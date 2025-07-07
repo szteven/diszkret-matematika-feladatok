@@ -1,0 +1,3537 @@
+\chapter{Elemi számelmélet}\label{chap:elemi_szamelmelet}
+\section{Számelméleti alapfogalmak}\label{sec:szamelmelet_alapok}
+\begin{description}
+{\large\item [{Szerző:}] Czofa Vivien (Didaktikai mesteri -- Matematika, II. év)}
+\end{description}
+
+\subsection*{Bevezetés}
+\begin{theorem}[Maradékos osztás tétele]{thm:MOT}
+Ha $a,b\in\mathbb{Z}$ és $b>0$, akkor egyértelműen létezik olyan
+$q,r\in\mathbb{Z}$, amelyre 
+\[
+a=qb+r\quad\text{és}\quad0\leq r<b.
+\]
+\end{theorem}
+
+\begin{proof}
+\underline{Létezés:}
+
+Tekintsük a következő halmazt: 
+\[
+S=\{a-xb\mid x\in\mathbb{Z},\ a-xb\geq0\}.
+\]
+
+Megmutatjuk, hogy $S$ nem üres. Mivel $b\geq1$, a következő becslést
+kapjuk: 
+\[
+|a|\cdot b\geq|a|\quad\Rightarrow\quad a+|a|\cdot b\geq a+|a|\geq0,
+\]
+így az $x=-|a|$ választással 
+\[
+a-(-|a|)b=a+|a|\cdot b\in S.
+\]
+
+Mivel $S\subseteq\mathbb{Z}_{\geq0}$ és nem üres, a jólrendezési
+elv alapján létezik $r=\min S$. Ekkor létezik olyan $q\in\mathbb{Z}$,
+amelyre 
+\[
+a=qb+r\quad\text{és}\quad r\geq0.
+\]
+
+\textit{Tegyük fel, hogy} $r\geq b$. Ekkor 
+\[
+a-(q+1)b=r-b\geq0,
+\]
+tehát $r-b\in S$, ami ellentmond annak, hogy $r$ a legkisebb eleme
+$S$-nek. Ezért $r<b$ is teljesül.
+
+\underline{Egyértelműség:}
+
+Tegyük fel, hogy két különböző pár is kielégíti a tétel feltételeit:
+\[
+a=qb+r=q'b+r',\quad\text{ahol }0\leq r,r'<b.
+\]
+
+Ekkor: 
+\[
+b(q-q')=r'-r.
+\]
+
+A jobb oldal abszolút értéke kisebb, mint $b$, hiszen $r,r'<b$.
+Így: 
+\[
+|b(q-q')|=|r'-r|<b\Rightarrow|q-q'|<1,
+\]
+de mivel $q,q'\in\mathbb{Z}$, ebből következik, hogy $q=q'$, és
+így $r=r'$ is.
+\end{proof}
+\begin{corollary}{cor:MOTZ}
+A tétel kiterjeszthető azokra az esetekre is, amikor $b\in\mathbb{Z}\setminus\{0\}$,
+vagyis $b$ negatív is lehet. Ekkor is létezik $q,r\in\mathbb{Z}$,
+hogy 
+\[
+a=qb+r\quad\text{és}\quad0\leq r<|b|.
+\]
+\end{corollary}
+
+\begin{proof}
+Tegyük fel, hogy $b<0$. Ekkor $|b|=-b$, így alkalmazhatjuk a korábban
+bizonyított esetet $|b|>0$-ra. Eszerint létezik olyan $q'\in\mathbb{Z}$
+és $r\in\mathbb{Z}$, hogy 
+\[
+a=q'\cdot|b|+r,\quad0\leq r<|b|.
+\]
+
+Ekkor viszont: 
+\[
+a=q'(-b)+r=(-q')b+r,
+\]
+ahol $q=-q'$. Mivel az $(q',r)$ pár egyértelmű volt, a $(q,r)$
+pár is az.
+\end{proof}
+
+\subsection*{Oszthatóság és legnagyobb közös osztó}
+
+Az oszthatóság fogalma tekinthető a maradékos osztás tételének egy
+speciális eseteként, amikor a maradék $r=0$.
+\begin{definition}{def:oszto}
+Egy $a\in\mathbb{Z}$ szám akkor osztója egy $b\in\mathbb{Z}$ számnak,
+ha létezik olyan $c\in\mathbb{Z}$, amelyre teljesül: 
+\[
+b=a\cdot c.
+\]
+Ekkor azt mondjuk, hogy $a\mid b$.
+\end{definition}
+
+\textbf{Megjegyzés:} Ha $a,b\in\mathbb{Z}$, $a\neq0$, és $a\mid b$,
+akkor azt is mondhatjuk, hogy $b$ osztható $a$-val, vagy $b$ többszöröse
+$a$-nak. Ezeket gyakran a következő alternatív jelölésekkel is kifejezzük:
+\[
+a\mid b\quad\text{helyett}\quad b\vdots a.
+\]
+
+\textbf{Tulajdonságok:}
+
+Legyen $a,b,c\in\mathbb{Z}$. Az oszthatóságra az alábbi tulajdonságok
+teljesülnek:
+\begin{enumerate}
+\item[(a)] Ha $a\neq0$, akkor $a\mid0$, $1\mid a$, és $a\mid a$. 
+\item[(b)] $a\mid1\iff a=\pm1$. 
+\item[(c)] Ha $a\mid b$, akkor $-a\mid b$, $a\mid-b$, és $-a\mid-b$ is. 
+\item[(d)] Ha $a\mid b$ és $c\mid d$, akkor $ac\mid bd$. 
+\item[(e)] Ha $a\mid b$ és $b\mid c$, akkor $a\mid c$. 
+\item[(f)] $a\mid b$ és $b\mid a\iff|a|=|b|$. 
+\item[(g)] Ha $a\mid b$ és $b\neq0$, akkor $|a|\leq|b|$. 
+\item[(h)] Ha $a\mid b$ és $a\mid c$, akkor minden $x,y\in\mathbb{Z}$ esetén
+\[
+a\mid(bx+cy).
+\]
+\item[(i)] Általánosan: ha $n\in\mathbb{N}^{*}$ és $a\mid b_{k}$ minden $k\in\{1,\dots,n\}$
+esetén, akkor 
+\[
+a\mid\left(\sum_{k=1}^{n}b_{k}x_{k}\right),\quad\forall x_{k}\in\mathbb{Z}.
+\]
+\end{enumerate}
+
+\subsection*{A legnagyobb közös osztó}
+\begin{definition}{def:lnko}
+Legyen $a,b\in\mathbb{Z}$, úgy hogy $a^{2}+b^{2}\neq0$. Azt mondjuk,
+hogy a $d\in\mathbb{Z}$ szám az $a$ és $b$ legnagyobb közös osztója,
+ha:
+\begin{itemize}
+\item[(a)] $d\mid a$ és $d\mid b$,
+\item[(b)] minden olyan $c\in\mathbb{Z}$ esetén, amelyre $c\mid a$ és $c\mid b$,
+teljesül $c\leq d$.
+\end{itemize}
+Jelölés: $d=\mathrm{lnko}(a,b),\quad\text{vagy röviden: }d=(a,b).$
+\end{definition}
+
+\textbf{Tulajdonságok:} 
+\begin{itemize}
+\item[(a)] Minden $a,b\in\mathbb{Z}$, $a^{2}+b^{2}\neq0$ esetén $\mathrm{lkko}(a,b)\geq1$. 
+\item[(b)] A legnagyobb közös osztó egyértelműen meghatározott egész szám. 
+\end{itemize}
+\begin{theorem}{thm:lnko_linkomb}
+Ha $a,b\in\mathbb{Z}$, és nem mindkettő nulla, akkor létezik $x,y\in\mathbb{Z}$
+úgy, hogy 
+\[
+\mathrm{lnko}(a,b)=ax+by.
+\]
+\end{theorem}
+
+\begin{proof}
+Tekintsük az alábbi halmazt: 
+\[
+S=\{au+bv\mid u,v\in\mathbb{Z},\ au+bv>0\}.
+\]
+
+Mivel például $a=a\cdot1+b\cdot0\in S$ (ha $a>0$), ezért $S$ nem
+üres. A jólrendezési elv szerint $S$-nek van legkisebb eleme, jelöljük
+ezt $d$-vel: 
+\[
+d=\min S,\quad d>0.
+\]
+
+Célunk, hogy megmutassuk: $d=\mathrm{lnko}(a,b)$.
+
+A maradékos osztás tétele szerint $a=qd+r$ valamely $q,r\in\mathbb{Z}$
+és $0\leq r<d$ mellett. Mivel $d=au+bv$, behelyettesítve: 
+\[
+r=a-qd=a-q(au+bv)=a(1-qu)+b(-qv),
+\]
+tehát $r\in S$. Mivel azonban $r<d=\min S$, ez csak úgy lehetséges,
+ha $r=0$, tehát $d\mid a$. Hasonlóképp belátható, hogy $d\mid b$
+is.
+
+Most vegyünk egy $c\in\mathbb{Z}$ számot, amely $a$ és $b$ közös
+osztója. Ekkor: 
+\[
+c\mid a,\quad c\mid b\quad\Rightarrow\quad c\mid(au+bv)=d,
+\]
+vagyis $c\leq d$. Ezáltal $d$ valóban a legnagyobb közös osztó.
+\end{proof}
+\textbf{Megjegyzés:} Ez a bizonyítás a létezést biztosítja, de nem
+nyújt algoritmust a $\mathrm{lnko}(a,b)$ kiszámítására -- erre a
+kiterjesztett Euklideszi algoritmus ad lehetőséget.
+\begin{example}
+Legyen $a=6$, $b=8$. Ekkor: $S=\{2,4,6,8,\dots\}\quad\Rightarrow\quad\mathrm{lnko}(6,8)=2.$
+\end{example}
+
+\begin{corollary}{cor:tobbszorosok}
+Ha $a,b\in\mathbb{Z}$, $a^{2}+b^{2}\neq0$, akkor a $T=\{ax+by\mid x,y\in\mathbb{Z}\}$ halmaz éppen a $\mathrm{lnko}(a,b)$ egész többszöröseinek halmaza.
+\end{corollary}
+
+
+\subsection*{Relatív prímek}
+\begin{definition}{def:relativ_primek}
+Két számot relatív prímnek nevezünk, ha legnagyobb közös osztójuk
+1, azaz: $\mathrm{lnko}(a,b)=1.$
+\end{definition}
+
+\begin{theorem}{thm:lnko-linkomb1}
+Legyen $a,b\in\mathbb{Z}$, $a^{2}+b^{2}\neq0$. Ekkor: 
+\[
+a,b\text{ relatív prím}\iff\exists x,y\in\mathbb{Z}\text{ olyan, hogy }ax+by=1.
+\]
+\end{theorem}
+
+\begin{proof}
+~
+\begin{itemize}
+\item[$\Rightarrow$] Ha $\mathrm{lnko}(a,b)=1$, akkor a lineáris kombinációs alakból
+léteznek $x_{0},y_{0}\in\mathbb{Z}$, hogy $1=ax_{0}+by_{0}$.
+\item[$\Leftarrow$] Ha $ax+by=1$ valamilyen $x,y\in\mathbb{Z}$ esetén, akkor minden
+közös osztó osztja az 1-et, tehát $d=1$.
+\end{itemize}
+\end{proof}
+\begin{corollary}{cor:lnko1}
+Ha $\mathrm{lnko}(a,b)=d$, akkor: 
+\[
+\mathrm{lnko}\left(\frac{a}{d},\frac{b}{d}\right)=1.
+\]
+\end{corollary}
+
+\begin{corollary}{cor:lnko1c}
+Ha $c\mid a$ és $\mathrm{lnko}(a,b)=1$, akkor $c\mid b$.
+\end{corollary}
+
+\begin{theorem}{thm:lnkoe}
+Legyen $a,b\in\mathbb{Z}$, $a^{2}+b^{2}\neq0$. Egy $d\in\mathbb{N}^{*}$
+szám pontosan akkor a legnagyobb közös osztójuk, ha:
+\begin{itemize}
+\item[(a)] $d\mid a$, $d\mid b$,
+\item[(b)] minden közös osztó osztja $d$-t is.
+\end{itemize}
+\end{theorem}
+
+\subsection*{Az euklideszi algoritmus}
+
+Hogyan határozhatjuk meg két egész szám legnagyobb közös osztóját
+hatékonyan?
+\begin{lemma}{lem:lnko_rem}
+Ha két egész számra $a=qb+r$ teljesül, akkor 
+\[
+\mathrm{lnko}(a,b)=\mathrm{lnko}(b,r).
+\]
+\end{lemma}
+
+\begin{proof}
+Tegyük fel, hogy $d=\mathrm{lnko}(a,b)$. Mivel $d\mid a$ és $d\mid b$,
+ezért 
+\[
+d\mid(a-qb)=r\quad\Rightarrow\quad d\mid r,
+\]
+azaz $d$ osztója $r$-nek is, tehát $d\mid\mathrm{lnko}(b,r)$.
+
+Másrészt, ha egy $c\in\mathbb{Z}$ osztója $b$-nek és $r$-nek, akkor:
+\[
+c\mid qb+r=a\quad\Rightarrow\quad c\mid a\quad\Rightarrow\quad c\mid\mathrm{lnko}(a,b).
+\]
+
+Így belátjuk, hogy a közös osztók megegyeznek, tehát: 
+\[
+\mathrm{lnko}(a,b)=\mathrm{lnko}(b,r).
+\]
+\end{proof}
+Ez az összefüggés alapját képezi az euklideszi algoritmus rekurzív
+szerkezetének.
+
+\paragraph{\textbf{Az algoritmus lépései:}}
+
+Legyenek $a,b\in\mathbb{Z}$, úgy hogy $a^{2}+b^{2}\neq0$. Mivel
+\[
+\mathrm{lnko}(a,b)=\mathrm{lnko}(|a|,|b|)=\mathrm{lnko}(b,r),
+\]
+feltehetjük, hogy $a\geq b>0$. Az algoritmus lépései tehát a következők:
+
+\begin{align*}
+a & =q_{1}b+r_{1}\quad & \text{(ha }r_{1}=0,\text{ akkor }\mathrm{lnko}(a,b)=b)\\
+b & =q_{2}r_{1}+r_{2}\quad & \text{(ha }r_{2}=0,\text{ akkor }\mathrm{lnko}(a,b)=r_{1})\\
+r_{1} & =q_{3}r_{2}+r_{3}\\
+ & \vdots\\
+r_{n-2} & =q_{n}r_{n-1}+r_{n}\quad & \text{(ha }r_{n}=0,\text{ akkor }\mathrm{lnko}(a,b)=r_{n-1})
+\end{align*}
+
+Az algoritmus a maradékos osztás ismétlésével addig folytatódik, amíg
+a maradék nullává nem válik. Ekkor az utolsó nem nulla maradék lesz
+a két szám legnagyobb közös osztója.
+\begin{example}
+Határozzuk meg $\mathrm{lnko}(26,15)$ értékét:
+
+\begin{align*}
+26 & =1\cdot15+11\\
+15 & =1\cdot11+4\\
+11 & =2\cdot4+3\\
+4 & =1\cdot3+1\\
+3 & =3\cdot1+0
+\end{align*}
+
+Az utolsó nem nulla maradék: $\mathrm{lnko}(26,15)=1$.
+
+\textit{A legnagyobb közös osztó lineáris kombinációként:} Az algoritmus
+során visszafelé haladva kifejezhetjük a legnagyobb közös osztót $a$
+és $b$ lineáris kombinációjaként:
+
+\begin{align*}
+1 & =4-1\cdot3\\
+ & =4-1\cdot(11-2\cdot4)=3\cdot4-1\cdot11\\
+ & =3\cdot(15-1\cdot11)-1\cdot11=3\cdot15-4\cdot11\\
+ & =3\cdot15-4\cdot(26-1\cdot15)=7\cdot15-4\cdot26
+\end{align*}
+
+Így: 
+\[
+\mathrm{lnko}(26,15)=1=7\cdot15-4\cdot26
+\]
+\end{example}
+
+
+\subsection*{Oszthatósági szabályok tételei}
+\begin{theorem}{thm:div2}
+Egy természetes szám osztható 2-vel $\iff$ a tízes számrendszerbeli
+alakjában az utolsó számjegy páros (azaz 0, 2, 4, 6, vagy 8).
+\end{theorem}
+
+\begin{proof}
+Legyen egy természetes szám: 
+\[
+n=a_{k}\cdot10^{k}+a_{k-1}\cdot10^{k-1}+\dots+a_{1}\cdot10^{1}+a_{0}\cdot10^{0},
+\]
+ahol $a_{0}$ a szám utolsó számjegye (egyesének a helyi értéke).
+
+Azt kell megvizsgálnunk, hogy: 
+\[
+10^{m}\equiv0\pmod 2
+\]
+minden $m\geq1$-re, hiszen $10=2\cdot5$, tehát a 10 többszöröse
+minden nagyobb helyi értékű számjegy (tízesek, százasok, ezresek,
+stb.) biztosan osztható 2-vel.
+
+Ebből az következik, hogy ha az $n$ számot mod 2 szerint vizsgáljuk,
+akkor: 
+\[
+n\equiv a_{0}\pmod 2
+\]
+azaz a szám oszthatósága 2-vel csak az utolsó számjegyétől függ.
+
+Tehát
+\begin{itemize}
+\item Ha $a_{0}$ páros számjegy (azaz $a_{0}\equiv0\pmod 2$), akkor $n$
+is osztható 2-vel.
+\item Ha $a_{0}$ páratlan számjegy (azaz $a_{0}\equiv1\pmod 2$), akkor
+$n$ nem osztható 2-vel.
+\end{itemize}
+\end{proof}
+\begin{theorem}{thm:div3}
+Egy természetes szám osztható 3-mal $\iff$ a számjegyeinek
+összege osztható 3-mal.
+\end{theorem}
+
+\begin{proof}
+Legyen egy $n$ szám, amit 10-es számrendszerben így írhatunk fel:
+\[
+n=a_{k}10^{k}+a_{k-1}10^{k-1}+\dots+a_{1}10^{1}+a_{0}10^{0},
+\]
+ahol $a_{i}$ a számjegyek ($0\leq a_{i}\leq9$).
+
+Mivel $10\equiv1\pmod 3$, ezért bármely $10^{m}$ hatvány is: 
+\[
+10^{m}\equiv1^{m}=1\pmod 3.
+\]
+
+Ha a fenti $n$ számot vizsgáljuk modulo 3 szerint, akkor: 
+\[
+n\equiv a_{k}+a_{k-1}+\dots+a_{1}+a_{0}\pmod 3.
+\]
+(Azért, mert minden $10^{m}$-et lecserélhetünk 1-re mod 3 szerint.)
+
+Ez azt jelenti, hogy $n$ maradéka 3-mal osztva megegyezik a számjegyeinek
+összegének maradékával 3-mal osztva.
+
+Tehát: 
+\[
+n\equiv S(n)\pmod 3,
+\]
+ahol $S(n)$ a számjegyek összege.
+
+Tehát
+\begin{itemize}
+\item Ha $S(n)$ osztható 3-mal $\Rightarrow$ $n$ is osztható 3-mal.
+\item Ha $S(n)$ nem osztható 3-mal $\Rightarrow$ $n$ sem osztható 3-mal.
+\end{itemize}
+\end{proof}
+\begin{theorem}{thm:div4}
+Egy természetes szám osztható 4-gyel $\iff$ a szám utolsó két számjegyéből
+alkotott szám osztható 4-gyel.
+\end{theorem}
+
+\begin{proof}
+Legyen egy természetes szám: 
+\[
+n=a_{k}\cdot10^{k}+a_{k-1}\cdot10^{k-1}+\dots+a_{2}\cdot10^{2}+a_{1}\cdot10^{1}+a_{0}\cdot10^{0},
+\]
+ahol $a_{1}a_{0}$ az utolsó két számjegy.
+
+Mivel $10^{2}=100$, és 100 osztható 4-gyel ($100=4\cdot25$), ezért
+minden $10^{2}$-nél nagyobb helyértékű tag osztható 4-gyel.
+
+Vagyis 
+\[
+10^{2}\equiv0\pmod 4.
+\]
+Ez azt jelenti, hogy: 
+\[
+n\equiv10\cdot a_{1}+a_{0}\pmod 4.
+\]
+Vagyis az egész szám mod 4 maradéka csak az utolsó két számjegytől
+fog függeni.
+
+Ha az utolsó két számjegyből alkotott szám $10\cdot a_{1}+a_{0}$
+osztható 4-gyel, akkor az eredeti szám is osztható 4-gyel.
+\end{proof}
+\begin{theorem}{thm:div5}
+Egy természetes szám osztható 5-tel $\iff$ a szám utolsó számjegye
+0 vagy 5.
+\end{theorem}
+
+\begin{proof}
+Legyen $n$ szám: 
+\[
+n=a_{k}\cdot10^{k}+a_{k-1}\cdot10^{k-1}+\dots+a_{1}\cdot10^{1}+a_{0}\cdot10^{0},
+\]
+ahol $a_{0}$ az utolsó számjegy.
+
+Mivel 10 osztható 5-tel ($10=5\cdot2$), ezért: 
+\[
+10^{m}\equiv0\pmod 5
+\]
+minden $m\geq1$-re.
+
+Ez azt jelenti, hogy a tízes, százas, ezres stb. helyértékeken álló
+számjegyek mind oszthatók 5-tel --- vagyis mod 5 szerint ``eltűnnek'',
+csak az utolsó számjegy számít.
+
+Vagyis 
+\[
+n\equiv a_{0}\pmod 5.
+\]
+
+Tehát $n$ akkor és csak akkor osztható 5-tel, ha az utolsó számjegye
+$a_{0}$ osztható 5-tel.
+
+Mivel a számjegyek csak $0,1,2,3,4,5,6,7,8,9$ lehetnek, ezért ezek
+közül csak a $0$ és az $5$ osztható $5$-tel.
+\end{proof}
+\begin{theorem}{thm:div6}
+Egy természetes szám osztható 6-tal $\iff$ osztható 2-vel és 3-mal
+is egyszerre.
+\end{theorem}
+
+\begin{proof}
+$\Longrightarrow.$ Ha egy szám osztható 6-tal, akkor osztható 2-vel
+és 3-mal is.
+
+Ez triviális, hiszen ha: 
+\[
+n=6\cdot k=2\cdot3\cdot k,
+\]
+akkor nyilván osztható 2-vel és 3-mal is.
+
+$\Longleftarrow.$ Ha egy szám osztható 2-vel és 3-mal, akkor osztható
+6-tal.
+
+A 2 és a 3 relatív prímek (azaz $\gcd(2,3)=1$) --- ezért teljesül
+az alábbi alapvető számelméleti tétel:
+
+\textit{Ha $a$ és $b$ relatív prímek, és $n$ osztható $a$-val
+és $b$-vel is, akkor $n$ osztható $a\cdot b$-vel is.}
+
+Mivel $2\mid n$ és $3\mid n$, és $\gcd(2,3)=1$, ezért a legkisebb
+közös többszörös: 
+\[
+\operatorname{lcm}(2,3)=2\times3=6.
+\]
+Ezért biztos, hogy $n$ osztható 6-tal.
+\end{proof}
+\begin{theorem}{thm:div7}
+Egy szám osztható 7-tel akkor és csak akkor, ha a következő eljárással
+kapott szám is osztható 7-tel: az utolsó számjegyet megkétszerezzük,
+és ezt levonjuk a szám többi részéből. Az eljárás ismételhető.
+\end{theorem}
+
+\begin{example}
+Vizsgáljuk meg, hogy a 203 osztható-e 7-tel.
+
+Utolsó számjegy: 3
+
+A többi rész: 20
+
+Számoljuk: 
+\[
+20-2\cdot3=20-6=14.
+\]
+Mivel 14 osztható 7-tel, ezért 203 is osztható 7-tel.
+
+Miért működik ez?
+
+Legyen a szám: 
+\[
+n=10a+b,
+\]
+ahol $b$ az utolsó számjegy, $a$ pedig a többi szám.
+
+Mivel $10\equiv3\pmod 7$, ezért: 
+\[
+n=10a+b\equiv3a+b\pmod 7.
+\]
+
+Szeretnénk valamilyen egyszerű műveletet, ami csökkenti a szám méretét.
+
+Vegyük észre, hogy: 
+\[
+3a+b\equiv a-2b\pmod 7,
+\]
+ugyanis: 
+\[
+3\equiv-2\pmod 7
+\]
+(pl. mert $3+2\cdot2=7$).
+
+Tehát az $n=10a+b$ szám oszthatósága 7-tel ekvivalens azzal, hogy
+$a-2b$ osztható 7-tel.
+\end{example}
+
+\begin{theorem}{thm:div11}
+Egy természetes szám osztható 11-gyel $\iff$ a számjegyeinek váltakozó
+előjellel vett összege osztható 11-gyel.
+\end{theorem}
+
+\begin{proof}
+Ha a szám: 
+\[
+n=a_{k}a_{k-1}\dots a_{1}a_{0},
+\]
+akkor a következő mennyiséget képezzük: 
+\[
+S(n)=a_{0}-a_{1}+a_{2}-a_{3}+\dots+(-1)^{k}a_{k}.
+\]
+Ha $S(n)$ osztható 11-gyel, akkor $n$ is osztható 11-gyel.
+
+Miért igaz ez?
+
+\[
+n=a_{k}\cdot10^{k}+a_{k-1}\cdot10^{k-1}+\dots+a_{1}\cdot10^{1}+a_{0}\cdot10^{0}.
+\]
+
+Vegyük észre, hogy 
+\[
+10\equiv-1\pmod{11}
+\]
+(mert $10+1=11$).
+
+Tehát: 
+\[
+10^{m}\equiv(-1)^{m}\pmod{11}.
+\]
+Vagyis:
+\begin{itemize}
+\item Páros hatványok: $10^{m}\equiv1\pmod{11}$.
+\item Páratlan hatványok: $10^{m}\equiv-1\pmod{11}$.
+\end{itemize}
+Írjuk át a számot mod 11 szerint: 
+\[
+n\equiv a_{0}-a_{1}+a_{2}-a_{3}+\dots+(-1)^{k}a_{k}\pmod{11}.
+\]
+Azaz: 
+\[
+n\equiv S(n)\pmod{11}.
+\]
+
+Tehát egy szám osztható 11-gyel $\iff$ a számjegyeinek váltakozó
+előjeles összege osztható 11-gyel.
+\end{proof}
+
+\subsection*{A legkisebb közös többszörös}
+\begin{definition}{def:lkkt}
+Legyen $a,b\in\mathbb{Z}^{*}$. Ekkor az $m\in\mathbb{N}^{*}$ számot
+az $a$ és $b$ legkisebb közös többszörösének nevezzük, ha teljesül:
+\begin{itemize}
+\item[(a)] $a\mid m$ és $b\mid m$, azaz $m$ közös többszörös,
+\item[(b)] minden olyan $c\in\mathbb{N}^{*}$ esetén, amelyre $a\mid c$ és
+$b\mid c$, fennáll, hogy $m\mid c$, azaz $m$ a legkisebb ilyen.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+$\mathrm{lkkt}(-12,30)=60.$
+\end{example}
+
+\begin{theorem}{thm:lnko-lkkt}
+Tegyük fel, hogy $a,b\in\mathbb{Z}^{*}$, és $a,b>0$. Ekkor a legnagyobb
+közös osztó és a legkisebb közös többszörös között fennáll az alábbi
+összefüggés: 
+\[
+\mathrm{lnko}(a,b)\cdot\mathrm{lkkt}(a,b)=ab.
+\]
+\end{theorem}
+
+\begin{proof}
+Legyen $d=\mathrm{lnko}(a,b)$, ekkor felírhatók $a$ és $b$ a következő
+alakban: 
+\[
+a=da_{1},\quad b=db_{1}.
+\]
+Ekkor 
+\[
+ab=d^{2}a_{1}b_{1}\quad\Rightarrow\quad\frac{ab}{d}=da_{1}b_{1}.
+\]
+Definiáljuk $m=ab/d$, így: 
+\[
+m=ab_{1}=ba_{1},
+\]
+azaz $m$ valóban többszöröse $a$-nak és $b$-nek.
+
+Tegyük fel, hogy $c$ tetszőleges közös többszörös, vagyis $a\mid c$,
+$b\mid c$. Írjuk: 
+\[
+c=an_{1}=bn_{2}.
+\]
+
+A korábban látott lineáris kombinációs alak szerint $d=ax+by$ valamilyen
+$x,y\in\mathbb{Z}$ esetén. Ekkor: 
+\[
+\frac{c}{m}=\frac{cd}{ab}=\frac{c(ax+by)}{ab}=\frac{an_{1}x+bn_{2}y}{ab}=\frac{c(ax+by)}{ab}.
+\]
+Mivel $c\in\mathbb{Z}$, és $ax+by\in\mathbb{Z}$, így $\frac{c}{m}\in\mathbb{Z}$,
+azaz $m\mid c$.
+
+Ez bizonyítja, hogy $m$ valóban a legkisebb közös többszörös.
+\end{proof}
+\begin{corollary}{cor:lkktlnko}
+Ha $a,b\in\mathbb{N}^{*}$, akkor: 
+\[
+\mathrm{lkkt}(a,b)=\frac{ab}{\mathrm{lnko}(a,b)},
+\]
+amely különösen azt is jelenti, hogy $\mathrm{lnko}(a,b)=1$ esetén
+a két szám szorzata éppen a legkisebb közös többszörösük.
+\end{corollary}
+
+\textbf{Megjegyzés:} A legnagyobb közös osztó és a legkisebb közös
+többszörös fogalma természetes módon kiterjeszthető három vagy több
+egész számra is. Például $\mathrm{lnko}(a,b,c)$, illetve $\mathrm{lkkt}(a,b,c)$.
+
+Legyen $a,b,c\in\mathbb{Z}$, ahol $a^{2}+b^{2}+c^{2}\neq0$. Ekkor
+a három szám legnagyobb közös osztóját az alábbi módon értelmezhetjük:
+
+\[
+\mathrm{lnko}(a,b,c)=d\quad\Longleftrightarrow\quad\begin{cases}
+d\mid a,\quad d\mid b,\quad d\mid c,\\
+\text{és ha }f\mid a,\quad f\mid b,\quad f\mid c,\text{ akkor }f\mid d.
+\end{cases}
+\]
+
+
+\subsection*{Prímszámok}
+\begin{definition}{def:primek}
+Egy $p>1$ természetes számot prímszámnak nevezünk, ha pontosan kettő
+osztója van a $\mathbb{N}^{*}$-ben: 1 és $p$. Az 1-nél nagyobb,
+nem prím számokat összetett számoknak nevezzük.
+\end{definition}
+
+\begin{theorem}{thm:pdivab}
+Ha $p$ prím és $p\mid ab$, akkor $p\mid a$ vagy $p\mid b$.
+\end{theorem}
+
+\begin{proof}
+Tegyük fel, hogy $p\mid a$. Ekkor $\mathrm{lnko}(a,p)=1$, tehát
+az Euklideszi lemma alapján következik, hogy $p\mid b$.
+\end{proof}
+\begin{corollary}{cor:euklnko}
+Ha $p\mid a_{1}a_{2}\dots a_{n}$, akkor létezik olyan index $i\in\{1,2,\dots,n\}$,
+amelyre $p\mid a_{i}$.
+\end{corollary}
+
+\begin{theorem}[A számelmélet alaptétele]{thm:szamelmelet_alap}
+Minden $n>1$ természetes szám felbontható prímszámok szorzatára.
+Ez a felbontás egyértelmű, ha a prímszámok sorrendjét nem vesszük
+figyelembe.
+\end{theorem}
+\begin{proof}
+\underline{Létezés: }Ha $n$ prím, akkor kész. Ha nem, akkor $n$ összetett,
+tehát van olyan pozitív osztója, amely 1-nél és saját magánál kisebb.
+Legyen: 
+\[
+S=\{d\in\mathbb{N}^{*}\mid1<d<n\text{ és }d\mid n\}
+\]
+A jólrendezési elv alapján legyen $p_{1}=\min S$. Ekkor $p_{1}\mid n$,
+és $p_{1}$ prím. Ha $m_{1}=n/p_{1}$, akkor $n=p_{1}m_{1}$, és $m_{1}<n$.
+Ha $m_{1}$ nem prím, akkor ismételhetjük az eljárást. A folyamat
+véges lépés után leáll, mert minden lépésben szigorún csökken az aktuális
+szám.
+
+\underline{Egyértelműség:} Tegyük fel, hogy 
+\[
+n=p_{1}p_{2}\dots p_{r}=q_{1}q_{2}\dots q_{s},
+\]
+ahol minden $p_{i},q_{j}$ prím. Feltehetjük, hogy mindkét oldalon
+a prímek nem csökkenő sorrendben szerepelnek. Mivel $p_{1}\mid q_{1}q_{2}\dots q_{s}$,
+a korábbi tétel alapján kell lennie olyan $q_{j}$-nek, amelyre $p_{1}=q_{j}$.
+
+Az $q_{j}$-t az első helyre mozgatva, az egyenlőség mindkét oldaláról
+elhagyhatjuk $p_{1}$-et, majd ugyanazt az érvelést ismételhetjük
+a maradék szorzattal. Végül kiderül, hogy $r=s$, és a prímek megegyeznek.
+\end{proof}
+\begin{theorem}[Eukleidész]{thm:Euklidesz}
+Végtelen sok prímszám létezik.
+\end{theorem}
+
+\begin{proof}
+Tegyük fel indirekten, hogy csak véges sok prím van: $p_{1},p_{2},\dots,p_{n}$.
+Tekintsük a $N=p_{1}p_{2}\dots p_{n}+1$ számot. Mivel $N>p_{i}$
+minden $i$-re, $N$ nem lehet ezek közül egyik sem.
+
+Tegye fel, hogy valamelyik $p_{i}\mid N$. Ekkor: 
+\[
+p_{i}\mid(p_{1}p_{2}\dots p_{n}+1),\quad\text{de }p_{i}\mid p_{1}p_{2}\dots p_{n}\Rightarrow p_{i}\mid1,
+\]
+amely ellentmondáshoz vezet. Ezért végtelen sok prím van.
+\end{proof}
+\textbf{Prímtesztelés:} Hogyan döntsük el, hogy egy adott $m>1$ természetes
+szám prím-e?
+\begin{enumerate}
+\item Határozzuk meg a $\sqrt{n}$ értéket. 
+\item Írjuk fel a számokat $2$-től $n$-ig. 
+\item A felsorolásból töröljük ki a 2 összes többszörösét (a 2-vel osztható
+számokat, de magát a 2-t megtartjuk). 
+\item Ezután a következő megmaradt szám (3) összes többszörösét is töröljük. 
+\item Folytassuk a szitálást minden soron következő megmaradt számmal, amely
+nem nagyobb $\sqrt{n}$-nél: az adott szám összes többszörösét távolítsuk
+el a listából. 
+\item A megmaradó számok pontosan a 2, 3, ..., $n$ intervallumba eső prímszámokat
+adják. 
+\end{enumerate}
+\begin{example}
+\textbf{Eratoszthenészi szita $N=50$-ig}
+
+\[
+\begin{array}{cccccc}
+2 & 3 & \cancel{4} & 5 & \cancel{6} & 7\\
+\cancel{8} & \cancel{9} & \cancel{10} & 11 & \cancel{12} & 13\\
+\cancel{14} & \cancel{15} & \cancel{16} & 17 & \cancel{18} & 19\\
+\cancel{20} & \cancel{21} & \cancel{22} & 23 & \cancel{24} & \cancel{25}\\
+\cancel{26} & 27 & \cancel{28} & 29 & \cancel{30} & 31\\
+\cancel{32} & \cancel{33} & \cancel{34} & 35 & \cancel{36} & 37\\
+\cancel{38} & \cancel{39} & \cancel{40} & 41 & \cancel{42} & 43\\
+\cancel{44} & \cancel{45} & \cancel{46} & 47 & \cancel{48} & \cancel{49}\\
+\cancel{50}
+\end{array}
+\]
+
+A megmaradt számok: $2,3,5,7,11,13,17,19,23,29,31,37,41,43,47$
+
+\textbf{Osztók száma:}
+
+Egy $n$ természetes szám \textit{pozitív osztóinak száma} a $\tau(n)$.
+
+Ha $n=1$, akkor $\tau(n)=1$.
+
+Ha $n>1$ és az $n$ szám kanonikus alakja 
+\[
+n=p_{1}^{\alpha_{1}}\cdot p_{2}^{\alpha_{2}}\cdots p_{k}^{\alpha_{k}},
+\]
+akkor 
+\[
+\tau(n)=(\alpha_{1}+1)\cdot(\alpha_{2}+1)\cdots(\alpha_{k}+1).
+\]
+\end{example}
+
+
+\subsection*{Házi feladatok}
+\begin{problem}
+Állapítsuk meg, milyen maradékot adnak a természetes számok négyzetei
+$3$-mal és $5$-tel osztva. 
+\end{problem}
+
+\begin{solution}
+Tekintsük először a $3$-mal való osztást.
+
+Minden egész szám felírható a következő alakban: 
+\begin{itemize}
+\item $n=3k$ esetén $n^{2}=9k^{2}$, ami osztható $3$-mal, tehát a maradék
+$0$. 
+\item $n=3k\pm1$ esetén $n^{2}=(3k\pm1)^{2}=9k^{2}\pm6k+1$, ami osztható
+$3$-mal $+1$ maradékkal, tehát a maradék $1$. 
+\end{itemize}
+Ezért négyzetszámok $3$-mal osztva csak $0$ vagy $1$ maradékot
+adhatnak.
+
+\vspace{1em}
+
+Most tekintsük az $5$-tel való osztást.
+
+Minden egész szám felírható a következő alakban: 
+\begin{itemize}
+\item $n=5k$ esetén $n^{2}=25k^{2}$, tehát a maradék $0$. 
+\item $n=5k\pm1$ esetén $n^{2}=(5k\pm1)^{2}=25k^{2}\pm10k+1$, tehát a
+maradék $1$. 
+\item $n=5k\pm2$ esetén $n^{2}=(5k\pm2)^{2}=25k^{2}\pm20k+4$, tehát a
+maradék $4$, ami mod $5$ szerint ugyanaz, mint $-1$. 
+\end{itemize}
+Ezért négyzetszámok $5$-tel osztva csak $0$, $1$ vagy $-1$ maradékot
+adhatnak.
+
+Tehát: 
+\begin{itemize}
+\item ha négyzetszámot $3$-mal osztunk, a lehetséges maradékok: $0$ vagy
+$1$. 
+\item ha négyzetszámot $5$-tel osztunk, a lehetséges maradékok: $0$, $1$
+vagy $-1$.
+\end{itemize}
+\end{solution}
+\begin{problem}
+A szultán 100 cellájában száz rab raboskodik. A szultán leküldi egymás
+után 100 emberét.
+
+A $k$-adik alkalommal leküldött ember minden $k$-adik cella zárján
+állít egyet: ha nyitva volt, bezárja, ha zárva volt, kinyitja.
+
+Kezdetben minden cella zárva volt.
+
+Mely sorszámú cellák lesznek a végén nyitva? 
+\end{problem}
+
+\begin{solution}
+Azok a cellák lesznek a végén nyitva, amelyek sorszámában az osztók
+száma páratlan.
+
+Az osztók számát a $\tau(n)$ függvény adja meg.
+
+Ennek értéke akkor páratlan, ha a szám minden prímtényezőjének kitevője
+páros, vagyis ha a szám négyzetszám.
+
+Ez azért van, mert az osztók számát párokba lehet rendezni, kivéve
+ha a szám egy négyzetszám, ekkor a gyök osztó pár nélkül marad.
+
+Ezért a feltételeknek pontosan az $1$ és $100$ közötti négyzetszámok
+felelnek meg, vagyis $1,4,9,16,25,36,49,64,81$ és $100$. 
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy ha $a$ tetszőleges egész szám, akkor az 
+\[
+\frac{a^{3}+2a}{a^{4}+3a^{2}+1}
+\]
+tört nem egyszerűsíthető. 
+\end{problem}
+
+\begin{solution}
+A tört átalakítható így: 
+\[
+\frac{a^{3}+2a}{a^{4}+3a^{2}+1}=\frac{a(a^{2}+2)}{a^{2}(a^{2}+2)+a^{2}+1}.
+\]
+
+Tegyük fel, hogy létezik olyan prím $p$, amely osztója a számlálónak.
+
+Vizsgáljuk először azt az esetet, amikor $p\mid a$.
+
+Ekkor a nevező minden tagja is osztható $p$-vel, így a nevező végén
+szereplő $1$ is osztható lenne $p$-vel, ami ellentmondás.
+
+Ezért $p$ nem oszthatja $a$-t.
+
+\vspace{0.5em}
+
+Most vizsgáljuk azt az esetet, amikor $p\mid a^{2}+2$.
+
+Mivel a nevezőben szerepel $a^{2}(a^{2}+2)+a^{2}+1$, ezért $p$ osztója
+kellene legyen $a^{2}+1$-nek is.
+
+De ekkor $p$ osztója lenne: 
+\[
+(a^{2}+2)-(a^{2}+1)=1,
+\]
+ami lehetetlen.
+
+\vspace{0.5em}
+
+Mivel egyik eset sem lehetséges, a tört nem egyszerűsíthető. 
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy $n^{5}-5n^{3}+4n$ osztható $120$-szal, ha $n$
+tetszőleges egész szám. 
+\end{problem}
+
+\begin{solution}
+A $120$ prímtényezős felbontása: 
+\[
+120=2^{3}\cdot3\cdot5.
+\]
+
+Vizsgáljuk meg a következő átalakításokat:
+
+\[
+n^{5}-5n^{3}+4n=n(n^{4}-5n^{2}+4)=n(n^{4}-4n^{2}-n^{2}+4)=n(n^{2}(n^{2}-4)-(n^{2}-4)).
+\]
+
+Ez tovább alakítható: 
+\[
+=n(n^{2}-4)(n^{2}-1)=n(n-2)(n+2)(n-1)(n+1).
+\]
+
+Így a kifejezés $n(n-2)(n-1)(n+1)(n+2)$ alakban írható, vagyis 5
+egymást követő szám szorzataként.
+
+Öt egymást követő szám között biztosan van olyan, amely osztható $3$-mal
+és olyan is, amely osztható $5$-tel.
+
+Továbbá van közöttük legalább két páros szám, amelyek közül az egyik
+osztható $4$-gyel, és mivel van legalább három páros szám, ezért
+a szorzat osztható $2^{3}=8$-cal is.
+
+Mivel $3$, $5$ és $8$ páronként relatív prímek, ezért a szorzat
+osztható $3\cdot5\cdot8=120$-szal. 
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy végtelen sok $4k-1$ alakú prímszám van. 
+\end{problem}
+
+\begin{solution}
+Először belátjuk, hogy egy $4k-1$ alakú számnak van $4k-1$ alakú
+prímosztója.
+
+Nézzük meg két páratlan szám szorzatát 4-gyel osztva.
+
+A következő esetek fordulhatnak elő: 
+\[
+(4k+1)(4s+1)=4m+1,
+\]
+\[
+(4k+1)(4s-1)=4m-1,
+\]
+\[
+(4k-1)(4s-1)=4m+1.
+\]
+
+Tehát ahhoz, hogy egy szám $4k-1$ alakú legyen, a szorzatában szerepelnie
+kell legalább egy $4k-1$ alakú prímosztónak.
+
+\vspace{1em}
+
+Tegyük fel ellentmondásra, hogy csak véges sok $4k-1$ alakú prímszám
+létezik: 
+\[
+p_{1},p_{2},\dots,p_{r}.
+\]
+
+Alkossuk meg a következő számot: 
+\[
+N=4p_{1}p_{2}\dots p_{r}-1.\tag{1}
+\]
+
+Ez a szám $4k-1$ alakú.
+
+$N$-nek kell legyen $4k-1$ alakú prímosztója, jelöljük $p$-vel.
+
+Mivel $p$ az előző listában szerepel, ezért: 
+\[
+p\mid N\quad\text{és}\quad p\mid4p_{1}p_{2}\dots p_{r}.
+\]
+
+Ez alapján $p\mid1$ következik, ami lehetetlen.
+
+\vspace{1em}
+
+Ez ellentmondás, tehát a feltevésünk hibás volt.
+
+Következik, hogy végtelen sok $4k-1$ alakú prímszám létezik. 
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy ha 
+\[
+m^{2}-m+1\equiv0\pmod 3\quad\text{és}\quad2n^{2}+n-1\equiv0\pmod 3,
+\]
+akkor $m-n$ is osztható 3-mal.
+\end{problem}
+
+\begin{solution}
+Mivel 
+\[
+3\mid m^{2}-m+1,\quad\text{és}\quad3\mid2n^{2}+n-1,
+\]
+vezessük be a jelöléseket: 
+\[
+a=m^{2}-m+1,\quad b=2n^{2}+n-1.
+\]
+Tudjuk, hogy $3\mid a$ és $3\mid b$, ezért $a+b$ is osztható 3-mal.
+
+Számoljuk ki az összeget: 
+\[
+a+b=m^{2}-m+1+2n^{2}+n-1=m^{2}+2n^{2}-(m-n).
+\]
+
+Mivel $a+b\equiv0\pmod 3$, és $m^{2}+2n^{2}$ osztási maradéka 1
+modulo 3 (mivel $n^{2}\equiv1\pmod 3\Rightarrow2n^{2}\equiv2$), így:
+\[
+m^{2}+2n^{2}\equiv1+2=3\equiv0\pmod 3.
+\]
+Ezért: 
+\[
+m^{2}+2n^{2}-(m-n)\equiv0\pmod 3\Rightarrow m-n\equiv0\pmod 3.
+\]
+
+Tehát $m-n$ is osztható 3-mal. 
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy bármely $n\in\mathbb{N}$ esetén a $35n+57$
+és a $45n+76$ számok legnagyobb közös osztója vagy 1, vagy 19. 
+\end{problem}
+
+\begin{solution}
+Jelöljük a két adott számot: 
+\[
+a=35n+57,\quad b=45n+76.
+\]
+
+Tegyük fel, hogy $d$ az $a$ és $b$ legnagyobb közös osztója: $d=\mathrm{lnko}(a,b)$.
+Ekkor $d\mid a$ és $d\mid b$, tehát bármely olyan szám, amely az
+$a$ és $b$ lineáris kombinációja, szintén osztható $d$-vel. Másként
+fogalmazva: ha 
+\[
+d\mid a\quad\text{és}\quad d\mid b\quad\Rightarrow\quad d\mid(x\cdot b-y\cdot a),
+\]
+ahol $x,y\in\mathbb{Z}$.
+
+Képezzük az alábbi lineáris kombinációt: 
+\[
+7\cdot b-9\cdot a=7(45n+76)-9(35n+57).
+\]
+
+Számoljuk ki:
+
+\[
+7\cdot45n=315n,\quad9\cdot35n=315n,
+\]
+\[
+7\cdot76=532,\quad9\cdot57=513.
+\]
+
+Így:
+
+\[
+7b-9a=(315n+532)-(315n+513)=532-513=19.
+\]
+
+Tehát:
+
+\[
+7b-9a=19,
+\]
+
+azaz $d\mid19$. Mivel 19 prím, így $d\in\{1,19\}$. Ez azt jelenti,
+hogy $a$ és $b$ legnagyobb közös osztója csak 1 vagy 19 lehet.
+
+\textbf{Megjegyzés:} Könnyen ellenőrizhető például: 
+\begin{itemize}
+\item Ha $n=0$, akkor $a=57$, $b=76$, és $\mathrm{lnko}(57,76)=19$. 
+\item Ha $n=1$, akkor $a=92$, $b=121$, és $\mathrm{lnko}(92,121)=1$. 
+\end{itemize}
+Ez megerősíti az állítást: a két szám legnagyobb közös osztója bármely
+$n$-re vagy 1, vagy 19.
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy minden $n\in\mathbb{N}$ esetén teljesül: 
+\[
+\tau(n)<2\sqrt{n},
+\]
+ahol $\tau(n)$ az $n$ pozitív osztóinak számát jelöli. 
+\end{problem}
+
+\begin{solution}
+Az ötlet az, hogy az $n$ osztóit párokba rendezzük úgy, hogy minden
+osztóhoz hozzárendeljük az $n$-hez tartozó komplementer osztóját.
+Pontosabban:
+
+Tekintsük azokat az osztókat, amelyekre $1\leq d\leq\sqrt{n}$. Minden
+ilyen $d$ esetén $\frac{n}{d}$ is osztója $n$-nek, hiszen ha $d\mid n$,
+akkor $\frac{n}{d}\mid n$ is teljesül.
+
+Így minden $d\leq\sqrt{n}$ osztóhoz párosítani tudjuk a hozzá tartozó
+komplementer osztót $\frac{n}{d}$. Minden osztópár tehát a következő
+formában áll elő: 
+\[
+(d,\frac{n}{d}),
+\]
+és minden osztó pontosan egy ilyen párban jelenik meg.
+
+A maximum párok száma tehát nem több, mint $\lfloor\sqrt{n}\rfloor$,
+hiszen csak ennyi $d$ van, amire $d\leq\sqrt{n}$.
+
+Fontos megjegyezni, hogy a párok tagjai különbözők, kivéve azt az
+esetet, amikor $n$ négyzet, azaz $\sqrt{n}\in\mathbb{N}$. Ebben
+az esetben a $\sqrt{n}$ osztó „saját magával” párosul: 
+\[
+\frac{n}{\sqrt{n}}=\sqrt{n}.
+\]
+Ez tehát nem két különböző osztót ad, csak egyet.
+
+Két lehetőség van: 
+\begin{itemize}
+\item Ha $\sqrt{n}$ \textbf{nem egész}, akkor minden osztópár különböző
+számokat tartalmaz, és pontosan annyi pár van, ahány $d\leq\sqrt{n}$
+osztó létezik. Ekkor $\tau(n)=2k$, ahol $k\leq\lfloor\sqrt{n}\rfloor$,
+így $\tau(n)<2\sqrt{n}$. 
+\item Ha $\sqrt{n}\in\mathbb{N}$, akkor a $\sqrt{n}$ osztó csak egyszer
+szerepel (mert $\sqrt{n}=\frac{n}{\sqrt{n}}$), tehát az osztók száma
+$\tau(n)=2k-1$, ahol $k=\sqrt{n}$. Így $\tau(n)=2\sqrt{n}-1<2\sqrt{n}$. 
+\end{itemize}
+Mindkét esetben beláttuk, hogy: 
+\[
+\tau(n)<2\sqrt{n}.
+\]
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy ha egy prímszámot 30-cal osztunk, akkor a maradék
+1 vagy ismét prímszám. 
+\end{problem}
+
+\begin{solution}
+Tegyük fel, hogy $p$ egy prímszám, és osszuk el maradékosan 30-cal:
+\[
+p=30n+r,\quad\text{ahol }1\leq r<30,\quad n\in\mathbb{N}.
+\]
+
+Azt kell belátnunk, hogy a keletkező maradék $r$ vagy 1, vagy ismét
+prímszám.
+
+Megfigyelés: Mivel $p$ prímszám, ezért biztosan nem osztható 2-vel,
+3-mal vagy 5-tel, ha $p>5$. De a 30 számot éppen ezen három szám
+szorzataként írhatjuk fel: 
+\[
+30=2\cdot3\cdot5.
+\]
+
+Ez azt jelenti, hogy ha $p$ osztva van 30-cal, akkor a maradéka $r$
+nem lehet osztható 2-vel, 3-mal vagy 5-tel, különben maga a prímszám
+$p$ is osztható lenne ezekkel, ami lehetetlen.
+
+Tehát az $r\in\{1,2,\dots,29\}$ számok közül csak azok jöhetnek szóba,
+amelyek nem oszthatók 2-vel, 3-mal vagy 5-tel.
+
+Most nézzük meg, hogy 1 és 29 között mely számok NEM oszthatók sem
+2-vel, sem 3-mal, sem 5-tel:
+
+\[
+\{1,7,11,13,17,19,23,29\}.
+\]
+
+Ezek közül: - az 1 nyilvánvalóan nem prím, de az állítás ezt is megengedi,
+- a többi viszont mind prímszám.
+
+Így azt kaptuk, hogy ha egy prímszámot osztunk 30-cal, akkor a maradék
+vagy: 
+\begin{itemize}
+\item $r=1$, vagy 
+\item $r$ ismét prím: $r\in\{7,11,13,17,19,23,29\}$. 
+\end{itemize}
+Ez éppen az állításban szereplő követelmény.
+\end{solution}
+\begin{problem}
+Bizonyítsuk be, hogy végtelen sok $6k-1$ alakú prímszám létezik. 
+\end{problem}
+
+\begin{solution}
+Először tegyünk egy fontos megfigyelést: ha egy szám $6k-1$ alakú,
+akkor biztosan van olyan prímosztója is, amely szintén $6k-1$ alakú.
+
+Vegyük észre, hogy minden prímszám (a 2 és 3 kivételével) vagy $6k-1$,
+vagy $6k+1$ alakú. Ez abból következik, hogy minden egész szám kongruens
+valamelyik számmal modulo 6: 
+\[
+n\equiv0,1,2,3,4,5\pmod 6.
+\]
+Azonban: 
+\begin{itemize}
+\item $n\equiv0\pmod 6$: osztható 6-tal, tehát nem lehet prím, ha $n>6$, 
+\item $n\equiv2\pmod 6$: osztható 2-vel, 
+\item $n\equiv3\pmod 6$: osztható 3-mal, 
+\item $n\equiv4\pmod 6$: osztható 2-vel. 
+\end{itemize}
+Ezért csak a $n\equiv1\pmod 6$ és $n\equiv5\pmod 6$ esetek maradnak,
+azaz csak az $6k\pm1$ alakú számok lehetnek prímek, ha $n>3$.
+
+Most vegyük észre, hogy ha $N$ nem osztható 2-vel vagy 3-mal, akkor
+$N$ biztosan $6k\pm1$ alakú. Ha ilyen számot (pl. $N=6k-1$) összetettként
+állítunk elő, azaz prímek szorzataként, akkor legalább az egyik prímosztónak
+is ilyen alakúnak kell lennie.
+
+\medskip{}
+
+Most bizonyítsuk az állítást indirekten (ellentmondással):
+
+Tegyük fel, hogy csak véges sok $6k-1$ alakú prímszám létezik, jelöljük
+ezeket: 
+\[
+p_{1},p_{2},\dots,p_{r}.
+\]
+
+Képezzük az alábbi számot: 
+\[
+N=6p_{1}p_{2}\cdots p_{r}-1.
+\]
+
+Ez a szám nyilvánvalóan nem osztható egyikkel sem az $\{p_{1},\dots,p_{r}\}$
+közül, hiszen mindegyik prím osztja a szorzatot $6p_{1}\cdots p_{r}$,
+így egyik sem osztja $N=6p_{1}\cdots p_{r}-1$-et.
+
+Ugyanakkor $N$ nem osztható 2-vel és 3-mal sem (hiszen 1-gyel kisebb
+egy 6-tal osztható számnál), ezért $N$ csak olyan prímek szorzata
+lehet, amelyek mind $6k\pm1$ alakúak.
+
+De ahogy korábban láttuk, az $N$ prímtényezői között szerepelnie
+kell egy $6k-1$ alakú prímszámnak is. Ez viszont új lenne, hiszen
+egyik $p_{i}$-vel sem osztható --- ez ellentmond annak a feltételezésnek,
+hogy már felsoroltuk az összes ilyen alakú prímszámot.
+
+\medskip{}
+
+Ezért a feltételezés, hogy csak véges sok $6k-1$ alakú prímszám van,
+hamis. Tehát:
+
+\[
+\text{Végtelen sok }6k-1\text{ alakú prímszám létezik.}
+\]
+\end{solution}
+\begin{problem}
+Lássuk be, hogy ha $2^{k}+1$ prímszám, akkor $k=2^{n}$ valamely
+nemnegatív egész számra (\textit{Fermat-féle prímek}).
+\end{problem}
+
+\begin{solution}
+Tegyük fel indirekten, hogy $2^{k}+1$ prím, de $k$ nem kettőhatvány.
+Ez azt jelenti, hogy létezik olyan $n\in\mathbb{N}_{0}$ és páratlan
+$b>1$, hogy: 
+\[
+k=2^{n}\cdot b.
+\]
+
+Ekkor tekintsük a következő azonosságot: 
+\[
+2^{2^{n}}+1\mid2^{k}+1=2^{2^{n}\cdot b}+1.
+\]
+
+Ez egy klasszikus oszthatósági azonosság: ha $b$ páratlan, akkor
+$x+1\mid x^{b}+1$ teljesül bármely $x$ esetén. Így a következő áll
+fenn: 
+\[
+2^{2^{n}}+1\mid(2^{2^{n}})^{b}+1=2^{k}+1.
+\]
+
+Ez azt jelenti, hogy $2^{2^{n}}+1$ osztója a $2^{k}+1$ számnak.
+Ugyanakkor: 
+\[
+2^{2^{n}}+1>1\quad\text{és}\quad2^{2^{n}}+1<2^{k}+1,
+\]
+tehát $2^{2^{n}}+1$ valódi osztója $2^{k}+1$-nek.
+
+Ez viszont ellentmond annak a feltételezésnek, hogy $2^{k}+1$ prímszám,
+hiszen egy prímnek csak két pozitív osztója van: 1 és önmaga.
+
+\medskip{}
+
+Ezért az $2^{k}+1$ szám csak akkor lehet prím, ha $k$ nem bontható
+ilyen módon fel, azaz ha nincs benne páratlan tényező. Ez pontosan
+akkor teljesül, ha: 
+\[
+k=2^{n},\quad\text{valamilyen }n\in\mathbb{N}_{0}\text{ esetén}.
+\]
+
+\medskip{}
+
+Ez tehát azt mutatja, hogy ha $2^{k}+1$ prím, akkor $k$ csak kettőhatvány
+lehet.
+\end{solution}
+
+\subsection*{Nehezebb feladatok}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+Egy piaci árus tyúk- és kacsatojásokat árul. A tojások hat kosárban
+vannak, az egyes kosarakban $4;6;12;13;22;29$ tojás található. A
+kétféle tojás keverten fér el a kosarakban. "Ha ezt a kosár tojást
+eladom, akkor pontosan kétszer annyi tyúktojás marad, mint kacsatojás."
+- gondolja magában az árus. Melyik kosárra gondolt? 
+\end{extraproblem}
+
+\begin{solution}
+Mivel kétszer annyi tyúktojás maradt, mint kacsatojás, a megmaradt
+tojások száma $3$-mal osztható. Az egyes kosarakban levő tojások
+számának $3$-as maradéka rendre: $1,0,0,1,1,2$. Ahhoz, hogy a megmaradt
+tojások száma $3$ többszöröse legyen szükséges, hogy a visszamaradt
+öt kosár $3$-as maradékainak összege osztható legyen $3$-mal. Ez
+csak akkor lehetséges, ha az árus az utolsó, $29$ tojást tartalmazó
+kosarat adta el. A megmaradt tojásokból $38$ a tyúktojás, $19$ a
+kacsatojás. 
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+A $15^{3}\cdot12^{6}\cdot23^{2}\cdot14$ számnak 
+\begin{itemize}
+\item[a.)] hány 21-hez relatív prím pozitív osztója van? 
+\item[b.)] hány 21-gyel nem osztható pozitív osztója van? 
+\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+Számítsuk ki a szám kanonikus alakját.
+
+\[
+15^{3}\cdot12^{6}\cdot23^{2}\cdot14=2^{13}\cdot3^{9}\cdot5^{3}\cdot7\cdot23^{2}
+\]
+
+\textbf{a.)} A számnak annyi 21-hez relatív prím pozitív osztója van,
+ahány osztója van a $2^{13}\cdot5^{3}\cdot23^{2}$-nek, tehát $14\cdot4\cdot3=168$.
+
+\textbf{b.)} A 3-mal nem osztható osztók száma megegyezik $2^{13}\cdot5^{3}\cdot7\cdot23^{2}$
+osztóinak a számával.
+
+\[
+\tau_{1}=\tau(2^{13}\cdot5^{3}\cdot7\cdot23^{2})=14\cdot4\cdot2\cdot3=336
+\]
+
+A 7-tel nem osztható osztók száma megegyezik $2^{13}\cdot3^{9}\cdot5^{3}\cdot23^{2}$
+osztóinak a számával.
+
+\[
+\tau_{2}=\tau(2^{13}\cdot3^{9}\cdot5^{3}\cdot23^{2})=14\cdot10\cdot4\cdot3=1680
+\]
+
+A 3-mal és 7-tel nem osztható osztók száma $\tau_{3}=168$. Erre azért
+van szükség, mert kétszer számoltuk meg azokat, amik 3-mal és 7-tel
+is oszthatóak. \\
+A keresett szám: 
+\[
+\tau_{1}+\tau_{2}-\tau_{3}=2\cdot168+10\cdot168-168=11\cdot168=1848
+\]
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+Ha egy tyúk 5 pengőt, egy kakas 3 pengőt és három csirke 1 pengőt
+ér, akkor hány tyúkot, kakast és csirkét tudunk venni úgy, hogy összesen
+100 szárnyasunk legyen és összesen 100 pengőt fizessünk értük? 
+\end{extraproblem}
+
+\begin{solution}
+A megvásárolt tyúkok száma $t$-vel, a csirkék száma $c$-vel és a
+kakasok száma $k$-val jelölve, felírhatjuk, hogy: 
+\[
+\left\{ \begin{array}{ll}
+t+k+c=100\\
+5t+3k+{\displaystyle {\frac{c}{3}}=100\Rightarrow15t+9k+c=300}
+\end{array}\right.\Rightarrow14t+8k=200\Rightarrow7t+4k=100
+\]
+Innen a kiküszöbölés módszerével: $k=25-2t+{\displaystyle {\frac{c}{33}}}$,
+vagyis $t=4l$ alakú, ahol $l\in\mathbb{N}$. \\
+Innen: $\left\{ \begin{array}{ll}
+t=4l & \geq0\\
+k=25-7l & \geq0\\
+c=75+3l & \geq0
+\end{array}\right.\Rightarrow l\leq{\displaystyle {\frac{25}{7}},\text{ vagyis }l\in\{0,1,2,3\}}$ \\
+Ezek alapján a megoldások a $t,k$ és c legnagyobb közös osztói lesznek:
+\[
+(t,k,c)\in\{(0,25,75),(4,18,78),(8,11,81),(12,4,84)\}
+\]
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Mutassuk ki, hogy az $n=2014^{2013}+2012^{2013}$ számnak van legalább
+három prímosztója. \emph{(Matematică de excelență - Clasa 6 -
+Pentru concursuri, olimpiade si centre de excelență) }
+\end{extraproblem}
+
+\begin{solution}
+\begin{align*}
+ & 2014^{2013}=(2013+1)^{2013}=t_{2013}+1,\text{ ahol }t_{2013}\text{ jelöli a }2013\mbox{ többszöröseit. }\\
+ & 2012^{2013}=(2013-1)^{2013}=t_{2013}-1\\
+ & n=t_{2013}+1+t_{2013}-1=t_{2013}
+\end{align*}
+Mivel $n=t_{2013}=2013\cdot k=3\cdot11\cdot67\cdot k$, ahol $k\in\mathbb{N}$
+és $3,11$ és $67$ prímszámok következik, hogy $n$-nek van legalább
+három prímosztója. 
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Mutassuk ki, hogy $76^{63}+66^{63}$ osztható $71$-el. \emph{ (Matematika
+Olimpia -- megyei szakasz, 2008, Fehér megye, V. osztály) }
+\end{extraproblem}
+
+\begin{solution}
+\underline{Ötlet:} A $76$-ből ha "kölcsönkérnénk" $5$-t és hozza
+adnánk a $66$-hoz, akkor két darab $71$-ünk lenne. Az asszociativitás
+alapján $76+66=(71+5)+66=71+(5+66)=71+71$. Ezt kell valahogy kiterjesztenünk
+magasabb hatványokra. írjuk át az alapokat $76=71+5$-t és a $66=71-5$-t.
+
+\noindent Így a feladatunk a következő $76^{63}+66^{63}=(71+5)^{63}+(71-5)^{63}\vdots71$.
+\[
+(71+5)^{3}+(71-5)^{3}=(71+5)\cdot(71+5)\cdot(71+5)+(71-5)\cdot(71-5)\cdot(71-5)
+\]
+
+\noindent Minden zárójelet el kellene osztani $71$-el, viszont a
+$71$-et elhagyhatjuk, mert $71$ osztható $71$-gyel, így azt kapjuk:
+
+\[
+=(\underline{71}+5)\cdot(\underline{71}+5)\cdot(\underline{71}+5)+(\underline{71}-5)\cdot(\underline{71}-5)\cdot(\underline{71}-5)
+\]
+
+\noindent Ennek az osztási maradéka: 
+\[
+=5\cdot5\cdot5+(-5)\cdot(-5)\cdot(-5)=5\cdot5\cdot5-(5\cdot5\cdot5)=125-125=0.
+\]
+
+\noindent A nulla pedig osztható $71$-el. így a $(71+5)^{3}+(71-5)^{3}\,\vdots71$.
+
+\noindent Az eredeti feladatban: 
+\[
+76^{63}+66^{63}=(71+5)^{63}+(71-5)^{63}=\underbrace{(71+5)\cdot\ldots\cdot(71+5)}_{\textnormal{63 db. zárójel}}+\underbrace{(71-5)\cdot\ldots\cdot(71-5)}_{\textnormal{63 db. zárójel}}.
+\]
+
+\noindent Elhagyva a $71$-et, az előbbi gondolatmenetet követve:
+\[
+=\underbrace{5\cdot5\cdot\ldots\cdot5}_{\textnormal{63 db. 5-ös}}+\underbrace{(-5)\cdot\ldots\cdot(-5)}_{\textnormal{63 db. (-5)-ös}}=\underbrace{5\cdot5\cdot\ldots\cdot5}_{\textnormal{63 db. 5-ös}}-\underbrace{5\cdot\ldots\cdot5}_{\textnormal{63 db. 5-ös}}=5^{63}-5^{63}=0.
+\]
+Ebből következik $76^{63}+66^{63}\,\vdots71$. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Az $a_{1},a_{2},...,a_{2n+1}$ egész számok rendelkeznek azzal a
+tulajdonsággal, hogy ha bármelyiket kidobjuk közülük, a maradék $2n$
+szám mindig felosztható két n elemű csoportra úgy, hogy a két csoportban
+szereplő számok összege ugyanannyi. Igazold, hogy $a_{1}=a_{2}=\cdot\cdot\cdot=a_{2n+1}$!
+\emph{(PUTNAM verseny, 1973) }
+\end{extraproblem}
+
+\begin{solution}
+Feltételezhetjük, hogy $a_{1}\leq a_{2}\leq\cdot\cdot\cdot\leq a_{2n+1}$
+és $a_{1}=0$. (Ha nem teljesülne, hogy a legkisebb szám a sorozatból
+$0$, akkor levonva mindegyik számból a legkisebbet, a kapott új számsorozat
+is rendelkezik az eredeti tulajdonságával.)
+
+Ugyanakkor a feltételből következik, hogy 
+\[
+a_{2}+a_{3}+\dots+a_{2n+1}=p\acute{a}ros,
+\]
+ ezért az összes szám páros kell legyen. Viszont ez azt jelenti, hogy
+ha most az összes számot felezzük, a kapott új $2n+1$ természetes
+szám teljesíti az eredeti számokra kirótt tulajdonságot, ezért ezek
+is mind párosak, és így tovább.
+
+Tehát ha van az eredeti $a_{1},a_{2},\dots,a_{2n+1}$ számok között
+olyan, amelyik nem 0, akkor azt a számot végtelen sokszor oszthatjuk
+kettővel úgy, hogy az eredmény mindig természetes szám lesz. Ez nyilvánvalóan
+ellentmondás, így $a_{1}=a_{2}=\dots=a_{2n+1}=0$. 
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+Legyen $a,b,k\in\mathbb{Z}$ és $k\neq0$. Ekkor: 
+\[
+ka\equiv kb\pmod m\quad\Longrightarrow\quad a\equiv b\pmod{\frac{m}{(k,m)}}
+\]
+\end{extraproblem}
+
+\begin{solution}
+Legyen $(k,m)=d$, ekkor írhatjuk: 
+\[
+k=k_{1}d\quad\text{és}\quad m=m_{1}d,
+\]
+ahol $(k_{1},m_{1})=1$.
+
+Így:
+
+\[
+ka\equiv kb\pmod m\quad\Longrightarrow\quad m\mid k(a-b)
+\]
+
+Osszuk fel ezt részletesen: 
+\[
+\frac{k(a-b)}{m}\in\mathbb{Z}
+\]
+
+Behelyettesítve: 
+\[
+\frac{k(a-b)}{m}=\frac{k_{1}d(a-b)}{m_{1}d}=\frac{k_{1}(a-b)}{m_{1}}\in\mathbb{Z}
+\]
+
+De mivel $(k_{1},m_{1})=1$, ezért következik, hogy: 
+\[
+m_{1}\mid(a-b)\quad\text{azaz}\quad a\equiv b\pmod{m_{1}}
+\]
+
+És mivel $m_{1}=\frac{m}{(k,m)}$, végül:
+
+\[
+a\equiv b\pmod{\frac{m}{(k,m)}}
+\]
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+Tekintsük az $a,b,c$ természetes számokat és tudjuk, hogy $5a+2b=3c$.
+Bizonyítsuk be, hogy $(a+b)\cdot(b+c)\cdot(c+a)$ osztható 30-al. 
+\end{extraproblem}
+
+\begin{solution}
+Megvizsgáljuk az $(a+b)\cdot(b+c)\cdot(c+a)$ szorzat mindegyik tagjának
+az osztóit.\\
+ $5a+2b=3c\Rightarrow3a+(2a+2b)=3c$ vagy $3a+2(a+b)=3c\Rightarrow(a+b)\vdots3$
+vagy $a+b=3\cdot n,n\in\mathbb{N}$. (1)
+
+$5a+2b=3c\Rightarrow5a+5b=3b+3c$ vagy $5(a+b)=3(b+c)\Rightarrow(b+c)\vdots5$
+vagy $b+c=5\cdot m,m\in\mathbb{N}$. (2)
+
+$5a+2b=3c\Rightarrow8a+2b=3a+3c$ vagy $2(4a+b)=3(a+c)\Rightarrow(c+a)\vdots2$
+vagy $c+a=2\cdot p,p\in\mathbb{N}$. (3)
+
+(1), (2), (3)-ból következik:\\
+ $(a+b)\cdot(b+c)\cdot(c+a)=3n\cdot5m\cdot2p=30\cdot mnp$, tehát
+a szorzat osztható 30-al.\\
+ 
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+Határozzuk meg a 100 legkisebb egymás után következő természetes
+számot, amelyek összege osztható 85-el. 
+\end{extraproblem}
+
+\begin{solution}
+Legyenek $n,n+1,n+2,\ldots,n+99$ a 100 legkisebb egymás után következő
+természetes szám, $n\in\mathbb{N}$.
+
+\[
+S=n+(n+1)+\ldots+(n+99)=100n+(99\cdot100):2=50\cdot(2n+99).
+\]
+
+\[
+85=5\cdot17\text{ és }S=5\cdot10\cdot(2n+99);(17,10)=1
+\]
+
+\[
+85|S\Rightarrow17|2\cdot n+99
+\]
+
+$2n+99$ páratlan és $2n+99\geq99$.\\
+ A 17 legkisebb páratlan háromjegyű többszöröse 119 .\\
+ $2n+99=119\Rightarrow n=10$.\\
+ A keresett számok $10,11,12,13,\ldots,109$. 
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+Két padon 6-6 gyerek ül. A gyerekek különböző életkorúak (az életkorok
+egész számok), és az egyik padon ülő gyerekek életkorának összege
+és szorzata is megegyezik a másik padon ülők életkorának összegével,
+illetve szorzatával. A legidősebb gyerek 16 éves. Hány évesek azok
+a gyerekek, akik vele egy padon ülnek? 
+\end{extraproblem}
+
+\begin{solution}
+Az $1,2,3,\ldots,16$ számok közül ki kell hagyni négyet, a maradék
+12 egész szám a 12 gyerek életkorát fogja jelölni.
+
+\[
+\begin{array}{llll}
+1=1 & 5=5^{1} & 9=3^{2} & 13=13^{1}\\
+2=2^{1} & 6=2^{1}\cdot3^{1} & 10=2^{1}\cdot5^{1} & 14=2^{1}\cdot7^{1}\\
+3=3^{1} & 7=7^{1} & 11=11^{1} & 15=3^{1}\cdot5^{1}\\
+4=2^{2} & 8=2^{3} & 12=2^{2}\cdot3^{1} & 16=2^{4}
+\end{array}
+\]
+
+Figyeljünk arra, hogy mindkét padon ülők életkorának szorzatában minden
+prímnek ugyanolyan kitevővel kell szerepelnie. Ebből adódóan a 11
+és 13 prímszámok nem jelölhetik valakinek az életkorát, valamint a
+2 és az 5 prímekkel osztható számokból is el kell hagyni.
+
+Mivel a mindkét padon ülők életkorának összege megegyezik, így a 12
+gyerek életkorának összege páros lesz. Mivel $1+2+3+\ldots+16=\dfrac{16\cdot17}{2}=8\cdot17=136$
+páros, ezért a 11 és 13-as számok mellett még olyan számokat kell
+elhagynunk, amelyek összege páros, vagyis még két páros vagy két páratlan
+számot kell elhagynunk.
+
+Az előzőekben leírtak alapján egy 2-többszöröst biztos el kell hagynunk,
+ezért a 11 és 13 számok mellett két páros számot kell még elhagynunk.
+
+Így a fent leírt feltételek alapján a 10-et biztosan el kell hagyni,
+mert ő az egyedüli páros 5-többszörös. Így most már egy olyan páros
+számot kell még elhagynunk, amiben a 2 hatványa páros. Ez a 4, 12
+vagy 16. A 16-ot nem hagyhatjuk el, a megadott feltétel alapján. A
+12-öt pedig azért nem lehet elhagyni, mert akkor a 3-asok hatványkitevőjének
+egyenlősége sérül.
+
+Ezek alapján $4,10,11,13$ életkorokat hagyjuk el az $1,2,3,\ldots,16$
+lehetséges életkorok közül.
+
+A megmaradt számok összege $136-(4+10+11+13)=136-38=98$, tehát egy-egy
+padon az életkorok összege 49 év.
+
+A 16 szám mellé a 2,6,14 számokból kettőt kell választani ahhoz, hogy
+a szorzatokban a 2 hatványkitevői megegyezzenek.
+
+Továbbá a 3 hatványkitevői miatt a 9 mellé a 3,6,12,15 számokból csak
+egy mehet, az 5 hatványkitevői miatt az 5 és 15 évesek külön padokra
+kell ültetni, ami érvényes a 7 hatványkitevői miatt a 7 és 14 éves
+gyerekekre is.
+
+Ezeket a lehetőségeket vizsgálva két megoldást találunk. A 16 éves
+gyerekkel a 15,7,6,3,2 évesek ülnek egy padon, vagy a 14,9,5,3,2 évesek. 
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Legyen $n\in\mathbb{N}$. Bizonyítsuk be, hogy az alábbi kifejezés
+osztható 6-tal: 
+\[
+n^{3}-n
+\]
+\end{extraproblem}
+
+\begin{solution}
+Vizsgáljuk meg a kifejezést: 
+\[
+n^{3}-n=n(n^{2}-1)=n(n-1)(n+1)
+\]
+
+Ez három egymást követő egész szám szorzata. Minden három egymást
+követő egész szám között:
+
+biztosan van egy páros szám, tehát $2\mid n(n-1)(n+1)$
+
+biztosan van egy olyan szám, amelyik osztható 3-mal, tehát $3\mid n(n-1)(n+1)$
+
+Mivel $2\mid\ldots$ és $3\mid\ldots$, ezért:
+
+\[
+6\mid n(n-1)(n+1)\Rightarrow\boxed{6\mid n^{3}-n}
+\]
+
+Következtetés:
+
+\[
+\boxed{n^{3}-n\text{ osztható 6-tal minden }n\in\mathbb{N}\text{ esetén.}}
+\]
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+ Három gép egyszerre indul el. Az első 18 percenként, a második 24
+percenként, a harmadik 30 percenként végez egy ciklust. Hány perc
+múlva indulnak újra egyszerre?
+\end{extraproblem}
+
+\begin{solution}
+A megoldáshoz a három szám legkisebb közös többszörösét (LKKT) kell
+kiszámítani:
+
+\[
+\text{LKKT}(18,24,30)
+\]
+
+\textbf{Prímtényezős felbontások:} 
+\[
+18=2\cdot3^{2},\quad24=2^{3}\cdot3,\quad30=2\cdot3\cdot5
+\]
+
+\textbf{LKKT:} minden prímtényezőt a legnagyobb kitevőjével vesszük:
+\[
+\text{LKKT}=2^{3}\cdot3^{2}\cdot5=8\cdot9\cdot5=72\cdot5=360
+\]
+
+Válasz:
+
+\[
+\boxed{360\text{ perc múlva, azaz 6 óra múlva indulnak újra egyszerre.}}
+\]
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Legyen $\mathbb{N}=\{0,1,2,\dots\}$ a természetes számok halmaza.
+Bizonyítsd be, hogy 
+\begin{enumerate}
+\item a $\{6^{x}+6^{y}\mid x,y\in\mathbb{N},x\ne y\}$ halmaz egyetlen eleme
+sem négyzetszám; 
+\item a $\{3^{x}+3^{y}\mid x,y\in\mathbb{N},x\ne y\}$ halmazban végtelen
+sok négyzetszám található! 
+\end{enumerate}
+\flushright{(NMMV, 2024, IX. osztály)} 
+\begin{enumerate}
+\item Ha $x\in\mathbb{N}$, akkor a $6^{x}$ kifejezés utolsó számjegye
+$1$ vagy $6$.
+
+Ez alapján, ha $x,y\in\mathbb{N}$, akkor a $6^{x}+6^{y}$ kifejezés
+utolsó számjegye $2$ vagy $7$. Egy négyzetszám utolsó számjegye
+csak $0$, $1$, $4$, $5$, $6$ vagy $9$ lehet, ezért a megadott
+halmaz egyetlen eleme sem lehet négyzetszám.
+\item Legyen $x,y\in\mathbb{N}$ úgy, hogy $x\ne y$. Az általánosság megszorítása
+nélkül feltételezhetjük, hogy $x>y$. Ekkor 
+\[
+3^{x}+3^{y}=3^{y}(3^{x-y}+1).
+\]
+Ha $3^{x-y}+1$ négyzetszám és $y$ páros, akkor a fenti kifejezés
+szintén négyzetszám. Vegyük észre, hogy $3^{1}+3^{0}=4$ négyzetszám.
+Az előbbiek alapján minden $k\in\mathbb{N}$ esetén, az $y=2k$ és
+$x=2k+1$ választással a $3^{x}+3^{y}$ négyzetszám, tehát a megadott
+halmaz végtelen sok négyzetszámot tartalmaz. 
+\end{enumerate}
+Igazold, hogy $2019^{2016}-1$ osztható a $2019^{84}+2019^{42}+1$
+számmal!
+\begin{flushright}
+(EMMV, 2019, XI-XII. osztály, II. forduló) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+A következő átalakításokat végezhetjük: 
+\begin{align*}
+2019^{2016}-1 & =(2019^{1008}-1)(2019^{1008}+1)\\
+ & =(2019^{504}-1)(2019^{504}+1)(2019^{1008}+1)\\
+ & =(2019^{252}-1)(2019^{252}+1)(2019^{504}+1)(2019^{1008}+1)\\
+ & =(2019^{126}-1)(2019^{126}+1)(2019^{252}+1)(2019^{504}+1)(2019^{1008}+1)\\
+ & =(2019^{63}-1)\cdot\\
+ & \phantom{====}\cdot(2019^{63}+1)(2019^{126}+1)(2019^{252}+1)(2019^{504}+1)(2019^{1008}+1)\\
+ & =(2019^{21}-1)(2019^{42}+2019^{21}+1)(2019^{21}+1)(2019^{42}-2019^{21}+1)\cdot\\
+ & \phantom{====}\cdot(2019^{126}+1)(2019^{252}+1)(2019^{504}+1)(2019^{1008}+1)\\
+ & =(2019^{84}+2019^{42}+1)(2019^{21}-1)(2019^{21}+1)\cdot\\
+ & \phantom{====}\cdot(2019^{126}+1)(2019^{252}+1)(2019^{504}+1)(2019^{1008}+1).
+\end{align*}
+Innen következik, hogy $(2019^{84}+2019^{42}+1)\mid(2019^{2016}-1)$. 
+\end{solution}
+\textbf{Megjegyzés.} Mivel $2019^{126}-1=(2019^{42}-1)(2019^{84}+2019^{42}+1)$,
+a megoldás gyorsabban is befejezhető. 
+\begin{extraproblem}[Lukács Andor] -- \emph{NMMV, 2024, X. osztály} 
+\begin{enumerate}
+\item Igazold, hogy három egymásutáni egész szám köbeinek összege osztható
+$3$-mal!
+\item Igazold, hogy ha $k\ge3$ és $k$ egy páratlan természetes szám, akkor
+nem létezik $k$ darab olyan egymást követő egész szám, amelyek köbeinek
+összege $2^{2024}$.
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}\textbf{Első megoldás:}
+A megoldás során a maradékos osztás tételének azt a változatát használjuk,
+amelyben a maradékok negatív számok is lehetnek. 
+\begin{enumerate}
+\item Három egymásutáni egész számnak a $3$-mal való osztásai maradékai
+rendre valamilyen sorrendben $-1$, $0$ és $1$. Innen következik,
+hogy a három egymásutáni egész szám köbeinek összege $3$-mal osztva
+ugyanannyit ad maradékul, mint a $(-1)^{3}+0^{3}+1^{3}=0$ szám, azaz
+$3$-mal osztható. 
+\item Az előző alpont megoldásának ötletét általánosabban is használhatjuk:
+ha $k=2l+1$, ahol $l\ge1$ egész szám, akkor $k$ darab egymásutáni
+egész számnak a $k$-val való osztási maradékai felveszik rendre valamilyen
+sorrendben a $-(l-1)$, $-(l-2)$, …, $0$, …, $l-2$, $l-1$ maradékok
+mindegyikét. Ez viszont azt jelenti, hogy a kiinduló számok köbeinek
+összegének a maradéka $k$-val osztva ugyanannyi, mint a 
+\[
+(-(l-1))^{3}+(-(l-2))^{3}+\dots+(l-2)^{3}+(l-1)^{3}=0
+\]
+számé, vagyis az összeg $k$-val osztható. A $2^{2024}$ szám viszont
+nem osztható a $k\ge3$ páratlan számmal, így nem létezhet a feltételnek
+megfelelő $k$ darab egymásutáni szám. 
+\end{enumerate}
+
+%
+\textbf{Második megoldás:}
+\begin{enumerate}
+\item Ha az egymásutáni egész számok $x-1$, $x$ és $x+1$, akkor a köbeik
+összege 
+\[
+S=(x-1)^{3}+x^{3}+(x+1)^{3}=(x^{3}-3x^{2}+3x-1)+x^{3}+(x^{3}+3x^{2}+3x+1)=3(x^{3}+2x),
+\]
+tehát $S$ osztható $3$-mal. 
+\item Legyen $k=2l+1$, ahol $l\ge1$ egész szám. Ha a $k$ darab egymásutáni
+egész szám közül a középsőt $x$-el jelöljük, akkor a számok növekvő
+sorrendben 
+\[
+x-l,x-l+1,\dots,x-1,x,x+1,\dots,x+l-1,x+l,
+\]
+a köbeik összege pedig 
+\[
+S=(x-l)^{3}+(x-l+1)^{3}+\dots+(x+l-1)^{3}+(x+l)^{3}.
+\]
+Csoportosítással az $S$-et a következő alakba írhatjuk: 
+\begin{align*}
+S & =\left((x-l)^{3}+(x+l)^{3}\right)+\left((x-(l-1))^{3}+(x+(l-1))^{3}\right)+\dots+\left((x-1)^{3}+(x+1)^{3}\right)+x^{3}\\
+ & =(2x^{3}+6x\cdot l^{2})+\left(2x^{3}+6x\cdot(l-1)^{2}\right)+\dots+(2x^{3}+6x\cdot2^{2})+(2x^{3}+6x\cdot1^{2})+x^{3}\\
+ & =(2l+1)x+6x\left(l^{2}+(l-1)^{2}+\dots+2^{2}+1^{2}\right)\\
+ & =(2l+1)x+6x\cdot\frac{l(l+1)(2l+1)}{6}\\
+ & =k\left(x+l(l+1)\right).
+\end{align*}
+Az előbbi összefüggés alapján $S$ osztható $k$-val és a megoldást
+be tudjuk fejezni az első megoldáshoz hasonlóan. 
+\end{enumerate}
+
+%
+\textbf{A 2. alpont harmadik megoldása:}
+Az állítás akkor is igaz, ha $k\ge2$ tetszőleges pozitív egész.
+Vegyük észre, hogy feltételezhetjük, hogy az egymásutáni számok közül
+a legkisebb is legalább $1$. Felhasználva az 
+\[
+1^{3}+2^{3}+\dots+n^{3}=\left(\frac{n(n+1)}{2}\right)^{2}
+\]
+azonosságot, ha az egymásutáni számok $x+1,x+2\dots,x+k$, ahol $x\ge0$,
+akkor a köbeik összege 
+\begin{align*}
+S & =\left(1^{3}+2^{3}+\dots+(x+k)^{3}\right)-\left(1^{3}+2^{3}+\dots+x^{3}\right)\\
+ & =\left(\frac{(x+k)(x+k+1)}{2}\right)^{2}-\left(\frac{x(x+1)}{2}\right)^{2}\\
+ & =\frac{1}{4}\left((x+k)(x+k+1)+x(x+1)\right)\left((x+k)(x+k+1)-x(x+1)\right)\\
+ & =\frac{1}{4}\left(2x^{2}+2(k+1)x+k^{2}+k\right)\left(k+k^{2}+2kx\right)\\
+ & =\frac{1}{4}k\left(1+k+2x\right)\left(2x^{2}+2(k+1)x+k^{2}+k\right).\\
+\end{align*}
+Mivel a $k$ és $(1+k+2x)$ számok közül az egyik biztosan $1$-nél
+nagyobb páratlan szám, ezért $S$ nem lehet $2$ hatványa. 
+\end{solution}
+%%%%% Végtelen leszállással kapcs. számelméleti feladatok %%%%
+
+\begin{extraproblem}[Lukács Andor]
+Igazold, hogy ha az $a,b$ pozitív egész számok esetén fennáll az
+\[
+(ab+1)\mid(a^{2}+b^{2})
+\]
+reláció, akkor $(a^{2}+b^{2})/(ab+1)$ teljes négyzet! 
+\begin{flushright}
+(IMO, 1988) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Tételezzük fel, hogy $a_{0}$ és $b_{0}$ két természetes szám úgy,
+hogy az $a_{0}+b_{0}$ összeg minimális és teljesül az oszthatósági
+feltétel, viszont az $\frac{a_{0}^{2}+b_{0}^{2}}{a_{0}b_{0}+1}$ arány
+nem teljes négyzet. A szimmetria miatt feltételezhetjük azt is, hogy
+$a_{0}\ge b_{0}>0.$ Legyen $k\in\mathbb{N}^{*}$ az a természetes
+szám, amelyre 
+\[
+\frac{a_{0}^{2}+b_{0}^{2}}{a_{0}b_{0}+1}=k,
+\]
+vagyis $a_{0}^{2}-b_{0}^{2}-ka_{0}b_{0}-k=0$. Tekintsük most az $x$-ben
+másodfokú 
+\[
+x^{2}-kb_{0}x+b_{0}^{2}-k=0
+\]
+egyenletet. Ennek az egyenletnek tudjuk, hogy $a_{0}$ gyöke. Jelöljük
+az egyenlet másik gyökét $a_{0}'$-tel. Mivel $a_{0}+a_{0}'=kb_{0}$,
+következik, hogy $a_{0}'\in\mathbb{Z}$. Mivel $a_{0}'a_{0}=b_{0}^{2}-k$
+és a feltételünk szerint $k$ nem teljes négyzet, következik, hogy
+$a_{0}'\ne0.$ Másrészt, ha $a_{0}'<0$ teljesülne, akkor fennállna
+az 
+\[
+a_{0}'{}^{2}-kb_{0}a_{0}'+b_{0}^{2}\ge a_{0}'{}^{2}+k+b_{0}^{2}>k
+\]
+összefüggés, ami ellentmond annak, hogy $a_{0}$ gyöke az egyenletnek,
+ezért $a_{0}'\in\mathbb{N}^{*}.$ Végül pedig 
+\[
+a_{0}'=\frac{b_{0}^{2}-k}{a_{0}}<\frac{b_{0}^{2}}{a_{0}}\le a_{0},
+\]
+tehát $0<a_{0}'<a_{0}$ és ezért az $(a_{0}',b_{0})\in\mathbb{N}^{*}\times\mathbb{N}^{*}$
+számpár olyan, amelyre teljesül a feladatban megfogalmazott oszthatóság,
+$\frac{a_{0}'{}^{2}+b_{0}^{2}}{a_{0}'b_{0}+1}=k$ nem teljes négyzet
+és $a_{0}'+b_{0}<a_{0}+b_{0}$, ellentmondva az $a_{0}+b_{0}$ minimalitásának.
+Következésképpen $k$ teljes négyzet. 
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{extraproblem}[Lukács Andor]
+\label{fel:fib1} %TA50
+ Határozd meg az $m^{2}+n^{2}$ maximális értékét, ha az $m,n$ olyan
+1981-nél kisebb pozitív egész számok, amelyek teljesítik az 
+\begin{equation}
+(n^{2}-mn-m^{2})^{2}=1\label{eq:ta1}
+\end{equation}
+összefüggést! 
+\begin{flushright}
+(IMO, 1981) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Ha az $(m,n)$ pár teljesíti \aref({eq:ta1}) összefüggést és $0<m<n$,
+akkor $m<n\le2m$ és 
+\begin{align*}
+(n^{2}-mn-m^{2})^{2} & =\left((n-m)^{2}+mn-2m^{2}\right)^{2}\\
+ & =\left((n-m)^{2}+m(n-m)-m^{2}\right)^{2}\\
+ & =\left(m^{2}-m(n-m)-(n-m)^{2}\right),
+\end{align*}
+tehát az $(n-m,m)$ számpár is teljesíti \aref({eq:ta1}) összefüggést
+és $n-m\le m$. Következésképpen, ha egy kiinduló $(m,n)$, $0<m<n$
+számpárt lépésenként helyettesítünk az $(n-m,m)$ számpárral, akkor
+az új számpár is teljesíti az összefüggést és $0<n-m\le m$. Ezért
+véges sok lépés után le kell álljon a folyamat. Viszont a leállás
+csak egy $(k,k)$ számpárban történhet ($k\in\mathbb{N}^{*})$ és
+az ilyen számpárok közül egyedül az $(1,1)$ teljesíti \aref({eq:ta1})
+összefüggést.
+
+Az előbb vázolt gondolatmenetből viszont az következik, hogy az összes
+olyan $(m,n)$ számpár, amely teljesíti \aref({eq:ta1}) összefüggést
+elérhető az $(1,1)$ számpárból a $(k,l)\mapsto(l,k+l)$ transzformációval
+(esetleg a végén még végre kell hajtani egy $(k,l)\mapsto(l,k)$ transzformációt
+is az utolsó lépésben, ha $m>n$).
+
+Az $(1,1)$ számpárból a következők érhetők el a transzformációval:
+\[
+(1,1)\mapsto(1,2)\mapsto(2,3)\mapsto(3,5)\mapsto(5,8)\mapsto\dots\mapsto(F_{k},F_{k+1})\mapsto\dots,
+\]
+ahol $F_{k}$-val jelöltük a $k$-adik Fibonacci számot.
+
+Tehát \aref({eq:ta1}) összefüggést teljesítő számpárok egymásutáni
+Fibonacci számokból állnak. Az utolsó, 1981-nél kisebb Fibonacci szám
+$F_{17}=1597,$ tehát a feladatban feltett kérdésre a válasz 
+\[
+F_{16}^{2}+F_{17}^{2}=987^{2}+1597^{2}=3524578.
+\]
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%TA 247
+
+\begin{extraproblem}[Lukács Andor]
+Határozd meg az összes olyan $(a,b)$ pozitív egészekből álló számpárt,
+amelyre 
+\[
+(ab+a+b)\mid(a^{2}+b^{2}+1).
+\]
+\end{extraproblem}
+
+\begin{solution}
+Az oszthatósági feltételt írhatjuk 
+\begin{equation}
+k(ab+a+b)=a^{2}+b^{2}+1\label{eq:ta2}
+\end{equation}
+alakban, ahol $k\in\mathbb{N}^{*}.$ Ha most $k=1$, akkor \aref({eq:ta2})
+ekvivalens az 
+\[
+(a-b)^{2}+(a-1)^{2}+(b-1)^{2}=0
+\]
+egyenlettel, tehát $a=b=1.$ Ha $k=2$, akkor \eqref{eq:ta2} a 
+\[
+4a=(b-a-1)^{2}
+\]
+alakot ölti, tehát $a=d^{2}$. Innen viszont következik, hogy $\pm2d=b-d^{2}-1$,
+vagyis $b=(d\pm1)^{2}$. Összefoglalva, a $k=2$ esetben az $a,b$
+számok egymásutáni teljes négyzetek.
+
+A bizonyítás hátralevő részében a végtelen leszállás elvével igazolni
+fogjuk, hogy nincs más megoldása a feladatnak. Feltételezzük, hogy
+$k\ge3$ esetén létezik megoldás és válasszunk ki az ilyen megoldások
+közül egy olyant, amelyre $a$ minimális és $a\le b.$ \Aref({eq:ta2})
+egyenletet írjuk $b^{2}-k(a+1)b+(a^{2}-ka+1)=0$ alakba és tekintsük
+az 
+\[
+x^{2}-k(a+1)x+(a^{2}-ka+1)=0
+\]
+$x$-ben másodfokú egyenletet. Ennek az egyenletnek a $b$ gyöke.
+Jelöljük a másik gyököt $b'$-tel. Mivel $b+b'=k(a+1)$, következik,
+hogy $b'\in\mathbb{Z}$. \Aref({eq:ta2}) összefüggésből következik,
+hogy $b'>0$. Másrészt, $bb'=a^{2}-ka+1$, ezért $b'<a$. Összefoglalva,
+a $(b',a)$ számpár olyan megoldása \aref({eq:ta2}) egyenletnek,
+amelyre $b'<a$, ellentmondva az $a$ minimalitásának. Következésképpen
+nincs más megoldás az $(1,1)$, $(d^{2},(d+1)^{2})$ és $(d^{2},(d-1)^{2})$
+alakú számpárokon kívül. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Bergengóciában csak háromféle pénzérme létezik: 8-as, 12-es, 19-es.
+Állapítsuk meg, hogy melyik az a legnagyobb tétel, melyet nem lehet
+ezekkel az érmékkel kifizetni. \emph{(Felvidéki Magyar Matematika
+Verseny, XXXVIII. 4. évfolyam) }
+\end{extraproblem}
+
+\begin{solution}
+Jelölje $k$, $l$, $m$ a 8-as, 12-es és 19-es pénzérmék számát.
+A feladatot az szerint tárgyaljuk le, hogy hány 19-essel fizetünk
+és a néggyel való oszthatóság vesszük alapul.
+
+Ha $m=0$, akkor $8k+12l=4(2k+3l)=4t$ értéket fizetünk ki. Mivel
+$k$ és $l$ is pozitív számok, ezért ebben az esetben a kifizethető
+összegek $\{8,12,16,\dots\}$, vagyis 8-tól kezdődően minden 4 többszörös.
+
+Ha $m=1$, akkor $8k+12l+19=4t+19$ alakú értékek fizethetőek ki.
+Ha $k=l=0$, akkor kifizethető a 19, és ha $t\geq2$, akkor minden
+27-nél nagyobb $4t+3$ alakú szám (tehát 27, 31, 35, ...).
+
+Ha $m=2$, akkor $19\cdot2+8k+12l=38+4t$ kifejezés 4-gyel való osztási
+maradéka 2. Ha $k=l=0$, akkor kifizethető 38, más esetben meg $t\geq2$-re
+kifizethetőek a 46-nál nagyobb $4t+2$ alakú számok (tehát 46, 50,
+54, 58, ...).
+
+Ha $m=3$, akkor $19\cdot3+8k+12l=57+4t$ kifejezés 4-gyel való osztási
+maradéka 1. Ha $k=l=0$, akkor kifizethető 57, más esetben meg $t\geq2$-re
+kifizethetőek a 65-nél nagyobb $4t+1$ alakú számok (tehát 65, 69,
+73, 77, ...).
+
+Ezekből láthatjuk, hogy a 46 és ennél nagyobb összegek kifizethetőek,
+ha nem $4t+1$ alakúak és a 65-nél nagyobb összegek mind kifizethetőek.
+A 65-nél kisebb, de legnagyobb $4t+1$ alakú száma, ami nem fizethető
+ki a 61. Tehát a 61 az a legnagyobb összeg, amit ezekkel az érmékkel
+nem tudunk kifizetni. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Adjuk meg az összes olyan természetes számot, amelyekre az $n+1$,
+$n+3$, $n+7$, $n+9$, $n+13$ és $n+15$ számok mindegyike prímszám.
+\emph{(Felvidéki Magyar Matematika Verseny, XX.3. évfolyam) }
+\end{extraproblem}
+
+\begin{solution}
+Csupán egyetlen ilyen természetes szám van, az $n=4$, melyre a következő
+számokat kapjuk: 5, 7, 11, 13, 17, 19. Valóban, ha $n=1$, akkor $n+3=4$
+összetett szám. Ha $n=2$, akkor meg $n+7=9$ összetett szám. Ha $n=3$,
+az $n+1=4$ összetett szám. Ha $n>4$, akkor minden számunk 5-nél
+nagyobb ls közülük legalább egy osztható 5-tel. Ugyanis az 1, 3, 7,
+9, 13, 15 számokat 5-tel elosztva rendre 1, 3, 2, 4, 3, 0 maradékot
+kapunk, vagyis az összes lehetséges maradékot, amiből az következik,
+hogy az $n+1$, $n+3$, $n+7$, $n+9$, $n+13$ és $n+15$ számokat
+5-tel elosztva szintén minden lehetséges maradék előfordul. Tehát
+közülük legalább egy osztható 5-tel és ezért mindig lesz a 6 szám
+között összetett szám. 
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Igazoljuk, hogy 
+\[
+7^{2001}-3^{3335}
+\]
+osztható $100$-zal. 
+\end{extraproblem}
+
+\vspace{0.5cm}
+ 
+\begin{solution}
+Igazoljuk, hogy 
+\[
+100\mid7^{2001}-3^{3335}.
+\]
+
+Felírjuk a $2001$ és a $3335$ prímtényezős felbontását: 
+\[
+2001=3\cdot667,\quad3335=5\cdot667.
+\]
+
+Ezek alapján: 
+\[
+7^{2001}-3^{3335}=7^{3\cdot667}-3^{5\cdot667}.
+\]
+
+Az azonosság alapján: 
+\[
+a-b\mid a^{n}-b^{n}\quad\text{(egész kitevős hatványok különbsége osztható az alapok különbségével)},
+\]
+ha $a=343=7^{3}$ és $b=243=3^{5}$, akkor: 
+\[
+343-243=100\mid343^{667}-243^{667}.
+\]
+
+Tehát: 
+\[
+100\mid7^{2001}-3^{3335}.
+\]
+\end{solution}
+\vspace{0.5cm}
+ 
+\begin{extraproblem}[Péter Róbert]
+Vizsgáljuk meg, hogy az $\overline{ababab}$ alakú hatjegyű számok
+közül hány darab:
+\begin{enumerate}
+\item osztható $217$-tel, 
+\item osztható $218$-cal. 
+\end{enumerate}
+\end{extraproblem}
+
+\vspace{0.5cm}
+ 
+\begin{solution}
+Az $\overline{ababab}$ szám hatjegyű, tehát $a\ne0$.
+
+\textbf{a) Oszthatóság 217-tel}\\
+
+\[
+\overline{ababab}=101010a+10101b=10101(10a+b)=3\cdot7\cdot13\cdot37\cdot(10a+b)
+\]
+
+Vagyis a szám minden esetben osztható $7$-tel. Mivel $217=7\cdot31$,
+ezért pontosan akkor osztható $217$-tel, ha $31\mid(10a+b)$.
+
+Ez három lehetőséget jelent, mivel $ab\leq99$: 
+\[
+31\mid10\cdot3+1=31;31\mid10\cdot6+2=62;31\mid10\cdot9+3=93.
+\]
+
+A feltételt kielégítő számok tehát: $313131$, $626262$ és $939393$.
+
+\textbf{b) Oszthatóság 218-cal}\\
+
+A $218$ prímtényezős felbontása: 
+\[
+218=2\cdot109.
+\]
+
+Az a) pont alapján $10101$ nem osztható sem $2$-vel, sem $109$-cel.
+Azt kellene megvizsgálni, hogy hányszor osztható $10a+b$ egyszerre
+$2$-vel és $109$-cel. Ez sosem teljesül, hiszen $109$ nem lehet
+osztója $ab$-nek, mivel $ab\leq99$ (az $ab=0$ esetet pedig kizártuk). 
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Határozd meg az összes olyan természetes számot, amelynek pontosan
+hat pozitív osztója van, és pozitív valódi osztóinak összege 2024-gyel
+egyenlő!
+\begin{flushright}
+\textit{(NMMV, 2024, XI-XII. osztály, 2. forduló, 1. feladat (Kajántó
+Tünde, Kolozsvár))} 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Az osztók számát a prímtényezős felbontásban szereplő hatványkitevők
+határozzák meg, így ha az $n$ természetes számnak $6$ osztója van,
+akkor csakis $n=p^{5}$ vagy $n=p^{2}\cdot q$ lehet, ahol $p,q$
+különböző prímek. Ez azért van így, mert $6=5+1$ vagy $6=(1+1)\cdot(2+1)$
+alakban írható fel csakis, az osztók számának meghatározásához felhasznált
+képlet alapján.
+
+Ha $n=p^{5}$, akkor a feltétel alapján ($1$ és önmaga nem valódi
+osztók), 
+\[
+p+p^{2}+p^{3}+p^{4}=2024,
+\]
+ahonnan 
+\[
+p\cdot(1+p+p^{2}+p^{3})=2024=2^{3}\cdot11\cdot23.
+\]
+Egy szám szorzatra bontása csakis úgy állhat elő, hogy a prímtényezőkre
+bontott alakjából párosítjuk az elemeket, de jelen esetben $p$ prím,
+így csakis $2,11,23$ lehet a $2024$ prímtényezős felbontása szerint.
+Innen a $p=2$ eset behelyettesítés alapján nem jó, hisz az összeg
+kisebb lesz, mint $2024$. A $p=11$ vagy $p=23$ értékek sem jók,
+mivel $10^{4}=10000$, vagyis $10$-nél nagyobb prímszámok esetén
+az összeg már meghaladja a $2024$-et. Tehát $n$ nem lehet $p^{5}$
+alakú.
+
+Ha $n=p^{2}q$, akkor a feltétel alapján 
+\[
+p+p^{2}+q+pq=2024,
+\]
+ahonnan 
+\[
+(1+p)\cdot(q+p)=2024=2^{3}\cdot11\cdot23.
+\]
+Mivel $p$ prímszám, így $p\geq2$, ekkor $1+p\geq3$ és $p+q\neq1$,
+$p+q\neq2$, ahol $q$ prím. Vagyis a baloldali tényezők egyike se
+lehet $1$ vagy $2$, valamint $1+p<q+p$, ugyanis $q$ prím, így
+biztos, hogy $q\geq2$. Ezt felhasználva az alábbi táblázatban vizsgáljuk
+a $2024$ lehetséges tényezőre bontásait:
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline 
+$1+p$ & $q+p$ & $p$ & $q$\tabularnewline
+\hline 
+4 & 506 & 3 (prím) & 503 (prím)\tabularnewline
+8 & 253 & 7 (prím) & 246 (nem prím)\tabularnewline
+11 & 184 & 10 (nem prím) & --\tabularnewline
+22 & 92 & 21 (nem prím) & --\tabularnewline
+23 & 88 & 22 (nem prím) & --\tabularnewline
+44 & 46 & 43 (prím) & 3 (prím)\tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+\noindent Tehát az egyik lehetséges eset a $p=3$, $q=503$, ekkor
+\[
+n=3^{2}\cdot503=4527.
+\]
+A másik esetben $p=43$, $q=3$, ekkor 
+\[
+n=43^{2}\cdot3=5547.
+\]
+
+\noindent Ekkor az összes olyan természetes szám, amelynek pontosan
+hat pozitív osztója van, és pozitív valódi osztóinak összege $2024$-gyel
+egyenlő: 
+\[
+n\in\{4527,5547\}.
+\]
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Legyen a következő racionális szám 
+\[
+1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\cdots-\frac{1}{86}+\frac{1}{87}=\frac{p}{q},
+\]
+ahol $p,q$ természetes számok és relatív prímek, $(p,q)=1$. Mutassátok
+ki, hogy $131\mid p$. 
+\begin{flushright}
+(\textit{Olimpiada Națională de Matematică, helyi szakasz, Kolozs
+megye, 2023, IX. osztály, 2. feladat (prof. Jecan Eugen, Colegiul
+Național Andrei Mureșanu Dej)}) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük a kifejezés bal oldalát $S$-sel, ekkor: 
+\[
+S=1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\cdots-\frac{1}{86}+\frac{1}{87}.
+\]
+
+Ekkor 
+\[
+S=1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}+\cdots+\frac{1}{86}+\frac{1}{87}-2\left(\frac{1}{2}+\frac{1}{4}+\cdots+\frac{1}{86}\right)
+\]
+\[
+\begin{aligned} & =\left(1+\frac{1}{2}+\frac{1}{3}+\cdots+\frac{1}{86}+\frac{1}{87}\right)-1-\frac{1}{2}-\frac{1}{3}-\cdots-\frac{1}{43}\\
+ & =\frac{1}{44}+\frac{1}{45}+\frac{1}{46}+\cdots+\frac{1}{85}+\frac{1}{86}+\frac{1}{87}.
+\end{aligned}
+\]
+
+\vspace{0.2cm}
+
+Amennyiben máshogy csoportosítjuk az összeg tagjait, láthatóvá válik,
+hogy 
+\[
+\begin{aligned}S & =\left(\frac{1}{44}+\frac{1}{45}+\cdots+\frac{1}{65}\right)+\left(\frac{1}{87}+\frac{1}{86}+\cdots+\frac{1}{66}\right)\\
+ & =\sum_{k=44}^{65}\left(\frac{1}{k}+\frac{1}{131-k}\right)=\sum_{k=44}^{65}\frac{131}{k(131-k)}.
+\end{aligned}
+\]
+
+Mivel $131$ prímszám, nem osztható egyetlen nevezővel sem, ami az
+összegben szerepel, mert a nevezőben lévő szorzótényezők nem lehetnek
+$131$-el egyenlőek (ugyanis $k=\overline{44,65}$), és szorzatuk
+sem adja ki az $131$-et, mert prímszám. Ekkor az $S$ összeget $\frac{p}{q}$
+irreducibilis törtként felírva, a számlálóban található kifejezés
+osztható lesz $131$-el, vagyis $131\mid p$.
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+Igazoljuk, hogy a prímszámok sorozatában tetszőleges nagy hézag lehet,
+tehát $n$ természetes szám esetén megadható $n$ egymást követő összetett
+szám. 
+\end{extraproblem}
+
+\begin{solution}
+Tekintsük az alábbi egymást követő $n$ darab természetes számot:
+\[
+(n+1)!+2,(n+1)!+3,\dots,(n+1)!+(n+1).
+\]
+
+Legyen $k$ egy tetszőleges 2 és $n+1$ közötti szám és vizsgáljuk
+az $(n+1)!+k$ tagot. Mivel $k|k$ és $k|(n+1)!$, ezért $k|(n+1)!+k$.
+Tehát $(n+1)!+k$ egy összetett szám. Mivel $k$-t tetszőlegesen választottuk,
+ezért minden fent felsorolt szám összetett szám. Mivel fel tudtunk
+sorolni $n$ egymást követő összetett számot, ezért tetszőlegesen
+nagy hézagok léteznek a prímszámok között. 
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+Mely $p$ prímekre teljesül, hogy $(p-1)!+1=p^{n}$, valamely $n$
+természetes számra? \emph{(Róka Sándor: Válogatás Erdős Pál kedvenc
+feladataiból)}
+\end{extraproblem}
+
+\begin{solution}
+Ha $p$ a 2, 3, 5 prímek valamelyike, akkor $(p-1)!+1$ értéke 2,
+3, illetve 25, a kérdéses prím hatványa.
+
+Ha $p>5$, akkor az egyenletnek nincs megoldása.
+
+\[
+(p-1)!+1=p^{n}
+\]
+\[
+(p-1)!=p^{n}-1
+\]
+\[
+(p-2)!=p^{n-1}+p^{n-2}+\ldots+p+1
+\]
+
+A jobb oldal tagjaiból egyet-egyet levonva $(p-1)$-gyel osztható
+számokat kapunk, így ez az összeg $(p-1)$-gyel osztva annyi maradékot
+ad, mint a tagok száma, azaz $n$.
+
+A bal oldal osztható $(p-1)$-gyel, mivel $p-1$ páros és 4-nél nagyobb,
+tehát biztosan összetett.
+
+Ezek miatt $n$ osztható $(p-1)$-gyel, és $n$ nem lehet nulla, tehát
+$n\geq p-1$, akkor azonban az eredeti egyenlet bal oldala lényegesen
+kisebb, mint a jobb oldal. Az egyenlőség tehát nem állhat fenn.
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+Legyen $p$ egy páratlan prímszám. Határozd meg az összes olyan pozitív
+egészekből álló $(a,b)$ rendezett párt, amelyre teljesül: 
+\[
+a^{2}+b^{2}\equiv0\pmod p,\quad\text{és}\quad lnko(a,b)=1.
+\]
+\end{extraproblem}
+
+\begin{solution}
+Az egyenlet: 
+\[
+a^{2}+b^{2}\equiv0\pmod p\Rightarrow a^{2}\equiv-b^{2}\pmod p\Rightarrow\left(\frac{a}{b}\right)^{2}\equiv-1\pmod p.
+\]
+
+Legyen $x=\frac{a}{b}\pmod p$. Ekkor:
+
+\[
+x^{2}\equiv-1\pmod p.
+\]
+
+Ez azt jelenti, hogy $-1$ négyzetmaradék modulo $p$, azaz létezik
+olyan $x$, hogy $x^{2}\equiv-1\pmod p$ akkor és csak akkor, ha:
+
+\[
+\left(\frac{-1}{p}\right)=1,
+\]
+
+ahol $\left(\frac{\cdot}{p}\right)$ a Legendre-szimbólum. Ismeretes,
+hogy:
+
+\[
+\left(\frac{-1}{p}\right)=(-1)^{\frac{p-1}{2}}=\begin{cases}
+1 & \text{ha }p\equiv1\pmod 4,\\
+-1 & \text{ha }p\equiv3\pmod 4.
+\end{cases}
+\]
+
+Tehát:
+
+- Ha $p\equiv1\pmod 4$, akkor $-1$ négyzetmaradék, tehát léteznek
+megoldások. - Ha $p\equiv3\pmod 4$, akkor $-1$ nem négyzetmaradék
+modulo $p$, így nem létezik $x$, amelyre $x^{2}\equiv-1\pmod p$,
+tehát nincsen megoldás.
+
+\medskip{}
+
+Most tegyük fel, hogy $p\equiv1\pmod 4$. Ekkor létezik $x\in\mathbb{Z}_{p}$,
+hogy $x^{2}\equiv-1\pmod p$. Legyen egy ilyen $x$, ekkor:
+
+\[
+\frac{a}{b}\equiv x\pmod p\Rightarrow a\equiv bx\pmod p.
+\]
+
+Válasszunk például $b$ tetszőleges pozitív egészet, amely relatív
+prím $p$-hez, és definiáljuk:
+
+\[
+a=bx\mod p.
+\]
+
+Ekkor $a^{2}+b^{2}\equiv0\pmod p$ teljesül. Azonban figyelnünk kell
+arra, hogy $lnko(a,b)=1$ is teljesüljön. Ezért választani kell olyan
+$b$-t, amelyre $lnko(bx,b)=1$, azaz $lnko(x,b)=1$.
+
+Tehát a megoldáspárok:
+
+\[
+(a,b)=(bx,b),\quad\text{ahol }b\in\mathbb{Z}^{+},lnko(b,p)=1,lnko(x,b)=1.
+\]
+
+Egy konkrét példával: Legyen $p=5$, akkor $5\equiv1\pmod 4$, tehát
+$-1\equiv4$ négyzetmaradék modulo 5. Valóban: 
+\[
+2^{2}=4\Rightarrow x=2\text{ vagy }3.
+\]
+
+A megoldások:
+
+\[
+(a,b)=(2b,b)\text{ és }(3b,b),\text{ ahol }lnko(2b,b)=1\Rightarrow lnko(b,2)=1,\text{ stb.}
+\]
+
+\textbf{Végső válasz:}
+
+- Ha $p\equiv3\pmod 4$, akkor nincs megoldás. - Ha $p\equiv1\pmod 4$,
+akkor létezik két $x\in\mathbb{Z}_{p}$, melyre $x^{2}\equiv-1\pmod p$,
+és minden olyan pozitív egész $b$, amelyre $lnko(b,x)=1$, és $lnko(a,b)=1$,
+megoldást ad a formában: 
+\[
+(a,b)=(bx,b).
+\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Bizonyítsuk be, hogy ha $m^{2}-m+1$ és $2n^{2}+n-1$ oszthatók 3-mal,
+akkor $m-n$ is osztható 3-mal.
+\end{extraproblem}
+
+\begin{solution}
+Vizsgáljuk a kifejezéseket modulo 3 szerint. Az egész számokat három
+osztályba soroljuk modulo 3: $0$, $1$, $2$.
+
+\medskip{}
+
+\textbf{1. lépés:} Vizsgáljuk meg $m^{2}-m+1\mod 3$-at:
+
+Ha $m\equiv0\pmod 3$, akkor $m^{2}-m+1\equiv0-0+1=1\pmod 3$
+
+Ha $m\equiv1\pmod 3$, akkor $1-1+1=1\pmod 3$
+
+Ha $m\equiv2\pmod 3$, akkor $4-2+1=3\equiv0\pmod 3$
+
+Tehát $m^{2}-m+1\equiv0\pmod 3$ pontosan akkor, ha $m\equiv2\pmod 3$.
+
+\medskip{}
+
+\textbf{2. lépés:} Vizsgáljuk meg $2n^{2}+n-1\mod 3$-at:
+
+Ha $n\equiv0\pmod 3$, akkor $0+0-1=-1\equiv2\pmod 3$
+
+Ha $n\equiv1\pmod 3$, akkor $2+1-1=2\pmod 3$
+
+Ha $n\equiv2\pmod 3$, akkor $8+2-1=9\equiv0\pmod 3$
+
+Tehát $2n^{2}+n-1\equiv0\pmod 3$ pontosan akkor, ha $n\equiv2\pmod 3$.
+
+\medskip{}
+
+\textbf{3. lépés:} A feltételek szerint tehát $m\equiv2\pmod 3$ és
+$n\equiv2\pmod 3$, azaz:
+
+\[
+m-n\equiv2-2=0\pmod 3
+\]
+
+\medskip{}
+
+\textbf{Következtetés:} Ha $m^{2}-m+1\equiv0\pmod 3$ és $2n^{2}+n-1\equiv0\pmod 3$,
+akkor $m-n$ is osztható 3-mal.
+
+\[
+\boxed{m-n\equiv0\pmod 3}
+\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Bizonyítsuk be, hogy ha $a,b\in\mathbb{N}$ és $\gcd(a,b)=1$, akkor:
+
+\[
+\tau(ab)=\tau(a)\cdot\tau(b)
+\]
+
+ahol $\tau(n)$ a pozitív osztók számát jelöli.
+\end{extraproblem}
+
+\begin{solution}
+Legyen $a=p_{1}^{\alpha_{1}}\cdots p_{k}^{\alpha_{k}}$ és $b=q_{1}^{\beta_{1}}\cdots q_{\ell}^{\beta_{\ell}}$
+a számok prímtényezős felbontása. Mivel $\gcd(a,b)=1$, a prímtényezők
+különbözők, azaz:
+
+\[
+ab=p_{1}^{\alpha_{1}}\cdots p_{k}^{\alpha_{k}}\cdot q_{1}^{\beta_{1}}\cdots q_{\ell}^{\beta_{\ell}}
+\]
+
+A pozitív osztók számát a következő formula adja:
+
+\[
+\tau(n)=(\alpha_{1}+1)(\alpha_{2}+1)\cdots(\alpha_{k}+1)
+\]
+
+Ezért:
+
+\[
+\tau(a)=\prod_{i=1}^{k}(\alpha_{i}+1),\quad\tau(b)=\prod_{j=1}^{\ell}(\beta_{j}+1)
+\]
+
+És:
+
+\[
+\tau(ab)=\prod_{i=1}^{k}(\alpha_{i}+1)\cdot\prod_{j=1}^{\ell}(\beta_{j}+1)=\tau(a)\cdot\tau(b)
+\]
+
+\textbf{Megjegyzés:} A tulajdonság csak akkor igaz, ha $a$ és $b$
+relatív prímek. Például:
+
+\[
+\tau(2)=2,\quad\tau(4)=3,\quad\tau(8)=4,\quad\text{de }\tau(2\cdot4)=\tau(8)=4\neq2\cdot3
+\]
+
+Tehát ha $a$ és $b$ nem relatív prímek, az azonosság nem áll fenn.
+
+\medskip{}
+
+\textbf{Következtetés:} Ha $a$ és $b$ relatív prímek, akkor:
+
+\[
+\boxed{\tau(ab)=\tau(a)\cdot\tau(b)}
+\]
+\end{solution}
+
+
+
+\section{Kongruenciák modulo $n$, kis Fermat-tétel, Wilson-tételek}\label{sec:Fermat-Wilson}
+\begin{description}
+	{\large \item [{Szerző:}] Kis Brigitta (Didaktikai mesteri -- Matematika, II. év)}
+\end{description}
+Ha $a$ és $b$ $n$-el osztva ugyanazt a maradékot adják, (ahol $a$,
+$b$ és $n$ egyaránt egész számok), akkor ezt $a\equiv b\pmod n$
+jelöli (kiolvasása: $a$ kongruens $b$-vel modulo $n$). Ugyanezt
+a relációt adjuk meg, ha azt mondjuk: $b-a$ osztható $n$-el. Az
+$n$ számot a kongruencia modulusának nevezzük.
+
+Megjegyzések: 
+\begin{itemize}
+	\item $\forall a,b\in\mathbb{Z}$ esetén $a\equiv b\pmod 1$ 
+	\item $a\equiv b\pmod n\Leftrightarrow\hat{a}=\hat{b}$ a $(\mathbb{Z}_{n},+,\cdot)$
+	gyűrűben 
+	\item $n\mid a\Leftrightarrow a\equiv0\pmod n$ 
+\end{itemize}
+Tulajdonságok: 
+\begin{itemize}
+	\item ekvivalencia-reláció:\\
+	$a\equiv a\pmod n\rightarrow$ reflexív\\
+	$a\equiv b\pmod n\Rightarrow b\equiv a\pmod n\rightarrow$ szimmetrikus\\
+	$a\equiv b\pmod n$ és $b\equiv c\pmod n\Rightarrow a\equiv c\pmod n\rightarrow$
+	tranzitív 
+	\item Ha $a\equiv b\pmod n$ és $c\equiv d\pmod n$, akkor:\\
+	$a+c\equiv b+d\pmod n$\\
+	$a\cdot c\equiv b\cdot d\pmod n$ 
+	\item $a\equiv b\pmod n$ és $k\in\mathbb{N}$, akkor $a^{k}\equiv b^{k}\pmod n$ 
+\end{itemize}
+\begin{example}
+	Bizonyítsuk be, hogy $41\mid2^{20}-1\Leftrightarrow2^{20}\equiv1\pmod{41}$\\
+	$2\equiv2\pmod{41}$\\
+	$2^{2}\equiv4\pmod{41}$\\
+	$2^{3}\equiv8\pmod{41}$\\
+	$2^{4}\equiv16\pmod{41}$\\
+	$2^{5}\equiv-9\pmod{41}$\\
+	$2^{10}\equiv(-9)^{2}\equiv81\equiv-1\pmod{41}$\\
+	$2^{20}\equiv(-1)^{2}\equiv1\pmod{41}\Leftrightarrow41\mid2^{20}-1$\\
+\end{example}
+\begin{example}
+	Határozzuk meg $1!+2!+\ldots+100!$ 12-vel való osztási maradékát.\\
+	$4!\equiv24\equiv0\pmod{12}$\\
+	$\forall k!,k\geq4$ esetén $k!\equiv0\pmod{12}\Rightarrow1!+2!+\ldots+100!\equiv1!+2!+3!\equiv9\pmod{12}$
+\end{example}
+\begin{theorem}{thm:binommod}
+	Ha $p$ prímszám és $0<k<p$, akkor $p\mid\binom{p}{k}$. 
+\end{theorem}
+
+\begin{proof}
+	$\binom{p}{k}=\frac{p(p-1)\cdots(p-k+1)}{k(k-1)\cdots1}$ számlálója
+	osztható $p$-vel, de a nevezője nem, mert tudjuk, hogy ha egy $p$
+	prím egyik tényezőnek sem osztója, akkor nem osztója a szorzatnak
+	sem. Ezért az egész tört osztható $p$-vel. 
+\end{proof}
+\begin{theorem}[Kis Fermat-tétel]{thm:kis-Fermat}
+	Tetszőleges $p$ prímszám és $a\in\mathbb{Z}$
+	egész szám esetén $p\mid a^{p}-a$. $(a^{p}\equiv a\pmod p)$ 
+\end{theorem}
+
+\begin{proof}
+	Mielőtt a bizonyításra rátérnénk, megjegyezzük, hogy a tételt gyakran
+	a következő alakban mondják ki: ha $p$ prímszám, $a$ pedig $p$-vel
+	nem osztható egész szám, akkor $p\mid a^{p-1}-1$.$(a^{p-1}\equiv1\pmod p)$
+	
+	A „kis” Fermat-tételt indukcióval bizonyítjuk. Az állítás $a=0$ esetén
+	triviálisan igaz. Tegyük fel, hogy $0<a=b+1$. Ekkor:
+	
+	\[
+	a^{p}-a=(b+1)^{p}-(b+1)=b^{p}+\binom{p}{1}b^{p-1}+\ldots+\binom{p}{p-1}b+1-b-1=
+	\]
+	\[
+	=(b^{p}-b)+\binom{p}{1}b^{p-1}+\ldots+\binom{p}{p-1}b.
+	\]
+	
+	Az első tag ($b^{p}-b$) az indukciós feltevés szerint osztható $p$-vel,
+	a többi tagra pedig az előző tétel miatt teljesül ugyanez. Így minden
+	tag osztható $p$-vel, tehát $a^{p}-a$ is osztható $p$-vel.
+	
+	Most nézzük meg az $a<0$ esetet.
+	
+	Világos, hogy $a^{2}-a=a(a-1)$ páros szám, így $p=2$ esetén fennáll
+	az állítás. Ha pedig $p>2$, akkor $p$ páratlan, és
+	
+	\[
+	a^{p}-a=-(({-a})^{p}-(-a)),
+	\]
+	
+	ami a pozitív egész számra vonatkozó eset $(-1)$-szerese, tehát szintén
+	osztható $p$-vel. 
+\end{proof}
+
+\begin{example}
+	$6^{1001}\equiv\ ?\pmod{11}$\\
+	Kis Fermat-tétel alapján: $a=6,p=11\Rightarrow6^{10}\equiv1\pmod{11}\Leftrightarrow6^{1000}\equiv1^{100}\equiv1\pmod{11}\Leftrightarrow6^{1001}\equiv6\pmod{11}$
+\end{example}
+\begin{theorem}[Wilson-tétel]{thm:Wilson1}
+	Ha $p$ prím, akkor $(p-1)!\equiv-1\pmod p.$ 
+\end{theorem}
+
+\begin{proof}
+	Ha $p=2$ vagy $3$, akkor az állítás igaz. Ha $p>3$, akkor tekintsük
+	a $H=\{1,2,3,\ldots,p-1\}$ halmazt. Ha $a\in H$, akkor az $a\cdot x\equiv1\pmod p$
+	lineáris kongruenciának egyetlen megoldása létezik a H halmazban.
+	Másrészt, $a^{2}\equiv1\pmod p\Leftrightarrow a^{2}-1\equiv0\pmod p\Leftrightarrow p\mid(a+1)\cdot(a-1)$,
+	ami csak akkor teljesülhet az $a\in H$ elemre, ha $a=1$ vagy $a=p-1$.
+	Innen következik, hogy az $1,2,3,\ldots p-2,p-1$ számok közül az
+	$1$, illetve a $p-1$ multiplikatív inverze modulo $p$ önmaga, míg
+	a többi számnak nem önmaga. Ugyanakkor $a(^{-1})^{-1}=a$, tehát $2\cdot3\cdot4\cdot\ldots\cdot p-2\equiv1\pmod p$,
+	mivel a bal oldali szorzatban minden szám mellett pontosan egyszer
+	szerepel a multiplikatív inverze is modulo p. Innen következik, hogy
+	$1\cdot2\cdot3\cdot\ldots\cdot(p-2)\cdot(p-1)\equiv p-1\equiv-1\pmod p$,
+	amit bizonyítani kellett. 
+\end{proof}
+\begin{theorem}[Fordított Wilson-tétel]{thm:Wilson2}
+	Ha $(n-1)!\equiv-1\pmod n$, akkor $n$
+	prím. 
+\end{theorem}
+
+\begin{proof}
+	Ha $n$ nem prímszám, akkor létezik $d\in\mathbb{N}$, $1<d\leq n-1$
+	úgy hogy $d\mid n$. Ebben az esetben egyrészt $d\mid(n-1)!$, másrészt
+	pedig a feltétel alapján $d\mid n\mid(n-1)!+1$,tehát $d\mid(n-1)!+1$.
+	Ez viszont azt jelenti, hogy $d\mid((n-1)!+1-(n-1)!)$, vagyis $d\mid1$,
+	ami ellentmondás, tehát n prímszám. 
+\end{proof}
+
+\begin{example}
+	Határozzuk meg $15!$-nak a $17$-el, valamint a $2\cdot(26!)$-nak
+	a $29$-el való osztási maradékát.\\
+	Wilson: 17 prím $\Leftrightarrow16!\equiv-1\pmod{17}\Leftrightarrow15!\cdot16\equiv-1\pmod{17}\Leftrightarrow15!\cdot(-1)\equiv-1\pmod{17}\Leftrightarrow15!\equiv1\pmod{17}$\\
+	Wilson: $28!\equiv-1\pmod{29}\Leftrightarrow26!\cdot27\cdot28\equiv-1\pmod{29}\Leftrightarrow26!\cdot(-2)\cdot(-1)\equiv-1\pmod{29}\Leftrightarrow26!\cdot2\equiv-1\pmod{29}$
+\end{example}
+
+\subsection*{Házi feladatok}
+\begin{problem}
+	Igazold, hogy $53^{103}+103^{53}$ osztható 39-el! 
+\end{problem}
+
+\begin{solution}
+	$53^{103}+103^{53}\equiv14^{103}+(-14)^{53}\pmod{39}$\\
+	$14^{103}-14^{53}\equiv14^{53}\cdot(14^{50}-1)\pmod{39}$\\
+	$14^{2}\equiv196\equiv5\cdot39+1\equiv1\pmod{39}$\\
+	$53^{103}+103^{53}\equiv14^{53}\cdot[(14^{2})^{25}-1]\equiv14^{53}\cdot(1^{25}-1)\equiv0\pmod{39}$\\
+	
+\end{solution}
+\begin{problem}
+	Minden $n\geq1$ esetén igazold, hogy $13\mid3^{n+2}+4^{2n+1}$! 
+\end{problem}
+
+\begin{solution}
+	$3^{n+2}+4^{2n+1}\equiv0\pmod{13}$\\
+	$3^{n+2}+4^{2n+1}\equiv3^{n}\cdot9+4\cdot16^{n}\equiv3^{n}\cdot9+4\cdot3^{n}\equiv3^{n}\cdot13\equiv0\pmod{13}$\\
+	
+\end{solution}
+\begin{problem}
+	Határozd meg a $3^{21}$ szám utolsó két számjegyét! 
+\end{problem}
+
+\begin{solution}
+	$3^{21}\equiv?\pmod{100}$\\
+	$3^{4}\equiv81\equiv-19\pmod{100}$ $/()^{2}$\\
+	$3^{8}\equiv19^{2}\equiv-39\pmod{100}$ $/()^{2}$\\
+	$3^{16}\equiv39^{2}\equiv-21\pmod{100}$ $/\cdot3$\\
+	$3^{17}\equiv63\pmod{100}$ $/\cdot3$\\
+	$3^{18}\equiv189\equiv89\equiv-11\pmod{100}$ $/\cdot3^{2}$\\
+	$3^{20}\equiv-99\equiv1\pmod{100}$ $/\cdot3$\\
+	$3^{21}\equiv3\pmod{100}$\\
+	$\Rightarrow$ az utolsó két számjegye: $03$ 
+\end{solution}
+\begin{problem}
+	Igazold, hogy $11^{104}+1$ osztható 17-el! 
+\end{problem}
+
+\begin{solution}
+	KFT: $a=11,p=17$\\
+	$11^{16}\equiv1\pmod{17}$ $/()^{6}$\\
+	$11^{96}\equiv1\pmod{17}$ $/\cdot11^{8}$\\
+	$11^{104}\equiv11^{8}\pmod{17}$\\
+	$11^{2}\equiv121\equiv2\pmod{17}$ $/()^{4}$\\
+	$11^{8}\equiv2^{4}\equiv16\equiv-1\pmod{17}$\\
+	Tehát $11^{104}+1\equiv0\pmod{17}$ 
+\end{solution}
+\begin{problem}
+	Igazold, hogy minden $n\in\mathbb{N}$ esetén $13\mid11^{12n+6}+1$! 
+\end{problem}
+
+\begin{solution}
+	KFT: $a=11,p=13$\\
+	$11^{12}\equiv1\pmod{13}$ $/()^{n}$\\
+	$11^{12n}\equiv1\pmod{13}$ $/\cdot11^{6}$\\
+	$11^{12n+6}\equiv11^{6}\pmod{13}$ \\
+	$11\equiv-2\pmod{13}$ $/()^{6}$\\
+	$11^{6}\equiv64\equiv-1\pmod{13}$\\
+	$\Rightarrow11^{12n+6}\equiv11^{6}\equiv-1\pmod{13}\Rightarrow13\mid11^{12n+6}+1$ 
+\end{solution}
+\begin{problem}
+	Igazold, hogy $18!\equiv-1\pmod{437}$! 
+\end{problem}
+
+\begin{solution}
+	$437=19\cdot23$\\
+	Wilson: $18!\equiv-1\pmod{19}$\\
+	Wilson: $22!\equiv-1\pmod{23}\Leftrightarrow18!\cdot19\cdot20\cdot21\cdot22\equiv-1\pmod{23}$\\
+	$18!\cdot(-4)\cdot(-3)\cdot(-2)\cdot(-1)\equiv-1\pmod{23}$\\
+	$18!\cdot24\equiv-1\pmod{23}$\\
+	$18!\equiv-1\pmod{23}$\\
+	Mivel $18!\equiv-1\pmod{19}$, $18!\equiv-1\pmod{23}$ és $lnko(19,23)=1$,
+	ezért $18!\equiv-1\pmod{437}$ 
+\end{solution}
+
+\subsection*{Nehezebb feladatok}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+	Igazold, hogy az alábbi felsorolt egész számok közül egyik sem teljes
+	négyzet: 
+	\[
+	11,111,1111,11111,\dots
+	\]
+\end{extraproblem}
+
+\begin{solution}
+	Teljes négyzet akkor, ha $4k$ vagy $4k+1$ alakú.
+	
+	\begin{align*}
+		& 11=4\cdot2+3=4k+3\\
+		& 111=100+11=4\cdot25+4k+3=4k+3\\
+		& 1111=1000+111=4\cdot250+4k+3=4k+3
+	\end{align*}
+	
+	\begin{align*}
+		& a_{0}=11\\
+		& a_{1}=a_{0}+10^{2}\\
+		& \vdots\\
+		& a_{n}=a_{n-1}+10^{n+1}\\
+	\end{align*}
+	
+	Indukció: 
+	\begin{align*}
+		& \text{1. eset: }a_{0},a_{1},a_{2}\text{ igaz}\\
+		& \text{2. eset: Ha }a_{n}\text{ igaz }\Rightarrow a_{n+1}\text{ is igaz}
+	\end{align*}
+	
+	\begin{align*}
+		& a_{n}=4k+1\\
+		& a_{n+1}=a_{n}+10^{n+2}=4k+3+10^{n+2}
+	\end{align*}
+	
+	Mivel a sorozat minden eleme $4k+3$ alakú ezért a sorozat tagjai
+	közül egyik sem teljes négyzet.
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+	Igazold, hogy $2222^{5555}+5555^{2222}\equiv0(mod7)$! 
+\end{extraproblem}
+
+\begin{solution}
+	Mivel $2222\equiv3(mod7)$ és $5555\equiv4(mod7)$, ezért azt kell
+	belátni, hogy $3^{5555}+4^{2222}\equiv0(mod7)$. A kis Fermát tétel
+	alapján tudjuk, hogy $a^{p-1}\equiv1(modp)$, ahol $p$ egy prímszám.
+	Ez alapján írhatjuk, hogy: 
+	\[
+	\left.\begin{aligned}3^{6}\equiv1(mod7)\\
+		5555\equiv-1(mod6)
+	\end{aligned}
+	\right\} \Rightarrow3^{5555}\equiv3^{-1}\equiv5(mod7)
+	\]
+	\\
+	Hasonlóan 
+	\[
+	\left.\begin{aligned}4^{6}\equiv1(mod7)\\
+		2222\equiv2(mod6)
+	\end{aligned}
+	\right\} \Rightarrow4^{2222}\equiv4^{2}\equiv2(mod7)
+	\]
+	\\
+	Összeadva a két eredményt azt kapjuk, hogy: $3^{5555}+4^{2222}\equiv7(mod7)\equiv0(mod7)\Rightarrow2222^{5555}+5555^{2222}\equiv0(mod7)$ 
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+	Határozd meg az $x^{2}\equiv-1(mod37)$ kongruencia összes megoldását. 
+\end{extraproblem}
+
+\begin{solution}
+	Lagrange tétele alapján tudjuk, hogy legfeljebb két különböző megoldás
+	létezik modulo 37. \\
+	\textbf{Első megoldás (tipp) :} 
+	\[
+	x^{2}\equiv-1(mod37)\Leftrightarrow x^{2}\equiv6^{2}(mod37)\Leftrightarrow x\equiv\pm6(mod37).
+	\]
+	Vagyis megvan a két inkongruens megoldás modulo 37, ezek a \textbf{$6$
+		és $31$}. \\
+	\textbf{Második megoldás (Wilson-tétel alapján):} $36!\equiv-1(mod37)$
+	vagyis \\
+	
+	\[
+	1\cdot2\cdot\ldots\cdot18\cdot(-18)\cdot(-17)\cdot\ldots\cdot(-1)\equiv-1(mod37)
+	\]
+	tehát 
+	\[
+	(18!)^{2}\equiv-1(mod37).
+	\]
+	Redukálással kapjuk, hogy $18!\equiv31(mod37)$, így a fenti ekvivalencia
+	alapján $(\pm31)^{2}\equiv-1(mod37)$. \\
+	Tehát a megoldások \textbf{$6$ és $31$}. 
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+	Bizonyítsd be, hogy hét tetszőleges szám közt mindig létezik legalább
+	kettő, amelynek összege vagy különbsége osztható $11$-gyel. 
+\end{extraproblem}
+
+\begin{solution}
+	Bizonyítjuk, hogy a hét szám között van legalább kettő, melyek négyzeteinek
+	ugyanaz a $11$-gyel való osztási maradéka.
+	
+	Ha pl. egy $a$ szám $11$-gyel való osztási maradéka $5$ (jelöljük:
+	$a$ mod $11=5$ ), akkor felírható, hogy $a=11k+5,k\in\mathbb{Z}$,
+	ahonnan $a^{2}=121k^{2}+110k+25=121k^{2}+110k+22+3$, innen $121k^{2}+110k+22$
+	osztható $11$-gyel, így $a^{2}$ mod $11=3$.
+	
+	Vagyis 
+	\begin{center}
+		$a$ mod $11=0$, akkor $a^{2}$ mod $11=0$\\
+		$a$ mod $11=1$, akkor $a^{2}$ mod $11=1$\\
+		$a$ mod $11=2$, akkor $a^{2}$ mod $11=4$\\
+		$a$ mod $11=3$, akkor $a^{2}$ mod $11=9$\\
+		$a$ mod $11=4$, akkor $a^{2}$ mod $11=5$\\
+		$a$ mod $11=5$, akkor $a^{2}$ mod $11=3$\\
+		$a$ mod $11=6$, akkor $a^{2}$ mod $11=3$\\
+		$a$ mod $11=7$, akkor $a^{2}$ mod $11=5$\\
+		$a$ mod $11=8$, akkor $a^{2}$ mod $11=9$\\
+		$a$ mod $11=9$, akkor $a^{2}$ mod $11=4$\\
+		$a$ mod $11=10$, akkor $a^{2}$ mod $11=1$\\
+		\par\end{center}
+	Tehát a teljes négyzetek $11$-gyel való osztási maradékai az $M={0,1,3,4,5,9}$
+	halmaz elemei. Ez azt jelenti, hogy két különböző szám közül legalább
+	két szám négyzetének ugyanaz az osztási maradéka. Legyen ez a két
+	szám $x$ és $y$. Ekkor $x^{2}=11k_{1}+r$ és $y^{2}=11k_{2}+r$,
+	ahonnan $11\mid x^{2}-y^{2}\Rightarrow\newline11\mid(x-y)(x+y)$.
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+	Határozzuk meg az összes olyan tízes számrendszerben felírt $ABCDE$
+	számot, amire $ABCDE$ is és $EDCBA$ is osztható $275$-tel! \emph{(KöMaL,
+		1977) }
+\end{extraproblem}
+
+\begin{solution}
+	A $275$ törzstényezős felbontása $275=5\cdot5\cdot11$, tehát azokat
+	a számokat kell megkeresnünk, amelyekre $ABCDE$ és $EDCBA$ osztható
+	külön-külön $11$-gyel és $25$-tel.
+	
+	Mivel pontosan azok a számok oszthatók $25$-tel, amelyek $00$-ra,
+	$25$-re, $50$-re vagy $75$-re végződnek, a $DE$ és $BA$ e négy
+	szám valamelyike lehet. Így az $ABDE$ számra $4\cdot4=16$ különböző
+	esetet kapunk. Határozzuk meg, mennyi lehet $C$ értéke az egyes esetekben!
+	Egy szám pontosan akkor osztható $11$-gyel, ha jegyeit váltakozó
+	előjellel összeadva $11$-gyel osztható számot kapunk, tetszőleges
+	szám és fordítottja egyszerre osztható $11$-gyel.
+	
+	Tehát $C$ értékét úgy kell megválasztani, hogy például $A-B+C-D+E$
+	osztható legyen $11$-gyel. Végignézve a $16$ lehetséges esetet,
+	az alábbi $13$ esetben kapunk $C$-re egyjegyű számot: 
+	\[
+	00000\quad00825\quad00550\quad00275\quad52800\quad52525\quad52250
+	\]
+	\[
+	05500\quad05225\quad05775\quad57200\quad57750\quad57475
+	\]
+	
+	Ha úgy értelmezzük az ötjegyűséget, hogy $A$ nem nulla, vagyis a
+	kezdő szám valódi ötjegyű, akkor csak 6 megoldás van: 
+	\[
+	52800\quad52525\quad52250\quad57200\quad57750\quad57475
+	\]
+	
+	Ha pedig $E$ sem nulla, akkor a szám és fordítottja is valódi ötjegyű,
+	és csak kettő van ilyen: 
+	\[
+	52525\quad57475.
+	\]
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+	Lássuk be, hogy ha $(a,10)=1$, akkor 
+	\[
+	a^{100n+1}\equiv a\pmod{1000},
+	\]
+	ahol $n$ természetes szám. 
+\end{extraproblem}
+
+\begin{solution}
+	Mivel 
+	\[
+	\varphi(1000)=\varphi(2^{3}\cdot5^{3})=\varphi(2^{3})\cdot\varphi(5^{3})=4\cdot100=400,
+	\]
+	az Euler-tételből következik, hogy 
+	\[
+	a^{400}\equiv1\pmod{1000}.
+	\]
+	Ezt n-edik hatványra emelve és a-val szorozva kapjuk: 
+	\[
+	a^{400n+1}\equiv a\pmod{1000}.
+	\]
+	De más módon is megmutatjuk az állítást: be fogjuk látni, hogy a kongruencia
+	fennáll modulo 8 és modulo 125 szerint is, így fennáll modulo $8\cdot125=1000$
+	szerint is.
+	
+	Egyrészt: 
+	\[
+	\varphi(8)=4,\quad\text{tehát}\quad a^{4}\equiv1\pmod 8,
+	\]
+	mivel $(a,8)=1$ (hiszen $(a,10)=1$ miatt $a$ páratlan). Ebből következik,
+	hogy 
+	\[
+	a^{100}=(a^{4})^{25}\equiv1^{25}\equiv1\pmod 8,
+	\]
+	így 
+	\[
+	a^{100n+1}\equiv a\pmod 8.\tag{*}
+	\]
+	
+	Másrészt: 
+	\[
+	\varphi(125)=100,\quad\text{tehát}\quad a^{100}\equiv1\pmod{125},
+	\]
+	mivel $(a,125)=1$ (ismét, mert $(a,10)=1$ miatt $a$ nem osztható
+	5-tel). Így: 
+	\[
+	a^{100n+1}\equiv a\pmod{125}.\tag{**}
+	\]
+	
+	Mivel 8 és 125 relatív prímek, ezért a ({*}) és ({*}{*}) kongruenciákból
+	a kínai maradéktétel alapján következik az állítás: 
+	\[
+	a^{100n+1}\equiv a\pmod{1000}.
+	\]
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+	A 9.A osztály kirándulni ment. Ötfős szobákban szállásolták el őket,
+	így négy gyerek kénytelen volt Marcsi nénivel egy szobában aludni.
+	Éjszaka Bence olyan rosszul viselkedett, hogy Marcsi néni felhívta
+	a szüleit, akik már hajnalban hazavitték. Így a reggelinél szépen
+	elfértek a gyerekek a hétszemélyes asztaloknál (Marcsi néni külön
+	asztalnál ült). Panka gyomorrontást kapott a reggelitől, ezért délelőtt
+	őt is hazavitték. Ebédnél az étteremben minden asztalnál kilenc gyerek
+	ült (Marcsi néni külön asztalnál). Hányan járnak a 9.A osztályba? 
+\end{extraproblem}
+
+\begin{solution}
+	Jelöljük a 9.A osztály tanulóinak számát $x$-szel.
+	
+	Miképpen a gyerekeket ötfős szobába szállásolták el úgy, hogy négy
+	gyerek a kísérő tanárral aludt egy szobába, következik, hogy $5|(x+1)$.
+	
+	Miután Bence hazament, a tanulók hétszemélyes asztalokhoz ültek le,
+	és senki nem kellett Marcsi nénivel egy asztalnál étkezzen, ezért
+	$7|(x-1)$.
+	
+	Miután Panka is hazament, az ebédnél minden asztalnál kilenc diák
+	ült, Marcsi néni pedig külön, így $9|(x-2)$.
+	
+	A következő kongruenciarendszert írhatjuk fel: 
+	\[
+	\left\{ \begin{array}{l}
+		x+1\equiv0(\text{mod }5)\\
+		x-1\equiv0(\text{mod }7)\\
+		x-2\equiv0(\text{mod }9)
+	\end{array}\right.\Leftrightarrow\left\{ \begin{array}{l}
+		x\equiv-1(\text{mod }5)\\
+		x\equiv1(\text{mod }7)\\
+		x\equiv2(\text{mod }9)
+	\end{array}\right.\Leftrightarrow\left\{ \begin{array}{l}
+		x\equiv4(\text{mod }5)\\
+		x\equiv1(\text{mod }7)\\
+		x\equiv2(\text{mod }9)
+	\end{array}\right.
+	\]
+	
+	Az első kongruenciából kapjuk, hogy $x=5k+4$, $k\in\mathbb{Z}$.
+	Ezt helyettesítsük be a második kongruenciába: 
+	\[
+	x\equiv1(\text{mod }7)\Leftrightarrow5k+4\equiv1(\text{mod }7)\Leftrightarrow5k\equiv-3(\text{mod }7)\Leftrightarrow5k\equiv4(\text{mod }7)
+	\]
+	\[
+	\Leftrightarrow5k\cdot3\equiv4\cdot3(\text{mod }7)\Leftrightarrow15k\equiv12(\text{mod }7)\Leftrightarrow(7\cdot2k+k)\equiv7+5(\text{mod }7)
+	\]
+	\[
+	\Leftrightarrow\ k\equiv5(\text{mod }7).
+	\]
+	A fentiek alapján $k=7l+5$, ahol $l\in\mathbb{Z}$. Így $x=5k+4=5\cdot(7l+5)+4=35l+29$,
+	ahol $l\in\mathbb{Z}$. Helyettesítsük ezt be a harmadik kongruenciába:
+	\[
+	35l+29\equiv2(\text{mod }9)\Leftrightarrow35l\equiv-27(\text{mod }9)\Leftrightarrow9\cdot4l-l\equiv9\cdot(-3)(\text{mod }9)
+	\]
+	\[
+	\Leftrightarrow-l\equiv0(\text{mod }9)\Leftrightarrow l\equiv0(\text{mod }9)
+	\]
+	
+	A fent leírtak alapján $l=9m$, $m\in\mathbb{Z}$, ahonnan $x=35l+29=35\cdot9m+29=415m+29$,
+	ahol $m\in\mathbb{Z}$.
+	
+	Ha $m<0$, akkor $x<0$, illetve ha $m>0$, akkor $x\geq444$, ami
+	irreálisan sok. Ezért $m=0$, ami alapján $29$-en járnak az 9.A osztályba. 
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+	Oldjuk meg a következő kongruencia-egyenletet az egész számok halmazán:
+	\[
+	17x\equiv5\pmod{43}
+	\]
+\end{extraproblem}
+
+\begin{solution}
+	Ez egy lineáris kongruencia. Megoldásához meg kell keresni a 17 szám
+	inverzét modulo 43. Keressük az $a$ számot, amelyre: 
+	\[
+	17a\equiv1\pmod{43}
+	\]
+	
+	\textbf{Kiterjesztett euklideszi algoritmussal:} 
+	\begin{align*}
+		43 & =2\cdot17+9\\
+		17 & =1\cdot9+8\\
+		9 & =1\cdot8+1\\
+		8 & =8\cdot1+0
+	\end{align*}
+	
+	Visszafejtés: 
+	\[
+	1=9-1\cdot8=2\cdot9-1\cdot17=2(43-2\cdot17)-1\cdot17=2\cdot43-5\cdot17
+	\]
+	
+	Tehát: 
+	\[
+	-5\cdot17\equiv1\pmod{43}\Rightarrow17^{-1}\equiv38\pmod{43}
+	\]
+	
+	Most megszorozzuk az eredeti kongruenciát ezzel az inverzzel: 
+	\[
+	x\equiv38\cdot5\pmod{43}\Rightarrow x\equiv190\pmod{43}
+	\]
+	
+	Számoljuk ki a maradékot: 
+	\[
+	190\div43=4\text{ maradék }18\Rightarrow\boxed{x\equiv18\pmod{43}}
+	\]
+\end{solution}
+
+\begin{extraproblem}[Kovács Levente]
+	Számítsuk ki a következő maradékot: 
+	\[
+	7^{1000}\mod 13
+	\]
+\end{extraproblem}
+
+\begin{solution}
+	A Kis Fermat-tétel szerint, ha $p$ prím és $\gcd(a,p)=1$, akkor:
+	\[
+	a^{p-1}\equiv1\pmod p
+	\]
+	
+	Ebben az esetben: 
+	\[
+	7^{12}\equiv1\pmod{13}
+	\]
+	
+	\textbf{Osszuk fel a kitevőt:} 
+	\[
+	1000=83\cdot12+4\Rightarrow7^{1000}=(7^{12})^{83}\cdot7^{4}\equiv1^{83}\cdot7^{4}=7^{4}\pmod{13}
+	\]
+	
+	\textbf{Számítsuk ki:} 
+	\[
+	7^{2}=49\Rightarrow7^{4}=49^{2}=2401
+	\]
+	
+	\textbf{Maradék számítása:} 
+	\[
+	2401\div13=184\text{ maradék }9\Rightarrow\boxed{7^{1000}\equiv9\pmod{13}}
+	\]
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+	Bizonyítsuk be, hogy minden pozitív egész $n$ esetén a $2^{4n}-1$
+	és $2^{4n}+1$ közül valamelyik osztható $17$-tel. 
+\end{extraproblem}
+
+\vspace{0.5cm}
+
+\begin{solution}
+	Azt kell belátni, hogy minden $n$ esetén vagy 
+	\[
+	16^{n}-1\equiv0\pmod{17},\quad\text{vagy}\quad16^{n}+1\equiv0\pmod{17}
+	\]
+	teljesül.
+	
+	\[
+	16^{n}-1\equiv(-1)^{n}-1\pmod{17},\quad16^{n}+1\equiv(-1)^{n}+1\pmod{17}
+	\]
+	
+	Páros $n$ esetén a 
+	\[
+	(-1)^{n}-1\equiv0\pmod{17}
+	\]
+	kongruencia teljesül, tehát $2^{4n}-1$ osztható $17$-tel.
+	
+	Páratlan $n$ esetén pedig 
+	\[
+	(-1)^{n}+1\equiv0\pmod{17}
+	\]
+	teljesül, tehát $2^{4n}+1$ osztható $17$-tel. 
+\end{solution}
+\vspace{0.5cm}
+
+\begin{extraproblem}[Péter Róbert]
+	Vizsgáljuk meg, hogy $2020^{4}+1620^{4}-3^{2004}-1$\quad{}osztható-e
+	323-mal?
+\end{extraproblem}
+
+\vspace{0.5cm}
+
+\begin{solution}
+	Kongruencia használatával: 
+	\[
+	2020^{4}+1620^{4}-3^{2004}-1\equiv0\pmod{17}
+	\]
+	
+	Mivel 
+	\[
+	2020\equiv3\pmod{17},\quad1620\equiv-1\pmod{17},\quad3^{2004}\equiv3^{2004}\pmod{17}
+	\]
+	
+	Ez alapján: 
+	\[
+	3^{4}+(-1)^{4}-3^{2004}-1\equiv81+1-3^{2004}-1\equiv81-3^{2004}\pmod{17}
+	\]
+	
+	De valójában a következő egyszerűbb átalakítást használhatjuk: 
+	\[
+	2020^{4}+1620^{4}-3^{2004}-1\equiv3^{2004}+(-1)^{2004}-3^{2004}-1\equiv0\pmod{17}
+	\]
+	
+	Hasonlóan: 
+	\[
+	2020^{4}+1620^{4}-3^{2004}-1\equiv0\pmod{19}
+	\]
+	
+	Mivel 
+	\[
+	2020\equiv1\pmod{19},\quad1620\equiv-3\pmod{19}
+	\]
+	
+	Ez alapján: 
+	\[
+	1^{2004}+(-3)^{2004}-3^{2004}-1\equiv1+3^{2004}-3^{2004}-1\equiv0\pmod{19}
+	\]
+	
+	Tehát beláttuk, hogy 
+	\[
+	2020^{4}+1620^{4}-3^{2004}-1
+	\]
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+	
+	\textbf{a.)} Igazold, hogy $2^{p}+3^{p}$ osztható 5-tel, bármely
+	$p\geq1$ páratlan természetes szám esetén! \\
+	\textbf{b.)} Mutasd ki, hogy $3^{12m+1}+2^{12n+5}$ osztható 5-tel,
+	bármely $m$ és $n$ természetes számok esetén! 
+	\begin{flushright}
+		\textit{(NMMV, 2024, X. osztály, 2. forduló, 1. feladat)} 
+		\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+	\textbf{a)} \textbf{I. Megoldás.} Mivel $p$ páratlan, így $p=4k+1$,
+	$k\in\mathbb{N}$ vagy $p=4k+3$, $k\in\mathbb{N}$ alakú.
+	
+	\medskip{}
+	
+	\noindent\textbf{I. eset:} $p=4k+1$ esetén 
+	\[
+	3^{4}\equiv1\pmod 5\quad\Rightarrow\quad3^{4k+1}\equiv3\pmod 5
+	\]
+	\[
+	2^{4}\equiv1\pmod 5\quad\Rightarrow\quad2^{4k+1}\equiv2\pmod 5
+	\]
+	ahonnan 
+	\[
+	3^{4k+1}+2^{4k+1}\equiv3+2\equiv5\equiv0\pmod 5.
+	\]
+	Vagyis $2^{p}+3^{p}$ osztható 5-tel.
+	
+	\medskip{}
+	
+	\noindent\textbf{II. eset:} $p=4k+3$ esetén az előző eset alapján
+	\[
+	3^{4k+1}\equiv3\pmod 5\quad\Rightarrow\quad3^{4k+3}=3\cdot9\equiv2\pmod 5
+	\]
+	\[
+	2^{4k+1}\equiv2\pmod 5\quad\Rightarrow\quad2^{4k+3}=2\cdot4\equiv3\pmod 5
+	\]
+	ahonnan 
+	\[
+	3^{4k+3}+2^{4k+3}\equiv2+3\equiv5\equiv0\pmod 5,
+	\]
+	tehát $2^{p}+3^{p}$ osztható 5-tel.
+	
+	\medskip{}
+	
+	\noindent Ezzel beláttuk, hogy a kért állítás igaz.
+	
+	\bigskip{}
+	
+	\noindent\textbf{II. Megoldás.} Mivel $p$ páratlan, így felírható
+	$p=2k+1$, $k\in\mathbb{N}$ alakba. Ekkor képlet szerint 
+	\begin{align*}
+		3^{2k+1}+2^{2k+1} & =(3+2)\bigl(3^{2k}-3^{2k-1}\cdot2+3^{2k-2}\cdot2^{2}-\ldots+2^{2k}\bigr)\\
+		& =5\cdot\bigl(3^{2k}-3^{2k-1}\cdot2+3^{2k-2}\cdot2^{2}-\ldots+2^{2k}\bigr)
+	\end{align*}
+	vagyis a megadott kifejezés osztható 5-tel.
+	
+	\bigskip{}
+	
+	\noindent\textbf{b.)} Mivel $3^{4}\equiv81\equiv1\pmod 5$, ezért
+	$3^{12}\equiv1\pmod 5$, vagyis $3^{12m+1}\equiv3\pmod 5$.
+	
+	\smallskip{}
+	
+	\noindent Hasonlóan, mivel $2^{4}\equiv16\equiv1\pmod 5$, ezért $2^{12}\equiv1\pmod 5$,
+	vagyis $2^{12n+1}\equiv2\pmod 5$. Tehát 
+	\[
+	3^{12m+1}+2^{12n+5}\equiv3+2\equiv5\equiv0\pmod 5,
+	\]
+	azaz $3^{12m+1}+2^{12n+5}$ osztható 5-tel, bármely $m$ és $n$ természetes
+	számok esetében. 
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+	Bizonyítsuk be, hogy ha valamely $n\in\mathbb{Z}$ nem osztható 17-tel,
+	akkor $(n^{8}-1)$ vagy $(n^{8}+1)$ osztható 17-tel.
+	\begin{flushright}
+		\textit{Láng Csabáné: "Számelmélet: példák és feladatok", 2010} 
+		\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+	Tekintsünk egy olyan $n$ egész számot, amelyre $17\nmid n$. Mivel
+	$n\in\mathbb{Z}$, 17 prímszám és $(n,17)=1$ ( mert $17\nmid n$),
+	alkalmazhatjuk a kis Fermat-tételt: 
+	\[
+	n^{16}\equiv1\pmod{17}.
+	\]
+	
+	Ez azt jelenti, hogy $n^{16}-1\equiv0\pmod{17}$, vagyis $17$ osztója
+	$(n^{16}-1)$-nek: 
+	\[
+	17\mid n^{16}-1.
+	\]
+	
+	Mivel $n^{16}-1=(n^{8})^{2}-1^{2}=(n^{8}-1)(n^{8}+1)$, ezért: 
+	\[
+	17\mid(n^{8}-1)(n^{8}+1).
+	\]
+	
+	Tudjuk, hogy ha egy prímszám osztója egy szorzatnak, akkor osztója
+	a szorzat valamely tényezőjének. Mivel 17 prímszám, következik, hogy:
+	\[
+	17\mid(n^{8}-1)\quad\text{vagy}\quad17\mid(n^{8}+1).
+	\]
+	Vagyis teljesül, hogy $(n^{8}-1)$ vagy $(n^{8}+1)$ osztható 17-tel,
+	amit be kellett látni.osztható $17$-tel és $19$-cel is. Mivel $17\cdot19=323$,
+	a kifejezés osztható $323$-mal is. 
+\end{solution}
+\begin{extraproblem}
+	Ha $p>3$ prímszám, akkor mennyi lehet (p-1) darab számtani haladványban
+	álló egész szám szorzatának a $p$-vel való osztási maradéka? 
+\end{extraproblem}
+
+\begin{flushright}
+	OMMO 2020, országos, Kovács Bálint 
+	\par\end{flushright}
+\begin{solution}[Sógor Bence]
+	Jelöljük a haladványban szereplő számokat a következő módon: 
+	\[
+	x,x+r,x+2r,\dots,x+(p-2)r,
+	\]
+	ahol $x$ egész szám és $r$ természetes szám.
+	
+	Ha ezek közül valamelyik tag osztható $p$-vel, akkor a szorzat is
+	osztható lesz $p$-vel.
+	
+	Feltételezzük, hogy egyik tag sem osztható $p$-vel. Ekkor két esetet
+	különböztetünk meg:
+	
+	Ha $p|r$, akkor a szorzat $p$-vel való osztási maradéka megegyezik
+	$x^{p-1}$ $p$-vel való osztási maradékával. Mivel $p$ nem osztja
+	$x$-et és így relatív prímek, ezért a kis Fermat-tétel alapján a
+	$p$-vel való osztási maradék 1 lesz.
+	
+	Ha $p$ nem osztja $r$-et, akkor a következő módon járunk el. A haladvány
+	két különböző tagjának különbsége $x+ir-x-jr=(i-j)r$ nem osztható
+	$p$-vel, hiszen $i-j$ kisebb, mint $p$ abszolút értéke és $r$-ről
+	meg feltételeztük, hogy nem osztható $p$-vel. Mivel $p-1$ számunk
+	van amelyek $p$-vel való osztási maradékai különböznek és $p-1$
+	lehetséges maradékunk van, ezért a szorzatban az összes lehetséges
+	maradék pontosan egyszer fordul elő. Tehát a szorzat $p$-vel való
+	osztási maradéka ekvivalens $(p-1)!$ $p$-vel való osztási maradékával.
+	A Wilson-tétel alapján ez viszont $p-1$.
+	
+	Tehát a lehetséges maradékok: $0$, $1$, $p-1$. 
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+	Mutassuk meg, hogy ha $p>3$ prím, akkor $n=\frac{4^{p}-1}{3}$
+	összetett szám, és $3\mid2^{n}-2$. (Azaz $n$ pszeudoprím.) \emph{(Róka
+		Sándor: Válogatás Erdős Pál kedvenc feladataiból)}
+\end{extraproblem}
+
+\begin{solution}
+	\[
+	n=\frac{4^{p}-1}{3}=\frac{2^{p}+1}{3}\cdot(2^{p}-1),
+	\]
+	tehát $n$ összetett szám, hiszen $\frac{2^{p}+1}{3}$ egész szám,
+	mivel a $2$ páratlan hatványai $3$-mal osztva $2$ maradékot adnak.
+	
+	\[
+	n-1=\frac{4^{p}-4}{3}=\frac{4\cdot(4^{p-1}-1)}{3}=\frac{4\cdot(2^{p-1}-1)}{3}\cdot(2^{p-1}+1).
+	\]
+	
+	Mivel $p$ prím, a kis Fermat-tétel miatt $p\mid2^{p-1}-1$.\\
+	
+	$p>3$ páratlan, így $3\mid2^{p-1}-1$.
+	
+	Ezek szerint $n-1$ egész szám és $2p\mid n-1$, ezért $2^{2p}-1\mid2^{n-1}-1$
+	(hiszen az $a-b\mid a^{n}-b^{n}$ oszthatóság miatt $2^{r}-1\mid2^{r\cdot s}-1$).
+	
+	Tehát $2^{2p}-1\mid2^{n}-2$, ezért 
+	\[
+	\frac{2^{2p}-1}{3}\mid2^{n}-2,
+	\]
+	azaz $n\mid2^{n}-2.$
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+	Legyen $p$ páratlan prímszám. Mutasd meg, hogy:
+	
+	\[
+	\left(\frac{p-1}{2}\right)!^{2}\equiv(-1)^{\frac{p+1}{2}}\pmod p.
+	\]
+\end{extraproblem}
+
+\begin{solution}
+	A feladatban szereplő kifejezés kapcsolatban áll a Wilson-tétellel,
+	amely szerint:
+	
+	\[
+	(p-1)!\equiv-1\pmod p.
+	\]
+	
+	A cél az, hogy $\left(\frac{p-1}{2}\right)!$-t valamilyen módon összekapcsoljuk
+	a teljes faktoriálissal.
+	
+	\bigskip{}
+	
+	\textbf{1. lépés:} Tekintsük az $\{1,2,\dots,p-1\}$ maradékosztályokat
+	modulo $p$. Ezek az elemek rendre inverz párokba rendezhetők: ha
+	$a$ nem saját inverze, akkor $a\cdot a^{-1}\equiv1\pmod p$.
+	
+	Csak $a=a^{-1}\Rightarrow a^{2}\equiv1\Rightarrow a\equiv\pm1\pmod p$.
+	Ez azt jelenti, hogy csak 1 és $p-1$ saját inverz.
+	
+	\bigskip{}
+	
+	\textbf{2. lépés:} A szimmetriára építve, bontsuk a faktoriálist:
+	
+	\[
+	(p-1)!=\prod_{k=1}^{p-1}k=\left(\prod_{k=1}^{\frac{p-1}{2}}k\cdot(p-k)\right).
+	\]
+	
+	Megjegyezzük, hogy $p-k\equiv-k\pmod p$, tehát:
+	
+	\[
+	(p-1)!=\prod_{k=1}^{\frac{p-1}{2}}k\cdot(p-k)=\prod_{k=1}^{\frac{p-1}{2}}k\cdot(-k)=(-1)^{\frac{p-1}{2}}\cdot\left(\prod_{k=1}^{\frac{p-1}{2}}k^{2}\right).
+	\]
+	
+	Így:
+	
+	\[
+	(p-1)!\equiv(-1)^{\frac{p-1}{2}}\cdot\left(\left(\frac{p-1}{2}\right)!\right)^{2}\pmod p.
+	\]
+	
+	De Wilson-tétel szerint $(p-1)!\equiv-1\pmod p$, így:
+	
+	\[
+	(-1)^{\frac{p-1}{2}}\cdot\left(\left(\frac{p-1}{2}\right)!\right)^{2}\equiv-1\pmod p.
+	\]
+	
+	Osszuk le mindkét oldalt $(-1)^{\frac{p-1}{2}}$-tel:
+	
+	\[
+	\left(\left(\frac{p-1}{2}\right)!\right)^{2}\equiv(-1)^{\frac{p+1}{2}}\pmod p.
+	\]
+	
+	A kívánt állítást beláttuk.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+	Határozd meg a legkisebb pozitív egészt $x$, amely kielégíti az
+	alábbi kongruenciarendszert: 
+	\[
+	\begin{cases}
+		x\equiv3\pmod 7\\
+		x\equiv4\pmod{11}\\
+		x\equiv5\pmod{13}
+	\end{cases}
+	\]
+\end{extraproblem}
+
+\begin{solution}
+	A modulos számok: $7$, $11$, és $13$ páronként relatív prímek,
+	ezért alkalmazható a \textbf{kínai maradéktétel}.
+	
+	Legyen: 
+	\[
+	M=7\cdot11\cdot13=1001
+	\]
+	
+	Résztagokat definiáljuk: 
+	\[
+	M_{1}=\frac{M}{7}=143,\quad M_{2}=\frac{M}{11}=91,\quad M_{3}=\frac{M}{13}=77
+	\]
+	
+	Meg kell találni az egyes $M_{i}$-k multiplikatív inverzét a saját
+	modulusuk szerint:
+	
+	1. inverz: $143^{-1}\mod 7$
+	
+	$143\equiv3\mod 7$, keressük $x$-et, hogy $3x\equiv1\mod 7$
+	
+	\[
+	3\cdot5=15\equiv1\mod 7\Rightarrow x_{1}=5
+	\]
+	
+	2. inverz: $91^{-1}\mod 11$
+	
+	$91\equiv3\mod 11$, $3x\equiv1\mod 11$
+	
+	\[
+	3\cdot4=12\equiv1\mod 11\Rightarrow x_{2}=4
+	\]
+	
+	3. inverz: $77^{-1}\mod 13$
+	
+	$77\equiv12\mod 13$, $12x\equiv1\mod 13$
+	
+	\[
+	12\cdot12=144\equiv1\mod 13\Rightarrow x_{3}=12
+	\]
+	
+	Most összeállítjuk az eredményt:
+	
+	\[
+	x\equiv a_{1}M_{1}x_{1}+a_{2}M_{2}x_{2}+a_{3}M_{3}x_{3}\mod M
+	\]
+	
+	Ahol: 
+	\[
+	a_{1}=3,\ a_{2}=4,\ a_{3}=5
+	\]
+	
+	Behelyettesítve: 
+	\[
+	x\equiv3\cdot143\cdot5+4\cdot91\cdot4+5\cdot77\cdot12\mod 1001
+	\]
+	
+	Számoljuk ki:
+	
+	\[
+	3\cdot143\cdot5=2145,\quad4\cdot91\cdot4=1456,\quad5\cdot77\cdot12=4620
+	\]
+	
+	\[
+	x\equiv2145+1456+4620=8221\mod 1001
+	\]
+	
+	\[
+	8221\div1001\approx8.21,\quad8\cdot1001=8008,\quad8221-8008=213
+	\]
+	
+	Végeredmény:
+	
+	\[
+	\boxed{x=213}
+	\]
+	
+	Ez a legkisebb pozitív egész szám, amelyre: 
+	\[
+	x\equiv3\mod 7,\quad x\equiv4\mod 11,\quad x\equiv5\mod 13
+	\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+	A 110 egy olyan számjegysorozat, amelyet bármilyen 1-nél nagyobb
+	pozitív egész alapú számrendszerben tekintve páros számot kapunk.
+	Van-e olyan 1-esekből és 0-kból álló számjegysorozat, amelyet bármilyen
+	1-nél nagyobb pozitív egész alapú számrendszerben tekintve 3-mal osztható
+	pozitív egész számot kapunk?
+\end{extraproblem}
+
+\bigskip{}
+
+\begin{solution}
+	Van ilyen számjegysorozat, például az 101010. Ha a számrendszer alapja
+	$n$, akkor 
+	\[
+	101010_{n}=n^{5}+n^{3}+n.
+	\]
+	Könnyen ellenőrizhető, hogy $n^{5}$ és $n^{3}$ mindig ugyanazt a
+	maradékot adja 3-mal osztva, mint $n$ (végignézhetjük a három esetet,
+	vagy hivatkozhatunk a kis \textbf{Fermat}-tételre), így az összegük
+	osztható 3-mal.
+	
+	De akár érvelhetünk így is: 
+	\[
+	n^{5}+n^{3}+n=(n-2)(n-1)n(n+1)(n+2)+6n^{3}-3n,
+	\]
+	itt a jobb oldalon az első szorzat mindig tartalmaz 3-mal osztható
+	tényezőt.
+	
+	Néhány további alkalmas számjegysorozat: 1010100, 1111110, 10001010.
+	Akkor és csak akkor lesz alkalmas egy számjegysorozat, ha az utolsó
+	számjegy 0 és a páros, ill. páratlan helyiértékeken szereplő 1-esek
+	száma (külön-külön) osztható 3-mal.
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+	Bizonyítsuk be, hogy ha valamely $n$ egész szám nem osztható 17-tel,
+	akkor $(n^{8}-1)$ vagy $(n^{8}+1)$ osztható 17-tel.
+\end{extraproblem}
+
+\bigskip{}
+
+\begin{solution}
+	$17\nmid n$, így a kis Fermat-tétel első alakja szerint
+	$n^{16}\equiv1\pmod{17}$. Átírva ezt oszthatósággá, kapjuk, hogy
+	\[
+	17\mid n^{16}-1\Longleftrightarrow17\mid(n^{8}-1)(n^{8}+1).
+	\]
+	Mivel 17 prímszám, így a prímtulajdonság alapján, ha osztója egy szorzatnak,
+	akkor valamelyik tényezőt a szorzatnak biztosan osztja. Ez pedig éppen
+	az állítás.
+\end{solution}
+
+
+
+
+%\begin{thebibliography}{1}
+%\bibitem{lang} Láng Csabáné: \textit{Számelmélet -- Példák és feladatok},
+%Eötvös Loránd Tudományegyetem, Informatikai Kar, elérhető: \url{https://www.inf.elte.hu/dstore/document/288/Szamelmelet_-_Peldak_es_feladatok%20(1).pdf},
+%letöltés ideje: 2025. április 11.
+%
+%\bibitem{szesler} Szeszlér Dávid: \textit{Bevezetés a Számításelméletbe
+%1}, Budapesti Műszaki és Gazdaságtudományi Egyetem, Távközlési és
+%Médiainformatikai Tanszék, elérhető: \url{https://cs.bme.hu/bsz1/jegyzet/bsz1_jegyzet.pdf},
+%letöltés ideje: 2025. április 11.
+%
+%\bibitem{lukacs} Lukács Andor: \textit{Számelmélet}, Babes-Bolyai
+%Tudományegyetem, Matematika és Informatika Kar, , belső használatú
+%jegyzet.
+%
+%\end{thebibliography}
+

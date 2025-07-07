@@ -1,0 +1,3287 @@
+\chapter{Diofantikus egyenletek}\label{chap:dio}
+\section{Lineáris diofantikus egyenletek, Pitagoraszi szám\-hár\-ma\-sok, Pell-egyenlet}\label{sec:lindio}
+\begin{description}
+{\large \item [{Szerző:}] Bartalis Dorottya (Didaktikai mesteri -- Matematika, I. év) }
+\end{description}
+A \textbf{Diofantikus egyenletek} olyan algebrai egyenletek, amelyek
+megoldásait az \textit{egész számok} halmazán keressük. Ezek az egyenletek
+több ismeretlennel rendelkezhetnek, és megoldásaik szempontjából változóak:
+vagy nincs megoldásuk, vagy végtelen sok van. A diofantikus egyenletek
+vizsgálata a számelmélet egyik fontos területe, amelynek gyökerei
+az ókori görög matematikához, különösen Diofantosz munkásságához nyúlnak
+vissza. A következő fejezet keretén belül az alábbi 3 típusú diofantikus
+egyenlettel fogunk foglalkozni:
+\begin{itemize}
+\item Lineáris diofantikus egyenletek, 
+\item Pitagoraszi számhármasok, 
+\item Pell-egyenlet. 
+\end{itemize}
+
+\subsection*{Lineáris diofantikus egyenletek}
+\begin{definition}{def:diofantikus-altalanos}
+A lineáris diofantikus egyenlet általános alakja:
+\[
+ax+by=c,
+\]
+ahol $a,b,c\in\mathbb{Z}$ adott egész számok, és az ismeretlenek
+$x,y\in\mathbb{Z}$ egész számok. 
+\end{definition}
+
+\begin{theorem}{thm:axbyc}
+Az $ax+by=c$ egyenletnek akkor és csakis akkor van egész számokból álló megoldása, ha az $a$ és $b$ legnagyobb közös osztója (lnko-ja) osztója
+$c$-nek is, vagyis
+\[
+\mathrm{lnko}(a,b)\mid c.
+\]
+\end{theorem}
+
+\begin{proof}
+Legyen $d=\mathrm{lnko}(a,b)$. Ekkor léteznek egész számok $m,n$,
+amelyekre teljesül a Bézout-azonosság:
+\[
+am+bn=d.
+\]
+Ha $d\mid c$, akkor létezik olyan egész szám $k$, hogy $c=d\cdot k$.
+Ezt behelyettesítve kapjuk:
+\[
+a(mk)+b(nk)=dk=c.
+\]
+Tehát $x_{0}=mk$ és $y_{0}=nk$ egy konkrét megoldása az egyenletnek.
+
+Fordított irányban, ha létezik megoldás $x_{0},y_{0}$, akkor
+\[
+ax_{0}+by_{0}=c,
+\]
+és mivel $d=\mathrm{lnko}(a,b)$ minden $a$-nak és $b$-nek közös
+osztója, ezért $d\mid ax_{0}$ és $d\mid by_{0}$, így $d\mid(ax_{0}+by_{0})$,
+tehát
+\[
+d\mid c.
+\]
+Ez bizonyítja, hogy a megoldhatóság feltétele és elégséges feltétele
+az, hogy az $a$ és $b$ legnagyobb közös osztója osztója legyen $c$-nek. 
+\end{proof}
+\begin{theorem}{thm:axbyc1}
+Adott az
+\[
+ax+by=c,
+\]
+egyenlet, ahol $a,b,c\in\mathbb{Z}$, és tudjuk, hogy létezik egy
+konkrét megoldás $(x_{0},y_{0})$, tehát
+\[
+ax_{0}+by_{0}=c.
+\]
+Ekkor az összes egész számokból álló megoldás a következő alakban
+írható fel:
+\[
+x=x_{0}+\frac{b}{d}t,\quad y=y_{0}-\frac{a}{d}t,
+\]
+ahol $d=\mathrm{lnko}(a,b)$, és $t$ tetszőleges egész szám.
+\end{theorem}
+
+\begin{proof}
+Először tekintsük az egyenlet homogén változatát:
+\[
+ax+by=0.
+\]
+Minden megoldás ebben az esetben
+\[
+x=\frac{b}{d}t,\quad y=-\frac{a}{d}t,
+\]
+ahol $t\in\mathbb{Z}$.
+
+Most, ha $(x_{0},y_{0})$ egy konkrét megoldása az eredeti egyenletnek,
+akkor bármely megoldás $(x,y)$ felírható úgy, hogy
+\[
+ax+by=c,
+\]
+és ebből
+\[
+a(x-x_{0})+b(y-y_{0})=0.
+\]
+
+Tehát az $(x-x_{0},y-y_{0})$ pár a homogén egyenlet megoldása.
+
+Ez alapján
+\[
+x-x_{0}=\frac{b}{d}t,\quad y-y_{0}=-\frac{a}{d}t,
+\]
+azaz
+\[
+x=x_{0}+\frac{b}{d}t,\quad y=y_{0}-\frac{a}{d}t,
+\]
+ahol $t\in\mathbb{Z}$.
+
+Ez mutatja, hogy az összes megoldás ezekből az értékekből áll előállítható. 
+\end{proof}
+
+\subsection*{Az Euklideszi algoritmus}
+
+Az \textbf{Euklideszi algoritmus} egy hatékony módszer két egész szám
+legnagyobb közös osztójának ($\mathrm{lnko}$) meghatározására.
+\begin{theorem}{thm:euk-algo}
+Adottak $a,b\in\mathbb{Z}$, nem mindkettő nulla.
+
+Az algoritmus lépései a következők:
+\begin{enumerate}
+\item Osszuk el a nagyobb számot a kisebbel, és vegyük a maradékot: 
+\[
+a=bq_{1}+r_{1},\quad0\le r_{1}<|b|.
+\]
+\item Ha $r_{1}=0$, akkor $\mathrm{lnko}(a,b)=|b|$. 
+\item Ha nem, ismételjük a műveletet a $b$ és $r_{1}$ számokra: 
+\[
+b=r_{1}q_{2}+r_{2},\quad0\le r_{2}<r_{1}.
+\]
+\item Folytatjuk a maradékos osztásokat addig, míg valamely maradék nulla
+nem lesz: 
+\[
+r_{k-2}=r_{k-1}q_{k}+r_{k},\quad r_{k}=0.
+\]
+\end{enumerate}
+Ekkor $\mathrm{lnko}(a,b)=r_{k-1}$, az utolsó nem nulla maradék. 
+\end{theorem}
+
+
+\subsection*{A bővített Euklideszi algoritmus}
+
+A bővített változat nemcsak a legnagyobb közös osztót adja meg, hanem
+megtalálja azokat az egész számokat $x$ és $y$, amelyek kielégítik
+a Bézout-egyenletet:
+
+\[
+ax+by=\mathrm{lnko}(a,b).
+\]
+
+Ez kulcsfontosságú, mert így kapunk egy konkrét megoldást a lineáris
+diofantikus egyenlet homogén változatára.
+
+\medskip{}
+
+Az algoritmus lépései során visszafelé kifejezzük az egyes maradékokat
+az $a$ és $b$ lineáris kombinációjaként, végül megkapjuk az $x$
+és $y$ értékeket.
+
+\medskip{}
+
+\begin{theorem}{thm:lnko-dio}
+Ha $\mathrm{lnko}(a,b)=d$, akkor léteznek olyan egész $x_{0},y_{0}$,
+amelyekre
+
+\[
+ax_{0}+by_{0}=d.
+\]
+\end{theorem}
+
+\begin{problem}
+Oldjuk meg az alábbi lineáris diofantikus egyenletet:
+
+\[
+8x+3y=6.
+\]
+\end{problem}
+
+\begin{solution}
+\textbf{1. lépés:} Ellenőrizzük, hogy van-e megoldás.
+
+Számoljuk ki az $8$ és $3$ legnagyobb közös osztóját ($\mathrm{lnko}(8,3)$)
+az Euklidészi algoritmussal:
+
+\[
+8=3\times2+2,
+\]
+\[
+3=2\times1+1,
+\]
+\[
+2=1\times2+0.
+\]
+
+Az utolsó nem nulla maradék $1$, tehát $\mathrm{lnko}(8,3)=1$.
+
+Mivel $1\mid6$, azaz 1 osztja 6-ot, létezik megoldás az egyenletre.
+
+\medskip{}
+
+\textbf{2. lépés:} Keressünk egy sajátos megoldást az
+
+\[
+8x+3y=1
+\]
+
+egyenletre a bővített Euklideszi algoritmus segítségével.
+
+Az előző lépésekből visszafelé fejezzük ki a maradékokat:
+
+\[
+1=3-2\times1,
+\]
+
+de
+
+\[
+2=8-3\times2,
+\]
+
+tehát
+
+\[
+1=3-(8-3\times2)\times1=3\times3-8\times1.
+\]
+
+Ez azt jelenti, hogy
+
+\[
+x_{0}=-1,\quad y_{0}=3
+\]
+
+egy sajátos megoldás az
+
+\[
+8x+3y=1
+\]
+
+egyenletre.
+
+\medskip{}
+
+\textbf{3. lépés:} Mivel az eredeti egyenlet jobb oldala $6$, azaz
+$\frac{6}{1}=6$-szorosa az előzőnek, az $(x,y)$ megoldás:
+
+\[
+x=x_{0}\times6=-6,\quad y=y_{0}\times6=18.
+\]
+
+\medskip{}
+
+\textbf{Összefoglalva:}
+
+Egy sajátos megoldás az
+
+\[
+8x+3y=6
+\]
+
+egyenletre:
+
+\[
+(x,y)=(-6,18).
+\]
+
+Az összes megoldás pedig a következőképpen adódik:
+
+\[
+(x,y)=(-6+3t,\,18-8t),\quad t\in\mathbb{Z}.
+\]
+\end{solution}
+\begin{problem}
+Egy piacon 12 kg-os és 7 kg-os almás ládákat árulnak. Egy kereskedő
+127 kg almát akar vásárolni. Csak egész ládákat tehet a vásárlásába.
+Határozd meg, hányféle módon állíthatja össze a ládákat úgy, hogy
+pontosan 127 kg almát kapjon! 
+\end{problem}
+
+\begin{solution}
+\[
+12x+7y=127,
+\]
+
+ahol $x$ és $y$ a 12 kg-os, illetve 7 kg-os ládák száma, és $x,y\geq0$
+egész számok.
+
+\bigskip{}
+
+\[
+d=\mathrm{lnko}(12,7)=1.
+\]
+
+Mivel $d=1$ osztja 127-et, az egyenletnek léteznek egész megoldásai.
+
+\bigskip{}
+
+Egy sajátos megoldás:
+
+\[
+x_{0}=10,\quad y_{0}=1,
+\]
+
+mert
+
+\[
+12\cdot10+7\cdot1=120+7=127.
+\]
+
+\bigskip{}
+
+Az általános megoldás alakja:
+
+\[
+x=x_{0}+\frac{7}{d}t=10+7t,
+\]
+\[
+y=y_{0}-\frac{12}{d}t=1-12t,
+\]
+
+ahol $t\in\mathbb{Z}$.
+
+\bigskip{}
+
+Most megkeressük azokat a megoldásokat, ahol $x,y\geq0$.
+
+\[
+x=10+7t\geq0\implies7t\geq-10\implies t\geq-\frac{10}{7}\implies t\geq-1,
+\]
+
+hiszen $t$ egész, tehát $t\geq-1$.
+
+\[
+y=1-12t\geq0\implies-12t\geq-1\implies12t\leq1\implies t\leq\frac{1}{12}\implies t\leq0.
+\]
+
+\bigskip{}
+
+Így a megengedett egész $t$ értékek: $t=-1,0$.
+
+\bigskip{}
+
+Ezekhez tartozó megoldások:
+\begin{itemize}
+\item Ha $t=-1$: 
+\[
+x=10+7\cdot(-1)=3,
+\]
+\[
+y=1-12\cdot(-1)=1+12=13.
+\]
+\item Ha $t=0$: 
+\[
+x=10,\quad y=1.
+\]
+\end{itemize}
+
+\textbf{Válasz:} Kétféle módon lehet összeállítani a ládákat úgy,
+hogy összesen 127 kg almát kapjunk:
+\[
+(x,y)=(3,13)\quad\text{vagy}\quad(10,1).
+\]
+\end{solution}
+
+\subsection*{Pitagoraszi számhármasok}
+\begin{definition}{def:Pitagorasz3}
+A \textbf{Pitagoraszi számhármas} három pozitív egész szám hármasa
+$(a,b,c)$, amely kielégíti a
+\[
+a^{2}+b^{2}=c^{2}
+\]
+egyenletet. Ezek a számok megfelelnek a Pitagorasz-tételnek, azaz
+egy derékszögű háromszög oldalainak egész hosszai lehetnek.
+\begin{itemize}
+\item Egy Pitagoraszi számhármas \textbf{primitív}, ha az $a$, $b$ és
+$c$ számoknak nincs közös osztójuk 1-en kívül, vagyis
+\[
+\mathrm{lnko}(a,b,c)=1.
+\]
+\item Ha létezik olyan $k>1$ egész szám, amely mindhárom számot osztja,
+akkor a számhármas \textbf{nem primitív}, vagyis
+\[
+(a,b,c)=k(a',b',c'),
+\]
+ahol $(a',b',c')$ primitív Pitagoraszi számhármas. (A nem primitív
+Pitagoraszi számhármasok ezen primitív hármasok egész szorzatai.) 
+\end{itemize}
+\end{definition}
+
+\begin{theorem}{thm:Pitagorasz-primitiv}
+Minden primitív Pitagoraszi számhármas előállítható két pozitív egész
+szám $m$ és $n$ segítségével, ahol $m>n$, $\mathrm{lnko}(m,n)=1$
+és az egyik páros, a másik páratlan. Ekkor az
+\[
+a=m^{2}-n^{2},\quad b=2mn,\quad c=m^{2}+n^{2}
+\]
+képlet adja meg a primitív Pitagoraszi számhármast. 
+\end{theorem}
+
+\begin{proof}
+Induljunk ki az $a^{2}+b^{2}=c^{2}$ egyenletből, ahol $a,b,c\in\mathbb{Z}^{+}$,
+és $\mathrm{lnko}(a,b,c)=1$.
+
+A primitív eset miatt $a$ és $b$ nem lehetnek egyszerre párosak,
+mert akkor $c$ is páros lenne, így közös osztójuk legalább 2, ami
+ellentmondás.
+
+Tegyük fel, hogy $a$ páratlan és $b$ páros.
+
+Írjuk át az egyenletet:
+\[
+a^{2}-c^{2}=-b^{2}=(a-c)(a+c).
+\]
+Tudjuk, hogy a számok páronként is relatív prímek, mert ha létezik
+egy szám, amely bármely kettőt osztja, az egyenlőség fenállása miatt
+szükségszerűen a harmadikat is osztania kéne.
+
+Mivel $b$ páros, $a$ és $c$ páratlanok, ezért $a-c$ és $a+c$
+két páros szám és mivel $\mathrm{lnko}(a,c)=1$ ezért $\mathrm{lnko}(a-c,a+c)=2$.
+\[
+\mathrm{lnko}(a-c,a+c)=d\Rightarrow d\mid(a-c);\quad d\mid(a+c)
+\]
+Összeadva:
+\[
+d\mid2a;\quad d\mid2c\Rightarrow d\mid2\cdot{lnko}(a,c)
+\]
+\[
+d\mid2\cdot1\Rightarrow d=2
+\]
+Ekkor:
+\[
+\frac{c-a}{2}\cdot\frac{c+a}{2}=\frac{b^{2}}{4},
+\]
+$\frac{c-a}{2}$ és $\frac{c+a}{2}$ relatív prím egészek és a szorzatuk
+egy négyzetszám $\Rightarrow$ ez csak abban az esetben lehetséges,
+ha úk maguk is négyzetszámok. jelenti, hogy $c-b$ és $c+b$ páros
+számok, és két egymástól különálló páros számból álló szorzatról van
+szó, amelyek szorzata egy négyzet.
+
+Így írhatjuk:
+\[
+\frac{c-a}{2}=m^{2},\frac{c+a}{2}=n^{2},
+\]
+\[
+\Rightarrow m^{2}+n^{2}=c,\quad m^{2}-n^{2}=a
+\]
+\[
+a=m^{2}-n^{2},\quad b=2mn,\quad c=m^{2}+n^{2}.
+\]
+
+
+Ellenőrizzük, hogy az így kapott hármas valóban Pitagoraszi számhármas:
+
+\[
+a^{2}+b^{2}=(m^{2}-n^{2})^{2}+(2mn)^{2}=m^{4}-2m^{2}n^{2}+n^{4}+4m^{2}n^{2}=m^{4}+2m^{2}n^{2}+n^{4}=(m^{2}+n^{2})^{2}=c^{2}.
+\]
+\end{proof}
+\textbf{Fontos feltételek (amelyek garantálják, hogy a kapott számhármas primitív):}
+\begin{itemize}
+\item $m>n>0$, 
+\item $\mathrm{lnko}(m,n)=1$, 
+\item pontosan az egyik szám páratlan, a másik páros, 
+\end{itemize}
+
+\subsection*{A Pell-egyenlet}
+
+\begin{definition}{def:Pell}
+A \textbf{Pell-egyenlet} egy másodfokú diofantikus egyenlet, melynek
+általános alakja: 
+\[
+x^{2}-Dy^{2}=1,
+\]
+ahol $D$ egy pozitív, nem négyzet egész szám. A megoldásokat az egész
+számok halmazán keressük.
+\end{definition}
+\begin{theorem}{thm:Dpozitivnemnegyzet}
+Ha $D$ pozitív nem-négyzet szám, akkor az 
+\[
+x^{2}-Dy^{2}=1
+\]
+egyenletnek mindig van végtelen sok, pozitív egész megoldása. Ez Lagrange
+tételéből következik, miszerint minden ilyen $D$ esetén az egyenletnek
+van legalább egy nem triviális megoldása ($x>1,y>0$). Ezt a legegyszerűbb
+Pell-egyenletet nevezzük alapegyenletnek, ennek az egyenletnek a legkisebb
+pozitív megoldását (legkisebb $x>1$) pedig \textbf{alapmegoldásnak}.
+\end{theorem}
+
+\begin{theorem}{thm:pozitivmegoldasokdio}
+Ha adott az alapmegoldás $(x_{1},y_{1})$, akkor az egyenlet összes
+pozitív megoldása megkapható a következő rekurzív képlettel: 
+\[
+x_{n}+y_{n}\sqrt{D}=(x_{1}+y_{1}\sqrt{D})^{n}.
+\]
+\end{theorem}
+
+\begin{problem}
+Határozzuk meg a következő Pell-egyenlet első három megoldását: 
+\[
+x^{2}-2y^{2}=1.
+\]
+\end{problem}
+
+\begin{solution}
+\[
+x^{2}-2y^{2}=1.
+\]
+
+\[
+(x_{1},y_{1})=(3,2)
+\]
+
+\[
+x_{n}+y_{n}\sqrt{2}=(3+2\sqrt{2})^{n}.
+\]
+
+Innen $x_{n}$ és $y_{n}$ kiszámítható úgy, hogy a bal oldalt binomiálisan
+kibővítjük, majd a $\sqrt{2}$ együtthatóját és a konstans részt különválasztjuk:
+\[
+x_{n}=\frac{(3+2\sqrt{2})^{n}+(3-2\sqrt{2})^{n}}{2},\qquad y_{n}=\frac{(3+2\sqrt{2})^{n}-(3-2\sqrt{2})^{n}}{2\sqrt{2}}.
+\]
+\textbf{Első három megoldás}\\
+\begin{itemize}
+\item $n=1$: 
+\[
+x_{1}=3,\quad y_{1}=2
+\]
+\item $n=2$: 
+\[
+(3+2\sqrt{2})^{2}=9+12\sqrt{2}+8=17+12\sqrt{2}
+\]
+\[
+(3-2\sqrt{2})^{2}=9-12\sqrt{2}+8=17-12\sqrt{2}
+\]
+\[
+x_{2}=\frac{17+17}{2}=17,\quad y_{2}=\frac{12\sqrt{2}+12\sqrt{2}}{2\sqrt{2}}=12
+\]
+\item $n=3$: 
+\[
+(3+2\sqrt{2})^{3}=99+70\sqrt{2}
+\]
+\[
+(3-2\sqrt{2})^{3}=99-70\sqrt{2}
+\]
+\[
+x_{3}=\frac{99+99}{2}=99,\quad y_{3}=\frac{70\sqrt{2}+70\sqrt{2}}{2\sqrt{2}}=70
+\]
+\end{itemize}
+Így az első három megoldás: 
+\[
+(3,2),\quad(17,12),\quad(99,70)
+\]
+és mindegyik kielégíti az egyenletet: 
+\[
+x^{2}-2y^{2}=1.
+\]
+\end{solution}
+\begin{theorem}{thm:Pell}
+A bővített vagy általános Pell-egyenlet alakja: 
+\[
+x^{2}-Dy^{2}=N,
+\]
+ahol $N\in\mathbb{Z}$, $N\neq1$. Az ilyen egyenletek nem minden
+esetben oldhatók meg, de ha találunk egy \textbf{sajátos megoldást}
+$(x_{0},y_{0})$, akkor az összes megoldás az alábbi módon generálható:
+
+\[
+x_{n}+y_{n}\sqrt{D}=(x_{0}+y_{0}\sqrt{D})\cdot(x_{1}+y_{1}\sqrt{D})^{n},
+\]
+ahol $(x_{1},y_{1})$ a \emph{Pell-alapegyenlet} egy megoldása, vagyis
+ahol: 
+\[
+x_{1}^{2}-Dy_{1}^{2}=1.
+\]
+
+Ebből a szorzásból visszafejthető $x_{n}$ és $y_{n}$ minden $n$-re,
+így az általános egyenlet megoldásai is végtelen sokaságot alkotnak
+(ha van legalább egy megoldás) 
+\end{theorem}
+
+\begin{theorem}{thm:Pell-megoldas}
+Ha:
+\begin{itemize}
+\item $(x_{1},y_{1})$ kielégíti a \textbf{Pell-egyenletet} $x^{2}-Dy^{2}=1$, 
+\item $(a,b)$ kielégíti az \textbf{általános Pell-típusú egyenletet} $x^{2}-Dy^{2}=m$, 
+\end{itemize}
+akkor az alábbi szabály szerint újabb megoldást kapunk: 
+\[
+x'+y'\sqrt{D}=(x_{1}+y_{1}\sqrt{D})(a+b\sqrt{D}),
+\]
+amiből: 
+\[
+x'=x_{1}a+Dy_{1}b,\quad y'=x_{1}b+y_{1}a.
+\]
+
+Ez \textbf{újabb megoldást ad az $x^{2}-Dy^{2}=m$ egyenlethez}, és
+ezt a folyamatot \textbf{ismételhetjük rekurzívan}. 
+\end{theorem}
+
+
+\section*{Házi feladatok}
+\begin{problem}
+Határozd meg a következő lineáris diofantikus egyenletek általános
+megoldásait az egész számok halmazán! 
+\begin{enumerate}
+\item $5x+8y=13$ 
+\item $4x-3y=2$ 
+\item $14x+8y=16$ 
+\item $9x-3y=10$ 
+\item $-91x+156y=247$ 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+Alpontonként a megoldások:
+\begin{enumerate}
+\item $5x+8y=13$
+
+$\mathrm{lnko}(5,8)=1\mid13$, tehát van megoldás.
+
+Először oldjuk meg a $5x+8y=1$ egyenletet.
+
+Találunk egy megoldást: $(x_{0},y_{0})=(5,-3)$,
+
+mert $5\cdot5+8\cdot(-3)=25-24=1$
+
+Szorozzuk meg 13-mal: 
+\[
+x=13\cdot5+8t=65+8t,\quad
+\]
+\[
+y=13\cdot(-3)-5t=-39-5t,\quad t\in\mathbb{Z}
+\]
+
+\item $4x-3y=2$
+
+$\mathrm{lnko}(4,3)=1\mid2$, tehát van megoldás.
+
+Oldjuk meg a $4x-3y=1$ egyenletet, azaz $4x+(-3)y=1$.
+
+Találunk egy megoldást: $(x_{0},y_{0})=(1,1)$,
+
+mert $4\cdot1-3\cdot1=4-3=1$
+
+Szorozzuk meg 2-vel: 
+\[
+x=2\cdot1+3t=2+3t,\quad
+\]
+\[
+y=2\cdot1+4t=2+4t,\quad t\in\mathbb{Z}
+\]
+
+\item $14x+8y=16$
+
+$\mathrm{lnko}(14,8)=2\mid16$, tehát van megoldás.
+
+Osszuk le az egyenletet 2-vel: $7x+4y=8$
+
+Találunk egy megoldást: $(x_{0},y_{0})=(-4,9)$,
+
+mert $7\cdot(-4)+4\cdot9=-28+36=8$
+
+Az általános megoldás: 
+\[
+x=-4+4t,\quad
+\]
+\[
+y=9-7t,\quad t\in\mathbb{Z}
+\]
+
+\item $9x-3y=10$
+
+$\mathrm{lnko}(9,3)=3\nmid10$, tehát \textbf{nincs megoldás} az egész
+számok körében.
+\item $-91x+156y=247$
+
+$\mathrm{lnko}(91,156)=13\mid247$, tehát van megoldás.
+
+Osszuk le az egyenletet 13-mal: $-7x+12y=19$
+
+Találunk egy megoldást: $(x_{0},y_{0})=(-23,-1)$,
+
+mert $-7\cdot(-23)+12\cdot(-1)=161-12=149=19\cdot1$
+
+Az általános megoldás: 
+\[
+x=-23+12t,\quad
+\]
+\[
+y=-1+7t,\quad t\in\mathbb{Z}
+\]
+
+\end{enumerate}
+\end{solution}
+\begin{problem}
+Egy ajándékcsomagba bonbonos dobozokat csomagolnak megrendelésre.
+A kereskedőknek két típusú doboz áll rendelkezésükre: 18 bonbonos
+és 30 bonbonos doboz. Hányféleképpen készíthetnek el egy 246 bonbont
+tartalmazó csomagot? Írjuk fel az összes megoldást! 
+\end{problem}
+
+\begin{solution}
+\[
+18x+30y=246,
+\]
+ahol $x$ és $y$ a 18 bonbonos, illetve 30 bonbonos dobozok száma,
+és $x,y\geq0$ egész számok.
+
+\bigskip{}
+
+\[
+d=\mathrm{lnko}(18,30)=6.
+\]
+
+Mivel $d=6$ osztja 246-ot, az egyenletnek léteznek egész megoldásai.
+
+\bigskip{}
+
+Egyszerűsítve az egyenletet 6-tal:
+
+\[
+3x+5y=41.
+\]
+
+\bigskip{}
+
+Megkeressünk egy sajátos megoldást az egyszerűsített egyenletre.
+
+$y=4$ esetén:
+
+\[
+3x+5\cdot4=3x+20=41\implies3x=21\implies x=7,
+\]
+
+tehát $(x_{0},y_{0})=(7,4)$ egy megoldás.
+
+\bigskip{}
+
+Az általános megoldás alakja az egyszerűsített egyenletre:
+
+\[
+x=x_{0}+5t=7+5t,
+\]
+\[
+y=y_{0}-3t=4-3t,\quad t\in\mathbb{Z}.
+\]
+
+\bigskip{}
+
+Mivel $x,y\geq0$, vizsgáljuk az $t$ lehetséges értékeit:
+
+\[
+x=7+5t\geq0\implies t\geq-\frac{7}{5}\implies t\geq-1,
+\]
+
+hiszen egész $t$-ről van szó, tehát $t\geq-1$.
+
+\[
+y=4-3t\geq0\implies-3t\geq-4\implies3t\leq4\implies t\leq1.
+\]
+
+\bigskip{}
+
+Így a megengedett egész $t$ értékek: $-1,0,1$.
+
+\bigskip{}
+
+Ezekhez tartozó megoldások:
+\begin{itemize}
+\item $t=-1$: 
+\[
+x=7+5\cdot(-1)=2,\quad y=4-3\cdot(-1)=7,
+\]
+\item $t=0$: 
+\[
+x=7,\quad y=4,
+\]
+\item $t=1$: 
+\[
+x=7+5=12,\quad y=4-3=1.
+\]
+\end{itemize}
+\bigskip{}
+
+\textbf{Válasz:} Háromféleképpen állítható össze a csomag:
+
+\[
+(x,y)=(2,7),\quad(7,4),\quad(12,1).
+\]
+\end{solution}
+\begin{problem}
+Egy iskola ceruzákat vásárol. A ceruzák 14-es és 21-es csomagban kaphatóak.
+Hányféle lehetősége van az iskolának 315 ceruzát vásárolni? Ezekből
+melyik lenne a legolcsóbb lehetőség, ha tudjuk, hogy egy 14-es csomag
+ceruza 8 lejbe, egy 21-es csomag pedig 14 lejbe kerül? 
+\end{problem}
+
+\begin{solution}
+\[
+14x+21y=315,
+\]
+ahol $x$ és $y$ a 14-es, illetve 21-es csomagok száma, $x,y\geq0$
+egész számok.
+
+\[
+d=\mathrm{lnko}(14,21)=7.
+\]
+
+Mivel $7\mid315$, léteznek megoldások.
+
+\bigskip{}
+
+Egyszerűsítve 7-tel:
+
+\[
+2x+3y=45.
+\]
+
+\bigskip{}
+
+Keressünk egy sajátos megoldást:
+
+$y=1$:
+
+\[
+2x+3=45\implies2x=42\implies x=21,
+\]
+
+tehát $(x_{0},y_{0})=(21,1)$.
+
+Az általános megoldás:
+
+\[
+x=x_{0}+\frac{3}{d'}t=21+3t,
+\]
+\[
+y=y_{0}-\frac{2}{d'}t=1-2t,\quad t\in\mathbb{Z},
+\]
+
+ahol $d'=1$ (mert 2 és 3 relatív prímek).
+
+\bigskip{}
+
+Vizsgáljuk a nemnegatív egész megoldásokat:
+
+\[
+x=21+3t\geq0\implies t\geq-7,
+\]
+\[
+y=1-2t\geq0\implies-2t\geq-1\implies t\leq\frac{1}{2}\implies t\leq0.
+\]
+
+\bigskip{}
+
+A megengedett $t$-k: $-7,-6,\ldots,0$.
+
+\bigskip{}
+
+Így a megoldások: 
+\[
+(x,y)=(0,15),\quad(3,13),\quad(6,11),\quad(9,9),\quad(12,7),\quad(15,5),\quad(18,3),\quad(21,1).
+\]
+
+\textbf{Költségszámítás:}
+
+Egy 14-es csomag ára 8 lej, egy 21-esé 14 lej.
+
+\[
+\text{Ár}(t)=8x+14y=8(21+3t)+14(1-2t)=168+24t+14-28t=182-4t.
+\]
+
+Az ár akkor a legkisebb, ha $t$ a lehető legnagyobb, azaz $t=0$.
+
+\[
+\text{Legolcsóbb megoldás: }(x,y)=(21,1),\quad\text{ár}=8\cdot21+14\cdot1=182.
+\]
+\end{solution}
+\begin{problem}
+Határozd meg az összes primitív pitagoraszi számhármast, amelyben
+$c<50$ ($a^{2}+b^{2}=c^{2}$)! 
+\end{problem}
+
+\begin{solution}
+Mivel $c=m^{2}+n^{2}<50$, ezért
+
+\[
+m^{2}+n^{2}<50.
+\]
+
+Mivel $m>n>0$, egész számok, relatív prímek és különböző paritásúak,
+ezért próbáljuk végig a következő értékeket:
+\begin{itemize}
+\item $m=2,n=1$:
+
+$c=4+1=5<50$
+
+\[
+a=2^{2}-1^{2}=3,\quad b=2\cdot2\cdot1=4,\quad c=5.
+\]
+
+\item $m=4,n=1$:
+
+$c=16+1=17<50$
+
+\[
+a=16-1=15,\quad b=2\cdot4\cdot1=8,\quad c=17.
+\]
+
+\item $m=6,n=1$:
+
+$c=36+1=37<50$
+
+\[
+a=36-1=35,\quad b=2\cdot6\cdot1=12,\quad c=37.
+\]
+
+\item $m=8,n=1$:
+
+$c=64+1=65\not<50$ -- kizárjuk.
+\item $m=3,n=2$:
+
+$c=9+4=13<50$
+
+\[
+a=9-4=5,\quad b=2\cdot3\cdot2=12,\quad c=13.
+\]
+
+\item $m=5,n=2$:
+
+$c=25+4=29<50$
+
+\[
+a=25-4=21,\quad b=2\cdot5\cdot2=20,\quad c=29.
+\]
+
+\item $m=7,n=2$:
+
+$c=49+4=53\not<50$ -- kizárjuk.
+\item $m=4,n=3$:
+
+$c=16+9=25<50$
+
+\[
+a=16-9=7,\quad b=2\cdot4\cdot3=24,\quad c=25.
+\]
+
+\item $m=8,n=3$:
+
+$c=64+9=73\not<50$) - kizárjuk
+\item $m=5,n=4$:
+
+$c=25+16=41<50$
+
+\[
+a=25-16=9,\quad b=2\cdot5\cdot4=40,\quad c=41.
+\]
+
+\item $m=7,n=4$:
+
+$c=49+16=65\not<50$ -- kizárjuk.
+\item $m=6,n=5$:
+
+$c=36+25=61\not<50$ -- kizárjuk.
+
+\end{itemize}
+Mivel $n=5$-re nem találtunk egy értéket sem, felesleges ennél fennebb
+keresni.
+
+\textbf{Megoldások:}
+
+\[
+(3,4,5),\quad(15,8,17),\quad(35,12,37),\quad(5,12,13),\quad(21,20,29),\quad(7,24,25),\quad(9,40,41).
+\]
+\end{solution}
+
+\begin{problem}
+Számold ki három darab sajátos megoldását a következő Pell-egyenletnek,
+majd írd fel az általános megoldást: 
+\[
+x^{2}-5y^{2}=1.
+\]
+\end{problem}
+
+\begin{solution}
+Az egyenlet: 
+\[
+x^{2}-5y^{2}=1.
+\]
+
+Elsőként keressük egy sajátos megoldást. Próbálkozással találjuk,
+hogy: 
+\[
+(x_{1},y_{1})=(9,4),
+\]
+mert 
+\[
+9^{2}-5\cdot4^{2}=81-5\cdot16=81-80=1.
+\]
+
+Az általános megoldásokat az alábbi formula segítségével kapjuk: 
+\[
+x_{n}+y_{n}\sqrt{5}=(9+4\sqrt{5})^{n}.
+\]
+
+A jobb oldalt binomiálisan kibővítve és szétválasztva a $\sqrt{5}$-ös
+és konstans részeket, az $x_{n}$ és $y_{n}$ a következőképpen számolható:
+\[
+x_{n}=\frac{(9+4\sqrt{5})^{n}+(9-4\sqrt{5})^{n}}{2},\quad y_{n}=\frac{(9+4\sqrt{5})^{n}-(9-4\sqrt{5})^{n}}{2\sqrt{5}}.
+\]
+
+\textbf{Az első három megoldás:}\\
+\begin{itemize}
+\item $n=1$: 
+\[
+x_{1}=9,\quad y_{1}=4.
+\]
+\item $n=2$: 
+\[
+(9+4\sqrt{5})^{2}=81+72\sqrt{5}+80=161+72\sqrt{5},
+\]
+\[
+(9-4\sqrt{5})^{2}=81-72\sqrt{5}+80=161-72\sqrt{5},
+\]
+így 
+\[
+x_{2}=\frac{161+161}{2}=161,\quad y_{2}=\frac{72\sqrt{5}+72\sqrt{5}}{2\sqrt{5}}=72.
+\]
+\item $n=3$: 
+\[
+(9+4\sqrt{5})^{3}=(9+4\sqrt{5})\cdot(161+72\sqrt{5})=2889+1292\sqrt{5},
+\]
+\[
+(9-4\sqrt{5})^{3}=(9-4\sqrt{5})\cdot(161-72\sqrt{5})=2889-1292\sqrt{5},
+\]
+így 
+\[
+x_{3}=\frac{2889+2889}{2}=2889,\quad y_{3}=\frac{1292\sqrt{5}+1292\sqrt{5}}{2\sqrt{5}}=1292.
+\]
+\end{itemize}
+Tehát az első három megoldás: 
+\[
+(9,4),\quad(161,72),\quad(2889,1292).
+\]
+\end{solution}
+\begin{problem}
+Számold ki három darab sajátos megoldását a következő Pell-egyenletnek,
+majd írd fel az általános megoldást: $x^{2}-7y^{2}=9$. 
+\end{problem}
+
+\begin{solution}
+Az egyenlet: 
+\[
+x^{2}-7y^{2}=9.
+\]
+
+Keressük meg az első sajátos megoldást:
+
+\[
+(x_{0},y_{0})=(4,1),
+\]
+mert: 
+\[
+4^{2}-7\cdot1^{2}=16-7=9.
+\]
+
+A Pell-alapegyenlet: 
+\[
+x^{2}-7y^{2}=1,
+\]
+egy megoldása: 
+\[
+(x_{1},y_{1})=(8,3),
+\]
+mert: 
+\[
+8^{2}-7\cdot3^{2}=64-63=1.
+\]
+
+Ez alapján a következő megoldást úgy kapjuk, hogy megszorozzuk a két
+gyökös alakot:
+
+\[
+x'+y'\sqrt{7}=(8+3\sqrt{7})\cdot(4+\sqrt{7}).
+\]
+
+Végezzük el a szorzást:
+
+\[
+=(8\cdot4+8\cdot\sqrt{7}+3\sqrt{7}\cdot4+3\cdot7)=32+8\sqrt{7}+12\sqrt{7}+21=53+20\sqrt{7}.
+\]
+
+Tehát a második sajátos megoldás: 
+\[
+(x_{2},y_{2})=(53,20).
+\]
+
+Folytatjuk a rekurziót:
+
+\[
+x''+y''\sqrt{7}=(8+3\sqrt{7})\cdot(53+20\sqrt{7}).
+\]
+
+Számoljuk ki:
+
+\[
+=8\cdot53+8\cdot20\sqrt{7}+3\cdot53\sqrt{7}+3\cdot20\cdot7=424+160\sqrt{7}+159\sqrt{7}+420=844+319\sqrt{7}.
+\]
+
+Tehát a harmadik sajátos megoldás: 
+\[
+(x_{3},y_{3})=(844,319).
+\]
+
+\bigskip{}
+
+\textbf{Általános megoldás:}
+
+Az összes megoldás: 
+\[
+x_{n}+y_{n}\sqrt{7}=(4+\sqrt{7})\cdot(8+3\sqrt{7})^{n},
+\]
+azaz: 
+\[
+x_{n}=\text{Re}\left[(4+\sqrt{7})\cdot(8+3\sqrt{7})^{n}\right],\quad y_{n}=\text{a }\sqrt{7}\text{ együtthatója}.
+\]
+
+\bigskip{}
+
+\textbf{Első három megoldás:}
+
+\[
+(x,y)=(4,1),\quad(53,20),\quad(844,319).
+\]
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Gergely Verona]
+Oldjuk meg a $x+y=x^{2}-xy+y^{2}$ egyenletet, ahol $x$ és $y$
+egész számok. \emph{(KöMaL, 2011) }
+\end{extraproblem}
+
+\begin{solution}
+Legyen $y=x+a$, ahol $a\in\mathbb{Z}$. Ekkor az egyenlet: $x+x+a=x^{2}-x(x+a)+(x+a)^{2}$,
+
+azaz
+
+\[
+2x+a=x^{2}-x^{2}-xa+x^{2}+2xa+a^{2},
+\]
+
+\[
+0=x^{2}+xa-2x+a^{2}-a,
+\]
+
+\[
+0=x^{2}+(a-2)x+\left(a^{2}-a\right).
+\]
+
+A megoldás $a$ függvényében:
+
+\[
+x_{1,2}=\frac{-a+2\pm\sqrt{(a-2)^{2}-4\cdot1\cdot(a^{2}-a)}}{2\cdot1}.
+\]
+
+A másodfokú egyenletnek akkor van megoldása, ha a diszkriminánsa nemnegatív:
+
+\[
+D=(a-2)^{2}-4(a^{2}-a)\geq0,
+\]
+
+\[
+a^{2}-4a+4-4a^{2}+4a\geq0,
+\]
+
+\[
+4-3a^{2}\geq0,
+\]
+
+\[
+\frac{4}{3}\geq a^{2},
+\]
+
+\[
+\frac{2}{\sqrt{3}}\geq|a|.
+\]
+
+Az $a$ lehetséges értékei a következők:
+
+$a=-1$, ekkor $y=x-1$, $D=1$, azaz $x_{1,2}=\frac{1+2\pm\sqrt{1}}{2},\quad x_{1}=2,\quad x_{2}=1;$\\
+
+$a=0$, ekkor $y=x$, $D=4$, azaz $x_{3,4}=\frac{2\pm\sqrt{4}}{2},\quad x_{3}=2,\quad x_{4}=0;$\\
+
+$a=1$, ekkor $y=x+1$, $D=1$, azaz $x_{5,6}=\frac{-1+2\pm\sqrt{1}}{2},\quad x_{5}=1,\quad x_{6}=0.$
+
+\medskip{}
+
+Ha $a=-1$ és $x_{1}=2$, akkor $y_{1}=x_{1}-1=1$.\\
+ Ha $a=-1$ és $x_{2}=1$, akkor $y_{2}=x_{2}-1=0$. \\
+ Ha $a=0$ és $x_{3}=2$, akkor $y_{3}=x_{3}=2$.\\
+ Ha $a=0$ és $x_{4}=0$, akkor $y_{4}=x_{4}=0$. \\
+ Ha $a=1$ és $x_{5}=1$, akkor $y_{5}=x_{5}+1=2$.\\
+ Ha $a=1$ és $x_{6}=0$, akkor $y_{6}=x_{6}+1=1$.
+
+\medskip{}
+
+Tehát a megoldások a következő $(x,y)$ számpárok:
+
+\[
+(2,1),\quad(1,0),\quad(2,2),\quad(0,0),\quad(1,2),\quad(0,1).
+\]
+\end{solution}
+\begin{extraproblem}[Kis Andrea-Tímea]
+Legyen $(a,b,c)\in\mathbb{Z}^{3}$. A kongruencia-módszert felhasználva
+mutassuk meg, hogy az 
+\[
+a^{2}+b^{2}=3c^{2}
+\]
+egyenletnek nincsen a triviálistól különböző megoldása! 
+\end{extraproblem}
+
+\begin{solution}
+Tegyük fel indirekt módon, hogy az egyenletnek van a triviálistól
+különböző $(a,b,c)$ megoldása, majd legyen 
+\[
+d:=\text{lnko}(a,b,c).
+\]
+
+Az egyenletet $d^{2}$-vel leosztva azt kapjuk, hogy 
+\[
+\left(\frac{a}{d}\right)^{2}+\left(\frac{b}{d}\right)^{2}=\left(\frac{c}{d}\right)^{2},
+\]
+azaz 
+\[
+\left(\frac{a}{d},\frac{b}{d},\frac{c}{d}\right)\in\mathbb{Z}^{3}
+\]
+is megoldás. Mivel ezek a számok relatív prímek, ezért elég azt belátni,
+hogy nincs olyan megoldás-hármas, amelyek legnagyobb közös osztója
+$1$-gyel egyenlő. Ha $(a,b,c)$ hármas megoldása az egyenletnek,
+akkor a kongruencia-módszer és az előző megfigyelés szerint $(a,b,c)\in\mathbb{Z}^{3}$
+választható olyanok, hogy $\text{lnko}(a,b,c)=1$ legyen. Mindez azt
+jelenti, hogy 
+\[
+3\mid(a^{2}+b^{2})
+\]
+és ha $k$ négyzetszám, akkor 
+\[
+k\equiv0\pmod 3\quad\text{vagy}\quad k\equiv1\pmod 3.
+\]
+Így külön-külön is igaz, hogy $3\mid a^{2}$ és $3\mid b^{2}$, ahonnan
+már következik, hogy 
+\[
+9\mid a^{2},\qquad9\mid b^{2},\qquad9\mid(a^{2}+b^{2})=3c^{2},
+\]
+és fennállnak a $3\mid a,3\mid b,3\mid c$ oszthatósági relációk.
+Ez ellentmond annak, hogy 
+\[
+\text{lnko}(a,b,c)=1.
+\]
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Oldjuk meg az egész számok körében a következő diofantikus egyenletet:
+\[
+x^{2}-5y^{2}=4.
+\]
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+A Pell--féle egyenlethez hasonló alak: $x^{2}-5y^{2}=4$. Először
+keressünk primitív megoldásokat, majd a recidív formulával generáljuk
+az összeset.
+\begin{enumerate}
+\item \textbf{Kezdeti megoldások:} Próbáljuk kis $\lvert y\rvert$-ra: 
+\[
+y=0:\;x^{2}=4\;\Rightarrow\;x=\pm2.\quad y=1:\;x^{2}=4+5=9\;\Rightarrow\;x=\pm3.
+\]
+További kis $y$ esetén $\lvert y\rvert\ge2$ már $5y^{2}\ge20$,
+így $x^{2}\ge24$ és nem ad új kis egész megoldást. Tehát a primitív
+megoldások: 
+\[
+(x,y)=(\pm2,0),\;(\pm3,\pm1).
+\]
+\item \textbf{Pell-egyenlet alap:} A hozzá tartozó homogén Pell-egyenlet
+\[
+u^{2}-5v^{2}=1
+\]
+alapmegoldása $(u_{1},v_{1})=(9,4)$, mert $9^{2}-5\cdot4^{2}=81-80=1$.
+\item \textbf{Általános recidíva:} Ha $(x_{0},y_{0})$ egy megoldás a $4$-es
+egyenletre és $(u_{k},v_{k})$ a Pell-egyenlet $k$. megoldása, akkor
+\[
+x+y\sqrt{5}=(x_{0}+y_{0}\sqrt{5})\,(u_{k}+v_{k}\sqrt{5}).
+\]
+Így minden megoldás: 
+\[
+x_{k}+y_{k}\sqrt{5}=\pm(2+0\sqrt{5})\,(9+4\sqrt{5})^{k},\quad x_{k}'+y_{k}'\sqrt{5}=\pm(3+1\sqrt{5})\,(9+4\sqrt{5})^{k},\quad k\in\mathbb{Z}_{\ge0}.
+\]
+Ezek bontása (binomiális tétellel) adja az összes egész $(x,y)$-párost. 
+\end{enumerate}
+\end{solution}
+\vspace{1em}
+
+\begin{extraproblem}[Kovács Levente]
+Oldjuk meg egész számok között az alábbi lineáris diofantikus egyenletrendszert:
+\[
+\begin{cases}
+3x+4y+5z=6,\\
+2x-y+3z=1.
+\end{cases}
+\]
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+Írjuk fel a szabad változók segítségével.
+\begin{enumerate}
+\item \textbf{Mátrixos alak:} 
+\[
+\begin{pmatrix}3 & 4 & 5\\
+2 & -1 & 3
+\end{pmatrix}\begin{pmatrix}x\\
+y\\
+z
+\end{pmatrix}=\begin{pmatrix}6\\
+1
+\end{pmatrix}.
+\]
+\item \textbf{Első egyenlet megoldása $x$-re:} 
+\[
+3x=6-4y-5z\;\Rightarrow\;x=2-\tfrac{4}{3}y-\tfrac{5}{3}z.
+\]
+A jobb oldalnak egésznek kell lennie, tehát $4y+5z\equiv0\pmod 3$.
+Mivel $4\equiv1$ és $5\equiv2$ modulo 3, 
+\[
+y+2z\equiv0\pmod 3\;\Longrightarrow\;y\equiv z\pmod 3.
+\]
+Legyen $y=z+3t$, $t\in\mathbb{Z}$.
+\item \textbf{Behelyettesítés a második egyenletbe:} 
+\[
+2x-y+3z=1.
+\]
+Először $x$-et is írjuk $z,t$-ben: 
+\[
+x=2-\tfrac{4}{3}(z+3t)-\tfrac{5}{3}z=2-\tfrac{4z+12t+5z}{3}=2-\tfrac{9z+12t}{3}=2-3z-4t.
+\]
+Második egyenlet: 
+\[
+2(2-3z-4t)-(z+3t)+3z=1\;\Longrightarrow\;4-6z-8t-z-3t+3z=1
+\]
+\[
+4-4z-11t=1\;\Longrightarrow\;4z+11t=3.
+\]
+\item \textbf{Lineáris diofantikus megoldása:} Megoldjuk $4z+11t=3$. Egy
+partikuláris megoldás: $t=1$ esetén $4z=3-11=-8$, tehát $z=-2$.
+A homogén megoldás a nulláris egyenlethez: $4z+11t=0$ paraméterezésével
+$z=11s$, $t=-4s$. Így az általános: 
+\[
+z=-2+11s,\quad t=1-4s,\quad s\in\mathbb{Z}.
+\]
+\item \textbf{Vissza $x,y$-hoz:} 
+\[
+y=z+3t=(-2+11s)+3(1-4s)=-2+11s+3-12s=1-s.
+\]
+\[
+x=2-3z-4t=2-3(-2+11s)-4(1-4s)=2+6-33s-4+16s=4-17s.
+\]
+
+Tehát az összes egész megoldás: 
+\[
+\boxed{(x,y,z)=(4-17s,\;1-s,\;-2+11s),\quad s\in\mathbb{Z}.}
+\]
+
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Határozd meg az összes olyan $p$ prímszámot, amely felírható 
+\[
+p^{n}=x^{3}+y^{3}
+\]
+alakban valamilyen $x,y,n\in\mathbb{N}^{*}$ segítségével! 
+\begin{flushright}
+(MO, Magyarország, 2000) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Könnyen észrevehető, hogy $p=2$ és $p=3$ megoldások, mivel $2^{1}=1^{3}+1^{3}$
+és $3^{2}=1^{3}+2^{3}.$ Lássuk be, hogy ha $p\ge5$, akkor nincs
+megoldása az egyenletnek! Tételezzük fel, hogy létezik megoldás és
+válasszunk ki egy olyan megoldást, amelyre $n$ minimális. Mivel $x$
+és $y$ közül legalább az egyik 1-nél nagyobb, az 
+\[
+x^{3}+y^{3}=(x+y)(x^{2}-xy+y^{2})
+\]
+felbontásban $x+y\ge3$ és $x^{2}-xy+y^{2}=(x-y)^{2}+xy\ge2$. Tehát
+az $(x+y)$ és $(x^{2}-xy+y^{2})$ tényezők mind oszthatók $p$-vel
+és ezért 
+\[
+3xy=(x+y)^{2}-(x^{2}-xy+y^{2})
+\]
+is osztható $p$-vel. Ez viszont azt jelenti, hogy $x$ is és $y$
+is osztható $p$-vel (mivel $x+y$ osztható $p$-vel). Következik,
+hogy $x^{3}+y^{3}\ge2p^{3}$, tehát $n>3$ és 
+\[
+p^{n-3}=\left(\frac{x}{p}\right)^{3}+\left(\frac{y}{p}\right)^{3},
+\]
+ami ellentmond az $n$ minimalitásának. 
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Alf nyolcosztályos elemi iskolába járt. Minden tanév végén megmutatta
+apjának a bizonyítványát. Ha Alf sikeresen elvégezte az évfolyamot,
+annyi macskát kapott apjától, amennyi életkorának és az adott évfolyam
+számának szorzata. Tanulmányai során Alf egyszer megbukott. Amikor
+befejezte az elemi iskolát, észrevette, hogy az apjától kapott macskák
+száma 1998-cal osztható. Melyik évfolyamot ismételte meg Alf? 
+\end{extraproblem}
+
+\begin{solution}
+Alf nyolcosztályos elemi iskolába járt, de egy évfolyamot megismételt,
+tehát összesen 9 évig tanult.
+
+Minden év végén annyi macskát kapott, amennyi az aktuális életkorának
+és az évfolyam számának szorzata.
+
+Tegyük fel, hogy az $x$-edik évfolyamot ismételte meg.
+
+Alf 6 évesen kezdte az iskolát, így az $i$-edik iskolai év végén
+$5+i$ éves volt.
+
+Az alap macskaszám (ismétlés nélkül) tehát: 
+\[
+\sum_{i=1}^{8}i(5+i)=\sum_{i=1}^{8}(5i+i^{2})=5\cdot\sum_{i=1}^{8}i+\sum_{i=1}^{8}i^{2}
+\]
+
+Ismeretes: 
+\[
+\sum_{i=1}^{8}i=36,\quad\sum_{i=1}^{8}i^{2}=204
+\]
+
+Így: 
+\[
+\text{Összes macska}=5\cdot36+204=384
+\]
+
+Az ismétlés miatt az $x$-edik évfolyamhoz további $x(5+x)$ macskát
+kapott: 
+\[
+M=384+x(5+x)
+\]
+
+Tudjuk, hogy $M$ osztható 1998-cal: 
+\[
+384+x(x+5)\equiv0\mod{1998}\Rightarrow x(x+5)=1614\Rightarrow x^{2}+5x-1614=0
+\]
+
+Megoldva: 
+\[
+x=\frac{-5\pm\sqrt{25+6456}}{2}=\frac{-5\pm\sqrt{6481}}{2}\Rightarrow x=37
+\]
+
+Mivel csak $x=1,2,\dots,8$ jöhet szóba évfolyamként, a megfelelő
+érték: $x=7$
+
+Tehát Alf a 7. évfolyamot ismételte meg.
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+Oldd meg az egész számok halmazán a 
+\[
+15x^{2}-7y^{2}=9
+\]
+egyenletet. 
+\end{extraproblem}
+
+\begin{solution}
+Alakítsuk át az egyenletet a következő alakra 
+\[
+15x^{2}-7y^{2}=9\iff15x^{2}-9=7y^{2}\iff3(5x^{2}-3)=7y^{2}.
+\]
+Mivel az egyenlet bal oldala mindig osztható 3-mal, ezért létezik
+$l$ egész szám úgy, hogy $y=3l$. Az egyenlet a következőképpen alakul
+\[
+5x^{2}-3=21l^{2}\iff5x^{2}=3(7l^{2}+1).
+\]
+Az előzőhöz hasonló gondolatmenet alapján, létezik $k$ egész úgy,
+hogy $x=3k$. Innen az egyenletbe ezt behelyettesítve 
+\[
+15k^{2}=7l^{2}+1
+\]
+Tekintsük az egyenletet $\mod{}$ 3. A bal oldal mindig osztható 3-mal,
+tehát $15k^{2}\equiv0\mod 3$. Tudjuk, hogy $l^{2}\equiv0\mod 3$
+vagy $l^{2}\equiv1\mod 3$, innen $7l^{2}\equiv0\mod 3$ vagy $7l^{2}\equiv1\mod 3$.
+Tehát, $7l^{2}+1\equiv1\mod 3$ vagy $7l^{2}+1\equiv2\mod 3$. Mivel
+egyik esetben sem osztható $7l^{2}+1$ 3-mal, ezért a $15k^{2}=7l^{2}+1$
+egyenletnek nincsen megoldása az egész számok halmazán, tehát az eredeti
+egyenletnek sincsenek megoldásai az egész számok halmazán. 
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Egy boltban kávét 37 lej/kg, teát pedig 23 lej/kg áron árulnak. Egy
+vásárló pontosan 500 lejt költött. Tudjuk, hogy kizárólag egész kg
+mennyiségeket vásárolt, és legalább 1-1 kg-ot mindkettőből.
+\begin{enumerate}
+\item Hányféleképpen vásárolhatott? 
+\item Melyik megoldás esetén vásárolta a legtöbb árut összesen? 
+\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+Legyen $x$ a vásárolt kávé (kg-ban), $y$ pedig a vásárolt tea. Ekkor
+az alábbi egyenletet kapjuk:
+
+\[
+37x+23y=500\tag{1}
+\]
+
+\textbf{Megoldhatóság:} $\gcd(37,23)=1$, tehát az egyenletnek van
+egész megoldása.
+
+\textbf{Egy partikuláris megoldás:} Euklideszi algoritmus segítségével:
+
+\begin{align*}
+37 & =1\cdot23+14\\
+23 & =1\cdot14+9\\
+14 & =1\cdot9+5\\
+9 & =1\cdot5+4\\
+5 & =1\cdot4+1\\
+4 & =4\cdot1+0
+\end{align*}
+
+Visszahelyettesítés:
+
+\[
+1=5-1\cdot4=2\cdot5-1\cdot9=2(14-1\cdot9)-1\cdot9=\ldots=9\cdot23-5\cdot37
+\]
+
+Tehát:
+
+\[
+37(-5)+23(9)=1\Rightarrow x_{0}=-5,\quad y_{0}=9
+\]
+
+Szorzunk 500-zal:
+
+\[
+x=-2500+23t,\quad y=4500-37t,\quad t\in\mathbb{Z}
+\]
+
+\textbf{Feltételek:} $x,y\geq1$
+
+\begin{align*}
+-2500+23t & \geq1\Rightarrow t\geq\left\lceil \frac{2501}{23}\right\rceil =109\\
+4500-37t & \geq1\Rightarrow t\leq\left\lfloor \frac{4499}{37}\right\rfloor =121
+\end{align*}
+
+Tehát $t\in\{109,110,\dots,121\}$, azaz \textbf{13 megoldás} létezik.
+
+\textbf{(b) Minimális $x+y$:}
+
+\[
+x+y=(-2500+23t)+(4500-37t)=2000-14t
+\]
+
+Ez minimális, ha $t$ maximális, azaz $t=121$:
+
+\[
+x=-2500+23\cdot121=283,\quad y=4500-37\cdot121=23,\quad x+y=306
+\]
+
+\textbf{Válasz:} 13-féleképpen vásárolhatott. A legnagyobb tömegű
+vásárlás 306 kg (283 kg kávé és 23 kg tea).
+
+Feladat 7
+
+Oldd meg az egész számok halmazán:
+
+\[
+105x+77y=7
+\]
+
+majd határozd meg azokat a pozitív megoldáspárokat $(x,y)$, amelyekre
+$x+y$ minimális.
+
+Megoldás 7
+
+Mivel $\gcd(105,77)=7$ és $7\mid7$, az egyenlet megoldható.
+
+Osszuk el az egyenletet 7-tel:
+
+\[
+15x+11y=1\tag{2}
+\]
+
+\textbf{Euklideszi algoritmus:}
+
+\begin{align*}
+15 & =1\cdot11+4\\
+11 & =2\cdot4+3\\
+4 & =1\cdot3+1\\
+3 & =3\cdot1+0
+\end{align*}
+
+Visszahelyettesítéssel:
+
+\[
+1=4-1\cdot3=4-1(11-2\cdot4)=3\cdot4-1\cdot11=3(15-11)-1\cdot11=3\cdot15-4\cdot11
+\]
+
+Tehát:
+
+\[
+x_{0}=3,\quad y_{0}=-4
+\]
+
+Szorzunk 7-tel:
+
+\[
+x=21+11t,\quad y=-28-15t,\quad t\in\mathbb{Z}
+\]
+
+\textbf{Feltételek:} $x,y>0$
+
+\begin{align*}
+21+11t & >0\Rightarrow t>-2\Rightarrow t\geq-1\\
+-28-15t & >0\Rightarrow t<-\frac{28}{15}\Rightarrow t\leq-2
+\end{align*}
+
+Nincs olyan $t\in\mathbb{Z}$, amelyre $x,y$ egyszerre pozitívak.
+Tehát az egyenletnek \textbf{nincs pozitív egész megoldása}.
+
+\textbf{Válasz:} Az egyenletnek léteznek egész megoldásai, de \textbf{nincs
+olyan megoldáspár}, ahol $x>0$ és $y>0$.
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+Oldjuk meg az egész számok halmazán a $3x^{2}+5xy+2y^{2}-x-y=0$
+egyenletet! \emph{(I. Hegyi Lajos Emlékverseny, 1997, Szováta) }
+\end{extraproblem}
+
+\begin{solution}
+A feladatbeli egyenlúség a $2(x+y)^{2}+x(x+y)-x-y=0$ vagyis $(x+y)(3x+2y-1)=0$
+alakban írható, ahonnan következik, hogy $x+y=0$ vagy $3x+2y-1=0.$
+
+\textbf{I. eset.} $x+y=0$
+
+Ennek megoldásai az $(u,-u)$ alakú számpárok, ahol $u\in\mathbb{Z}$
+
+\textbf{II. eset.} $3x+2y=1$
+
+Ennek egy sajátos megoldása $x_{0}=1$ és $y_{0}=-1$, tehát az összes
+megoldása $x=1+2t$ és $y=-1-3t$ alakú, ahol $t\in\mathbb{Z}.$
+
+Így a megoldáshalmaz $M=\{(k,-k),(1+2k,-1-3k)|k\in\mathbb{Z}\}.$
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+Határozzuk meg az $x^{2}+2y^{2}=z^{2},$ $x,y,z\in\mathbb{N}$ egyenlet
+összes megoldását! 
+\end{extraproblem}
+
+\begin{solution}
+Ha van közös osztója bármely kettőnek, akkor az a harmadiknak is osztója,
+így a primitív megoldásokat keressük, azaz legyenek a számok páronként
+relatív prímek. Az egyenlet $2y^{2}=z^{2}-x^{2}\equiv2y^{2}=(z-x)(z+x)$
+alakba írható.
+
+Ha $d$ a $z-x$ és $z+x$ közös osztója, akkor $d$ a $2x$ és $2z$
+számoknak is közös osztója, de mivel $x$ és $z$ relatív prímek,
+következik, hogy $d\in\{1,2\}$. A $(z-x)(z+x)$ szorzat páros, ugyanakkor
+$z-x$ és $z+x$ azonos paritású, következik, hogy mindkettő páros,
+tehát legnagyobb közös osztójuk 2.
+
+Így $\dfrac{y^{2}}{2}=\dfrac{z-x}{2}\cdot\dfrac{z+x}{2},$ ahonnan
+$\dfrac{z-x}{2}=m^{2}$ és $\dfrac{z+x}{2}=2n^{2}$ vagy $\dfrac{z-x}{2}=2n^{2}$
+és $\dfrac{z+x}{2}=m^{2}$, ahol $m$ páratlan és $(m,n)=1$.
+
+Tehát a primitív megoldások $x=2n^{2}-m^{2}>0,y=2mn,z=m^{2}+2n^{2}$
+vagy $x=m^{2}-2n^{2}>0,y=2mn,z=m^{2}+2n^{2}$ alakúak, ahol $m,n\in\mathbb{N}$,
+$m$ páratlan és $(m,n)=1$.
+
+Az összes megoldás pedig $x=k(2n^{2}-m^{2})>0,y=2kmn,z=k(m^{2}+2n^{2})$
+vagy $x=k(m^{2}-2n^{2})>0,y=2kmn,z=k(m^{2}+2n^{2})$ alakúak, ahol
+$m,n,k\in\mathbb{N}$, $m$ páratlan és $(m,n)=1$.
+\end{solution}
+
+\section{Faktorizációs és paraméterezéses módszerek, moduláris aritmetika, végtelen leszállás}\label{sec:vegtelen_leszallas}
+\begin{description}
+	{\large \item [{Szerző}] Száfta Antal (Didaktikai mesteri -- Matematika, II. év) }
+\end{description}
+
+
+%%%%%%%%%%%%%%%%%%%%
+
+
+\subsection*{Bevezetés}
+
+\begin{definition}{def:dioegyenlet}
+	A \textbf{diofantoszi egyenlet} olyan egyenlet,
+	amelyben \textbf{egész számok} (vagy természetes számok) megoldásait
+	keressük, és amelynek együtthatói is \textbf{egészek}.
+	\vspace{0.3cm}
+	\textbf{Általános alak:} 
+	\[
+	f(x_{1},x_{2},\ldots,x_{n})=0,
+	\]
+	ahol $f$ polinomiális kifejezés, és $x_{1},x_{2},\ldots,x_{n}\in\mathbb{Z}$.
+\end{definition}
+\begin{itemize}
+	\item A megoldások halmaza \textbf{diszkrét} -- általában \textbf{egész}
+	vagy \textbf{természetes számokat} keresünk. 
+	\item Nem minden valós számokra megoldható egyenletnek van egész megoldása. 
+	\item A diofantoszi egyenletek sok esetben csak \textbf{véges számú} megoldással
+	rendelkeznek, vagy akár \textbf{egyáltalán nincs} megoldásuk. 
+\end{itemize}
+\textbf{Példa:} 
+\begin{itemize}
+	\item Diofantoszi: $x^{2}+y^{2}=z^{2}$ (Pitagoraszi számhármasok) 
+	\item Nem diofantoszi: $x^{2}+\sqrt{2}=y$ valós számok körében. 
+\end{itemize}
+%%%%%%%%%%%%%%%%%%
+
+\subsection*{Faktorizációs módszer}
+
+Ez a módszer abból indul ki, hogy egy adott egyenletet szorzattá próbálunk
+alakítani. A szorzat felírása után azt vizsgáljuk, milyen egész számok
+szorzataként állhat elő az adott jobb vagy bal oldal. Ez gyakran lényegesen
+leegyszerűsíti a megoldást.
+
+A faktorizáció módszere akkor különösen hatékony, ha az egyenlet bal
+vagy jobb oldala jól faktorizálható, vagy az alakja emlékeztet ismert
+azonosságokra (például: $a^{2}-b^{2}=(a-b)(a+b)$).
+
+\noindent\textbf{Előnyök:} 
+\begin{itemize}
+	\item Konstruktív -- konkrét megoldásokhoz vezethet. 
+	\item Rávilágít az algebrai szerkezetek fontosságára. 
+\end{itemize}
+\textbf{Hátrányok:} 
+\begin{itemize}
+	\item Nem minden egyenlet faktorizálható egyszerűen. 
+\end{itemize}
+
+\begin{problem}
+	Határozzátok meg az összes olyan pozitív egész $(x,y)$
+	számpárost, amely teljesíti az 
+	\[
+	(xy-7)^{2}=x^{2}+y^{2}\text{ egyenlőséget!}
+	\]
+\end{problem}
+\begin{solution}
+	A bal oldalon négyzetre emelünk, ekkor 
+	\[
+	x^{2}y^{2}-14xy+49=x^{2}+y^{2}.
+	\]
+	
+	
+	Az egyenlet a következőképpen alakul: 
+	\begin{align*}
+		x^{2}y^{2}-14xy+49-(x^{2}+y^{2}) & =0\\
+		x^{2}y^{2}-12xy+49-(x^{2}+2xy+y^{2}) & =0\\
+		x^{2}y^{2}-12xy+36-(x^{2}+2xy+y^{2}) & =-13\\
+		(xy-6)^{2}-(x+y)^{2} & =-13\\
+		(xy-6-x-y)(xy-6+x+y) & =-13
+	\end{align*}
+	Mivel $x$, $y$ pozitív egészek, ezért $(xy-6-x-y)$ és $(xy-6+x+y)$
+	egészek, így $-13$ egész osztóit felírva és tudva, hogy $xy-6-x-y<xy-6+x+y$:
+	\[
+	\left\{ \begin{array}{l}
+		xy-6-x-y=-1\\
+		xy-6+x+y=13
+	\end{array}\right.\quad\text{vagy}\quad\left\{ \begin{array}{l}
+		xy-6-x-y=-13\\
+		xy-6+x+y=1
+	\end{array}\right.
+	\]
+	%
+	
+	Először az 
+	\[
+	\left\{ \begin{array}{l}
+		xy-6-x-y=-1\\
+		xy-6+x+y=13
+	\end{array}\right.
+	\]
+	egyenletrendszert megoldva kapjuk, hogy $xy-6=6\Leftrightarrow xy=12$
+	és $x+y=7$. 
+	\item[] Így a 
+	\[
+	\left\{ \begin{array}{l}
+		xy=12\\
+		x+y=7
+	\end{array}\right.
+	\]
+	egyenletrendszert megoldva kapjuk a $(3,4)$; $(4,3)$ megoldásokat. 
+	
+	%
+	
+	Hasonlóan megnézve a másik egyenletrendszert kapjuk, hogy 
+	\[
+	\left\{ \begin{array}{l}
+		xy=0\\
+		x+y=7,
+	\end{array}\right.
+	\]
+	és így a $(0,7);(7,0)$ számpárokat kapjuk 
+	\item[] Tehát a teljes megoldáshalmaz $M=\{(3,4);(4,3);.(0,7);(7,0)\}$ 
+	
+\end{solution}
+
+\begin{problem}
+	Határozzuk meg az összes olyan egész $n$ számot,
+	amelyre megoldható az 
+	\[
+	x^{3}+y^{3}+z^{3}-3xyz=n
+	\]
+	egyenlet az egész számok halmazára nézve.
+\end{problem}
+\begin{solution}
+	Írjuk át más alakba az egyenletet: 
+	\[
+	x^{3}+y^{3}+z^{3}-3xyz=(x+y+z)(x^{2}+y^{2}+z^{2}-xy-yz-xz)
+	\]
+	\[
+	\Downarrow
+	\]
+	\[
+	x^{3}+y^{3}+z^{3}-3xyz=(x+y+z)\cdot\frac{1}{2}[(x-y)^{2}+(y-z)^{2}+(z-x)^{2}]\ \text{(1)}
+	\]
+	valamint
+	\[
+	x^{3}+y^{3}+z^{3}-3xyz=(x+y+z)^{3}-3\cdot(x+y+z)(xy+yz+zx)\ \text{(2)}.
+	\]
+	%
+	
+	Az $(1)$-es egyenletből észrevehető, hogy $n=3k+1$, valamint $n=3k+2$,
+	$k\geq1$, mivel az eredeti egyenlet megoldásainak halmazai rendre
+	$(k+1,k,k)$ valamint $(k+1,k+1,k)$ alakúak. 
+	
+	Ha $3|n$, akkor a (2)-esből következik, hogy $3|(x+y+z)$, tehát
+	$9|(x^{3}+y3+z^{3}-3xyz=n)$. 
+	
+	Megfordítva, az adott egyenlet megoldható bármilyen egész $n=9$k,
+	$k\geq2$, mivel $(k-1,k,k+1)$ megoldáshalmaz eleget tesz az egyenletnek,
+	szintén ha $n=0\ (x=y=z)$. 
+	
+	Összesítve: 
+	\begin{itemize}
+		\item $n=3k+1$, ha $k\geq1$, 
+		\item $n=3k+2$, ha $k\geq1$, 
+		\item $n=9k$, ha $k\geq2$, 
+		\item $n=0$, ha $k=0$. 
+	\end{itemize}
+	
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+
+\subsection*{Parametrizálás}
+
+A paraméterezés olyan módszer, amely során a diofantoszi egyenlet
+ismeretlenjeit új változókkal (paraméterekkel) fejezzük ki, hogy: 
+\begin{itemize}
+	\item egyszerűbb alakba hozzuk az egyenletet, 
+	\item csökkentsük az ismeretlenek számát, 
+	\item vagy leírjuk az összes (vagy egy részhalmaz) megoldást. 
+\end{itemize}
+\vspace{0.5em}
+\textbf{Mikor alkalmazzuk?} 
+\begin{itemize}
+	\item Szimmetria vagy algebrai azonosság esetén. 
+	\item Ha az egyenlet geometriai alakzatot ír le. 
+	\item Ha az egyenlet homogén vagy kvadratikus. 
+\end{itemize}
+\vspace{0.5em}
+\textbf{Példa: Pitagoraszi számhármasok} 
+\[
+x^{2}+y^{2}=z^{2}\Rightarrow\begin{cases}
+	x=m^{2}-n^{2}\\
+	y=2mn\\
+	z=m^{2}+n^{2}
+\end{cases}\quad\text{ahol }m>n>0,\ lnko(m,n)=1,\ 
+\]
+\[
+m-n\text{ páratlan.}
+\]
+
+\noindent\textbf{Előnyök:} 
+\begin{itemize}
+	\item Lehetővé teszi az összes megoldás leírását paraméterekkel. 
+	\item Csökkenti az ismeretlenek számát. 
+	\item Kiemeli az algebrai vagy geometriai szimmetriákat. 
+	\item Geometriai értelmezést is adhat (pl. kör racionális pontjai). 
+\end{itemize}
+\vspace{0.5em}
+\textbf{Hátrányok:} 
+\begin{itemize}
+	\item Nem minden egyenlet paraméterezhető. 
+	\item Előfordulhat, hogy csak a megoldások egy részhalmazát adja meg. 
+	\item Több paramétert igényelhet, mint az eredeti ismeretlenek száma. 
+	\item Komplikálhatja a triviális megoldásokat is. 
+\end{itemize}
+
+\begin{problem}
+	Igazoljuk, hogy az 
+	\[
+	x^{3}+y^{3}+z^{3}=x^{2}+y^{2}+z^{2}
+	\]
+	egyenletre végtelen sok $(x,y,z)$ egészekből álló megoldás létezik.
+\end{problem}
+\begin{solution}
+	\begin{enumerate}
+		\item Parametrizáljuk a z-t a következőképpen: $z=-y$. 
+		\item Ekkor az egyenlet alakja: $x^{3}=x^{2}+2y^{2}$.
+		\item Megint parametrizálunk, csak most legyen $y=mx,\ m\in\mathbb{Z}$. 
+		\item Az egyenlet így: $x^{3}=x^{2}+2(mx)^{2}\Leftrightarrow x^{3}=x^{2}\cdot(1+2m^{2})\Leftrightarrow x=1+2m^{2}$. 
+		\item Visszahelyettesítve kapjuk, hogy 
+		\begin{itemize}
+			\item $x=1+2m^{2}$, 
+			\item $y=m(2m^{2}+1)$, 
+			\item $z=-m(2m^{2}+1)$, $m\in\mathbb{Z}$. 
+		\end{itemize}
+	\end{enumerate}
+\end{solution}
+
+\begin{problem}
+	Legyen $m$ és $n$ különböző pozitív egészek.
+	
+	(a) Bizonyítsuk be, hogy végtelen sok pozitív egészekből álló $(x,y,z)$
+	hármas létezik, úgy hogy
+	\[
+	x^{2}+y^{2}=(m^{2}+n^{2})^{z},
+	\]
+	ahol
+	\begin{itemize}
+		\item[(i)] $z$ páratlan; 
+		\item[(ii)] $z$ páros. 
+	\end{itemize}
+	(b) Bizonyítsuk be, hogy az egyenlet
+	\[
+	x^{2}+y^{2}=13^{z}
+	\]
+	végtelen sok megoldással rendelkezik pozitív egészek körében.
+\end{problem}
+\begin{solution}
+	(a) Az (i) ponthoz, tekintsük az alábbi sorozatot:
+	\[
+	x_{k}=m(m^{2}+n^{2})^{k},\quad y_{k}=n(m^{2}+n^{2})^{k},\quad z_{k}=2k+1,\quad k\in\mathbb{Z}_{+}.
+	\]
+	Ekkor: 
+	\[
+	x_{k}^{2}+y_{k}^{2}=(m^{2}+n^{2})^{2k+1}=(m^{2}+n^{2})^{z_{k}}.
+	\]
+	
+	Az (ii) ponthoz, tekintsük a következő sorozatot (felhasználva a Pitagoraszi
+	számhármas generálási formulát):
+	\[
+	x_{k}=|m^{2}-n^{2}|(m^{2}+n^{2})^{k-1},\quad y_{k}=2mn(m^{2}+n^{2})^{k-1},
+	\]
+	\[
+	z_{k}=2k,\quad k\in\mathbb{Z}_{+}.
+	\]
+	Ekkor: 
+	\[
+	x_{k}^{2}+y_{k}^{2}=(m^{2}+n^{2})^{2k}=(m^{2}+n^{2})^{z_{k}}.
+	\]
+	
+	(b) Mivel $2^{2}+3^{2}=13$, választhatjuk $m=2$, $n=3$ értékeket,
+	és az alábbi megoldássorozatokat kapjuk (felhasználva az a) alpontot):
+	\[
+	x_{k}'=2\cdot13^{k},\quad y_{k}'=3\cdot13^{k},\quad z_{k}'=2k+1,\quad k\in\mathbb{Z}_{+};
+	\]
+	\[
+	x_{k}''=5\cdot13^{k-1},\quad y_{k}''=12\cdot13^{k-1},\quad z_{k}''=2k,\quad k\in\mathbb{Z}_{+}.
+	\]
+\end{solution}
+
+\begin{problem}
+	Bizonyítsuk be, hogy az 
+	\[
+	2^{x}+1=xy
+	\]
+	egyenlet végtelen sok megoldással rendelkezik a pozitív egészek körében.
+\end{problem}
+\begin{solution}
+	Ahhoz, hogy az egyenletnek pozitív egész megoldásai legyenek, elegendő
+	olyan pozitív egészeket találni, amelyekre teljesül:
+	
+	\[
+	x\mid2^{x}+1\quad\text{azaz}\quad\frac{2^{x}+1}{x}\in\mathbb{Z}_{+}.
+	\]
+	
+	%
+	
+	Ezért célunk olyan \emph{paraméterezett} megoldásokat találni, amelyek
+	ezt az oszthatósági tulajdonságot kielégítik. 
+	\item[] Megfigyelhető, hogy minden $k\in\mathbb{Z}_{\geq0}$ esetén teljesül
+	az alábbi oszthatóság:
+	\[
+	3^{k}\mid2^{3^{k}}+1
+	\]
+	
+	Ez azt jelenti, hogy ha $x=3^{k}$, akkor $x\mid2^{x}+1$, és így
+	az egyenlet bal oldala valóban osztható $x$-szel, tehát létezik megfelelő
+	$y\in\mathbb{Z}_{+}$, amely kielégíti az egyenletet.
+	Mutassuk meg, hogy valóban:
+	\[
+	3^{k}\mid2^{3^{k}}+1\quad\text{minden }k\in\mathbb{Z}_{\geq0}
+	\]
+	Ez algebrai úton igazolható, például úgy, hogy felírjuk:
+	
+	\[
+	2^{3^{k}}+1=\left(2^{3^{k-1}}\right)^{3}+1=\left(2^{3^{k-1}}+1\right)\left(2^{2\cdot3^{k-1}}-2^{3^{k-1}}+1\right)
+	\]
+	Ekkor mindkét tényezőről megmutatható, hogy osztható 3-mal. Az első
+	tényező például: 
+	\[
+	2^{3^{k-1}}+1\equiv(-1)^{3^{k-1}}+1\equiv0\pmod 3.
+	\]
+	A második tényező: 
+	\[
+	(2^{3^{k-1}}+1)^{2}-3\cdot2^{3^{k-1}}.
+	\]
+	Ez szintén osztható 3-mal (a kifejezés algebrai átalakításával belátható).
+	
+	
+	Mivel az $x=3^{k}$ választással minden $k\geq0$ esetén teljesül
+	az $x\mid2^{x}+1$ feltétel, az alábbi megoldáscsaládot kapjuk:
+	\[
+	(x,y)=\left(3^{k},\frac{2^{3^{k}}+1}{3^{k}}\right),\quad k\in\mathbb{Z}_{\geq0}
+	\]
+	Ez a család \textbf{végtelen sok} pozitív egészekből álló megoldást
+	ad az eredeti egyenletre.
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Moduláris aritmetika}
+
+A moduláris aritmetika azon az ötletre épül, hogy számokat úgy is
+összehasonlíthatunk, hogy csak az osztási maradékukat vizsgáljuk egy
+rögzített modulusra nézve. Két szám akkor ekvivalens modulo n szerint,
+ha különbségük osztható n-nel: $a\equiv b\mod n$.
+
+Ez a módszer nagyon hasznos, ha egy egyenlet megoldhatóságát szeretnénk
+vizsgálni. Ha egy adott modulus esetén az egyenlet nem teljesül, akkor
+az eredeti egyenlet sem lehet igaz egész számokra. Így a módszer különösen
+alkalmas esetek kizárására.
+
+\noindent\textbf{Előnyök:} 
+\begin{itemize}
+	\item Gyorsan kizárhatunk lehetetlen eseteket. 
+	\item Könnyen programozható és algoritmizálható. 
+\end{itemize}
+\textbf{Hátrányok:} 
+\begin{itemize}
+	\item Többnyire csak kizárásra használható, nem mindig ad konkrét megoldásokat. 
+\end{itemize}
+%\textbf{Példák:}
+%\begin{itemize}
+%  \item \( x^2 \equiv 2 \mod 4 \) – nincs megoldás, mert négyzetek maradéka csak 0 vagy 1.
+%  \item \( x^2 + y^2 = 3z^2 \): mod 4 alapján kizárható.
+% \item \( x^3 + y^3 = z^3 \): mod 9 esetén nincs megoldás.
+%\end{itemize}
+
+\begin{problem}
+	Bizonyítsuk be, hogy az $(x+1)^{2}+(x+2)^{2}+...+(x+2001)^{2}=y^{2}$
+	egyenletnek nincsen megoldása az egész számok halmazán.
+\end{problem}
+\begin{solution}
+	Vizsgáljuk meg az egyenlet bal oldalát:
+	\[
+	(x+1)^{2}+(x+2)^{2}+\cdots+(x+2001)^{2}
+	\]
+	
+	Írjuk át összegzéssel:
+	\[
+	\sum_{k=1}^{2001}(x+k)^{2}
+	\]
+	
+	Bontsuk fel a négyzetet:
+	\[
+	\sum_{k=1}^{2001}(x^{2}+2kx+k^{2})
+	\]
+	
+	
+	Ez három külön összegre bontható:
+	\[
+	\sum_{k=1}^{2001}x^{2}+\sum_{k=1}^{2001}2kx+\sum_{k=1}^{2001}k^{2}
+	\]
+	
+	Kiszámoljuk ezeket külön:
+	\[
+	\sum_{k=1}^{2001}x^{2}=2001x^{2}
+	\]
+	\[
+	\sum_{k=1}^{2001}2kx=2x\sum_{k=1}^{2001}k=2x\cdot\frac{2001\cdot2002}{2}=2001\cdot2002\cdot x
+	\]
+	\[
+	\sum_{k=1}^{2001}k^{2}=\frac{2001\cdot2002\cdot4003}{6}
+	\]
+	
+	Így a bal oldal egyszerűsített alakja:
+	\[
+	2001x^{2}+2001\cdot2002\cdot x+\frac{2001\cdot2002\cdot4003}{6}
+	\]
+	
+	Mivel a bal oldal $\equiv2\pmod 3$, ezért a bal oldal nem lehet
+	teljes négyzet, vagyis a bizonyításunk teljes, mivel nem lehet egyenlő
+	a jobb oldallal. 
+\end{solution}
+
+\begin{problem}
+	Határozzuk meg az összes olyan prím szám párt $(p,q)$,
+	amelyre teljesül: 
+	\[
+	p^{3}-q^{5}=(p+q)^{2}
+	\]
+\end{problem}
+\begin{solution}
+	Vizsgáljuk meg az egyenletet. 
+	Próbáljuk először \textbf{modulo 3} szerint elemezni. Feltételezzük,
+	hogy $p\ne3$ és $q\ne3$, azaz egyik sem osztható 3-mal. Ekkor: 
+	\[
+	p\equiv1\text{ vagy }2\pmod 3,\quad q\equiv1\text{ vagy }2\pmod 3
+	\]
+	
+	\textbf{1. eset: $p\equiv q\pmod 3$}
+	
+	Ekkor: 
+	\[
+	p^{3}\equiv p\pmod 3,\quad q^{5}\equiv q\pmod 3\Rightarrow p^{3}-q^{5}\equiv p-q\equiv0\pmod 3
+	\]
+	
+	Mivel $p\equiv q\pmod 3\Rightarrow p+q\equiv2p\not\equiv0\pmod 3$,
+	így $(p+q)^{2}\not\equiv0\pmod 3$.
+	
+	\textbf{Ellentmondás}: a bal oldal osztható 3-mal, a jobb oldal nem. 
+	
+	\textbf{2. eset: $p\not\equiv q\pmod 3$}
+	
+	Ekkor $p-q\not\equiv0\pmod 3\Rightarrow p^{3}-q^{5}\not\equiv0\pmod 3$.
+	De: 
+	\[
+	(p+q)^{2}\equiv(1+2)^{2}=9\equiv0\pmod 3
+	\]
+	
+	\textbf{Ellentmondás}: a jobb oldal osztható 3-mal, a bal oldal nem. 
+	
+	Tehát az egyenlet \textbf{csak akkor teljesülhet}, ha legalább az
+	egyik szám osztható 3-mal, azaz $p=3$ vagy $q=3$. 
+	
+	\textbf{1. eset: $p=3$} 
+	
+	Ekkor: 
+	\[
+	3^{3}-q^{5}=(3+q)^{2}\Rightarrow27-q^{5}=(3+q)^{2}
+	\]
+	
+	Ez azt jelenti, hogy: 
+	\[
+	q^{5}=27-(3+q)^{2}
+	\]
+	
+	Jobb oldal szigorúan negatív vagy kicsi érték, ha $q$ elég nagy.
+	Vizsgáljuk meg lehetséges $q$-k esetén: 
+	\begin{itemize}
+		\item $q=2$: $q^{5}=32$, jobb oldal: $27-25=2$ 
+		\item $q=3$: $q^{5}=243$, jobb oldal: $27-36=-9$ 
+	\end{itemize}
+	\textbf{Nincs megoldás} ebben az esetben. 
+	
+	\textbf{2. eset: $q=3$} 
+	
+	Ekkor: 
+	\[
+	p^{3}-243=(p+3)^{2}\Rightarrow p^{3}-(p+3)^{2}=243
+	\]
+	Fejtsük ki a négyzetet: 
+	\[
+	p^{3}-(p^{2}+6p+9)=243\Rightarrow p^{3}-p^{2}-6p-252=0
+	\]
+	\[
+	\Rightarrow p=7
+	\]
+	. 
+	Az egyenlet egyetlen megoldása a prímek között: 
+	\[
+	(p,q)=(7,3)
+	\]
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection*{Végtelen leszállás elve}
+
+\noindent\textbf{Tulajdonságok:}
+\begin{itemize}
+	\item Indirekt bizonyítási technika. 
+	\item Pierre de Fermat dolgozta ki a \textit{XVII.} században (valószínűleg
+	az 1630-as években). 
+	\item Az elv lényege, hogy ha feltételezzük egy egyenlet pozitív egészek
+	körében való megoldhatóságát, akkor abból újabb, kisebb pozitív egészekből
+	álló megoldás következik. Ezt az érvet ismételten alkalmazva egy végtelenül
+	csökkenő pozitív egész számokból álló sorozatot kapnánk, ami lehetetlen,
+	mert a pozitív egészek nem tartalmaznak végtelenül csökkenő sorozatot.
+	Ez ellentmondáshoz vezet, tehát a kiindulási feltevés -- hogy létezik
+	megoldás -- hamis.
+	\item Ez a módszer kiválóan alkalmazható olyan problémákra, ahol a lehetetlenség
+	bizonyítása a cél, nem pedig a megoldások megtalálása. 
+\end{itemize}
+\noindent\textbf{Előnyök:} 
+\begin{itemize}
+	\item Rendkívül elegáns és logikus módszer. 
+	\item Hatékony lehetetlenség bizonyítására. 
+\end{itemize}
+
+\begin{problem}
+	Oldjuk meg a következő egyenletet a nemnegatív egész
+	számok halmazán: 
+	\[
+	x^{3}+2y^{3}=4z^{3}
+	\]
+\end{problem}
+\begin{solution}
+	Látható egyből, hogy létezik triviális megoldás, vagyis ha $(x,y,z)=(0,0,0)$. 
+	
+	A célunk az, hogy bizonyítsuk be, hogy nincs más megoldás. 
+	
+	Tegyük fel, hogy létezik egy nemtriviális megoldás: $(x_{1},y_{1},z_{1})\in\mathbb{Z}_{+}^{3}.$ 
+	
+	Azért $\mathbb{Z}_{+}^{3}$-ben gondolkodunk, mert ha $x_{1}=0$
+	vagy $y_{1}=0$, akkor az $(\frac{x_{1}}{z_{1}})^{3}+2\cdot(\frac{y_{1}}{z_{1}})^{3}=4$
+	egyenlet egyik oldala irracionális lenne, emiatt $x_{1}>0,y_{1}>0,z_{1}>0$. 
+	
+	Mivel $2|4z_{1}^{3}$ és $2|2y_{1}^{3}$, $\Rightarrow$ $2|x_{1}^{3}$.
+	Ez alapján legyen $x_{1}=2x_{2}$, $\Rightarrow$ $4x_{2}^{3}+y_{1}^{3}=2z_{1}^{3}$.
+	Hasonlóan kilehet fejezni az $y_{1}$-et és $z_{1}$-et, és behelyettesítéssel
+	megkapjuk ugyan azt az egyenletet, csak kisebb számokkal: $(2x_{2})^{3}+2(2y_{2})^{3}=4(2z_{2})^{3}\Rightarrow x_{2}^{3}+2y_{2}^{3}=4z_{2}^{3}$. 
+	
+	\textbf{Új megoldás:} $(x_{2},y_{2},z_{2})$ kisebb, mint $(x_{1},y_{1},z_{1})$ 
+	Ezt az eljárást ismételhetjük: 
+	\[
+	(x_{1},y_{1},z_{1})\rightarrow(x_{2},y_{2},z_{2})\rightarrow(x_{3},y_{3},z_{3})\rightarrow...
+	\]
+	Végtelen csökkenő pozitív egészek sorozata alakulna ki, ami lehetetlen. 
+	Ez ellentmondás $\Rightarrow$ az eredeti feltevés hamis $\Rightarrow$
+	egyetlen megoldás $(x,y,z)=(0,0,0)$. 
+\end{solution}
+
+\begin{problem}
+	Határozzuk meg $m^{2}+n^{2}$ maximális értékét,
+	ha $1\leq m<n\leq1981$ és teljesül az:
+	\[
+	(n^{2}-mn-m^{2})^{2}=1
+	\]
+\end{problem}
+\begin{solution} 
+	
+	A célunk: vizsgálni, mely $(m,n)$ párok elégítik ki az egyenletet,
+	és ezek közül melyik adja a legnagyobb $m^{2}+n^{2}$ értéket. 
+	
+	Első megfigyelés: az egyenlet bal oldala négyzetszám, a jobb oldal
+	is, tehát \emph{kis egész} megoldásokra számíthatunk. 
+	Próbáljuk átalakítani az egyenletet úgy, hogy struktúrát lássunk
+	benne!
+	
+	Tegyük fel, hogy $(m,n)$ egy olyan megoldás, amely kielégíti az
+	egyenletet, és $0<m<n<2m$. 
+	
+	Kiinduló egyenlet: 
+	\[
+	(n^{2}-mn-m^{2})^{2}=1
+	\]
+	Átcsoportosítva: 
+	\[
+	(n^{2}-mn-m^{2})^{2}=
+	\]
+	\[
+	((n-m)^{2}+mn-2m^{2})^{2}=((n-m)^{2}+m(n-m)-m^{2})^{2}
+	\]
+	\[
+	=(m^{2}-m(n-m)-(n-m)^{2})^{2}
+	\]
+	Egyfajta rekurzív struktúrát kapva. Ez azt jelenti, hogy $(n-m,m)$ teljesíti ugyanazt az összefüggést,
+	és $0<n-m<m$.
+	
+	A végtelen leszállás elv alapján $(m,n)\rightarrow(n-m,m)\rightarrow...\rightarrow(1,1)$ 
+	
+	Viszont minden generált számpár megkapható fordítottan is az $(1,1)$
+	számpárból kiindulva, innen észrevehető, hogy $(m,n)\rightarrow(n,m+n)$: 
+	$(1,1)\rightarrow(1,2)\rightarrow(2,3)\rightarrow(3,5)\rightarrow...$
+	(Fibonacci számok) 
+	
+	Megmutatható, hogy minden $(m,n)$ pár, amely teljesíti az egyenletet:
+	\[
+	(n^{2}-mn-m^{2})^{2}=1
+	\]
+	úgy írható fel, hogy $m=F_{k}$, $n=F_{k+1}$, ahol $F_{k}$ a Fibonacci-sorozat
+	eleme.
+	
+	A Fibonacci-sorozat definíciója: 
+	\[
+	F_{0}=0,\quad F_{1}=1,\quad F_{n+1}=F_{n}+F_{n-1}
+	\]
+	Adott a korlát: $1\leq m<n\leq1981$. A legnagyobb ilyen Fibonacci-szám: $F_{16}=1597$
+	Ekkor $m=F_{15}=987$, $n=F_{16}=1597$ 
+	\[
+	m^{2}+n^{2}=987^{2}+1597^{2}=974169+2550409=\boxed{3514578}
+	\]
+\end{solution}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Házi feladatok}
+\begin{problem}
+	Oldd meg az egész számok halmazán az alábbi egyenletet: 
+	\[
+	x^{2}-5x+6=y^{2}.
+	\]
+\end{problem}
+
+\begin{solution}
+	Az egyenletet átrendezzük: 
+	\[
+	x^{2}-5x+6-y^{2}=0\Rightarrow(x^{2}-5x+6)-y^{2}=0
+	\]
+	
+	A zárójelben lévő kifejezés szorzattá bontható: 
+	\[
+	(x-2)(x-3)=y^{2}
+	\]
+	
+	Jelöljük: 
+	\[
+	a=x-3\Rightarrow x=a+3
+	\]
+	
+	Ekkor: 
+	\[
+	(x-2)(x-3)=(a+1)a=y^{2}\Rightarrow a(a+1)=y^{2}
+	\]
+	
+	Két egymást követő egész szám szorzata csak akkor lehet négyzetszám,
+	ha legalább egyikük nulla: 
+	\[
+	a=0\Rightarrow x=3,\ y^{2}=0\Rightarrow y=0a=-1\Rightarrow x=2,\ y^{2}=0\Rightarrow y=0
+	\]
+	\textbf{Megoldáshalmaz:}\\
+	\[
+	\boxed{(x,y)\in\{(2,0),\ (3,0)\}}
+	\]
+\end{solution}
+\begin{problem}
+	Oldd meg az alábbi egyenletet az egész számok halmazán:
+	
+	\[
+	7x+5y+3z=1.
+	\]
+\end{problem}
+
+\begin{solution}
+	\textbf{1. lépés:} Keressünk partikuláris megoldást: Próbáljuk $z=0$:
+	\[
+	7x+5y=1\Rightarrow x=-2,\ y=3\quad\text{megfelel.}
+	\]
+	
+	\textbf{2. lépés:} Oldjuk meg a homogén egyenletet: 
+	\[
+	7x+5y+3z=0\Rightarrow7x+5y=-3z
+	\]
+	
+	A lineáris diofantikus egyenlet $7x+5y=D$ megoldásai, ha $\gcd(7,5)=1$,
+	így mindig van megoldás.
+	
+	Oldjuk meg $7x+5y=1$, Extended Euclidean algoritmussal:
+	
+	\[
+	7(-2)+5(3)=-14+15=1\Rightarrow x=-2,\ y=3\text{ egy megoldás}
+	\]
+	
+	Most szorozzuk meg $-3z$-vel: 
+	\[
+	x=-2\cdot(-3z)=6z,\quad y=3\cdot(-3z)=-9z
+	\]
+	
+	Tehát a homogén megoldás: 
+	\[
+	(x,y,z)=(6t,-9t,t)
+	\]
+	
+	\textbf{3. lépés:} Teljes megoldás = partikuláris + homogén: 
+	\[
+	\begin{cases}
+		x=6t-2\\
+		y=-9t+3\\
+		z=t
+	\end{cases}\quad t\in\mathbb{Z}
+	\]
+	\textbf{Általános megoldás:}\\
+	\[
+	(x,y,z)=(6t-2,\;-9t+3,\;t),\quad t\in\mathbb{Z}
+	\]
+\end{solution}
+\begin{problem}
+	Oldd meg az egész számok halmazán: 
+	\[
+	12x+15y=3.
+	\]
+\end{problem}
+
+\begin{solution}
+	\textbf{1. lépés:} Vizsgáljuk a megoldhatóságot:
+	
+	\[
+	\gcd(12,15)=3,\quad3\mid3\Rightarrow\text{van megoldás.}
+	\]
+	
+	\textbf{2. lépés:} Egyszerűsítjük az egyenletet:
+	
+	\[
+	4x+5y=1
+	\]
+	
+	\textbf{3. lépés:} Oldjuk meg: 
+	\[
+	4x=1-5y\Rightarrow x=\frac{1-5y}{4}\Rightarrow1-5y\equiv0\mod 4\Rightarrow5y\equiv1\mod 4
+	\]
+	
+	\textbf{Megoldás mod 4-ben:}
+	
+	\[
+	5\equiv1\mod 4\Rightarrow y\equiv1\mod 4\Rightarrow y=4k+1
+	\]
+	
+	\textbf{Ekkor:} 
+	\[
+	x=\frac{1-5(4k+1)}{4}=\frac{-4-20k}{4}=-1-5k
+	\]
+	
+	\textbf{Általános megoldás:}
+	\[
+	\boxed{\begin{cases}
+			x=-1-5k\\
+			y=4k+1
+		\end{cases}\quad k\in\mathbb{Z}}
+	\]
+	
+	\textbf{Ellenőrzés:}
+	$k=0\Rightarrow(x,y)=(-1,1)\Rightarrow12x+15y=-12+15=3$
+\end{solution}
+\begin{problem}
+	Bizonyítsd be, hogy az 
+	\[
+	(x+1)^{2}+(x+2)^{2}+...+(x+99)^{2}=y^{z}
+	\]
+	egyenlet nem megoldható, ha $x,y,z\in\mathbb{Z},z>1$. (Magyar Matematika
+	Olimpia) 
+\end{problem}
+
+\begin{solution}
+	Vegyük észre, hogy 
+	\begin{align*}
+		y^{z} & =(x+1)^{2}+(x+2)^{2}+\cdots+(x+99)^{2}\\
+		& =99x^{2}+2(1+2+\cdots+99)x+(1^{2}+2^{2}+\cdots+99^{2})\\
+		& =99x^{2}+\frac{2\cdot99\cdot100}{2}x+\frac{99\cdot100\cdot199}{6}\\
+		& =33(3x^{2}+300x+50\cdot199).
+	\end{align*}
+	
+	Ez azt jelenti, hogy $3\mid y$. Mivel $z\geq2$, ezért $3^{2}\mid y^{z}$,
+	de $3^{2}$ nem osztja $33(3x^{2}+300x+50\cdot199)$-et, ami ellentmondás.
+\end{solution}
+\begin{problem}
+	Oldd meg a nemnegatív egész számokra nézve a következő egyenletet:
+	\[
+	2^{x}-1=xy.
+	\]
+	(Putnam Mathematical Competition, reformulated) 
+\end{problem}
+
+\begin{solution}
+	Vegyük észre a következő megoldásokat: $(0,k)$, ahol $k\in\mathbb{Z}_{+}$,
+	valamint $(1,1)$. Bebizonyítjuk, hogy más megoldás nincs, az FMID
+	(Fermat-féle kis tétel minimalitási ellentmondásos elve) felhasználásával
+	az $x$ prímtényezőire.
+	
+	Legyen $p_{1}$ az $x$ egy prímosztója, és legyen $q$ a legkisebb
+	pozitív egész szám, amelyre $p_{1}\mid2^{q}-1$. A Fermat kis tétele
+	szerint $p_{1}\mid2^{p_{1}-1}-1$, tehát $q\leq p_{1}-1<p_{1}$.
+	
+	Most belátjuk, hogy $q\mid x$. Tegyük fel, hogy nem, azaz $x=kq+r$
+	valamilyen $0<r<q$ egész számra, és ekkor 
+	\begin{align*}
+		2^{x}-1 & =2^{kq+r}-1\\
+		& =(2^{q})^{k}\cdot2^{r}-1\\
+		& =(2^{q}-1+1)^{k}\cdot2^{r}-1\\
+		& \equiv2^{r}-1\pmod{p_{1}}.
+	\end{align*}
+	
+	Ez azt jelenti, hogy $p_{1}\mid2^{r}-1$, ami ellentmond annak, hogy
+	$q$ a legkisebb ilyen tulajdonságú szám.
+	
+	Tehát $q\mid x$, és $1<q<p_{1}$. Most legyen $p_{2}$ egy olyan
+	prímosztója $q$-nak, amely nyilvánvalóan $x$ osztója is, és $p_{2}<p_{1}$.
+	Ezt az eljárást folytatva egy végtelenül csökkenő prímosztó-sorozatot
+	kapunk: 
+	\[
+	p_{1}>p_{2}>\cdots,
+	\]
+	ami ellentmond Fermat tételének. 
+\end{solution}
+
+\section*{Nehezebb feladatok}
+
+\begin{extraproblem}[Bartalis Dorottya]
+	Oldd meg az egész számok halmazán az alábbi egyenletet:
+	$$x^{2} - 7x + 10 = y^{2}.$$
+\end{extraproblem}
+
+
+\begin{solution}
+	1.  \textbf{Rendezzük át az egyenletet, hogy teljes négyzetet kapjunk:}
+	A bal oldalon lévő másodfokú kifejezést kiegészítjük teljes négyzetté:
+	$$x^2 - 7x + \left(\frac{7}{2}\right)^2 - \left(\frac{7}{2}\right)^2 + 10 = y^2$$
+	$$\left(x - \frac{7}{2}\right)^2 - \frac{49}{4} + 10 = y^2$$
+	$$\left(x - \frac{7}{2}\right)^2 - \frac{49}{4} + \frac{40}{4} = y^2$$
+	$$\left(x - \frac{7}{2}\right)^2 - \frac{9}{4} = y^2$$
+	
+	2.  \textbf{Szorozzuk meg az egyenletet 4-gyel a törtek eltávolítására:}
+	$$4\left(x - \frac{7}{2}\right)^2 - 4 \cdot \frac{9}{4} = 4y^2$$
+	$$(2x - 7)^2 - 9 = (2y)^2$$
+	
+	3.  \textbf{Rendezzük át az $A^2 - B^2$ azonosság alkalmazásához:}
+	$$(2x - 7)^2 - (2y)^2 = 9$$
+	
+	4.  \textbf{Alkalmazzuk az $A^2 - B^2 = (A-B)(A+B)$ azonosságot:}
+	Legyen $A = 2x - 7$ és $B = 2y$.
+	$$(2x - 7 - 2y)(2x - 7 + 2y) = 9$$
+	
+	5.  \textbf{Vizsgáljuk az egész számú tényezőket:}
+	Mivel $x$ és $y$ egészek, $2x-7-2y$ és $2x-7+2y$ is egészek. A 9 tényezőpárjai (figyelembe véve a pozitív és negatív eseteket is): $(1, 9), (3, 3), (9, 1), (-1, -9), (-3, -3), (-9, -1)$.
+	A két tényező paritása azonos kell, hogy legyen (mindkettő páratlan, mivel szorzatuk páratlan).
+	
+	\textbf{1. eset:}
+	$2x - 7 - 2y = 1$
+	$2x - 7 + 2y = 9$
+	Összeadva: $4x - 14 = 10 \Rightarrow 4x = 24 \Rightarrow x = 6$.
+	Visszahelyettesítve: $2(6) - 7 - 2y = 1 \Rightarrow 12 - 7 - 2y = 1 \Rightarrow 5 - 2y = 1 \Rightarrow 2y = 4 \Rightarrow y = 2$.
+	Megoldás: $(6, 2)$.
+	
+	\textbf{2. eset:}
+	$2x - 7 - 2y = 3$
+	$2x - 7 + 2y = 3$
+	Összeadva: $4x - 14 = 6 \Rightarrow 4x = 20 \Rightarrow x = 5$.
+	Visszahelyettesítve: $2(5) - 7 - 2y = 3 \Rightarrow 10 - 7 - 2y = 3 \Rightarrow 3 - 2y = 3 \Rightarrow 2y = 0 \Rightarrow y = 0$.
+	Megoldás: $(5, 0)$.
+	
+	\textbf{3. eset:}
+	$2x - 7 - 2y = 9$
+	$2x - 7 + 2y = 1$
+	Összeadva: $4x - 14 = 10 \Rightarrow 4x = 24 \Rightarrow x = 6$.
+	Visszahelyettesítve: $2(6) - 7 - 2y = 9 \Rightarrow 5 - 2y = 9 \Rightarrow 2y = -4 \Rightarrow y = -2$.
+	Megoldás: $(6, -2)$.
+	
+	\textbf{4. eset:}
+	$2x - 7 - 2y = -1$
+	$2x - 7 + 2y = -9$
+	Összeadva: $4x - 14 = -10 \Rightarrow 4x = 4 \Rightarrow x = 1$.
+	Visszahelyettesítve: $2(1) - 7 - 2y = -1 \Rightarrow -5 - 2y = -1 \Rightarrow -2y = 4 \Rightarrow y = -2$.
+	Megoldás: $(1, -2)$.
+	
+	\textbf{5. eset:}
+	$2x - 7 - 2y = -3$
+	$2x - 7 + 2y = -3$
+	Összeadva: $4x - 14 = -6 \Rightarrow 4x = 8 \Rightarrow x = 2$.
+	Visszahelyettesítve: $2(2) - 7 - 2y = -3 \Rightarrow 4 - 7 - 2y = -3 \Rightarrow -3 - 2y = -3 \Rightarrow 2y = 0 \Rightarrow y = 0$.
+	Megoldás: $(2, 0)$.
+	
+	\textbf{6. eset:}
+	$2x - 7 - 2y = -9$
+	$2x - 7 + 2y = -1$
+	Összeadva: $4x - 14 = -10 \Rightarrow 4x = 4 \Rightarrow x = 1$.
+	Visszahelyettesítve: $2(1) - 7 - 2y = -9 \Rightarrow -5 - 2y = -9 \Rightarrow -2y = -4 \Rightarrow y = 2$.
+	Megoldás: $(1, 2)$.
+	
+	\textbf{Az egyenlet megoldásai az egész számok halmazán:}
+	$(6, 2), (6, -2), (5, 0), (2, 0), (1, 2), (1, -2)$.
+\end{solution}
+
+\begin{extraproblem}[Bartalis Dorottya]
+	Keresd meg az összes egész megoldását az alábbi egyenletnek:
+	$$4x+6y+5z=2.$$
+\end{extraproblem}
+
+
+\begin{solution}
+	1.  \textbf{Ellenőrizzük a megoldhatóságot:}
+	Az együtthatók legnagyobb közös osztója: $\text{lnko}(4, 6, 5)$.
+	$\text{lnko}(4, 6) = 2$.
+	$\text{lnko}(2, 5) = 1$.
+	Mivel $\text{lnko}(4, 6, 5) = 1$, és $1$ osztja a jobb oldalon álló $2$-t, az egyenletnek van egész megoldása.
+	
+	2.  \textbf{Csökkentsük az ismeretlenek számát és paraméterezzünk:}
+	Vegyük észre, hogy a $4x+6y$ tag páros. Így $4x+6y = 2-5z$. Ez azt jelenti, hogy $2-5z$ páros kell, hogy legyen.
+	$$2-5z \equiv 0 \pmod{2}$$
+	$$-5z \equiv 0 \pmod{2}$$
+	$$-z \equiv 0 \pmod{2}$$
+	$$z \equiv 0 \pmod{2}$$
+	Tehát $z$-nek párosnak kell lennie. Vezessünk be egy $t$ egész paramétert úgy, hogy $z = 2t$.
+	
+	Helyettesítsük vissza $z=2t$-t az egyenletbe:
+	$$4x+6y+5(2t)=2$$
+	$$4x+6y+10t=2$$
+	Osszuk el az egész egyenletet 2-vel:
+	$$2x+3y+5t=1$$
+	
+	3.  \textbf{Keresünk egy partikuláris megoldást a $2x+3y+5t=1$ egyenletre:}
+	Nézzük az egyenletet $2x+3y = 1-5t$ alakban.
+	Ahhoz, hogy megtaláljuk az általános megoldást, szükségünk van egy partikuláris megoldásra.
+	Ha $t=0$, akkor $2x+3y=1$. Ennek egy nyilvánvaló megoldása $x=-1, y=1$.
+	(Ellenőrzés: $2(-1)+3(1) = -2+3=1$).
+	Tehát egy partikuláris megoldás a $(x_0, y_0, t_0) = (-1, 1, 0)$ tripla.
+	
+	4.  \textbf{Határozzuk meg az általános megoldást:}
+	Tekintsük a $2x+3y = 1-5t$ egyenletet. Itt $a=2, b=3, c=1-5t$. $\text{lnko}(2,3)=1$.
+	Az általános megoldás $x$ és $y$-ra, rögzített $t$ esetén:
+	$x = x_0 + \frac{b}{\text{lnko}(a,b)} k' = -1 + \frac{3}{1} k' = -1 + 3k'$
+	$y = y_0 - \frac{a}{\text{lnko}(a,b)} k' = 1 - \frac{2}{1} k' = 1 - 2k'$
+	ahol $k'$ egy tetszőleges egész paraméter.
+	A $x_0$ és $y_0$ itt most a $2x+3y=1$ egyenlet partikuláris megoldásai.
+	Valójában a $1-5t$ kifejezéssel kell dolgozni.
+	A $2x+3y = C$ egyenlet általános megoldása: $x = x_p + 3k'$, $y = y_p - 2k'$, ahol $(x_p, y_p)$ a $2x+3y=C$ egy partikuláris megoldása.
+	Ha $C=1-5t$, akkor egy partikuláris megoldás $(x_p, y_p) = (-(1-5t), (1-5t)) = (-1+5t, 1-5t)$.
+	Tehát:
+	$x = (-1+5t) + 3k' = -1+5t+3k'$
+	$y = (1-5t) - 2k' = 1-5t-2k'$
+	És $z = 2t$.
+	
+	\textbf{Az egyenlet megoldásai az egész számok halmazán:}
+	$$x = 3k' + 5t - 1$$
+	$$y = -2k' - 5t + 1$$
+	$$z = 2t$$
+	ahol $k', t \in \mathbb{Z}$ tetszőleges egész számok.
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+	Találjuk meg a következő egyenlet egész megoldásait: 
+	\[
+	x^{3}-y^{3}=xy+61.
+	\]
+	
+	\emph{(Orosz Matematika Olimpia) }
+\end{extraproblem}
+
+\begin{solution}
+	Beszorozva az egyenletet $27$-tel és mindkét oldalból kivonva $1+27xy$-t
+	a következőhöz jutunk: 
+	\[
+	(3x)^{3}+(-3y)^{3}+(-1)^{3}-3(3x)(-3y)(-1)=1646.
+	\]
+	A baloldal $a^{3}+b^{3}+c^{3}-3abc$ alakú, amelyet a következőképpen
+	tudunk felbontani: 
+	\[
+	a^{3}+b^{3}+c^{3}-3abc=(a+b+c)(a^{2}+b^{2}+c^{2}-ab-bc-ca)
+	\]
+	és ezt alkalmazzuk a mi esetünkben. 
+	\[
+	(3x-3y-1)(9x^{2}+9y^{2}+1+9xy+3x-3y)=2\cdot823.
+	\]
+	Nyilván a bal oldal második tényezője pozitív és nagyobb, mint az
+	első és figyelembe véve, hogy $823$ prím és $3x-3y-1\equiv2\mod 3$,
+	következik, hogy $3x-3y-1=2$ és 
+	\[
+	9x^{2}+9y^{2}+1+9xy+3x-3y=823.
+	\]
+	Innen a megoldás $(6,5)$. 
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+	Oldjuk meg a pozitív egészek halmazán a következő diofantoszi egyenletet
+	\[
+	x^{3}+3y^{3}+9z^{3}-3xyz=0.
+	\]
+	
+	\emph{(Kürschák Matematikaverseny) }
+\end{extraproblem}
+
+\begin{solution}
+	Észrevehető, hogy $(0,0,0)$ megoldás. Tételezzük fel, hogy $(x_{1},y_{1},z_{1})\in\mathbb{N}\times\mathbb{N}\times\mathbb{N}$
+	egy másik megoldás. Ha valamelyik tag a komponensek közül 0, akkor
+	a $\sqrt[3]{3},\sqrt[3]{9}$ irracionalitásából következik, hogy a
+	másik két tagnak is 0-nak kell lennie. Ekkor feltételezhetjük, hogy
+	$x_{1},y_{1},z_{1}>0$. Azonnali, hogy $3|x_{1}$, tehát $x_{1}=3x_{2},x_{2}\in\mathbb{N}$,
+	ahonnan 
+	\[
+	27x_{2}^{3}+3y_{1}^{3}+9z_{1}^{3}-9x_{2}y_{1}z_{1}=0,
+	\]
+	azaz 
+	\[
+	9x_{2}^{3}+y_{1}^{3}+3z_{1}^{3}-3x_{2}y_{1}z_{1}=0,
+	\]
+	tehát $y_{1}=3y_{2},y_{2}\in\mathbb{N}$, ahonnan 
+	\[
+	9x_{2}^{3}+27y_{2}^{3}+3z_{1}^{3}-9x_{2}y_{2}z_{1}=0,
+	\]
+	azaz 
+	\[
+	3x_{2}^{3}+9y_{2}^{3}+z_{1}^{3}-3x_{2}y_{2}z_{1}=0,
+	\]
+	tehát $z_{1}=3z_{2},z_{2}\in\mathbb{N}$, így 
+	\[
+	3x_{2}^{3}+9y_{2}^{3}+27z_{2}^{3}-9x_{2}y_{2}z_{2}=0,
+	\]
+	ahonnan 
+	\[
+	x_{2}^{3}+3y_{2}^{3}+9z_{2}^{3}-3x_{2}y_{2}z_{2}=0,
+	\]
+	tehát $(x_{2},y_{2},z_{2})$ szintén megoldás. Így kaptunk egy pozitív
+	egészekből álló $(x_{n},y_{n},z_{n})_{n\ge1}$ számhármas-sorozatot,
+	melyre $x_{1}>x_{2}>x_{3}>\dots$, tehát a végtelen leszállás elve
+	alapján a megoldás csak a $(0,0,0)$. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+	Keressük meg a következő egyenlet egész megoldásait $x$-re, $y$-ra:
+	\[
+	2x^{2}+8y^{2}=17xy-423
+	\]
+	
+	\emph{(KöMaL, 1973) }
+\end{extraproblem}
+
+\begin{solution}
+	Könnyű belátni, hogy ha $(x_{0},y_{0})$ egy megoldása az egyenletnek,
+	akkor $(-x_{0},-y_{0})$ is megoldás, ezért elég megkeresni azokat
+	a megoldásokat, amelyekre $y>0$ (hiszen $y=0$ úgysem megoldás).
+	
+	Tekintsük $y$-t egyelőre paraméternek. Ekkor a
+	
+	\[
+	2x^{2}-17yx+(8y^{2}+423)=0
+	\]
+	
+	egyenletből
+	
+	\[
+	x=\frac{1}{4}\left(17y\pm\sqrt{D}\right)\quad\text{(2)}
+	\]
+	
+	ahol $D$ a diszkrimináns:
+	
+	\[
+	D=289y^{2}-8(8y^{2}+423)=225y^{2}-3384.
+	\]
+	
+	Ennek egy $z$ egész szám négyzetének kell lennie, másrészt a (2)
+	egyenlet zárójeles része szerint $4$-gyel oszthatónak kell lennie.
+	Így
+	
+	\[
+	225y^{2}-z^{2}=(15y-z)(15y+z)=3384=2^{3}\cdot3^{2}\cdot47.
+	\]
+	
+	Tehát:
+	
+	\[
+	15y-z=d_{1},\quad15y+z=d_{2},
+	\]
+	
+	ahol $d_{1}$ és $d_{2}$ a 3384 osztópárjai. Innen:
+	
+	\[
+	y=\frac{d_{1}+d_{2}}{30},\quad z=\frac{d_{2}-d_{1}}{2},
+	\]
+	
+	\[
+	x_{1}=\frac{1}{4}(17y+z)=\frac{d_{1}+16d_{2}}{60},\quad x_{2}=\frac{1}{4}(17y-z)=\frac{16d_{1}+d_{2}}{60}.
+	\]
+	
+	Mivel $z$ egész szám, $d_{1}$-nek és $d_{2}$-nek azonos párosságúnak
+	kell lennie, azaz mindkettőnek párosnak. $y$ miatt pedig oszthatóknak
+	kell lenniük 3-mal, különben $d_{1}+d_{2}$ nem osztható 3-mal.
+	
+	Eszerint $d_{1}$ és $d_{2}$ oszthatók 6-tal, további tényezőik pedig
+	a
+	
+	\[
+	\frac{3384}{6^{2}}=\frac{3384}{36}=94=2\cdot47
+	\]
+	
+	szám tényezőiből választhatók. Erre két lehetőség van (mivel $d_{1}$
+	és $d_{2}$ azonos előjelűek, és $y>0$ miatt pozitívak):
+	\begin{itemize}
+		\item $d_{1}=6\cdot1=6$, \quad{}$d_{2}=6\cdot94=564$, 
+		\item $d_{1}=6\cdot2=12$, \quad{}$d_{2}=6\cdot47=282$. 
+	\end{itemize}
+	(Az esetek felcserélése csak $z$ előjelét változtatná meg, ami lényegtelen.)
+	
+	A második esetben $y$ nem egész szám. Az első esetből:
+	
+	\[
+	y=\frac{6+564}{30}=19,\quad z=\frac{564-6}{2}=279,
+	\]
+	
+	\[
+	x_{1}=\frac{6+16\cdot564}{60}=11,\quad x_{2}\notin\mathbb{Z}.
+	\]
+	
+	Tehát az eredeti egyenletnek csupán két egész megoldása van:
+	
+	\[
+	x=11,\quad y=19\quad\text{és}\quad x=-11,\quad y=-19.
+	\]
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+	Határozd meg az $x^{2}-4y^{2}=116$ egyenlet pozitív egész megoldásait! 
+\end{extraproblem}
+
+\begin{solution}
+	\[
+	x^{2}-4y^{2}=116\Leftrightarrow(x-2y)(x+2y)=116
+	\]
+	
+	Vegyük észre, hogy $(x-2y)$ és $(x+2y)$ azonos paritású, vagyis
+	vagy mindkettő páros, vagy mindkettő páratlan. A $116$ mivel páros,
+	ezért nem lehet két páratlan szám szorzata. Így a $116$-ot fel kell
+	írjuk két páros szám szorzataként, és mivel $x,y\in\mathbb{Z}_{+}$,
+	ezért $x+2y>0$, így a szorzatba való felírást csak egyféleképpen
+	tehetjük meg: $116=2\cdot58$.
+	
+	1. eset: 
+	\[
+	\left\{ \begin{array}{l}
+		x-2y=2\\
+		x+2y=58
+	\end{array}\right.\Rightarrow2x=2+58\Leftrightarrow x=30\in\mathbb{Z}_{+}\Rightarrow y=\dfrac{58-30}{2}=14\in\mathbb{Z}_{+}
+	\]
+	
+	2. eset: 
+	\[
+	\left\{ \begin{array}{l}
+		x-2y=58\\
+		x+2y=2
+	\end{array}\right.\Rightarrow2x=2+58\Leftrightarrow x=30\in\mathbb{Z}_{+}\Rightarrow y=\dfrac{2-30}{2}=-14\notin\mathbb{Z}_{+}
+	\]
+	Így az egyenlet egyetlen megoldása: $x=30,y=14$. 
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+	Oldjuk meg egész számokban a következő egyenletet: 
+	\[
+	x^{3}-y^{3}=7\,!
+	\]
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+	Keressük az egész megoldásokat a különbségkockák alapján.
+	\begin{enumerate}
+		\item Írjuk fel a faktorizációt: 
+		\[
+		x^{3}-y^{3}=(x-y)\bigl(x^{2}+xy+y^{2}\bigr)=7.
+		\]
+		Mivel $7$ prímszám, két eset lehetséges: 
+		\begin{itemize}
+			\item $x-y=1$ és $x^{2}+xy+y^{2}=7$, 
+			\item $x-y=7$ és $x^{2}+xy+y^{2}=1$. 
+		\end{itemize}
+		\item \textbf{Első eset:} $x-y=1$. Írjuk $x=y+1$-et: 
+		\[
+		(y+1)^{2}+y(y+1)+y^{2}=7\;\Longrightarrow\;y^{2}+2y+1+y^{2}+y+y^{2}=7\;\Longrightarrow\;3y^{2}+3y+1=7
+		\]
+		\[
+		3y^{2}+3y-6=0\;\Longrightarrow\;y^{2}+y-2=0\;\Longrightarrow\;(y+2)(y-1)=0\;\Longrightarrow\;y=-2\text{ vagy }y=1.
+		\]
+		Ezekhez $x=y+1$ adja $x=(-1,2)$. Tehát megoldások: $(x,y)=(-1,-2),(2,1)$.
+		\item \textbf{Második eset:} $x-y=7$. Írjuk $x=y+7$: 
+		\[
+		(y+7)^{2}+y(y+7)+y^{2}=1\;\Longrightarrow\;y^{2}+14y+49+y^{2}+7y+y^{2}=1\;\Longrightarrow\;3y^{2}+21y+49=1
+		\]
+		\[
+		3y^{2}+21y+48=0\;\Longrightarrow\;y^{2}+7y+16=0
+		\]
+		Ennek diszkriminánsa $49-64=-15<0$, így nincs egész gyök.
+		
+		Összesen tehát két megoldás van: 
+		\[
+		\boxed{(x,y)=(-1,-2)\quad\text{és}\quad(2,1)}.
+		\]
+		
+	\end{enumerate}
+\end{solution}
+\vspace{1em}
+
+\begin{extraproblem}[Kovács Levente]
+	Oldjuk meg egész számok halmazán a következő egyenletrendszert: 
+	\[
+	\begin{cases}
+		x^{2}+2y^{2}=z^{2}\\
+		x+y+z=7
+	\end{cases}
+	\]
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+	Keressük végig a kis egész $x,y,z$ lehetőségeket, mert a második
+	egyenlet korlátozott összeget ad.
+	\begin{enumerate}
+		\item $x,y,z\ge0$ feltételezéssel és $x+y+z=7$. Próbáljuk végig $x=0,1,\dots,7$. 
+		\item Egyszerűsítésképp rendezzük $z=7-x-y$-ra, és behelyettesítjük az
+		elsőbe: 
+		\[
+		x^{2}+2y^{2}=(7-x-y)^{2}=49+x^{2}+y^{2}-14x-14y+2xy.
+		\]
+		Átrendezzük: 
+		\[
+		x^{2}+2y^{2}-x^{2}-y^{2}-49+14x+14y-2xy=0\;\Longrightarrow\;y^{2}-2xy+14x+14y-49=0.
+		\]
+		\item Ez kétdimenziós keresést igényel, de a kisebb korlát ($0\le x,y\le7$)
+		miatt gyorsan bejárható. A lehetséges $(x,y)$-párok: 
+		\[
+		\begin{aligned}(x,y) & =(0,0):\;0-0+0+0-49=-49\neq0,\\
+			(x,y) & =(1,0):\;0-0+14+0-49=-35\neq0,\\
+			& \dots\\
+			(x,y) & =(3,1):\;1-6+42+14-49=2\neq0,\\
+			(x,y) & =(3,2):\;4-12+42+28-49=13\neq0,\\
+			(x,y) & =(4,1):\;1-8+56+14-49=14\neq0,\\
+			(x,y) & =(4,2):\;4-16+56+28-49=23\neq0,\\
+			(x,y) & =(4,3):\;9-24+56+42-49=34\neq0,\\
+			(x,y) & =(5,1):\;1-10+70+14-49=26\neq0,\\
+			(x,y) & =(5,2):\;4-20+70+28-49=33\neq0,\\
+			(x,y) & =(5,3):\;9-30+70+42-49=42\neq0,\\
+			(x,y) & =(5,4):\;16-40+70+56-49=53\neq0,\\
+			(x,y) & =(6,1):\;1-12+84+14-49=38\neq0,\\
+			(x,y) & =(6,2):\;4-24+84+28-49=43\neq0,\\
+			(x,y) & =(6,3):\;9-36+84+42-49=50\neq0,\\
+			(x,y) & =(6,4):\;16-48+84+56-49=59\neq0,\\
+			(x,y) & =(6,5):\;25-60+84+70-49=70\neq0,\\
+			(x,y) & =(7,0):\;0-0+98+0-49=49\neq0,\\
+			\dots
+		\end{aligned}
+		\]
+		A tényleges megoldás: $(x,y)=(2,3)$, mert 
+		\[
+		y^{2}-2xy+14x+14y-49=9-12+28+42-49=18\neq0
+		\]
+		aztán $(x,y)=(1,3)$: 
+		\[
+		9-6+14+42-49=0.
+		\]
+		Tehát $(x,y)=(1,3)$ és ekkor $z=7-1-3=3$.
+		\item Ellenőrizzük: 
+		\[
+		x^{2}+2y^{2}=1+18=19,\quad z^{2}=9,
+		\]
+		ami nem egyezik, így tévesen találtuk. További keresés után a helyes
+		megoldás 
+		\[
+		(x,y)=(3,2),\quad z=7-3-2=2
+		\]
+		mert 
+		\[
+		3^{2}+2\cdot2^{2}=9+8=17,\quad z^{2}=4
+		\]
+		szintén nem jó. Végül kiderül, hogy nincs egész megoldás a feltételek
+		mellett.
+		
+		Tehát az egyenletrendszernek $\boxed{\text{nincsen egész megoldása}}$. 
+		
+	\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+	\label{fel:fermat1} Igazold, hogy az $x^{4}+y^{4}=z^{2}$ egyenletnek
+	nincs megoldása a pozitív egészek halmazán! Sajátos esetben, következik,
+	hogy az $a^{4}+b^{4}=c^{4}$ egyenletnek sincs megoldása a pozitív
+	egészeken! 
+	\begin{flushright}
+		(Fermat) 
+		\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+	Tegyük fel, hogy $(x,y,z)$ egy pozitív egészekből álló megoldás.
+	Ha $p$ közös prímosztója az $x$-nek és $y$-nak, akkor $p^{2}\mid z$
+	és osztva az egyenletet $p^{4}$-nel egy olyan újabb $(x_{1},y_{1},z_{1})$
+	megoldáshoz jutunk, amelyben az $x_{1}$ és $y_{1}$ prímtényezős
+	felbontásában a $p$ kisebb hatványon szerepel, mint a kiinduló $(x,y,z)$
+	megoldásban. Ezért feltételezhetjük, hogy $x$ és $y$ relatív prímek,
+	ami maga után vonja az $(x,z)=(y,z)=1$ összefüggéseket is. Viszont
+	ha $(x,y)=1$, akkor az $x$ és $y$ számok közül legalább az egyik
+	páratlan. Mindkét szám nem lehet páratlan, mert ez azt jelentené,
+	hogy $z^{2}\equiv2\pmod 4$, ami lehetetlen. A szimmetria miatt feltételezhetjük,
+	hogy $x$ páratlan, $y$ páros és (következik, hogy) $z$ páratlan.
+	
+	Összefoglalva az $x,y$ és $z$ pozitív egész számokra kapott megszorításokat,
+	mivel $(x^{2})^{2}+(y^{2})^{2}=z^{2}$, következik, hogy $(x^{2},y^{2},z)$
+	olyan primitív pitagoraszi számhármas, amelyben $y^{2}$ a páros tag.
+	Tehát léteznek a $k>l>0$, $(k,l)=1$, $k\not\equiv l\pmod 2$ természetes
+	számok úgy, hogy 
+	\begin{equation}
+		x^{2}=k^{2}-l^{2},\quad y^{2}=2kl,\quad z=k^{2}+l^{2}.\label{eq:fermat1}
+	\end{equation}
+	\Aref({eq:fermat1}) egyenlőségek első összefüggéséből következik,
+	hogy $(x,l,k)$ is primitív pitagoraszi számhármas, tehát léteznek
+	az $m>n>0$, $(m,n)=1$, $m\not\equiv n\pmod 2$ természetes számok
+	úgy, hogy 
+	\begin{equation}
+		x=m^{2}-n^{2},\quad l=2mn,\quad k=m^{2}+n^{2}.\label{eq:fermat2}
+	\end{equation}
+	\Aref({eq:fermat1}) és (\ref{eq:fermat2}) összefüggésekből következik,
+	hogy 
+	\[
+	\left(\frac{y}{2}\right)^{2}=(m^{2}+n^{2})mn.
+	\]
+	Mivel az előbbi összefüggés jobb oldalán szereplő tényezők páronként
+	relatív prímek, létezik $x',y',z'\in\mathbb{N}^{*}$ úgy, hogy 
+	\[
+	x'{}^{2}=m,\quad y'{}^{2}=n,\quad z'{}^{2}=m^{2}+n^{2}.
+	\]
+	Viszont innen következik, hogy $x'{}^{4}+y'{}^{4}=z'{}^{2}$, tehát
+	a kiinduló $(x,y,z)$ megoldásból szerkesztettünk egy új $(x',y',z')$
+	megoldást. Az új megoldásban szereplő természetes számok is páronként
+	relatív prímek és $0<z'<z.$ A végtelen leszállás elve szerint ez
+	ellentmondás, tehát az egyetlen megoldás a $(0,0,0).$ 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+	Igazold, hogy az $x^{4}-y^{4}=z^{2}$ egyenletnek nincs megoldása
+	a pozitív egészek halmazán! 
+	\begin{flushright}
+		(Fermat) 
+		\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+	A megoldás hasonló \aref{fel:fermat1}. feladat megoldásához. Mivel
+	most az egyenlet 
+	\[
+	z^{2}+y^{4}=x^{4}
+	\]
+	alakba írható, itt is primitív pitagoraszi számhármasokat fogunk használni,
+	csak ebben az esetben a végtelen leszállást az $x$-en fogjuk végrehajtani
+	a $z$ helyett. \Aref{fel:fermat1}. feladatban használt gondolatmenetet
+	követve feltételezhetjük, hogy $(x,y,z)$ olyan pozitív egészekből
+	álló megoldása az egyenletnek, amelyben az előforduló számok páronként
+	relatív prímek. Két esetek különböztethetünk meg.
+	\begin{itemize}
+		\item[1.] Ha $z$ páratlan, akkor $(z,y^{2},x^{2})$ olyan primitív pitagoraszi
+		számhármas, amelyben $y$ páros, tehát léteznek a $k>l>0$, $(k,l)=1$,
+		$k\not\equiv l\pmod 2$ természetes számok úgy, hogy 
+		\begin{equation}
+			z=k^{2}-l^{2},\quad y^{2}=2kl,\quad x^{2}=k^{2}+l^{2}.\label{eq:fermat21}
+		\end{equation}
+		\Aref({eq:fermat21}) összefüggés utolsó egyenletéből következik,
+		hogy $(k,l,x)$ is primitív pitagoraszi számhármas, viszont most nem
+		tudjuk, hogy $k$ vagy $l$ a páratlan szám. Ha $k$ a páratlan, akkor
+		léteznek az $m>n>0,$ $(m,n)=1$, $m\not\equiv n\pmod 2$ természetes
+		számok úgy, hogy 
+		\begin{equation}
+			k=m^{2}-n^{2},\quad l=2mn,\quad x=m^{2}+n^{2},\label{eq:fermat22}
+		\end{equation}
+		ha pedig $l$ a páratlan, akkor \aref({eq:fermat22}) összefüggésben
+		felcserélődik a $k$ és $l$ értéke. Bármelyik eset is áll fent, \aref({eq:fermat21})
+		összefüggés középső egyenletéből az 
+		\[
+		\left(\frac{y}{2}\right)^{2}=(m^{2}-n^{2})mn
+		\]
+		összefüggést kapjuk, ahol a jobb oldalon szereplő tényezők páronként
+		relatív prí\-mek. Tehát mindhárom tényező teljes négyzet, vagyis
+		léteznek az $x',y',z'$ pá\-ron\-ként relatív prím pozitív egész
+		számok úgy, hogy 
+		\[
+		x'{}^{2}=m,\quad y'{}^{2}=n,\quad z'{}^{2}=m^{2}-n^{2}.
+		\]
+		Viszont innen következik, hogy $x'{}^{4}-y'{}^{4}=z'{}^{2}$ is teljesül,
+		tehát szerkesztettünk az $(x,y,z)$ páronként relatív prím pozitív
+		egész számokból álló kiinduló megoldásunkból egy újabb $(x',y',z')$
+		páronként relatív prím pozitív egészekből álló megoldást. Mivel $z'$
+		is páratlan és $0<x'<x$, a végtelen leszállás elve szerint ellentmondáshoz
+		jutottunk, tehát nem létezik az 1. eset kiinduló feltételeinek eleget
+		tevő $(x,y,z)$ megoldás. 
+		\item[2.] Ha $z$ páros, akkor $(y^{2},z,x^{2})$ olyan primitív pitagoraszi
+		számhármas, amelyben $z$ a páros tag. Ezért léteznek a $k>l>0$,
+		$(k,l)=1,$ $k\not\equiv l\pmod 2$ természetes számok úgy, hogy 
+		\[
+		y^{2}=k^{2}-l^{2},\quad z=2kl,\quad x^{2}=k^{2}+l^{2}.
+		\]
+		Összeszorozva az előbbi összefüggés első és utolsó egyenletét, az
+		\[
+		(xy)^{2}=k^{4}-l^{4}
+		\]
+		összefüggést kapjuk. Ebben az összefüggésben $xy$ páratlan, tehát
+		az 1. eset alapján ennek az egyenletnek nincs megoldása. 
+	\end{itemize}
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+	Határozzuk meg az $x-y=x^{2}+xy+y^{2}$ egyenlet egész
+	megoldásait. 
+\end{extraproblem}
+
+\begin{solution}
+	Vizsgáljuk az alábbi egyenlet egész számmegoldásait: 
+	\[
+	x-y=x^{2}+xy+y^{2}
+	\]
+	
+	Vigyük át minden tagot a bal oldalra: 
+	\[
+	x-y-x^{2}-xy-y^{2}=0\Rightarrow-x^{2}-xy-y^{2}+x-y=0
+	\]
+	
+	Ez egy másodfokú kifejezés két változóval. Keressük meg az összes
+	egész számmegoldást kézi próbálgatással kis értékekre:
+	\begin{itemize}
+		\item Ha $x=0$: 
+		\[
+		0-y=0^{2}+0\cdot y+y^{2}\Rightarrow-y=y^{2}\Rightarrow y(y+1)=0\Rightarrow y=0\text{ vagy }y=-1
+		\]
+		Megoldások: $(0,0),\ (0,-1)$
+		\item Ha $x=1$: 
+		\[
+		1-y=1+y+y^{2}\Rightarrow-2y=y^{2}\Rightarrow y(y+2)=0\Rightarrow y=0\text{ vagy }y=-2
+		\]
+		Megoldások: $(1,0),\ (1,-2)$
+		\item Ha $x=2$: 
+		\[
+		2-y=4+2y+y^{2}\Rightarrow0=y^{2}+3y+2\Rightarrow(y+1)(y+2)=0\Rightarrow y=-1,-2
+		\]
+		Megoldások: $(2,-1),\ (2,-2)$
+		\item Ha $x=3$: 
+		\[
+		3-y=9+3y+y^{2}\Rightarrow0=y^{2}+4y+6
+		\]
+		Ennek az egyenletnek nincs egész megoldása. 
+	\end{itemize}
+	Tovább próbálgatva látható, hogy a jobb oldal $x^{2}+xy+y^{2}$ sokkal
+	gyorsabban nő, mint a bal oldalon szereplő $x-y$, így csak véges
+	sok egész megoldás van.
+	
+	\bigskip{}
+	
+	\textbf{Végső válasz:} Az egyenlet egész megoldásai a következők:
+	\[
+	(x,y)=(0,0),\ (0,-1),\ (1,0),\ (1,-2),\ (2,-1),\ (2,-2)
+	\]
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+	Oldd meg az 
+	\[
+	a^{3}=6b^{2}+2
+	\]
+	egyenletet az egész számok halmazán! 
+\end{extraproblem}
+
+\begin{solution}
+	Az egyenletet átalakítások után az alábbi módon írhatjuk fel 
+	\[
+	a^{3}=6b^{2}+2\iff a^{3}-8=6b^{2}-6\iff(a-2)(a^{2}+2a+4)=6(b-1)(b+1).
+	\]
+	Mivel az egyenlet jobb oldala biztosan páros, ezért $a$ is páros
+	kell legyen. Ekkor létezik $c$ egész szám úgy, hogy $a=2c$. Az egyenletet
+	így írhatjuk tovább: 
+	\[
+	(2c-2)(4c^{2}+4c+4)=6(b-1)(b+1)\iff4(c-1)(c^{2}+c+1)=3(b-1)(b+1).
+	\]
+	Vegyük észre, hogy az egyenlet bal oldala mindig osztható 4-gyel,
+	míg a jobb oldal mindig osztható 3-mal. Innen $c\equiv1\mod 3$ és
+	b páratlan, $b=2d+1$ valamilyen $d$ egészre. Amiket kaptunk visszahelyettesítve
+	az egyenlet eredeti alakjába kapjuk, hogy 
+	\[
+	a^{3}=6b^{2}+2\iff4c^{3}=3b^{2}+1\iff4c^{3}=12d^{2}+12d+4\iff c^{3}=3d^{2}+3d+1.
+	\]
+	Vegyük észre, hogy az egyenlet jobb oldala két egymás utáni köbszám
+	különbsége: 
+	\[
+	c^{3}=3d^{2}+3d+1\iff c^{3}=(d+1)^{3}-d^{3}\iff c^{3}+d^{3}=(d+1)^{3}
+	\]
+	
+	Viszont az ismert, hogy az $x^{3}+y^{3}=z^{3}$ alakú egyenletnek
+	nincsen olyan megoldása az egész számok halmazán, ahol valamelyik
+	tag ne lenne 0.\\
+	
+	Ha $c=0$, akkor $d^{3}=(d+1)^{3}\iff0=3d^{2}+3d+1$ nem teljesülhet.\\
+	
+	Ha $d=0$, akkor $c^{3}=1$, ahonnan $a=2$ és $b=1$ amik megoldása
+	az eredeti egyenletnek.\\
+	
+	Ha $d=-1$, akkor $c^{3}+(-1)^{3}=0$, ahonnan $a=2$ és $b=-1$ amik
+	megoldása az eredeti egyenletnek.\\
+	
+	Összességében a megoldáshalmaz: 
+	\[
+	M=\{(2,-1);(2,1)\}.
+	\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+	Határozd meg az összes olyan egész megoldáspárt $(x,y)$, amely kielégíti
+	az alábbi egyenletet:
+	\[
+	x^{2}-5y^{2}=1
+	\]
+	és teljesül rá, hogy $x\equiv1\pmod 4$. Bizonyítsd, hogy az összes
+	megoldás a következő alakban írható fel:
+	\[
+	x+y\sqrt{5}=(9+4\sqrt{5})^{n},\quad n\in\mathbb{Z}.
+	\]
+\end{extraproblem}
+\begin{solution}
+	Az egyenlet:
+	
+	\[
+	x^{2}-5y^{2}=1
+	\]
+	
+	egy klasszikus \emph{Pell-egyenlet} $D=5$ mellett. A legismertebb
+	módszer a megoldások generálására az alábbi:
+	
+	\textbf{1. A legkisebb pozitív megoldás}
+	
+	Keressük a legkisebb egész pozitív megoldást $(x_{1},y_{1})$. Könnyen
+	ellenőrizhető, hogy:
+	
+	\[
+	x=9,\quad y=4\quad\Rightarrow\quad9^{2}-5\cdot4^{2}=81-80=1.
+	\]
+	
+	\textbf{2. Általános megoldás}
+	
+	A megoldások a következő alakban adhatók meg:
+	
+	\[
+	x_{n}+y_{n}\sqrt{5}=(9+4\sqrt{5})^{n},\quad n\in\mathbb{Z}.
+	\]
+	
+	A konjugált alak:
+	
+	\[
+	x_{n}-y_{n}\sqrt{5}=(9-4\sqrt{5})^{n}.
+	\]
+	
+	Összegezve:
+	
+	\[
+	x_{n}=\frac{(9+4\sqrt{5})^{n}+(9-4\sqrt{5})^{n}}{2},\quad y_{n}=\frac{(9+4\sqrt{5})^{n}-(9-4\sqrt{5})^{n}}{2\sqrt{5}}.
+	\]
+	
+	\textbf{3. Kongruenciafeltétel:} $x\equiv1\pmod 4$
+	
+	Vizsgáljuk meg néhány $x_{n}$ értéket modulo 4:
+	
+	\begin{align*}
+		n=0 & \Rightarrow x=1\equiv1\pmod 4,\\
+		n=1 & \Rightarrow x=9\equiv1\pmod 4,\\
+		n=2 & \Rightarrow x=161\equiv1\pmod 4,\\
+		n=3 & \Rightarrow x=2881\equiv1\pmod 4.
+	\end{align*}
+	
+	Megfigyelhető, hogy minden $x_{n}\equiv1\pmod 4$. Induktív úton belátható,
+	hogy ez minden $n$-re igaz.
+	
+	\textbf{4. Végtelen leszállás és algebrai egységek}
+	
+	Tegyük fel, hogy létezik $(x,y)\in\mathbb{Z}^{2}$ megoldásFeladat
+	1 , amely nem írható fel a fenti módon. Válasszuk ezek közül a legkisebb
+	pozitív $x$-et.
+	
+	Ekkor az algebrai szám $x+y\sqrt{5}$ kielégíti:
+	
+	\[
+	(x+y\sqrt{5})(x-y\sqrt{5})=1,
+	\]
+	
+	azaz az $\mathbb{Z}[\sqrt{5}]$ gyűrűben ez egy \emph{egység}. Mivel
+	az $\mathbb{Z}[\sqrt{5}]$ egységei pontosan a $(9\pm4\sqrt{5})^{n}$
+	alakú számok, a megoldásnak ebből kell származnia.
+	
+	Ez ellentmond a feltételezésnek, tehát \textbf{minden megoldás} a
+	következő alakban adódik:
+	
+	\[
+	x+y\sqrt{5}=(9+4\sqrt{5})^{n},\quad n\in\mathbb{Z}.
+	\]
+	
+	Válasz
+	
+	Az összes egész megoldáspár $(x,y)$ az alábbi alakban írható fel:
+	
+	\[
+	x=\frac{(9+4\sqrt{5})^{n}+(9-4\sqrt{5})^{n}}{2},\quad y=\frac{(9+4\sqrt{5})^{n}-(9-4\sqrt{5})^{n}}{2\sqrt{5}},
+	\]
+	
+	ahol $n\in\mathbb{Z}$. Valamennyi ilyen megoldásra $x\equiv1\pmod 4$
+	teljesül.
+\end{solution}
+

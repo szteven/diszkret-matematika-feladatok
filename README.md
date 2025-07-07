@@ -1,1 +1,2 @@
-# diszkret-matematika-feladatok
+# diszkret_feladatok
+Diszkrét matematika feladatok

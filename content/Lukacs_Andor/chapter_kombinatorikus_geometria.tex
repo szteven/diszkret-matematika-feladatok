@@ -1,0 +1,1083 @@
+
+\chapter{Kombinatorikus geometria}\label{chap:kombgeo}
+\begin{description}
+{\large \item [{Szerző:}] Lukács Andor (Didaktikai mesteri -- Matematika, I. év)}
+\end{description}
+\begin{problem}
+Adott egy $n$ oldalú konvex sokszög ($n\geq4$), amelyet valamilyen
+módon felbontunk háromszögekre belső pontban egymást nem metsző átlók
+segítségével. Az adott felbontás esetén nevezzük nullás csúcsnak a
+sokszög azon csúcsait, amelyekből nem indul ki átló, illetve nevezzük
+belső háromszögnek azokat, amelyek minden oldala átló. Ha $N$ a nullás
+csúcsok száma, illetve $B$ a belső háromszögek száma, akkor igazold,
+hogy 
+\[
+N=B+2.
+\]
+\end{problem}
+
+\begin{proof}[Első megoldás]
+A sokszög háromszögekre való felosztása során három fajta háromszög
+keletkezik. 
+\begin{enumerate}
+\item Olyan háromszög, amelyeknek egy oldala behúzott átló és két oldala
+a sokszögnek is oldala. Ezek számát jelöljük $K$-val.
+\item Olyan háromszög, amelyeknek két oldala behúzott átló és egy oldala
+a sokszögnek is oldala. Ezek számát jelöljük $M$-mel.
+\item Olyan háromszög, amelyeknek mindhárom oldala behúzott átló. Ezek a
+belső háromszögek, amelyek száma $B$. 
+\end{enumerate}
+Az első fajta háromszög pontosan egy csúcsából nem indul ki behúzott
+átló, illetve a második és harmadik fajta háromszögek mindegyik csúcsából
+indul ki behúzott átló. Így a nullás csúcsok száma megegyezik az első
+fajta háromszögek számával, vagyis $K=N$.\par %Az átlók és oldalak megszámlálásával összefüggéseket fogunk felírni a $K$, $M$, $B$ számok között.
+A sokszög oldalainak számát kétféleképpen számolhatjuk meg. Egyrészt
+a sokszög minden oldala pontosan egy háromszögnek oldala. Másrészt
+az első fajta háromszögek a sokszög oldalaiból $2K$ darabot és a
+második fajta háromszögek pedig $M$ darabot tartalmaznak, a harmadik
+fajta háromszögek pedig egyetlen darabot sem tartalmaznak. Ezek alapján
+a következő összefüggést írhatjuk fel: 
+\begin{equation}
+n=2K+M.\label{felixxx-1}
+\end{equation}
+\par A sokszög behúzott átlóinak kétszeresét kétféleképpen is megszámolhatjuk.
+Ehhez előbb meg\-számol\-juk, hogy hány háromszögre bontjuk a sokszöget,
+illetve ehhez hány átlóra van szükség.\par Az $n$ oldalú sokszög
+$n-2$ háromszögre bomlik fel, amit a következőképpen láthatunk be.
+A sokszög szögeinek összegét kétféleképpen számolhatjuk meg. A sokszög
+felosztása során a sokszög egy rögzített $A$ csúcsánál található
+szög felbomlik ezen csúcsot tartalmazó háromszögek $A$ csúcsainál
+található szögekre. Egyrészt az $n$ oldalú sokszög szögeinek összege
+$(n-2)\cdot180^{\circ}$, másrészt ha $h$ a háromszögek száma, akkor
+ugyanezen összeg egyenlő $h\cdot180^{\circ}$-val, ahonnan a háromszögek
+száma $h=n-2$. \\
+\par A háromszögekre bontás során összesen $n-3$ darab átlót húzunk
+be, amit a következőképpen tudunk belátni. Mielőtt behúznánk az első
+átlót a sokszög egy darabból áll. Az első átló behúzásával két részre
+bontjuk a sokszöget. A második átló behúzásával az egyik darabot újra
+két részre bontjuk, tehát három darabra bomlik a sokszög. Minden újabb
+átló behúzásával egy meglévő darabot bontuk ketté, így eggyel növelve
+a darabok számát. Tehát $k$ átló behúzása után $k+1$ darabra bomlik
+a sokszög. Ha a sokszög $n-2$ háromszögre bontásához $k$ darab átlóra
+van szükség, akkor $k+1=n-2$, ahonnan $k=n-3$.\par A sokszög minden
+behúzott átlója pontosan két háromszögnek oldala. Továbbá a behúzott
+átlókból az első fajta háromszögek $K$ darabot, a második fajta háromszögek
+$2M$ darabot, a harmadik fajta háromszögek pedig $3B$ darabot tartalmaznak.
+Tehát 
+\begin{equation}
+2(n-3)=K+2M+3B.\label{felixxx-2}
+\end{equation}
+Az (\ref{felixxx-2}) egyenlőségből kivonva az (\ref{felixxx-1})
+egyenlőség kétszeresét kapjuk, hogy 
+\[
+2\cdot(n-3)-2n=(K+2M+3B)-2\cdot(2K+M)\iff-6=-3K+3B\iff K=B+2
+\]
+Mivel $K=N$, így kapjuk, hogy $N=B+2$.
+\end{proof}
+%
+\begin{proof}[Második megoldás]
+Nevezzük nullás háromszögnek azokat a felbontásban szereplő háromszögeket,
+amelyeknek van nullás csúcsa. Matematikai indukcióval belátjuk, hogy
+bármilyen felbontásban lesz legalább két nullás háromszög. Az állítás
+$n=4$ esetén igaz. Ha elfogadjuk az állítást tetszőleges $k>4$ oldalú
+sokszög tetszőleges felbontására, és egy, a felbontásban szereplő
+átló mentén két részre osztjuk a sokszöget, akkor: 
+\begin{itemize}
+\item ha az egyik rész háromszög, akkor ez az eredeti háromszögnek nullás
+háromszöge volt, és a másik résznek van legalább két nullás háromszöge,
+amelyek közül csak az egyik lehet a vágáshoz használt átló mentén;
+\item ha mindkét rész legalább négyszög, akkor az indukciós feltevés szerint
+mindkét részben lesz legalább két nullás háromszög, amelyek közül
+legfennebb egy-egynek lehet az egyik oldala a vágáshoz használt átló. 
+\end{itemize}
+A matematikai indukció elve alapján tehát az állítás igaz minden $n\ge4$
+oldalú sokszögre.\par Belátjuk, hogy a feladat állítása igaz, ismét
+matematikai indukcióval. Ha $n=4$, az állítás igaz. Tegyük fel, hogy
+az állítás igaz tetszőleges $k$ csúcsú konvex sokszög esetén és legyen
+$P$ egy tetszőleges $k+1$ csúcsú konvex sokszög, amelyet tetszőlegesen
+felbontottunk háromszögekre a feltételek szerint. Válasszunk ki egy
+nullás háromszöget (ami biztosan létezik). Jelölje $Q$ azt a felbontott
+$k$-szöget, amelyet úgy kapunk a $P$-ből és a felbontásából, hogy
+levágjuk a kiválasztott háromszöget. Két esetet különböztetünk meg: 
+\begin{itemize}
+\item Ha a levágott háromszög megmaradó oldala a $P$ felbontásában belső
+háromszöghöz tartozik, akkor $N_{P}=N_{Q}+1$ és $B_{P}=B_{Q}+1$.
+\item Ha a levágott háromszög megmaradó oldala a $P$ felbontásában nullás
+háromszöghöz tartozik, akkor $N_{P}=N_{Q}$ és $B_{P}=B_{Q}$.
+\end{itemize}
+Mindkét esetben azt kapjuk, hogy $N_{P}=B_{P}+2$.
+
+Az egyenlőséget a csúcsok száma szerinti indukcióval igazoljuk. Az
+$n=4$ esetben a négyszög egyetlen átlóval két háromszögre osztható
+és a négyszögnek két csúcsa van, amelyből nem indul ki átló. Tehát
+$B=0$ és $N=2$.\par Feltételezzük, hogy minden $n$-nél kisebb
+oldalszámú konvex sokszögre igaz a tulajdonság, ahol $n$ legalább
+$5$. Be fogjuk látni, hogy az $n$ oldalú sokszögekre is igaz.\par Jelöljük
+$K$-val a megadott $n$ oldalú konvex sokszöget. Legyen $PQ$ a $K$
+felbontásában szereplő egyik átló. A $PQ$ átló az $n$ oldalú $K$
+sokszöget két, $K_{1}$ és $K_{2}$ konvex sokszögre bontja. A $K$
+felbontása származtatja a $K_{1}$, illetve $K_{2}$ sokszögek egy-egy
+háromszögekre való felbontását egymást nem metsző átlókkal. Megjegyezzük,
+hogy a $K$ sokszög $PQ$ átlója a $K_{1}$ és $K_{2}$ sokszögeknek
+oldala, illetve a $K$ nullás csúcsai egyben a $K_{1}$ és $K_{2}$
+sokszögeknek is nullás csúcsai.\par Jelölje $N_{1}$ és $N_{2}$
+a $K$ azon nullás csúcsainak számát, amelyek a $K_{1}$-nek, illetve
+$K_{2}$-nek is csúcsai.
+
+Mivel $P$ és $Q$ nem nullás csúcsai a $K$-nak, ezért 
+\begin{equation}
+N=N_{1}+N_{2}.\label{felixx-1}
+\end{equation}
+Jelölje $B_{1}$ és $B_{2}$ a $K$ azon belső háromszögeinek számát,
+amelyek a $K_{1}$-nek, illetve $K_{2}$-nek is (nem feltétlen belső)
+háromszögei. Ekkor 
+\begin{equation}
+B=B_{1}+B_{2}.\label{felixx-2}
+\end{equation}
+Megjegyezzük, hogy a $K_{1}$ és $K_{2}$ belső háromszögei a $K$-nak
+is belső háromszögei. A $K$ azon két háromszöge, amelynek egyik oldala
+a $PQ$ átló, azok lehetnek a $K$ belső háromszögei, de nem belső
+háromszögek a $K_{1}$ és $K_{2}$ sokszögekben.\par Mivel $n\geq5$,
+ezért a $K_{1}$ és $K_{2}$ sokszögek nem lehetnek egyszerre háromszögek.
+Tegyük fel, hogy $K_{1}$ biztosan nem háromszög, illetve $K_{2}$
+lehet háromszög vagy sem.\par Jelölje $\Delta$ a $K_{1}$ felbontásában
+azt a háromszöget, amelynek egyik oldala a $PQ$. A $K_{1}$ sokszög
+$P$ és $Q$ szomszédos csúcsainak valamelyikéből ki kell induljon
+legalább egy átló. 
+\begin{itemize}
+\item Először tekintjük azt az esetet, amikor csak az egyik csúcsból indul
+ki átló, például a $P$-ből kiindul átló, de a $Q$-ból nem.\par Ekkor
+a $\Delta$ nem belső háromszöge sem a $K$ sokszögnek, sem a $K_{1}$
+sokszögnek, ezért a $K_{1}$ belső háromszögeinek száma egyenlő $B_{1}$-gyel.\par A
+$Q$ nullás csúcsa a $K_{1}$ sokszögnek, míg a $P$ nem, így a $K_{1}$
+nullás csúcsainak száma egyenlő $(N_{1}+1)$-gyel.\par A $K_{1}$
+sokszögre használva az indukciós feltevést kapjuk, hogy $(N_{1}+1)-B_{1}=2$,
+ahonnan $N_{1}-B_{1}=1$.
+\item Most tekintjük azt az esetet, amikor a $K_{1}$ sokszög $P$ és $Q$
+csúcsaiból indul ki átló. Ekkor a $P$ és $Q$ nem nullás csúcsai
+a $K_{1}$ sokszögnek, tehát a $K_{1}$ sokszög nullás sokszögeinek
+száma egyenlő $N_{1}$-gyel. A $\Delta$ háromszög belső háromszöge
+a $K$-nak, de nem belső háromszöge a $K_{1}$-nek, ezért a $K_{1}$
+belső háromszögeinek száma egyenlő $(B_{1}-1)$-gyel.\par A $K_{1}$
+sokszögre használva az indukciós feltevést kapjuk, hogy $N_{1}-(B_{1}-1)=2$,
+ahonnan $N_{1}-B_{1}=1$.
+\end{itemize}
+Ezzel beláttunk, hogy a $K_{1}$ (legalább $4$ oldalú) konvex sokszögben
+\begin{equation}
+N_{1}-B_{1}=1.\label{felixx-3}
+\end{equation}
+Végül két esetet különböztetünk meg aszerint, hogy $K_{2}$ legalább
+négyszög vagy csak háromszög.\par 
+\begin{itemize}
+\item Ha $K_{2}$ legalább négyszög, akkor a fenti tárgyaláshoz hasonlóan
+belátható, hogy $N_{2}-B_{2}=1$. Innen az (\ref{felixx-1}), (\ref{felixx-2}),
+(\ref{felixx-3}) összefüggések felhasználásával kapjuk, hogy 
+\[
+N-B=(N_{1}+N_{2})-(B_{1}+B_{2})=(N_{1}-B_{1})+(N_{2}-B_{2})=1+1=2.
+\]
+\item Ha $K_{2}$ háromszög, akkor $K$-nak nem esik belső háromszöge a
+$K_{2}$-be, így $B=B_{1}$. Továbbá a $K_{2}$ azon csúcsa, amely
+nem esik egybe a $P$ és $Q$-val a $K$ sokszög nullás csúcsa, így
+a $N=N_{1}+1$. Ezekből az (\ref{felixx-3}) összefüggés felhasználásával
+kapjuk, hogy 
+\[
+N-B=(N_{1}+1)-B_{1}=1+N_{1}-B_{1}=2.
+\]
+\end{itemize}
+\end{proof}
+\begin{problem}
+Egy $2n \times 2n$-es, $4n^2$ egységnégyzetből álló négyzet alakú tábla egyik egység\-négyzetét kivettük. 
+ \begin{enumerate}
+ \item Bizonyítsd be, hogy ha $n\in \{1,2,4\}$, akkor a megmaradt rész hézag és átfedés nélkül lefedhető az alábbi ábrán látható, $3$ egységnégyzetből álló alakzat segítségével, ha ebből elégséges számú áll a rendelkezésünkre, és ezeket bármilyen pozícióban elhelyezhetjük a táblán!
+ \item Határozd meg az összes olyan $n\in \mathbb{N}^*$ számot, amely esetén a megmaradt rész hézag és átfedés nélkül lefedhető az előbbi alakzatok segítségével!
+\end{enumerate}
+ \begin{center}
+ 	\definecolor{ccqqqq}{rgb}{0.8,0.0,0.0}
+ 	\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+ 	\definecolor{qqzzqq}{rgb}{0.0,0.6,0.0}
+ 	\definecolor{ttqqqq}{rgb}{0.2,0.0,0.0}
+ 	\definecolor{zzttqq}{rgb}{0.6,0.2,0.0}
+ 	\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+ 	\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+ 		\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=1.0cm,ystep=1.0cm] (-7.364245476059976,9.756443168713044) grid (-4.625984891401025,12.286734595043452);
+ 		\clip(-7.364245476059976,9.756443168713044) rectangle (-4.625984891401025,12.286734595043452);
+ 		\draw [color=zzttqq] (-7.0,12.0)-- (-7.0,10.0);
+ 		\draw [color=zzttqq] (-7.0,10.0)-- (-5.0,10.0);
+ 		\draw [color=zzttqq] (-5.0,10.0)-- (-5.0,11.0);
+ 		\draw [color=zzttqq] (-5.0,11.0)-- (-6.0,11.0);
+ 		\draw [color=zzttqq] (-6.0,11.0)-- (-6.0,12.0);
+ 		\draw [color=zzttqq] (-6.0,12.0)-- (-7.0,12.0);
+ 		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (-7.0,12.0) -- (-7.0,10.0) -- (-5.0,10.0) -- (-5.0,11.0) -- (-6.0,11.0) -- (-6.0,12.0) -- cycle;
+ 	\end{tikzpicture}
+ \end{center}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+	\item
+$2\times 2$-es tábla esetén ha kiveszünk egy egységnégyzetet, a maradék pontosan egy olyan alakzat lesz, ami a kijelentésben szerepel. A továbbiakban nevezzük ezt az alakzatot $L$-triminónak. $4\times 4$-es tábla esetén vágjuk szét a táblát $4$ darab $2\times 2$-es táblára. A szimmetria miatt elégséges azt megvizsgálni, hogy lefedhető-e a maradék, ha a bal alsó $2\times 2$-es részből vesszük ki az egységnégyzetet. Így a bal alsó $2\times 2$-es rész lefedhető lesz és a többi három $2\times 2$-es rész mindegyikéből kivesszük az eredeti tábla középpontját tartalmazó egységnégyzetet. Így a maradékok ismét lefedhetők $L$-triminókkal és a $2\times 2$-es részek összeillesztése után a középen üresen maradó három egységnégyzetre illeszkedik egy $L$-triminó.
+
+\begin{center}
+\definecolor{ccqqqq}{rgb}{0.8,0.0,0.0}
+\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+\definecolor{qqzzqq}{rgb}{0.0,0.6,0.0}
+\definecolor{ttqqqq}{rgb}{0.2,0.0,0.0}
+\definecolor{zzttqq}{rgb}{0.6,0.2,0.0}
+\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+	\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=1.0cm,ystep=1.0cm] (0.31569909304841126,4.525866158156446) grid (9.912371489078488,9.520319639469019);
+	\clip(0.31569909304841126,4.525866158156446) rectangle (9.912371489078488,9.520319639469019);
+	\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (1.0,5.0) -- (3.0,5.0) -- (3.0,7.0) -- (1.0000000000000002,7.0) -- cycle;
+	\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (5.0,5.0) -- (9.0,5.0) -- (9.0,9.0) -- (5.0,9.0) -- cycle;
+	\fill[color=ttqqqq,fill=ttqqqq,fill opacity=1.0] (1.0,5.0) -- (2.0,5.0) -- (2.0,6.0) -- (1.0,6.0) -- cycle;
+	\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (5.0,7.0) -- (6.0,7.0) -- (6.0,8.0) -- (7.0,8.0) -- (7.0,9.0) -- (5.0,9.0) -- cycle;
+	\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (7.0,6.0) -- (7.0,5.0) -- (9.0,5.0) -- (9.0,7.0) -- (8.0,7.0) -- (8.0,6.0) -- cycle;
+	\fill[color=qqqqff,fill=qqqqff,fill opacity=0.35] (8.0,7.0) -- (9.0,7.0) -- (9.0,9.0) -- (7.0,9.0) -- (7.0,8.0) -- (8.0,8.0) -- cycle;
+	\fill[fill=black,fill opacity=1.0] (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (5.0,7.0) -- cycle;
+	\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (6.0,7.0) -- (7.0,7.0) -- (7.0,6.0) -- (8.0,6.0) -- (8.0,8.0) -- (6.0,8.0) -- cycle;
+	\fill[color=qqqqff,fill=qqqqff,fill opacity=0.25] (5.0,5.0) -- (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (7.0,7.0) -- (7.0,5.0) -- cycle;
+	\draw [color=zzttqq] (1.0,5.0)-- (3.0,5.0);
+	\draw [color=zzttqq] (3.0,5.0)-- (3.0,7.0);
+	\draw [color=zzttqq] (3.0,7.0)-- (1.0000000000000002,7.0);
+	\draw [color=zzttqq] (1.0000000000000002,7.0)-- (1.0,5.0);
+	\draw [color=zzttqq] (5.0,5.0)-- (9.0,5.0);
+	\draw [color=zzttqq] (9.0,5.0)-- (9.0,9.0);
+	\draw [color=zzttqq] (9.0,9.0)-- (5.0,9.0);
+	\draw [color=zzttqq] (5.0,9.0)-- (5.0,5.0);
+	\draw [color=ttqqqq] (1.0,5.0)-- (2.0,5.0);
+	\draw [color=ttqqqq] (2.0,5.0)-- (2.0,6.0);
+	\draw [color=ttqqqq] (2.0,6.0)-- (1.0,6.0);
+	\draw [color=ttqqqq] (1.0,6.0)-- (1.0,5.0);
+	\draw [color=qqzzqq] (5.0,7.0)-- (6.0,7.0);
+	\draw [color=qqzzqq] (6.0,7.0)-- (6.0,8.0);
+	\draw [color=qqzzqq] (6.0,8.0)-- (7.0,8.0);
+	\draw [color=qqzzqq] (7.0,8.0)-- (7.0,9.0);
+	\draw [color=qqzzqq] (7.0,9.0)-- (5.0,9.0);
+	\draw [color=qqzzqq] (5.0,9.0)-- (5.0,7.0);
+	\draw [color=qqzzqq] (7.0,6.0)-- (7.0,5.0);
+	\draw [color=qqzzqq] (7.0,5.0)-- (9.0,5.0);
+	\draw [color=qqzzqq] (9.0,5.0)-- (9.0,7.0);
+	\draw [color=qqzzqq] (9.0,7.0)-- (8.0,7.0);
+	\draw [color=qqzzqq] (8.0,7.0)-- (8.0,6.0);
+	\draw [color=qqzzqq] (8.0,6.0)-- (7.0,6.0);
+	\draw [color=qqqqff] (8.0,7.0)-- (9.0,7.0);
+	\draw [color=qqqqff] (9.0,7.0)-- (9.0,9.0);
+	\draw [color=qqqqff] (9.0,9.0)-- (7.0,9.0);
+	\draw [color=qqqqff] (7.0,9.0)-- (7.0,8.0);
+	\draw [color=qqqqff] (7.0,8.0)-- (8.0,8.0);
+	\draw [color=qqqqff] (8.0,8.0)-- (8.0,7.0);
+	\draw (5.0,6.0)-- (6.0,6.0);
+	\draw (6.0,6.0)-- (6.0,7.0);
+	\draw (6.0,7.0)-- (5.0,7.0);
+	\draw (5.0,7.0)-- (5.0,6.0);
+	\draw [color=ccqqqq] (6.0,7.0)-- (7.0,7.0);
+	\draw [color=ccqqqq] (7.0,7.0)-- (7.0,6.0);
+	\draw [color=ccqqqq] (7.0,6.0)-- (8.0,6.0);
+	\draw [color=ccqqqq] (8.0,6.0)-- (8.0,8.0);
+	\draw [color=ccqqqq] (8.0,8.0)-- (6.0,8.0);
+	\draw [color=ccqqqq] (6.0,8.0)-- (6.0,7.0);
+	\draw [color=qqqqff] (5.0,5.0)-- (5.0,6.0);
+	\draw [color=qqqqff] (5.0,6.0)-- (6.0,6.0);
+	\draw [color=qqqqff] (6.0,6.0)-- (6.0,7.0);
+	\draw [color=qqqqff] (6.0,7.0)-- (7.0,7.0);
+	\draw [color=qqqqff] (7.0,7.0)-- (7.0,5.0);
+	\draw [color=qqqqff] (7.0,5.0)-- (5.0,5.0);
+\end{tikzpicture}
+\end{center}
+
+Hasonló gondolatmenettel beláthatjuk, hogy a $8\times 8$-as táblán is lefedhető a maradék $L$-triminókkal ha egy tetszőleges egységnégyzetet kiveszünk: ha a bal alsó $4\times 4$-es részből kiveszünk egy egységnégyzetet, akkor az lefedhető marad, ha a többi három  $4\times 4$-es részből kivesszük az eredeti tábla középpontjára illeszkedő egységnégyzeteket, akkor $L$-triminókkal lefedhető részeket kapunk és a középpont körül a három egységnégyzet helyére egy $L$-triminó illeszkedik.
+
+\begin{center}
+\definecolor{ccqqqq}{rgb}{0.8,0.0,0.0}
+\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+\definecolor{qqzzqq}{rgb}{0.0,0.6,0.0}
+\definecolor{ttqqqq}{rgb}{0.2,0.0,0.0}
+\definecolor{zzttqq}{rgb}{0.6,0.2,0.0}
+\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+	\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=1.0cm,ystep=1.0cm] (10.618393708949911,4.72198344145406) grid (19.352150058470475,13.338069420995907);
+	\clip(10.618393708949911,4.72198344145406) rectangle (19.352150058470475,13.338069420995907);
+	\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (1.0,5.0) -- (3.0,5.0) -- (3.0,7.0) -- (1.0000000000000002,7.0) -- cycle;
+	\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (5.0,5.0) -- (9.0,5.0) -- (9.0,9.0) -- (5.0,9.0) -- cycle;
+	\fill[color=ttqqqq,fill=ttqqqq,fill opacity=1.0] (1.0,5.0) -- (2.0,5.0) -- (2.0,6.0) -- (1.0,6.0) -- cycle;
+	\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (5.0,7.0) -- (6.0,7.0) -- (6.0,8.0) -- (7.0,8.0) -- (7.0,9.0) -- (5.0,9.0) -- cycle;
+	\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (7.0,6.0) -- (7.0,5.0) -- (9.0,5.0) -- (9.0,7.0) -- (8.0,7.0) -- (8.0,6.0) -- cycle;
+	\fill[color=qqqqff,fill=qqqqff,fill opacity=0.35] (8.0,7.0) -- (9.0,7.0) -- (9.0,9.0) -- (7.0,9.0) -- (7.0,8.0) -- (8.0,8.0) -- cycle;
+	\fill[fill=black,fill opacity=1.0] (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (5.0,7.0) -- cycle;
+	\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (6.0,7.0) -- (7.0,7.0) -- (7.0,6.0) -- (8.0,6.0) -- (8.0,8.0) -- (6.0,8.0) -- cycle;
+	\fill[color=qqqqff,fill=qqqqff,fill opacity=0.25] (5.0,5.0) -- (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (7.0,7.0) -- (7.0,5.0) -- cycle;
+	\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (11.0,5.0) -- (19.0,5.0) -- (19.0,13.0) -- (11.0,13.0) -- cycle;
+	\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (14.0,9.0) -- (14.0,10.0) -- (16.0,10.0) -- (16.0,8.0) -- (15.0,8.0) -- (15.0,9.0) -- cycle;
+	\fill[fill=black,fill opacity=1.0] (12.0,7.0) -- (13.0,7.0) -- (13.0,8.0) -- (12.0,8.0) -- cycle;
+	\draw [color=zzttqq] (1.0,5.0)-- (3.0,5.0);
+	\draw [color=zzttqq] (3.0,5.0)-- (3.0,7.0);
+	\draw [color=zzttqq] (3.0,7.0)-- (1.0000000000000002,7.0);
+	\draw [color=zzttqq] (1.0000000000000002,7.0)-- (1.0,5.0);
+	\draw [color=zzttqq] (5.0,5.0)-- (9.0,5.0);
+	\draw [color=zzttqq] (9.0,5.0)-- (9.0,9.0);
+	\draw [color=zzttqq] (9.0,9.0)-- (5.0,9.0);
+	\draw [color=zzttqq] (5.0,9.0)-- (5.0,5.0);
+	\draw [color=ttqqqq] (1.0,5.0)-- (2.0,5.0);
+	\draw [color=ttqqqq] (2.0,5.0)-- (2.0,6.0);
+	\draw [color=ttqqqq] (2.0,6.0)-- (1.0,6.0);
+	\draw [color=ttqqqq] (1.0,6.0)-- (1.0,5.0);
+	\draw [color=qqzzqq] (5.0,7.0)-- (6.0,7.0);
+	\draw [color=qqzzqq] (6.0,7.0)-- (6.0,8.0);
+	\draw [color=qqzzqq] (6.0,8.0)-- (7.0,8.0);
+	\draw [color=qqzzqq] (7.0,8.0)-- (7.0,9.0);
+	\draw [color=qqzzqq] (7.0,9.0)-- (5.0,9.0);
+	\draw [color=qqzzqq] (5.0,9.0)-- (5.0,7.0);
+	\draw [color=qqzzqq] (7.0,6.0)-- (7.0,5.0);
+	\draw [color=qqzzqq] (7.0,5.0)-- (9.0,5.0);
+	\draw [color=qqzzqq] (9.0,5.0)-- (9.0,7.0);
+	\draw [color=qqzzqq] (9.0,7.0)-- (8.0,7.0);
+	\draw [color=qqzzqq] (8.0,7.0)-- (8.0,6.0);
+	\draw [color=qqzzqq] (8.0,6.0)-- (7.0,6.0);
+	\draw [color=qqqqff] (8.0,7.0)-- (9.0,7.0);
+	\draw [color=qqqqff] (9.0,7.0)-- (9.0,9.0);
+	\draw [color=qqqqff] (9.0,9.0)-- (7.0,9.0);
+	\draw [color=qqqqff] (7.0,9.0)-- (7.0,8.0);
+	\draw [color=qqqqff] (7.0,8.0)-- (8.0,8.0);
+	\draw [color=qqqqff] (8.0,8.0)-- (8.0,7.0);
+	\draw (5.0,6.0)-- (6.0,6.0);
+	\draw (6.0,6.0)-- (6.0,7.0);
+	\draw (6.0,7.0)-- (5.0,7.0);
+	\draw (5.0,7.0)-- (5.0,6.0);
+	\draw [color=ccqqqq] (6.0,7.0)-- (7.0,7.0);
+	\draw [color=ccqqqq] (7.0,7.0)-- (7.0,6.0);
+	\draw [color=ccqqqq] (7.0,6.0)-- (8.0,6.0);
+	\draw [color=ccqqqq] (8.0,6.0)-- (8.0,8.0);
+	\draw [color=ccqqqq] (8.0,8.0)-- (6.0,8.0);
+	\draw [color=ccqqqq] (6.0,8.0)-- (6.0,7.0);
+	\draw [color=qqqqff] (5.0,5.0)-- (5.0,6.0);
+	\draw [color=qqqqff] (5.0,6.0)-- (6.0,6.0);
+	\draw [color=qqqqff] (6.0,6.0)-- (6.0,7.0);
+	\draw [color=qqqqff] (6.0,7.0)-- (7.0,7.0);
+	\draw [color=qqqqff] (7.0,7.0)-- (7.0,5.0);
+	\draw [color=qqqqff] (7.0,5.0)-- (5.0,5.0);
+	\draw [color=zzttqq] (11.0,5.0)-- (19.0,5.0);
+	\draw [color=zzttqq] (19.0,5.0)-- (19.0,13.0);
+	\draw [color=zzttqq] (19.0,13.0)-- (11.0,13.0);
+	\draw [color=zzttqq] (11.0,13.0)-- (11.0,5.0);
+	\draw (11.0,9.0)-- (19.0,9.0);
+	\draw (15.0,13.0)-- (15.0,5.0);
+	\draw [color=ccqqqq] (14.0,9.0)-- (14.0,10.0);
+	\draw [color=ccqqqq] (14.0,10.0)-- (16.0,10.0);
+	\draw [color=ccqqqq] (16.0,10.0)-- (16.0,8.0);
+	\draw [color=ccqqqq] (16.0,8.0)-- (15.0,8.0);
+	\draw [color=ccqqqq] (15.0,8.0)-- (15.0,9.0);
+	\draw [color=ccqqqq] (15.0,9.0)-- (14.0,9.0);
+	\draw (12.0,7.0)-- (13.0,7.0);
+	\draw (13.0,7.0)-- (13.0,8.0);
+	\draw (13.0,8.0)-- (12.0,8.0);
+	\draw (12.0,8.0)-- (12.0,7.0);
+	\draw (12.906428680755448,11.272300703594372) node[anchor=north west] {$I.$};
+	\draw (16.89414677447367,11.272300703594372) node[anchor=north west] {$II$};
+	\draw (16.86799780336732,7.2976570954293924) node[anchor=north west] {$III.$};
+\end{tikzpicture}
+\end{center}
+
+\item $10\times 10$-es tábla esetén az ötlet az, hogy az eredeti táblát felvágjuk egy olyan részre, amelyről kiveszünk egy egységnégyzetet és a maradék lefedhető lesz (itt $4\times 4$-es részt használunk) és a többit olyan részekre, amelyek biztosan lefedhetők. Ehhez vegyük észre, hogy ha egy téglalap egyik oldala páros, a másik $3$-mal osztható, akkor a téglalap felbontható $3\times 2$-es darabokra és ezek lefedhetők. A következő három ábra mutatja, ezeket a szétvágásokat aszerint, hogy a kivett egységnégyzet hol helyezkedik el az eredeti táblán (a szimmetria miatt további esetekre nincs szükség). 
+
+\noindent \hspace*{-1cm}\begin{tabular}{ccc}
+	\definecolor{ccqqqq}{rgb}{0.8,0.0,0.0}
+	\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+	\definecolor{qqzzqq}{rgb}{0.0,0.6,0.0}
+	\definecolor{ttqqqq}{rgb}{0.2,0.0,0.0}
+	\definecolor{zzttqq}{rgb}{0.6,0.2,0.0}
+	\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+	\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
+		\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=0.5cm,ystep=0.5cm] (20.780913951067678,4.834506421604583) grid (31.23136415707631,15.21563357483687);
+		\clip(20.780913951067678,4.834506421604583) rectangle (31.23136415707631,15.21563357483687);
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (1.0,5.0) -- (3.0,5.0) -- (3.0,7.0) -- (1.0000000000000002,7.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (5.0,5.0) -- (9.0,5.0) -- (9.0,9.0) -- (5.0,9.0) -- cycle;
+		\fill[color=ttqqqq,fill=ttqqqq,fill opacity=1.0] (1.0,5.0) -- (2.0,5.0) -- (2.0,6.0) -- (1.0,6.0) -- cycle;
+		\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (5.0,7.0) -- (6.0,7.0) -- (6.0,8.0) -- (7.0,8.0) -- (7.0,9.0) -- (5.0,9.0) -- cycle;
+		\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (7.0,6.0) -- (7.0,5.0) -- (9.0,5.0) -- (9.0,7.0) -- (8.0,7.0) -- (8.0,6.0) -- cycle;
+		\fill[color=qqqqff,fill=qqqqff,fill opacity=0.35] (8.0,7.0) -- (9.0,7.0) -- (9.0,9.0) -- (7.0,9.0) -- (7.0,8.0) -- (8.0,8.0) -- cycle;
+		\fill[fill=black,fill opacity=1.0] (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (5.0,7.0) -- cycle;
+		\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (6.0,7.0) -- (7.0,7.0) -- (7.0,6.0) -- (8.0,6.0) -- (8.0,8.0) -- (6.0,8.0) -- cycle;
+		\fill[color=qqqqff,fill=qqqqff,fill opacity=0.25] (5.0,5.0) -- (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (7.0,7.0) -- (7.0,5.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (11.0,5.0) -- (19.0,5.0) -- (19.0,13.0) -- (11.0,13.0) -- cycle;
+		\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (14.0,9.0) -- (14.0,10.0) -- (16.0,10.0) -- (16.0,8.0) -- (15.0,8.0) -- (15.0,9.0) -- cycle;
+		\fill[fill=black,fill opacity=1.0] (12.0,7.0) -- (13.0,7.0) -- (13.0,8.0) -- (12.0,8.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (21.0,5.0) -- (31.0,5.0) -- (31.0,15.0) -- (21.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (24.0,12.0) -- (28.0,12.0) -- (28.0,8.0) -- (24.0,8.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (33.0,5.0) -- (43.0,5.0) -- (43.0,15.0) -- (33.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (33.0,11.0) -- (37.0,11.0) -- (37.0,15.0) -- (33.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (45.0,5.0) -- (55.0,5.0) -- (55.0,15.0) -- (45.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (48.0,15.0) -- (48.0,11.0) -- (52.0,11.0) -- (52.0,15.0) -- cycle;
+		\draw [color=zzttqq] (1.0,5.0)-- (3.0,5.0);
+		\draw [color=zzttqq] (3.0,5.0)-- (3.0,7.0);
+		\draw [color=zzttqq] (3.0,7.0)-- (1.0000000000000002,7.0);
+		\draw [color=zzttqq] (1.0000000000000002,7.0)-- (1.0,5.0);
+		\draw [color=zzttqq] (5.0,5.0)-- (9.0,5.0);
+		\draw [color=zzttqq] (9.0,5.0)-- (9.0,9.0);
+		\draw [color=zzttqq] (9.0,9.0)-- (5.0,9.0);
+		\draw [color=zzttqq] (5.0,9.0)-- (5.0,5.0);
+		\draw [color=ttqqqq] (1.0,5.0)-- (2.0,5.0);
+		\draw [color=ttqqqq] (2.0,5.0)-- (2.0,6.0);
+		\draw [color=ttqqqq] (2.0,6.0)-- (1.0,6.0);
+		\draw [color=ttqqqq] (1.0,6.0)-- (1.0,5.0);
+		\draw [color=qqzzqq] (5.0,7.0)-- (6.0,7.0);
+		\draw [color=qqzzqq] (6.0,7.0)-- (6.0,8.0);
+		\draw [color=qqzzqq] (6.0,8.0)-- (7.0,8.0);
+		\draw [color=qqzzqq] (7.0,8.0)-- (7.0,9.0);
+		\draw [color=qqzzqq] (7.0,9.0)-- (5.0,9.0);
+		\draw [color=qqzzqq] (5.0,9.0)-- (5.0,7.0);
+		\draw [color=qqzzqq] (7.0,6.0)-- (7.0,5.0);
+		\draw [color=qqzzqq] (7.0,5.0)-- (9.0,5.0);
+		\draw [color=qqzzqq] (9.0,5.0)-- (9.0,7.0);
+		\draw [color=qqzzqq] (9.0,7.0)-- (8.0,7.0);
+		\draw [color=qqzzqq] (8.0,7.0)-- (8.0,6.0);
+		\draw [color=qqzzqq] (8.0,6.0)-- (7.0,6.0);
+		\draw [color=qqqqff] (8.0,7.0)-- (9.0,7.0);
+		\draw [color=qqqqff] (9.0,7.0)-- (9.0,9.0);
+		\draw [color=qqqqff] (9.0,9.0)-- (7.0,9.0);
+		\draw [color=qqqqff] (7.0,9.0)-- (7.0,8.0);
+		\draw [color=qqqqff] (7.0,8.0)-- (8.0,8.0);
+		\draw [color=qqqqff] (8.0,8.0)-- (8.0,7.0);
+		\draw (5.0,6.0)-- (6.0,6.0);
+		\draw (6.0,6.0)-- (6.0,7.0);
+		\draw (6.0,7.0)-- (5.0,7.0);
+		\draw (5.0,7.0)-- (5.0,6.0);
+		\draw [color=ccqqqq] (6.0,7.0)-- (7.0,7.0);
+		\draw [color=ccqqqq] (7.0,7.0)-- (7.0,6.0);
+		\draw [color=ccqqqq] (7.0,6.0)-- (8.0,6.0);
+		\draw [color=ccqqqq] (8.0,6.0)-- (8.0,8.0);
+		\draw [color=ccqqqq] (8.0,8.0)-- (6.0,8.0);
+		\draw [color=ccqqqq] (6.0,8.0)-- (6.0,7.0);
+		\draw [color=qqqqff] (5.0,5.0)-- (5.0,6.0);
+		\draw [color=qqqqff] (5.0,6.0)-- (6.0,6.0);
+		\draw [color=qqqqff] (6.0,6.0)-- (6.0,7.0);
+		\draw [color=qqqqff] (6.0,7.0)-- (7.0,7.0);
+		\draw [color=qqqqff] (7.0,7.0)-- (7.0,5.0);
+		\draw [color=qqqqff] (7.0,5.0)-- (5.0,5.0);
+		\draw [color=zzttqq] (11.0,5.0)-- (19.0,5.0);
+		\draw [color=zzttqq] (19.0,5.0)-- (19.0,13.0);
+		\draw [color=zzttqq] (19.0,13.0)-- (11.0,13.0);
+		\draw [color=zzttqq] (11.0,13.0)-- (11.0,5.0);
+		\draw (11.0,9.0)-- (19.0,9.0);
+		\draw (15.0,13.0)-- (15.0,5.0);
+		\draw [color=ccqqqq] (14.0,9.0)-- (14.0,10.0);
+		\draw [color=ccqqqq] (14.0,10.0)-- (16.0,10.0);
+		\draw [color=ccqqqq] (16.0,10.0)-- (16.0,8.0);
+		\draw [color=ccqqqq] (16.0,8.0)-- (15.0,8.0);
+		\draw [color=ccqqqq] (15.0,8.0)-- (15.0,9.0);
+		\draw [color=ccqqqq] (15.0,9.0)-- (14.0,9.0);
+		\draw (12.0,7.0)-- (13.0,7.0);
+		\draw (13.0,7.0)-- (13.0,8.0);
+		\draw (13.0,8.0)-- (12.0,8.0);
+		\draw (12.0,8.0)-- (12.0,7.0);
+		\draw (12.912747460971628,11.316211856176995) node[anchor=north west] {$I.$};
+		\draw (16.898822995601787,11.33354261937104) node[anchor=north west] {$II$};
+		\draw (16.8641614692137,7.347467084740947) node[anchor=north west] {$III.$};
+		\draw [color=zzttqq] (21.0,5.0)-- (31.0,5.0);
+		\draw [color=zzttqq] (31.0,5.0)-- (31.0,15.0);
+		\draw [color=zzttqq] (31.0,15.0)-- (21.0,15.0);
+		\draw [color=zzttqq] (21.0,15.0)-- (21.0,5.0);
+		\draw [color=zzttqq] (24.0,12.0)-- (28.0,12.0);
+		\draw [color=zzttqq] (28.0,12.0)-- (28.0,8.0);
+		\draw [color=zzttqq] (28.0,8.0)-- (24.0,8.0);
+		\draw [color=zzttqq] (24.0,8.0)-- (24.0,12.0);
+		\draw (21.0,12.0)-- (31.0,12.0);
+		\draw (21.0,8.0)-- (31.0,8.0);
+		\draw (26.014804435669017,13.759849466537183) node[anchor=north west] {$I.$};
+		\draw (25.89348909331071,6.82754418891963) node[anchor=north west] {$II.$};
+		\draw (22.427336454501873,10.155050722176055) node[anchor=north west] {III.};
+		\draw (29.35964173211954,10.155050722176055) node[anchor=north west] {IV.};
+		\draw [color=zzttqq] (33.0,5.0)-- (43.0,5.0);
+		\draw [color=zzttqq] (43.0,5.0)-- (43.0,15.0);
+		\draw [color=zzttqq] (43.0,15.0)-- (33.0,15.0);
+		\draw [color=zzttqq] (33.0,15.0)-- (33.0,5.0);
+		\draw [color=zzttqq] (33.0,11.0)-- (37.0,11.0);
+		\draw [color=zzttqq] (37.0,11.0)-- (37.0,15.0);
+		\draw [color=zzttqq] (37.0,15.0)-- (33.0,15.0);
+		\draw [color=zzttqq] (33.0,15.0)-- (33.0,11.0);
+		\draw (37.0,5.0)-- (37.0,11.0);
+		\draw (37.0,11.0)-- (43.0,11.0);
+		%\draw (35.009470533377936,13.135941991551604) node[anchor=north west] {I.};
+		\draw (34.9921397701839,8.214005244443142) node[anchor=north west] {$II.$};
+		\draw (39.89674575409839,13.361241913074174) node[anchor=north west] {$III.$};
+		\draw (39.914076517292436,8.179343718055053) node[anchor=north west] {I.};
+		\draw [color=zzttqq] (45.0,5.0)-- (55.0,5.0);
+		\draw [color=zzttqq] (55.0,5.0)-- (55.0,15.0);
+		\draw [color=zzttqq] (55.0,15.0)-- (45.0,15.0);
+		\draw [color=zzttqq] (45.0,15.0)-- (45.0,5.0);
+		\draw [color=zzttqq] (48.0,15.0)-- (48.0,11.0);
+		\draw [color=zzttqq] (48.0,11.0)-- (52.0,11.0);
+		\draw [color=zzttqq] (52.0,11.0)-- (52.0,15.0);
+		\draw [color=zzttqq] (52.0,15.0)-- (48.0,15.0);
+		\draw (45.0,11.0)-- (55.0,11.0);
+		%\draw (49.96591916983805,13.378572676268218) node[anchor=north west] {$I.$};
+		\draw (46.34378966228282,13.447895729044394) node[anchor=north west] {$II.$};
+		\draw (53.293425703094535,13.34391114988013) node[anchor=north west] {$III.$};
+		\draw (49.896596117061875,8.335320586801448) node[anchor=north west] {$I.$};
+	\end{tikzpicture}
+&
+	\definecolor{ccqqqq}{rgb}{0.8,0.0,0.0}
+	\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+	\definecolor{qqzzqq}{rgb}{0.0,0.6,0.0}
+	\definecolor{ttqqqq}{rgb}{0.2,0.0,0.0}
+	\definecolor{zzttqq}{rgb}{0.6,0.2,0.0}
+	\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+	\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
+		\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=0.5cm,ystep=0.5cm] (32.87778666051051,4.869167947992671) grid (43.102936944996564,15.163641285254739);
+		\clip(32.87778666051051,4.869167947992671) rectangle (43.102936944996564,15.163641285254739);
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (1.0,5.0) -- (3.0,5.0) -- (3.0,7.0) -- (1.0000000000000002,7.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (5.0,5.0) -- (9.0,5.0) -- (9.0,9.0) -- (5.0,9.0) -- cycle;
+		\fill[color=ttqqqq,fill=ttqqqq,fill opacity=1.0] (1.0,5.0) -- (2.0,5.0) -- (2.0,6.0) -- (1.0,6.0) -- cycle;
+		\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (5.0,7.0) -- (6.0,7.0) -- (6.0,8.0) -- (7.0,8.0) -- (7.0,9.0) -- (5.0,9.0) -- cycle;
+		\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (7.0,6.0) -- (7.0,5.0) -- (9.0,5.0) -- (9.0,7.0) -- (8.0,7.0) -- (8.0,6.0) -- cycle;
+		\fill[color=qqqqff,fill=qqqqff,fill opacity=0.35] (8.0,7.0) -- (9.0,7.0) -- (9.0,9.0) -- (7.0,9.0) -- (7.0,8.0) -- (8.0,8.0) -- cycle;
+		\fill[fill=black,fill opacity=1.0] (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (5.0,7.0) -- cycle;
+		\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (6.0,7.0) -- (7.0,7.0) -- (7.0,6.0) -- (8.0,6.0) -- (8.0,8.0) -- (6.0,8.0) -- cycle;
+		\fill[color=qqqqff,fill=qqqqff,fill opacity=0.25] (5.0,5.0) -- (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (7.0,7.0) -- (7.0,5.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (11.0,5.0) -- (19.0,5.0) -- (19.0,13.0) -- (11.0,13.0) -- cycle;
+		\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (14.0,9.0) -- (14.0,10.0) -- (16.0,10.0) -- (16.0,8.0) -- (15.0,8.0) -- (15.0,9.0) -- cycle;
+		\fill[fill=black,fill opacity=1.0] (12.0,7.0) -- (13.0,7.0) -- (13.0,8.0) -- (12.0,8.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (21.0,5.0) -- (31.0,5.0) -- (31.0,15.0) -- (21.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (24.0,12.0) -- (28.0,12.0) -- (28.0,8.0) -- (24.0,8.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (33.0,5.0) -- (43.0,5.0) -- (43.0,15.0) -- (33.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (33.0,11.0) -- (37.0,11.0) -- (37.0,15.0) -- (33.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (45.0,5.0) -- (55.0,5.0) -- (55.0,15.0) -- (45.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (48.0,15.0) -- (48.0,11.0) -- (52.0,11.0) -- (52.0,15.0) -- cycle;
+		\draw [color=zzttqq] (1.0,5.0)-- (3.0,5.0);
+		\draw [color=zzttqq] (3.0,5.0)-- (3.0,7.0);
+		\draw [color=zzttqq] (3.0,7.0)-- (1.0000000000000002,7.0);
+		\draw [color=zzttqq] (1.0000000000000002,7.0)-- (1.0,5.0);
+		\draw [color=zzttqq] (5.0,5.0)-- (9.0,5.0);
+		\draw [color=zzttqq] (9.0,5.0)-- (9.0,9.0);
+		\draw [color=zzttqq] (9.0,9.0)-- (5.0,9.0);
+		\draw [color=zzttqq] (5.0,9.0)-- (5.0,5.0);
+		\draw [color=ttqqqq] (1.0,5.0)-- (2.0,5.0);
+		\draw [color=ttqqqq] (2.0,5.0)-- (2.0,6.0);
+		\draw [color=ttqqqq] (2.0,6.0)-- (1.0,6.0);
+		\draw [color=ttqqqq] (1.0,6.0)-- (1.0,5.0);
+		\draw [color=qqzzqq] (5.0,7.0)-- (6.0,7.0);
+		\draw [color=qqzzqq] (6.0,7.0)-- (6.0,8.0);
+		\draw [color=qqzzqq] (6.0,8.0)-- (7.0,8.0);
+		\draw [color=qqzzqq] (7.0,8.0)-- (7.0,9.0);
+		\draw [color=qqzzqq] (7.0,9.0)-- (5.0,9.0);
+		\draw [color=qqzzqq] (5.0,9.0)-- (5.0,7.0);
+		\draw [color=qqzzqq] (7.0,6.0)-- (7.0,5.0);
+		\draw [color=qqzzqq] (7.0,5.0)-- (9.0,5.0);
+		\draw [color=qqzzqq] (9.0,5.0)-- (9.0,7.0);
+		\draw [color=qqzzqq] (9.0,7.0)-- (8.0,7.0);
+		\draw [color=qqzzqq] (8.0,7.0)-- (8.0,6.0);
+		\draw [color=qqzzqq] (8.0,6.0)-- (7.0,6.0);
+		\draw [color=qqqqff] (8.0,7.0)-- (9.0,7.0);
+		\draw [color=qqqqff] (9.0,7.0)-- (9.0,9.0);
+		\draw [color=qqqqff] (9.0,9.0)-- (7.0,9.0);
+		\draw [color=qqqqff] (7.0,9.0)-- (7.0,8.0);
+		\draw [color=qqqqff] (7.0,8.0)-- (8.0,8.0);
+		\draw [color=qqqqff] (8.0,8.0)-- (8.0,7.0);
+		\draw (5.0,6.0)-- (6.0,6.0);
+		\draw (6.0,6.0)-- (6.0,7.0);
+		\draw (6.0,7.0)-- (5.0,7.0);
+		\draw (5.0,7.0)-- (5.0,6.0);
+		\draw [color=ccqqqq] (6.0,7.0)-- (7.0,7.0);
+		\draw [color=ccqqqq] (7.0,7.0)-- (7.0,6.0);
+		\draw [color=ccqqqq] (7.0,6.0)-- (8.0,6.0);
+		\draw [color=ccqqqq] (8.0,6.0)-- (8.0,8.0);
+		\draw [color=ccqqqq] (8.0,8.0)-- (6.0,8.0);
+		\draw [color=ccqqqq] (6.0,8.0)-- (6.0,7.0);
+		\draw [color=qqqqff] (5.0,5.0)-- (5.0,6.0);
+		\draw [color=qqqqff] (5.0,6.0)-- (6.0,6.0);
+		\draw [color=qqqqff] (6.0,6.0)-- (6.0,7.0);
+		\draw [color=qqqqff] (6.0,7.0)-- (7.0,7.0);
+		\draw [color=qqqqff] (7.0,7.0)-- (7.0,5.0);
+		\draw [color=qqqqff] (7.0,5.0)-- (5.0,5.0);
+		\draw [color=zzttqq] (11.0,5.0)-- (19.0,5.0);
+		\draw [color=zzttqq] (19.0,5.0)-- (19.0,13.0);
+		\draw [color=zzttqq] (19.0,13.0)-- (11.0,13.0);
+		\draw [color=zzttqq] (11.0,13.0)-- (11.0,5.0);
+		\draw (11.0,9.0)-- (19.0,9.0);
+		\draw (15.0,13.0)-- (15.0,5.0);
+		\draw [color=ccqqqq] (14.0,9.0)-- (14.0,10.0);
+		\draw [color=ccqqqq] (14.0,10.0)-- (16.0,10.0);
+		\draw [color=ccqqqq] (16.0,10.0)-- (16.0,8.0);
+		\draw [color=ccqqqq] (16.0,8.0)-- (15.0,8.0);
+		\draw [color=ccqqqq] (15.0,8.0)-- (15.0,9.0);
+		\draw [color=ccqqqq] (15.0,9.0)-- (14.0,9.0);
+		\draw (12.0,7.0)-- (13.0,7.0);
+		\draw (13.0,7.0)-- (13.0,8.0);
+		\draw (13.0,8.0)-- (12.0,8.0);
+		\draw (12.0,8.0)-- (12.0,7.0);
+		\draw (12.912747460971628,11.316211856176995) node[anchor=north west] {$I.$};
+		\draw (16.898822995601787,11.33354261937104) node[anchor=north west] {$II$};
+		\draw (16.8641614692137,7.347467084740947) node[anchor=north west] {$III.$};
+		\draw [color=zzttqq] (21.0,5.0)-- (31.0,5.0);
+		\draw [color=zzttqq] (31.0,5.0)-- (31.0,15.0);
+		\draw [color=zzttqq] (31.0,15.0)-- (21.0,15.0);
+		\draw [color=zzttqq] (21.0,15.0)-- (21.0,5.0);
+		\draw [color=zzttqq] (24.0,12.0)-- (28.0,12.0);
+		\draw [color=zzttqq] (28.0,12.0)-- (28.0,8.0);
+		\draw [color=zzttqq] (28.0,8.0)-- (24.0,8.0);
+		\draw [color=zzttqq] (24.0,8.0)-- (24.0,12.0);
+		\draw (21.0,12.0)-- (31.0,12.0);
+		\draw (21.0,8.0)-- (31.0,8.0);
+		\draw (26.014804435669017,13.759849466537183) node[anchor=north west] {$I.$};
+		\draw (25.89348909331071,6.82754418891963) node[anchor=north west] {$II.$};
+		\draw (22.427336454501873,10.155050722176055) node[anchor=north west] {III.};
+		\draw (29.35964173211954,10.155050722176055) node[anchor=north west] {IV.};
+		\draw [color=zzttqq] (33.0,5.0)-- (43.0,5.0);
+		\draw [color=zzttqq] (43.0,5.0)-- (43.0,15.0);
+		\draw [color=zzttqq] (43.0,15.0)-- (33.0,15.0);
+		\draw [color=zzttqq] (33.0,15.0)-- (33.0,5.0);
+		\draw [color=zzttqq] (33.0,11.0)-- (37.0,11.0);
+		\draw [color=zzttqq] (37.0,11.0)-- (37.0,15.0);
+		\draw [color=zzttqq] (37.0,15.0)-- (33.0,15.0);
+		\draw [color=zzttqq] (33.0,15.0)-- (33.0,11.0);
+		\draw (37.0,5.0)-- (37.0,11.0);
+		\draw (37.0,11.0)-- (43.0,11.0);
+		%\draw (35.009470533377936,13.135941991551604) node[anchor=north west] {I.};
+		\draw (34.9921397701839,8.214005244443142) node[anchor=north west] {$II.$};
+		\draw (39.89674575409839,13.361241913074174) node[anchor=north west] {$III.$};
+		\draw (39.914076517292436,8.179343718055053) node[anchor=north west] {I.};
+		\draw [color=zzttqq] (45.0,5.0)-- (55.0,5.0);
+		\draw [color=zzttqq] (55.0,5.0)-- (55.0,15.0);
+		\draw [color=zzttqq] (55.0,15.0)-- (45.0,15.0);
+		\draw [color=zzttqq] (45.0,15.0)-- (45.0,5.0);
+		\draw [color=zzttqq] (48.0,15.0)-- (48.0,11.0);
+		\draw [color=zzttqq] (48.0,11.0)-- (52.0,11.0);
+		\draw [color=zzttqq] (52.0,11.0)-- (52.0,15.0);
+		\draw [color=zzttqq] (52.0,15.0)-- (48.0,15.0);
+		\draw (45.0,11.0)-- (55.0,11.0);
+		\draw (49.96591916983805,13.378572676268218) node[anchor=north west] {$I.$};
+		\draw (46.34378966228282,13.447895729044394) node[anchor=north west] {$II.$};
+		\draw (53.293425703094535,13.34391114988013) node[anchor=north west] {$III.$};
+		\draw (49.896596117061875,8.335320586801448) node[anchor=north west] {$IV.$};
+	\end{tikzpicture}
+\\
+
+\multicolumn{2}{c}{
+\definecolor{ccqqqq}{rgb}{0.8,0.0,0.0}
+	\definecolor{qqqqff}{rgb}{0.0,0.0,1.0}
+	\definecolor{qqzzqq}{rgb}{0.0,0.6,0.0}
+	\definecolor{ttqqqq}{rgb}{0.2,0.0,0.0}
+	\definecolor{zzttqq}{rgb}{0.6,0.2,0.0}
+	\definecolor{cqcqcq}{rgb}{0.7529411764705882,0.7529411764705882,0.7529411764705882}
+	\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
+		\draw [color=cqcqcq,dash pattern=on 1pt off 1pt, xstep=0.5cm,ystep=0.5cm] (44.78402097481875,4.834506421604582) grid (55.19980965443927,15.198302811642824);
+		\clip(44.78402097481875,4.834506421604582) rectangle (55.19980965443927,15.198302811642824);
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (1.0,5.0) -- (3.0,5.0) -- (3.0,7.0) -- (1.0000000000000002,7.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (5.0,5.0) -- (9.0,5.0) -- (9.0,9.0) -- (5.0,9.0) -- cycle;
+		\fill[color=ttqqqq,fill=ttqqqq,fill opacity=1.0] (1.0,5.0) -- (2.0,5.0) -- (2.0,6.0) -- (1.0,6.0) -- cycle;
+		\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (5.0,7.0) -- (6.0,7.0) -- (6.0,8.0) -- (7.0,8.0) -- (7.0,9.0) -- (5.0,9.0) -- cycle;
+		\fill[color=qqzzqq,fill=qqzzqq,fill opacity=0.25] (7.0,6.0) -- (7.0,5.0) -- (9.0,5.0) -- (9.0,7.0) -- (8.0,7.0) -- (8.0,6.0) -- cycle;
+		\fill[color=qqqqff,fill=qqqqff,fill opacity=0.35] (8.0,7.0) -- (9.0,7.0) -- (9.0,9.0) -- (7.0,9.0) -- (7.0,8.0) -- (8.0,8.0) -- cycle;
+		\fill[fill=black,fill opacity=1.0] (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (5.0,7.0) -- cycle;
+		\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (6.0,7.0) -- (7.0,7.0) -- (7.0,6.0) -- (8.0,6.0) -- (8.0,8.0) -- (6.0,8.0) -- cycle;
+		\fill[color=qqqqff,fill=qqqqff,fill opacity=0.25] (5.0,5.0) -- (5.0,6.0) -- (6.0,6.0) -- (6.0,7.0) -- (7.0,7.0) -- (7.0,5.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (11.0,5.0) -- (19.0,5.0) -- (19.0,13.0) -- (11.0,13.0) -- cycle;
+		\fill[color=ccqqqq,fill=ccqqqq,fill opacity=0.5] (14.0,9.0) -- (14.0,10.0) -- (16.0,10.0) -- (16.0,8.0) -- (15.0,8.0) -- (15.0,9.0) -- cycle;
+		\fill[fill=black,fill opacity=1.0] (12.0,7.0) -- (13.0,7.0) -- (13.0,8.0) -- (12.0,8.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (21.0,5.0) -- (31.0,5.0) -- (31.0,15.0) -- (21.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (24.0,12.0) -- (28.0,12.0) -- (28.0,8.0) -- (24.0,8.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (33.0,5.0) -- (43.0,5.0) -- (43.0,15.0) -- (33.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (33.0,11.0) -- (37.0,11.0) -- (37.0,15.0) -- (33.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (45.0,5.0) -- (55.0,5.0) -- (55.0,15.0) -- (45.0,15.0) -- cycle;
+		\fill[color=zzttqq,fill=zzttqq,fill opacity=0.1] (48.0,15.0) -- (48.0,11.0) -- (52.0,11.0) -- (52.0,15.0) -- cycle;
+		\draw [color=zzttqq] (1.0,5.0)-- (3.0,5.0);
+		\draw [color=zzttqq] (3.0,5.0)-- (3.0,7.0);
+		\draw [color=zzttqq] (3.0,7.0)-- (1.0000000000000002,7.0);
+		\draw [color=zzttqq] (1.0000000000000002,7.0)-- (1.0,5.0);
+		\draw [color=zzttqq] (5.0,5.0)-- (9.0,5.0);
+		\draw [color=zzttqq] (9.0,5.0)-- (9.0,9.0);
+		\draw [color=zzttqq] (9.0,9.0)-- (5.0,9.0);
+		\draw [color=zzttqq] (5.0,9.0)-- (5.0,5.0);
+		\draw [color=ttqqqq] (1.0,5.0)-- (2.0,5.0);
+		\draw [color=ttqqqq] (2.0,5.0)-- (2.0,6.0);
+		\draw [color=ttqqqq] (2.0,6.0)-- (1.0,6.0);
+		\draw [color=ttqqqq] (1.0,6.0)-- (1.0,5.0);
+		\draw [color=qqzzqq] (5.0,7.0)-- (6.0,7.0);
+		\draw [color=qqzzqq] (6.0,7.0)-- (6.0,8.0);
+		\draw [color=qqzzqq] (6.0,8.0)-- (7.0,8.0);
+		\draw [color=qqzzqq] (7.0,8.0)-- (7.0,9.0);
+		\draw [color=qqzzqq] (7.0,9.0)-- (5.0,9.0);
+		\draw [color=qqzzqq] (5.0,9.0)-- (5.0,7.0);
+		\draw [color=qqzzqq] (7.0,6.0)-- (7.0,5.0);
+		\draw [color=qqzzqq] (7.0,5.0)-- (9.0,5.0);
+		\draw [color=qqzzqq] (9.0,5.0)-- (9.0,7.0);
+		\draw [color=qqzzqq] (9.0,7.0)-- (8.0,7.0);
+		\draw [color=qqzzqq] (8.0,7.0)-- (8.0,6.0);
+		\draw [color=qqzzqq] (8.0,6.0)-- (7.0,6.0);
+		\draw [color=qqqqff] (8.0,7.0)-- (9.0,7.0);
+		\draw [color=qqqqff] (9.0,7.0)-- (9.0,9.0);
+		\draw [color=qqqqff] (9.0,9.0)-- (7.0,9.0);
+		\draw [color=qqqqff] (7.0,9.0)-- (7.0,8.0);
+		\draw [color=qqqqff] (7.0,8.0)-- (8.0,8.0);
+		\draw [color=qqqqff] (8.0,8.0)-- (8.0,7.0);
+		\draw (5.0,6.0)-- (6.0,6.0);
+		\draw (6.0,6.0)-- (6.0,7.0);
+		\draw (6.0,7.0)-- (5.0,7.0);
+		\draw (5.0,7.0)-- (5.0,6.0);
+		\draw [color=ccqqqq] (6.0,7.0)-- (7.0,7.0);
+		\draw [color=ccqqqq] (7.0,7.0)-- (7.0,6.0);
+		\draw [color=ccqqqq] (7.0,6.0)-- (8.0,6.0);
+		\draw [color=ccqqqq] (8.0,6.0)-- (8.0,8.0);
+		\draw [color=ccqqqq] (8.0,8.0)-- (6.0,8.0);
+		\draw [color=ccqqqq] (6.0,8.0)-- (6.0,7.0);
+		\draw [color=qqqqff] (5.0,5.0)-- (5.0,6.0);
+		\draw [color=qqqqff] (5.0,6.0)-- (6.0,6.0);
+		\draw [color=qqqqff] (6.0,6.0)-- (6.0,7.0);
+		\draw [color=qqqqff] (6.0,7.0)-- (7.0,7.0);
+		\draw [color=qqqqff] (7.0,7.0)-- (7.0,5.0);
+		\draw [color=qqqqff] (7.0,5.0)-- (5.0,5.0);
+		\draw [color=zzttqq] (11.0,5.0)-- (19.0,5.0);
+		\draw [color=zzttqq] (19.0,5.0)-- (19.0,13.0);
+		\draw [color=zzttqq] (19.0,13.0)-- (11.0,13.0);
+		\draw [color=zzttqq] (11.0,13.0)-- (11.0,5.0);
+		\draw (11.0,9.0)-- (19.0,9.0);
+		\draw (15.0,13.0)-- (15.0,5.0);
+		\draw [color=ccqqqq] (14.0,9.0)-- (14.0,10.0);
+		\draw [color=ccqqqq] (14.0,10.0)-- (16.0,10.0);
+		\draw [color=ccqqqq] (16.0,10.0)-- (16.0,8.0);
+		\draw [color=ccqqqq] (16.0,8.0)-- (15.0,8.0);
+		\draw [color=ccqqqq] (15.0,8.0)-- (15.0,9.0);
+		\draw [color=ccqqqq] (15.0,9.0)-- (14.0,9.0);
+		\draw (12.0,7.0)-- (13.0,7.0);
+		\draw (13.0,7.0)-- (13.0,8.0);
+		\draw (13.0,8.0)-- (12.0,8.0);
+		\draw (12.0,8.0)-- (12.0,7.0);
+		%\draw (12.912747460971598,11.316211856176993) node[anchor=north west] {$I.$};
+		\draw (16.898822995601748,11.333542619371038) node[anchor=north west] {$II$};
+		\draw (16.86416146921366,7.347467084740945) node[anchor=north west] {$III.$};
+		\draw [color=zzttqq] (21.0,5.0)-- (31.0,5.0);
+		\draw [color=zzttqq] (31.0,5.0)-- (31.0,15.0);
+		\draw [color=zzttqq] (31.0,15.0)-- (21.0,15.0);
+		\draw [color=zzttqq] (21.0,15.0)-- (21.0,5.0);
+		\draw [color=zzttqq] (24.0,12.0)-- (28.0,12.0);
+		\draw [color=zzttqq] (28.0,12.0)-- (28.0,8.0);
+		\draw [color=zzttqq] (28.0,8.0)-- (24.0,8.0);
+		\draw [color=zzttqq] (24.0,8.0)-- (24.0,12.0);
+		\draw (21.0,12.0)-- (31.0,12.0);
+		\draw (21.0,8.0)-- (31.0,8.0);
+		%\draw (26.01480443566896,13.759849466537181) node[anchor=north west] {$I.$};
+		\draw (25.893489093310652,6.827544188919628) node[anchor=north west] {$II.$};
+		\draw (22.427336454501827,10.155050722176053) node[anchor=north west] {III.};
+		\draw (29.359641732119478,10.155050722176053) node[anchor=north west] {I.};
+		\draw [color=zzttqq] (33.0,5.0)-- (43.0,5.0);
+		\draw [color=zzttqq] (43.0,5.0)-- (43.0,15.0);
+		\draw [color=zzttqq] (43.0,15.0)-- (33.0,15.0);
+		\draw [color=zzttqq] (33.0,15.0)-- (33.0,5.0);
+		\draw [color=zzttqq] (33.0,11.0)-- (37.0,11.0);
+		\draw [color=zzttqq] (37.0,11.0)-- (37.0,15.0);
+		\draw [color=zzttqq] (37.0,15.0)-- (33.0,15.0);
+		\draw [color=zzttqq] (33.0,15.0)-- (33.0,11.0);
+		\draw (37.0,5.0)-- (37.0,11.0);
+		\draw (37.0,11.0)-- (43.0,11.0);
+		%\draw (35.009470533377865,13.135941991551602) node[anchor=north west] {I.};
+		\draw (34.99213977018382,8.214005244443138) node[anchor=north west] {$II.$};
+		\draw (39.896745754098305,13.361241913074172) node[anchor=north west] {$III.$};
+		\draw (39.91407651729235,8.179343718055051) node[anchor=north west] {I};
+		\draw [color=zzttqq] (45.0,5.0)-- (55.0,5.0);
+		\draw [color=zzttqq] (55.0,5.0)-- (55.0,15.0);
+		\draw [color=zzttqq] (55.0,15.0)-- (45.0,15.0);
+		\draw [color=zzttqq] (45.0,15.0)-- (45.0,5.0);
+		\draw [color=zzttqq] (48.0,15.0)-- (48.0,11.0);
+		\draw [color=zzttqq] (48.0,11.0)-- (52.0,11.0);
+		\draw [color=zzttqq] (52.0,11.0)-- (52.0,15.0);
+		\draw [color=zzttqq] (52.0,15.0)-- (48.0,15.0);
+		\draw (45.0,11.0)-- (55.0,11.0);
+		%\draw (49.965919169837946,13.378572676268217) node[anchor=north west] {$I.$};
+		\draw (46.343789662282724,13.447895729044392) node[anchor=north west] {$II.$};
+		\draw (53.29342570309442,13.343911149880128) node[anchor=north west] {$III.$};
+		\draw (49.89659611706177,8.335320586801446) node[anchor=north west] {$I.$};
+	\end{tikzpicture}
+}\\
+\end{tabular}
+
+A továbbiakban ugyanezt a konstrukciót használjuk csak induktívan $(2k) \times (2k)$ méretű tábláról $(2k+6)\times (2k+6)$ méretű táblára úgy, hogy a $(2k) \times (2k)$ méretű táblát előbb a nagyobb tábla közepére helyezzük (így marad egy három egységnyi szélességű keret), majd az egyik csúcsába és végül valamelyik oldal közepére. Mindhárom esetben a $(2k) \times (2k)$ méretű táblán kívüli részek lefedhetőek lesznek $3\times 2$-es téglalapokkal, tehát $L$-triminókkal is és az indukciós feltevés alapján a $(2k) \times (2k)$ méretű tábláról elhagyva egy egységnégyzetet az is lefedhető lesz. Így a $8\times 8$-as táblából kiindulva rendre megkapjuk a $14\times 14$-es, $20\times 20$-as és általában a $(6k+2)\times (6k+2)$-es táblákat és a $10\times 10$-es táblából kiindulva a $(6k+4)\times (6k+4)$-es táblákat. Ha \(3\mid n\), akkor a megmaradt részen a mezők száma nem osztható hárommal, tehát ebben az esetben a lefedés nem valósítható meg.  Tehát a maradék pontosan akkor fedhető le, ha \(n\) nem osztható \(3\)-mal. 
+\end{enumerate}
+\end{solution}
+\begin{problem}
+ Adott egy \(2025 \times 2025\)-ös négyzetrács, melyben minden sorban és minden oszlopban egyetlen mező van feketére színezve, minden más mező fehér színű. Egy lépésben kiválasztunk egy sort vagy egy oszlopot és  az ebben található mezők színét megváltoztatjuk.
+ Elérhető-e, hogy valahány lépés után két sor vagy két oszlop színezése azonos legyen?
+\end{problem}
+
+\begin{solution}
+Hogyha van két azonos színezésű oszlop, akkor sorok átszínezésével elérhető, hogy a két oszlop csak fekete (vagy csak fehér) legyen. Tehát a feladat ekvivalens a következővel: elérhető-e, hogy valahány lépés után két sor teljesen fekete legyen?
+
+Válasszunk ki két tetszőleges oszlopot. Mivel ezek magasabbak, mint két egységnégyzet, ezér biztosan lesz két olyan sor, amely metszete a kiválasztott oszlopokkal \(3\) fehér és  egy fekete mezőt tartalmaz.   
+ \begin{center}
+   \definecolor{ccqqqq}{rgb}{0.8,0,0}
+\definecolor{uuuuuu}{rgb}{0.26666666666666666,0.26666666666666666,0.26666666666666666}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1cm,y=1cm]
+\fill[line width=1pt,fill=black,fill opacity=0.2] (-7,3) -- (-7,2) -- (-6,2) -- (-6,3) -- cycle;
+\fill[line width=1pt,fill=black,fill opacity=0.2] (-6,0) -- (-6,-1) -- (-5,-1) -- (-5,0) -- cycle;
+\fill[line width=1pt,fill=black,fill opacity=0.2] (-4,0) -- (-3,0) -- (-3,1) -- (-4,1) -- cycle;
+\fill[line width=1pt,fill=black,fill opacity=0.2] (-2,1) -- (-1,1) -- (-1,2) -- (-2,2) -- cycle;
+\fill[line width=1pt,fill=black,fill opacity=0.2] (-3,-3) -- (-2,-3) -- (-2,-2) -- (-3,-2) -- cycle;
+\draw [line width=1pt] (-7,-3)-- (-1,-3);
+\draw [line width=1pt] (-1,-3)-- (-1,3);
+\draw [line width=1pt] (-1,3)-- (-7,3);
+\draw [line width=1pt] (-7,3)-- (-7,-3);
+\draw [line width=1pt] (-6,-3)-- (-6,3);
+\draw [line width=1pt] (-5,3)-- (-5,-3);
+\draw [line width=1pt] (-4,-3)-- (-4,3);
+\draw [line width=1pt] (-3,3)-- (-3,-3);
+\draw [line width=1pt] (-2,-3)-- (-2,3);
+\draw [line width=1pt] (-7,2)-- (-1,2);
+\draw [line width=1pt] (-7,1)-- (-1,1);
+\draw [line width=1pt] (-7,0)-- (-1,0);
+\draw [line width=1pt] (-7,-1)-- (-1,-1);
+\draw [line width=1pt] (-7,-2)-- (-1,-2);
+\draw [line width=1pt] (-7,2)-- (-6,2);
+\draw [line width=1pt] (-6,2)-- (-6,3);
+\draw [line width=1pt] (-6,3)-- (-7,3);
+\draw [line width=1pt] (-6,-1)-- (-5,-1);
+\draw [line width=1pt] (-5,-1)-- (-5,0);
+\draw [line width=1pt] (-5,0)-- (-6,0);
+\draw [line width=1pt] (-3,0)-- (-3,1);
+\draw [line width=1pt] (-3,1)-- (-4,1);
+\draw [line width=1pt] (-4,1)-- (-4,0);
+\draw [line width=1pt] (-1,1)-- (-1,2);
+\draw [line width=1pt] (-1,2)-- (-2,2);
+\draw [line width=1pt] (-2,2)-- (-2,1);
+\draw [line width=1pt] (-2,-3)-- (-2,-2);
+\draw [line width=1pt] (-2,-2)-- (-3,-2);
+\draw [line width=1pt] (-3,-2)-- (-3,-3);
+\draw [line width=2pt,color=ccqqqq] (-6,5)-- (-6,-6);
+\draw [line width=2pt,color=ccqqqq] (-2,5)-- (-2,-6);
+\draw [line width=2pt,color=ccqqqq] (-3,5)-- (-3,-6);
+\draw [line width=2pt,color=ccqqqq] (-5,5)-- (-5,-6);
+\draw [fill=black] (-7,-3) circle (0.5pt);
+\draw [fill=black] (-1,-3) circle (0.5pt);
+\draw [fill=black] (-1,3) circle (0.5pt);
+\draw [fill=black] (-7,3) circle (0.5pt);
+\draw [fill=black] (-6,-3) circle (0.5pt);
+\draw [fill=black] (-6,3) circle (0.5pt);
+\draw [fill=black] (-5,3) circle (0.5pt);
+\draw [fill=black] (-5,-3) circle (0.5pt);
+\draw [fill=black] (-4,-3) circle (0.5pt);
+\draw [fill=black] (-4,3) circle (0.5pt);
+\draw [fill=black] (-3,3) circle (0.5pt);
+\draw [fill=black] (-3,-3) circle (0.5pt);
+\draw [fill=black] (-2,-3) circle (0.5pt);
+\draw [fill=black] (-2,3) circle (0.5pt);
+\draw [fill=black] (-7,2) circle (0.5pt);
+\draw [fill=black] (-1,2) circle (0.5pt);
+\draw [fill=black] (-7,1) circle (0.5pt);
+\draw [fill=black] (-1,1) circle (0.5pt);
+\draw [fill=black] (-7,0) circle (0.5pt);
+\draw [fill=black] (-1,0) circle (0.5pt);
+\draw [fill=black] (-7,-1) circle (0.5pt);
+\draw [fill=black] (-1,-1) circle (0.5pt);
+\draw [fill=black] (-7,-2) circle (0.5pt);
+\draw [fill=black] (-1,-2) circle (0.5pt);
+\draw [fill=black] (-6.5,3.5) circle (0.5pt);
+\draw [fill=black] (-6.5,4) circle (0.5pt);
+\draw [fill=black] (-6.5,4.5) circle (0.5pt);
+\draw [fill=black] (-5.5,3.5) circle (0.5pt);
+\draw [fill=black] (-5.5,4) circle (0.5pt);
+\draw [fill=black] (-5.5,4.5) circle (0.5pt);
+\draw [fill=black] (-4.5,3.5) circle (0.5pt);
+\draw [fill=black] (-4.5,4) circle (0.5pt);
+\draw [fill=black] (-4.5,4.5) circle (0.5pt);
+\draw [fill=black] (-3.5,3.5) circle (0.5pt);
+\draw [fill=black] (-3.5,4) circle (0.5pt);
+\draw [fill=black] (-3.5,4.5) circle (0.5pt);
+\draw [fill=black] (-2.5,3.5) circle (0.5pt);
+\draw [fill=black] (-2.5,4) circle (0.5pt);
+\draw [fill=black] (-2.5,4.5) circle (0.5pt);
+\draw [fill=black] (-1.5,3.5) circle (0.5pt);
+\draw [fill=black] (-1.5,4) circle (0.5pt);
+\draw [fill=black] (-1.5,4.5) circle (0.5pt);
+\draw [fill=black] (-0.5,2.5) circle (0.5pt);
+\draw [fill=black] (0,2.5) circle (0.5pt);
+\draw [fill=black] (0.5,2.5) circle (0.5pt);
+\draw [fill=black] (-0.5,1.5) circle (0.5pt);
+\draw [fill=black] (0,1.5) circle (0.5pt);
+\draw [fill=black] (0.5,1.5) circle (0.5pt);
+\draw [fill=black] (-0.5,0.5) circle (0.5pt);
+\draw [fill=black] (0,0.5) circle (0.5pt);
+\draw [fill=black] (0.5,0.5) circle (0.5pt);
+\draw [fill=black] (-0.5,-0.5) circle (0.5pt);
+\draw [fill=black] (0,-0.5) circle (0.5pt);
+\draw [fill=black] (0.5,-0.5) circle (0.5pt);
+\draw [fill=black] (-0.5,-1.5) circle (0.5pt);
+\draw [fill=black] (0,-1.5) circle (0.5pt);
+\draw [fill=black] (0.5,-1.5) circle (0.5pt);
+\draw [fill=black] (-0.5,-2.5) circle (0.5pt);
+\draw [fill=black] (0,-2.5) circle (0.5pt);
+\draw [fill=black] (0.5,-2.5) circle (0.5pt);
+\draw [fill=black] (-0.5,3.5) circle (0.5pt);
+\draw [fill=black] (0,4) circle (0.5pt);
+\draw [fill=black] (0.5,4.5) circle (0.5pt);
+\draw [fill=black] (-0.5,-3.5) circle (0.5pt);
+\draw [fill=black] (0,-4) circle (0.5pt);
+\draw [fill=black] (0.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-1.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-1.5,-4) circle (0.5pt);
+\draw [fill=black] (-1.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-2.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-2.5,-4) circle (0.5pt);
+\draw [fill=black] (-2.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-3.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-3.5,-4) circle (0.5pt);
+\draw [fill=black] (-3.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-4.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-4.5,-4) circle (0.5pt);
+\draw [fill=black] (-4.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-5.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-5.5,-4) circle (0.5pt);
+\draw [fill=black] (-5.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-6.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-6.5,-4) circle (0.5pt);
+\draw [fill=black] (-6.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-7.5,-3.5) circle (0.5pt);
+\draw [fill=black] (-8,-4) circle (0.5pt);
+\draw [fill=black] (-8.5,-4.5) circle (0.5pt);
+\draw [fill=black] (-7.5,-2.5) circle (0.5pt);
+\draw [fill=black] (-8,-2.5) circle (0.5pt);
+\draw [fill=black] (-8.5,-2.5) circle (0.5pt);
+\draw [fill=black] (-7.5,-1.5) circle (0.5pt);
+\draw [fill=black] (-8,-1.5) circle (0.5pt);
+\draw [fill=black] (-8.5,-1.5) circle (0.5pt);
+\draw [fill=black] (-7.5,-0.5) circle (0.5pt);
+\draw [fill=black] (-8,-0.5) circle (0.5pt);
+\draw [fill=black] (-8.5,-0.5) circle (0.5pt);
+\draw [fill=black] (-7.5,0.5) circle (0.5pt);
+\draw [fill=black] (-8,0.5) circle (0.5pt);
+\draw [fill=black] (-8.5,0.5) circle (0.5pt);
+\draw [fill=black] (-7.5,1.5) circle (0.5pt);
+\draw [fill=black] (-8,1.5) circle (0.5pt);
+\draw [fill=black] (-8.5,1.5) circle (0.5pt);
+\draw [fill=black] (-7.5,2.5) circle (0.5pt);
+\draw [fill=black] (-8,2.5) circle (0.5pt);
+\draw [fill=black] (-8.5,2.5) circle (0.5pt);
+\draw [fill=black] (-7.5,3.5) circle (0.5pt);
+\draw [fill=black] (-8,4) circle (0.5pt);
+\draw [fill=black] (-8.5,4.5) circle (0.5pt);
+\draw [fill=uuuuuu] (-6,2) circle (0.5pt);
+\draw [fill=uuuuuu] (-6,3) circle (0.5pt);
+\draw [fill=uuuuuu] (-6,0) circle (0.5pt);
+\draw [fill=uuuuuu] (-6,-1) circle (0.5pt);
+\draw [fill=uuuuuu] (-5,-1) circle (0.5pt);
+\draw [fill=uuuuuu] (-5,0) circle (0.5pt);
+\draw [fill=uuuuuu] (-4,0) circle (0.5pt);
+\draw [fill=uuuuuu] (-3,0) circle (0.5pt);
+\draw [fill=uuuuuu] (-3,1) circle (0.5pt);
+\draw [fill=uuuuuu] (-4,1) circle (0.5pt);
+\draw [fill=black] (-3,-2) circle (0.5pt);
+\draw [fill=uuuuuu] (-2,1) circle (0.5pt);
+\draw [fill=uuuuuu] (-1,2) circle (0.5pt);
+\draw [fill=uuuuuu] (-2,2) circle (0.5pt);
+\draw [fill=black] (-2,-2) circle (0.5pt);
+\draw [fill=uuuuuu] (-3,-2) circle (0.5pt);
+\end{tikzpicture}
+\end{center}
+
+Ahhoz, hogy elérjük a két teljesen egyszínű oszlopot, ezt a négy mezőt  is teljesen feketére kellene átszínezzük. Ha egy sort vagy oszlopot átszínezünk, a fekete mezők száma vagy változatlan marad, vagy pedig kettővel nő. Tehát ebben a négy mezőben a fekete mezők számának paritása invariáns. Kezdetben egy fekete mező van, így sosem tudjuk elérni a 4 fekete mezőt. 
+
+Ha a két kiválasztott oszlopnak van ilyen része, ami nem színezhető teljesen feketére, akkor a két oszlopot sem lehet teljesen feketére  színezni. Ez azt jelenti, hogy nem lehet semmilyen más azonos színezést sem elérni a két oszlopban. 
+
+Mivel a kiválasztott oszlopok tetszőlegesek voltak, ezért a bizonyítás teljes.
+\end{solution}
+\begin{problem}
+ Egy 1000 oldalú konvex sokszög belsejében felveszünk \(n\) pontot. Jelöljük \(\mathcal{H}\)-val a sokszög csúcsaiból és a felvett pontokból álló halmazt. A sokszöget osszuk fel páronként diszjunkt belsejű \textit{üres} háromszögekre úgy, hogy a háromszögek csúcsai a \(\mathcal{H}\)-ból legyenek. Egy háromszöget \textit{üres} háromszögnek nevezünk, ha sem a belsejében, sem az oldalainak belsejében nem tartalmaz \(\mathcal{H}\)-beli pontot. Az alábbi ábrákon két ilyen felbontást szemléltetünk egy ötszög és a belsejében felvett három pont esetén.
+
+  \begin{enumerate}
+    \item Létezik-e olyan \(n\) érték, amelyre a felbontás \(2025\) üres háromszögből áll?
+    \item Milyen \(k\) értékekre létezik olyan \(n>0\), amelyre a felbontás \(k\) darab üres háromszögből áll? 
+\end{enumerate}
+
+	% {\color{red} Egy 1000 oldal\'u konvex soksz\"oglap belsej\'eben felvesz\"unk $n$ pontot. Jel\"olj\"uk $\mathcal{H}$-val a soksz\"oglap cs\'ucsaib\'ol \'es a felvett pontokb\'ol all\'o halmazt. A soksz\"oglapot fedjük le háromszöglapokkal,  a következő szabályok szerint:
+	% \begin{itemize}
+	% 	\item a háromszöglapok csúcsainak a halmaza a  $\mathcal{H}$ halmaz;
+	% 	\item két felbontásban szereplő háromszöglap csak közös oldalban vagy csúcsban metszheti egymást.
+	% \end{itemize}
+	% }
+	% \begin{alpontok}
+	% 	\item L\'etezik-e olyan $n$ \'ert\'ek, amelyre a felbont\'as 2025 h\'aromsz\"oglapból \'all?
+	% 	\item Milyen $k$ \'ert\'ekekre l\'etezik olyan $n$, amelyre a felbont\'as $k$ darab h\'aromsz\"oglapból \'all? 
+%\end{alpontok}
+\begin{center}
+	\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.4cm,y=0.4cm]
+	%	\clip(-24.837793567575915,-13.90657083404228) rectangle (5.46314969584954,12.383953468047418);
+		\draw [line width=1pt] (-4.502133783833164,5.7455239726363105)-- (-8.512552745168879,2.8693649195571553);
+		\draw [line width=1pt] (-8.512552745168879,2.8693649195571553)-- (-8.877136287108494,-1.3436004539672288);
+		\draw [line width=1pt] (-8.877136287108494,-1.3436004539672288)-- (-3.813475982391677,-3.085499598789813);
+		\draw [line width=1pt] (-3.813475982391677,-3.085499598789813)-- (0.4805079560081884,1.8110307517987134);
+		\draw [line width=1pt] (0.4805079560081884,1.8110307517987134)-- (-4.502133783833164,5.7455239726363105);
+		\draw [line width=1pt] (-4.502133783833164,5.7455239726363105)-- (-3.813475982391677,-3.085499598789813);
+		\draw [line width=1pt] (-4.382624988629694,4.2129994223800376)-- (-3.9957779488092875,-0.7477449706110413);
+		\draw [line width=1pt] (-3.9957779488092875,-0.7477449706110413)-- (-8.877136287108494,-1.3436004539672288);
+		\draw [line width=1pt] (-3.9957779488092875,-0.7477449706110413)-- (0.4805079560081884,1.8110307517987134);
+		\draw [line width=1pt] (-4.382624988629694,4.2129994223800376)-- (-8.877136287108494,-1.3436004539672288);
+		\draw [line width=1pt] (-4.382624988629694,4.2129994223800376)-- (-8.512552745168879,2.8693649195571553);
+		\draw [line width=1pt] (-4.382624988629694,4.2129994223800376)-- (0.4805079560081884,1.8110307517987134);
+		\draw (-23.5,4.2) node[anchor=north west] {$A_1$};
+		\draw (-10.6,0.1) node[anchor=north west] {$A_2$};
+		\draw (-4.461624501395429,-3) node[anchor=north west] {$A_3$};
+		\draw (0.6,2.9047813776175406) node[anchor=north west] {$A_4$};
+		\draw (-4.7451894784595705,7) node[anchor=north west] {$A_5$};
+		\draw (-4.6,4) node[anchor=north west] {$B_1$};
+		\draw (-5.6,-0.8) node[anchor=north west] {$B_2$};
+		\draw [line width=1pt] (-18.243809629176003,5.983486842885368)-- (-21.646589353945703,3.107327789806218);
+		\draw [line width=1pt] (-21.646589353945703,3.107327789806218)-- (-22.092191460760784,-1.0651283012804367);
+		\draw [line width=1pt] (-22.092191460760784,-1.0651283012804367)-- (-15.610706270723266,-3.009573858291693);
+		\draw [line width=1pt] (-15.610706270723266,-3.009573858291693)-- (-12.410472958142272,2.4591792708024656);
+		\draw [line width=1pt] (-12.410472958142272,2.4591792708024656)-- (-18.243809629176003,5.983486842885368);
+		\draw [line width=1pt] (-17.100520621968613,3.3098742019948904)-- (-18.243809629176003,5.983486842885368);
+		\draw [line width=1pt] (-19.256541690119366,2.540197835677935)-- (-21.646589353945703,3.107327789806218);
+		\draw [line width=1pt] (-19.256541690119366,2.540197835677935)-- (-17.100520621968613,3.3098742019948904);
+		\draw [line width=1pt] (-17.100520621968613,3.3098742019948904)-- (-17.393114697983577,-0.13341480521254293);
+		\draw [line width=1pt] (-17.393114697983577,-0.13341480521254293)-- (-19.256541690119366,2.540197835677935);
+		\draw [line width=1pt] (-17.393114697983577,-0.13341480521254293)-- (-22.092191460760784,-1.0651283012804367);
+		\draw [line width=1pt] (-19.256541690119366,2.540197835677935)-- (-22.092191460760784,-1.0651283012804367);
+		\draw [line width=1pt] (-17.393114697983577,-0.13341480521254293)-- (-15.610706270723266,-3.009573858291693);
+		\draw [line width=1pt] (-17.393114697983577,-0.13341480521254293)-- (-12.410472958142272,2.4591792708024656);
+		\draw [line width=1pt] (-17.100520621968613,3.3098742019948904)-- (-12.410472958142272,2.4591792708024656);
+		\draw [line width=1pt] (-21.646589353945703,3.107327789806218)-- (-17.100520621968613,3.3098742019948904);
+		\draw (-9.44426624123678,4.727699087315593) node[anchor=north west] {$A_1$};
+		\draw (-23.7,-0.8) node[anchor=north west] {$A_2$};
+		\draw (-15.682695736647903,-2.4424439041634147) node[anchor=north west] {$A_3$};
+		\draw (-12.5,3.7149670263722308) node[anchor=north west] {$A_4$};
+		\draw (-18.923438331666667,7.3) node[anchor=north west] {$A_5$};
+		\draw (-20.2,2.3) node[anchor=north west] {$B_1$};
+		\draw (-17.14102990440635,0.4) node[anchor=north west] {$B_2$};
+		\draw (-17.18153918684408,4.5) node[anchor=north west] {$B_3$};
+		\draw [line width=1pt] (-5.352828715025589,1.3654286449836293)-- (-4.382624988629694,4.2129994223800376);
+		\draw [line width=1pt] (-5.352828715025589,1.3654286449836293)-- (-3.9957779488092875,-0.7477449706110413);
+		\draw [line width=1pt] (-5.352828715025589,1.3654286449836293)-- (-8.877136287108494,-1.3436004539672288);
+		\draw (-6.365560775968953,1.1) node[anchor=north west] {$B_3$};
+		\begin{scriptsize}
+			\draw [fill=black] (-4.502133783833164,5.7455239726363105) circle (1.5pt);
+			\draw [fill=black] (-8.512552745168879,2.8693649195571553) circle (1.5pt);
+			\draw [fill=black] (-8.877136287108494,-1.3436004539672288) circle (1.5pt);
+			\draw [fill=black] (-3.813475982391677,-3.085499598789813) circle (1.5pt);
+			\draw [fill=black] (0.4805079560081884,1.8110307517987134) circle (1.5pt);
+			\draw [fill=black] (-4.382624988629694,4.2129994223800376) circle (2.5pt);
+			\draw [fill=black] (-3.9957779488092875,-0.7477449706110413) circle (2.5pt);
+			\draw [fill=black] (-18.243809629176003,5.983486842885368) circle (1.5pt);
+			\draw [fill=black] (-21.646589353945703,3.107327789806218) circle (1.5pt);
+			\draw [fill=black] (-22.092191460760784,-1.0651283012804367) circle (1.5pt);
+			\draw [fill=black] (-15.610706270723266,-3.009573858291693) circle (1.5pt);
+			\draw [fill=black] (-12.410472958142272,2.4591792708024656) circle (1.5pt);
+			\draw [fill=black] (-17.100520621968613,3.3098742019948904) circle (2.5pt);
+			\draw [fill=black] (-19.256541690119366,2.540197835677935) circle (2.5pt);
+			\draw [fill=black] (-17.393114697983577,-0.13341480521254293) circle (2.5pt);
+			\draw [fill=black] (-5.352828715025589,1.3654286449836293) circle (2.5pt);
+		\end{scriptsize}
+	\end{tikzpicture}
+\end{center}
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+    \item Jelöljük \(A_1,A_2,\ldots, A_{1000}\)-rel a sokszög csúcsait és \(B_1,B_2,\ldots, B_n\)-nel a belső pontokat. Kiszámítjuk a felbontásban szereplő üres háromszögek szögeinek összegét kétféleképpen.\\
+    Ha a felbontás 2025 háromszögből áll, akkor ez a szögösszeg \(2025\cdot 180^\circ\). Másrészt az üres háromszögek szögeinek összege egyenlő a sokszög csúcsai körül, illetve a belső pontok körül létrejött szögek összegével. A sokszög \(A_i\) csúcsa körül létrejött szögek összege éppen az \(A_i\) szög. Így a sokszög csúcsai körül létrejött szögek összege a sokszög szögeinek összegével egyenlő, azaz \(180^\circ\cdot(1000-2)\).
+    Egy \(B_i\) pont körül létrejött szögek összege \(360^\circ\), tehát a \(B_1,B_2,\ldots, B_n\) pontok körül létrejött szögek összege \(n\cdot 360^\circ\). 
+    A fentiek alapján, ha létezik \(2025\) üres háromszögből álló felbontás, akkor
+    \[2025\cdot 180^\circ=998\cdot 180^\circ+n\cdot 360^\circ,\]
+    ahonnan \(2n+998=2025\). Az egyenlőség bal oldala páros, a jobb oldala páratlan, tehát nem létezik ilyen \(n\) érték.
+    \item A fenti gondolatmenet alapján 
+    \[k\cdot180^\circ=998\cdot180^\circ+n\cdot360^\circ, \]
+    vagyis \[2n+998=k.\]
+    Ennek az egyenletnek minden 1000-nél nagyobb vagy egyenlő páros \(k\) értékre van megoldása.
+\end{enumerate} 
+\end{solution}
+

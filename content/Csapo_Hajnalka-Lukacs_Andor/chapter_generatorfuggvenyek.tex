@@ -1,0 +1,2922 @@
+
+\chapter{Rekurziók és generátorfüggvények}\label{chap:generatorf}
+
+\section{Mi a generátorfüggvény?}\label{sec:mi_a_generatorf}
+\begin{description}
+{\large \item [{Szerző:}] Csapó Hajnalka (Didaktikai mesteri -- Matematika, I. év)}
+\end{description}
+
+\subsection*{Bevezető feladatok}
+\begin{problem}
+Legyen 
+\[
+A(x)=1+x+x^{2}+x^{3}+\dots+x^{n}+\dots
+\]
+
+Hogyan számolnánk ki ezt az összeget 6. osztályban?
+
+Nézzük meg sajátos esetekre. Mennyi lesz az összeg $x=\dfrac{1}{2}$
+és $x=\dfrac{1}{3}$ esetén?
+\end{problem}
+
+\begin{problem}\textbf{Csokoládé feladat:} Kapok két tábla csokoládét. Rögtön megeszem az egyiket, majd fokozatosan
+spórolok vele. Másnap a másik csoki felét eszem meg, következő nap
+a maradék felét, és így tovább. Mennyi csokit ettem meg $n$ nap alatt?
+\end{problem}
+\begin{solution} Tekintsük a következő ábrát:
+\begin{center}
+	\includegraphics[width=5cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/csoki1\string".JPG}
+\end{center}
+\begin{itemize}
+	\item Első nap megettem 1 csokit, maradt 1.
+	\item Második nap megettem fél csokit, maradt fél.
+	\item Harmadik nap megettem negyed csokit, maradt negyed.
+	\item \ldots
+	\item $n$-edik nap megettem $\dfrac{1}{2^{n-1}}$ csokit, maradt $\dfrac{1}{2^{n-1}}$.
+\end{itemize}
+Tehát $n$ nap alatt megettem $1+\dfrac{1}{2}+\dfrac{1}{2^{2}}+\dfrac{1}{2^{3}}+\dots+\dfrac{1}{2^{n-1}}$
+csokit és maradt $\dfrac{1}{2^{n-1}}$, ahonnan következik, hogy 
+\[
+1+\dfrac{1}{2}+\dfrac{1}{2^{2}}+\dfrac{1}{2^{3}}+\dots+\dfrac{1}{2^{n-1}}=2-\dfrac{1}{2^{n-1}}
+\]
+Innen következik, hogy ha a ,,végtelenségig'' ennénk, akkor 
+\[
+1+\dfrac{1}{2}+\dfrac{1}{2^{2}}+\dfrac{1}{2^{3}}+\dots=2
+\]
+\end{solution}
+
+
+\begin{problem}\textbf{Torta feladat:} Ketten eszünk egy tortát. Fokozatosan spórolunk vele. Első nap megesszük
+mindketten egy-egy harmadát. Másnap a maradék torta egy-egy harmadát
+esszük meg, következő nap a maradék egy-egy harmadát, és így tovább.
+Mennyi tortát eszünk meg $n$ nap alatt?
+\end{problem}
+\begin{solution}
+	Tekintsük a következő ábrát:
+\begin{center}
+	\includegraphics[width=5cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/torta\string".JPG}
+\end{center}
+
+\begin{itemize}
+	\item Első nap mindketten megettünk $\dfrac{1}{3}$ tortát, maradt $\dfrac{1}{3}$.
+	\item Második nap $\dfrac{1}{9}$, maradt $\dfrac{1}{9}$.
+	\item Harmadik nap $2\cdot\dfrac{1}{27}$, maradt $\dfrac{1}{27}$.
+	\item \ldots
+	\item $n$-edik nap $2\cdot\dfrac{1}{3^{n}}$, maradt $\dfrac{1}{3^{n}}$.
+\end{itemize}
+\[
+2\cdot\left(\dfrac{1}{3}+\dfrac{1}{3^{2}}+\dots+\dfrac{1}{3^{n}}\right)=1-\dfrac{1}{3^{n}}
+\]
+Tehát végtelen sok nap után: 
+\[
+2\cdot\left(\dfrac{1}{3}+\dfrac{1}{3^{2}}+\dots\right)=1\Rightarrow\dfrac{1}{3}+\dfrac{1}{3^{2}}+\dots=\dfrac{1}{2}
+\]
+
+Hasonlóan el lehet játszadozni és igazolni más ilyen összegeket is,
+például, ha hárman esszük a tortát,, akkor kiderül, hogy 
+\[
+3\cdot\left(\dfrac{1}{4}+\dfrac{1}{4^{2}}+\dots\right)=1\Rightarrow\dfrac{1}{4}+\dfrac{1}{4^{2}}+\dots=\dfrac{1}{3}
+\]
+\end{solution}
+
+\subsection*{Számolás másképp}
+
+Ugyanezeket az összegeket megkaphatjuk másképp is.
+
+Legyen 
+\[
+S_{1}=1+\dfrac{1}{2}+\dfrac{1}{2^{2}}+\dfrac{1}{2^{3}}+\dots,
+\]
+ekkor 
+\[
+2S_{1}=2+1+\dfrac{1}{2}+\dfrac{1}{2^{2}}+\dots.
+\]
+
+Tehát $2S_{1}=2+S_{1}$, ahonnnan $S_{1}=2$.
+
+Ha 
+\[
+S_{2}=\dfrac{1}{3}+\dfrac{1}{3^{2}}+\dfrac{1}{3^{3}}+\dots,
+\]
+akkor 
+\[
+3S_{2}=1+\dfrac{1}{3}+\dfrac{1}{3^{2}}+\dots,
+\]
+tehát $3S_{2}=1+S_{2}$, ahonnan $S_{2}=\frac{1}{2}.$
+
+\subsection*{Visszatérés $A(x)$-hez}
+
+Térjünk vissza az $A(x)=1+x+x^{2}+x^{3}+\dots+x^{n}+\dots$ összeghez.
+
+$x=\dfrac{1}{k}$ esetén már megvan elemi szinten, de mi történik,
+ha $x$ tetszőleges valós szám?
+
+Az 
+\[
+A(x)=1+x+x^{2}+x^{3}+\dots+x^{n}+\dots
+\]
+egyenlőség mindkét oldalát szorozzuk be $x$-szel.
+
+\[
+xA(x)=x+x^{2}+x^{3}+\dots+x^{n}+\dots
+\]
+
+Tehát:
+
+\[
+A(x)-xA(x)=1
+\]
+\[
+A(x)=\dfrac{1}{1-x}
+\]
+\[
+1+x+x^{2}+x^{3}+\dots+x^{n}+\dots=\dfrac{1}{1-x}
+\]
+
+\textbf{Megjegyzés} Ebben a fejezetben feltételezzük, hogy ezek az
+általunk számolt összegek léteznek és végesek, ami a fenti esetben
+is csak $|x|<1$ esetén biztosított. 
+
+\subsection*{Újabb összeg}
+
+\begin{problem}
+Számoljuk ki a $B(x)=1+2x+3x^{2}+4x^{3}+\dots$ összeget!
+\end{problem}
+\begin{solution}
+A fentiekhez hasonlóan, ha a 
+\[
+B(x)=1+2x+3x^{2}+4x^{3}+\dots
+\]
+egyenlőség mindkét oldalát beszorozzuk $x$-szel, kapjuk:
+
+\[
+xB(x)=x+2x^{2}+3x^{3}+\dots+(n-1)x^{n-1}+nx^{n}+\dots
+\]
+
+\[
+B(x)-xB(x)=1+x+x^{2}+\dots+x^{n}+\dots=\dfrac{1}{1-x},
+\]
+tehát 
+\[
+B(x)=\dfrac{1}{(1-x)^{2}}
+\]
+\[
+1+2x+3x^{2}+4x^{3}+...+n\cdot x^{n-1}+\dots=\dfrac{1}{(1-x)^{2}}
+\]
+\end{solution}
+\begin{definition}{def:genfugg}
+Egy $a_{0},a_{1},a_{2},\dots$ sorozat generátorfüggvénye: 
+\[
+A(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dots=\sum_{n=0}^{\infty}a_{n}x^{n}
+\]
+Ez egy formális hatványsor, amely ``kódolja'' a sorozatot.
+\end{definition}
+\textbf{Megjegyzés:} Ez abban az esetben létezik, ha ${\displaystyle |x|<\lim_{n\to\infty}\left|\frac{a_{n}}{a_{n+1}}\right|}$
+
+\begin{example}
+Az előbbi feladatok alapján 
+\begin{itemize}
+\item Az $\left(a_{n}\right)_{n\geq0}$, $a_{n}=1$, bármely $n\geq0$ sorozat
+generátorfüggvénye: 
+\[
+A(x)=\dfrac{1}{1-x}
+\]
+\item Az $\left(a_{n}\right)_{n\geq0}$, $a_{n}=n+1$, bármely $n\geq0$
+sorozat generátorfüggvénye: 
+\[
+B(x)=\dfrac{1}{(1-x)^{2}}.
+\]
+\end{itemize}
+\end{example}
+
+\subsection*{Feladatok}
+\begin{problem} Válaszoljunk a következő kérdésekre:
+\begin{enumerate}
+\item Az $\dfrac{1}{(1-x)^{3}}$ milyen sorozat generátorfüggvénye? 
+\item Az $\dfrac{1}{(1-x)^{n}}$ milyen sorozat generátorfüggvénye? 
+\item Mi az $1,0,1,0,\dots$ sorozat generátorfüggvénye?: 
+\item Mi az $1,0,0,1,0,0,\dots$ sorozat generátorfüggvénye?: 
+\item Hányféleképpen fedhető le $2\times n$ téglalap $1\times2$ dominókkal? 
+\end{enumerate}
+\end{problem}
+\begin{solution}
+\begin{enumerate}
+\item Az előbbiek alapján $B(x)=1+2x+3x^{2}+4x^{3}+\dots=\dfrac{1}{(1-x)^{2}},$
+ekkor 
+\[
+C(x)=\dfrac{1}{(1-x)^{3}}=\dfrac{B(x)}{1-x},
+\]
+tehát 
+\[
+C(x)-xC(x)=B(x)
+\]
+Legyen a keresett sorozat $\left(c_{n}\right)_{n\geq0}$, ekkor 
+\[
+C(x)=c_{0}+c_{1}x+c_{2}x^{2}+\dots
+\]
+és 
+\[
+xC(x)=c_{0}x+c_{1}x^{2}+c_{2}x^{3}+\dots,
+\]
+ahonnan 
+\[
+C(x)-xC(x)=c_{0}+(c_{1}-c_{0})x+(c_{2}-c_{1})x^{2}+(c_{3}-c_{2})x^{3}+\dots
+\]
+és
+
+\[
+B(x)=1+2x+3x^{2}+4x^{3}+\dots
+\]
+
+Tehát $c_{0}=1,c_{1}-c_{0}=2,c_{2}-c_{1}=3,c_{3}-c_{2}=4,\dots c_{n}-c_{n-1}=n+1,$
+ezeket összeadva kapjuk, hogy $c_{n}=1+2+3+\dots+n+1=\dfrac{(n+1)(n+2)}{2}$
+\item Vezessük be az $S_{k}(x)=\dfrac{1}{(1-x)^{k}}$ jelölést és legyen
+a sorozat, amelynek a generátorfüggvénye $\left(a_{n}^{k}\right)_{n\geq0}.$
+
+Az eddigiek alapján
+
+\[
+S_{1}(x)=\dfrac{1}{1-x}=1+x+x^{2}+x^{3}+\dots=\sum_{n=0}^{\infty}x^{n}\Rightarrow a_{n}^{1}=1,n\geq0
+\]
+
+\[
+S_{2}(x)=\dfrac{1}{(1-x)^{2}}=1+2x+3x^{2}+4x^{3}+\dots=\sum_{n=0}^{\infty}(n+1)x^{n}\Rightarrow a_{n}^{2}=n+1,n\geq0
+\]
+
+\[
+S_{3}(x)=\dfrac{1}{(1-x)^{3}}=\sum_{n=0}^{\infty}\dfrac{(n+1)(n+2)}{2}x^{k}\Rightarrow a_{n}^{3}=\dfrac{(n+1)(n+2)}{2},k\geq0
+\]
+
+Tehát $a_{n}^{1}=C_{n}^{0},a_{n}^{2}=C_{n+1}^{1},a_{n}^{3}=C_{n+2}^{2}$
+
+Az a sejtésünk, hogy $S_{k}(x)=\dfrac{1}{(1-x)^{k}}$ az $\left(a_{n}^{k}\right)_{n\geq0},$
+$a_{n}^{k}=C_{n+k-1}^{k-1}$ sorozat generátorfüggvénye. Ezt a matematikai
+indukció módszerével bizonyítjuk.
+
+Feltételezzük, hogy $a_{n}^{k}=C_{n+k-1}^{k-1}$ bármely $n\geq0$,
+$k\geq1$ és bizonyítjuk, hogy $a_{n}^{k}=C_{n+k}^{k}$ bármely $n\geq0$.
+
+\[
+S_{k+1}(x)=\dfrac{1}{(1-x)^{k+1}}=\dfrac{S_{k}(x)}{1-x},
+\]
+
+tehát 
+\[
+S_{k+1}(x)-xS_{k+1}(x)=S_{k}(x).
+\]
+\[
+S_{k+1}(x)=a_{0}^{k+1}+a_{1}^{k+1}x+a_{2}^{k+1}x^{2}+\dots
+\]
+és 
+\[
+xS_{k+1}(x)=a_{0}^{k+1}x+a_{1}^{k+1}x^{2}+a_{2}^{k+1}x^{3}+\dots,
+\]
+ahonnan 
+\[
+S_{k+1}(x)-xS_{k+1}(x)=a_{0}^{k+1}+(a_{1}^{k+1}-a_{0}^{k+1})x+(a_{2}^{k+1}-a_{1}^{k+1})x^{2}+(a_{3}^{k+1}-a_{2}^{k+1})x^{3}+\dots
+\]
+és
+
+\[
+S_{k}(x)=a_{0}^{k}+a_{1}^{k}x+a_{2}^{k}x^{2}+a_{3}^{k}x^{3}+\dots
+\]
+
+Tehát 
+\[
+a_{0}^{k+1}=a_{0}^{k},
+\]
+\[
+a_{1}^{k+1}-a_{0}^{k+1}=a_{1}^{k},
+\]
+\[
+a_{2}^{k+1}-a_{1}^{k+1}=a_{2}^{k},
+\]
+\[
+a_{3}^{k+1}-a_{2}^{k+1}=a_{3}^{k}\dots
+\]
+\[
+a_{n}^{k+1}-a_{n-1}^{k+1}=a_{n}^{k},
+\]
+ezeket összeadva kapjuk, hogy 
+\[
+a_{n}^{k+1}=a_{0}^{k}+a_{1}^{k}+a_{2}^{k}+\dots+a_{n}^{k}=C_{k-1}^{k-1}+C_{k}^{k-1}+C_{k+1}^{k-1}+\dots+C_{n+k-1}^{k-1}
+\]
+
+\[
+C_{k-1}^{k-1}=C_{k}^{k}\Rightarrow C_{k-1}^{k-1}+C_{k}^{k-1}=C_{k}^{k}+C_{k}^{k-1}=C_{k+1}^{k}
+\]
+
+\[
+C_{k+1}^{k}+C_{k+1}^{k-1}=C_{k+2}^{k}\Rightarrow C_{k-1}^{k-1}+C_{k}^{k-1}+C_{k+1}^{k-1}=C_{k+2}^{k}
+\]
+
+Ezt folytatva, kapjuk, hogy
+
+\[
+C_{k-1}^{k-1}+C_{k}^{k-1}+C_{k+1}^{k-1}+\dots+C_{n+k-1}^{k-1}=C_{n+k}^{k},
+\]
+amit bizonyítani akartunk.
+
+Tehát a matematikai indukció alapján 
+\[
+\dfrac{1}{(1-x)^{k}}=\sum_{n=0}^{\infty}C_{n+k-1}^{k-1}x^{n}
+\]
+
+\item $1+x^{2}+x^{4}+\dots=S_{1}(x^{2})=\dfrac{1}{1-x^{2}}$ 
+\item $1+x^{3}+x^{6}+\dots=S_{1}(x^{3})=\dfrac{1}{1-x^{3}}$ %\item 
+ %Ha $a$ darab 1-es, $b$ darab $2$-es és $c$ darab 5-ös pénzegységet használunk, akkor az$(a,b,c)$ számhármasok számát kell meghatározzuk, ha $a+2b+5c=10$ és $a,b,c$ nemnegatív egészek.
+ % Az $a+2b+5c$ az $x^{10}$ egy\"utthat\'oja az $(1+x+x^2+x^3+\dots)(1+x^2+x^4+x^6+\dots)(1+x^5+x^10+x^15+\dots)$ szorzatban, amit az $\dfrac{1}{(1-x)(1-x^2)(1-x^5)}$ sorbafejt\'es\'evel is kisz\'amolhatunk, de ebben az esetben nem \'erdemes. Nagyobb számoknál igen.
+\item Dominós probléma: Nézzünk meg néhány sajátos esetet.
+
+$n=1$ esetén a lefedéSek száma $T_{1}=1$
+
+\includegraphics[width=0.5cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/d1\string".JPG}
+
+$n=2$ esetén a lefedéSek száma $T_{2}=2$
+
+\includegraphics[width=3cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/d2\string".JPG}
+
+$n=3$ esetén a lefedések száma $T_{3}=3$
+
+A $2\times3$-as téglalap lefödéseit csoportos\'{t}hatjuk aszerint,
+hogy az első (vagy az utolsó) oszlop egy teljes dominó vagy két fél
+dominó. Előbbiket a $2\times2$-es téglalapookból kapjuk egy függőleges
+dominó balra (vagy jobbra) illesztésével, utóbbiakat a $2\times1$-esből
+2 vízsszintes dominó balra (vagy jobbra) illesztésével.
+
+\includegraphics[width=6cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/d32\string".JPG}
+
+$n=4$ esetén a lefedések száma $T_{4}=5$
+
+Az előző esethez hasonlóan képezzük.
+
+\includegraphics[width=12cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/d42\string".JPG}
+
+Formálisan adjuk össze az összes $2\times n$-es lefödést. Vezessük
+be a lefödésk szorzását, legyen ez az összetapasztás. Fogadjuk el,
+hogy a $2\times0$-s téglalap egyféleképpen födhető le, ez egy 2 egyységnyi
+függőleges vonal, ami a szorzásra nézve semleges elem.
+
+\begin{center}
+	\includegraphics[width=0.5cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/0\string".JPG}
+\end{center}
+
+
+Az előbb említett összeg:
+
+\includegraphics[width=\textwidth]{\string"content/Csapo_Hajnalka-Lukacs_Andor/T\string".JPG}
+
+\includegraphics[width=\textwidth]{\string"content/Csapo_Hajnalka-Lukacs_Andor/t2\string".JPG}
+
+Kiemeljük a pirossal jelölt függőleges dominókat és a kékkel jelölt
+dupla vízszintes dominókat és kapjuk, hogy
+
+\includegraphics[width=\textwidth]{\string"content/Csapo_Hajnalka-Lukacs_Andor/T3\string".JPG}
+
+A fentiekből
+\begin{center}
+	\includegraphics[width=10cm]{\string"content/Csapo_Hajnalka-Lukacs_Andor/Tforma\string".JPG}
+\end{center}
+Tulajdonképpen az utóbbi tört a generátorfüggvénye a lefödések számának
+sorozatának.
+
+A továbbiakban helyettesítsük a függőleges dominókat $x$-szel és
+a vízszintes dominókat $y$-nal, ekkor $T=1+xT+yT$.
+
+Vegyük észre, hogy egy lefödést helyettesítő monom fokszáma éppen
+az illető téglalap hosszúsága. Azaz, ha $y=x$-et helyettes`t-nk a
+tov'bbiakban, akkor megkapjuk a sorozat generátorfüggvényét, ugyanis
+éppen annyiszor szerepel az összegben a $2\times n$-es téglalap,
+ahány ilyen lefödés van, tehát az $x^{n}$ együtthatója éppen a lefödések
+száma lesz.
+
+Tehát 
+\[
+T=T_{0}+T_{1}x+T_{2}x^{2}+T_{3}x^{3}+\dots=\dfrac{1}{1-x-x^{2}}
+\]
+
+A sorozat meghatározása érdekében bontsuk elemi törtekre az utóbbi
+törtet.
+
+A nevező gyökei $x_{1,2}=\dfrac{-1\pm\sqrt{5}}{2}$
+
+\[
+\dfrac{1}{1-x-x^{2}}=\dfrac{1}{\sqrt{5}}\cdot\dfrac{1}{x-\dfrac{-1-\sqrt{5}}{2}}-\dfrac{1}{\sqrt{5}}\cdot\dfrac{1}{x-\dfrac{-1+\sqrt{5}}{2}}=
+\]
+
+\[
+=\dfrac{1}{\sqrt{5}}\cdot\dfrac{1}{{\dfrac{1+\sqrt{5}}{2}}\left(1-\dfrac{1-\sqrt{5}}{2}x\right)}-\dfrac{1}{\sqrt{5}}\cdot\dfrac{1}{{\dfrac{1-\sqrt{5}}{2}}\left(1-\dfrac{1+\sqrt{5}}{2}x\right)}=
+\]
+
+\[
+=\dfrac{\sqrt{5}-1}{2\sqrt{5}}\cdot\dfrac{1}{1-\dfrac{1-\sqrt{5}}{2}x}+\dfrac{\sqrt{5}+1}{2\sqrt{5}}\cdot\dfrac{1}{1-\dfrac{1+\sqrt{5}}{2}x}
+\]
+
+Tudjuk, hogy $\dfrac{1}{1-ax}=1+ax+a^{2}x^{2}+a^{3}x^{3}+\dots$,
+tehát
+
+\[
+T=\dfrac{\sqrt{5}-1}{2\sqrt{5}}\cdot\left(1+\dfrac{1-\sqrt{5}}{2}x+\left(\dfrac{1-\sqrt{5}}{2}x\right)^{2}+\dots\right)+
+\]
+
+\[
+\dfrac{\sqrt{5}+1}{2\sqrt{5}}\cdot\left(1+\dfrac{1+\sqrt{5}}{2}x+\left(\dfrac{1+\sqrt{5}}{2}x\right)^{2}+\dots\right)
+\]
+
+Ez alapján: 
+\[
+T_{n}=\dfrac{\sqrt{5}-1}{2\sqrt{5}}\cdot\left(\dfrac{1-\sqrt{5}}{2}\right)^{n}+\dfrac{\sqrt{5}+1}{2\sqrt{5}}\cdot\left(\dfrac{1+\sqrt{5}}{2}\right)^{n}=\dfrac{1}{\sqrt{5}}\left(\left(\dfrac{1+\sqrt{5}}{2}\right)^{n+1}-\left(\dfrac{1-\sqrt{5}}{2}\right)^{n+1}\right)
+\]
+
+\end{enumerate}
+\end{solution}
+
+\subsection*{Fibonacci-sorozat}
+\begin{problem}
+Határozzuk meg a Fibonacci-sorozat generátorfüggvényét és számoljuk
+ki annak segítségével az általános tag képletét. 
+\end{problem}
+\begin{solution}
+\[
+F_{0}=0,\ F_{1}=1,\ F_{n+2}=F_{n}+F_{n+1}
+\]
+\[
+F(x)=x+x^{2}+2x^{3}+3x^{4}+5x^{5}+8x^{6}+\dots
+\]
+
+\[
+F(x)=x+xF(x)+x^{2}F(x)\Rightarrow F(x)=\dfrac{x}{1-x-x^{2}}
+\]
+
+Ezt elemi törtekre bontjuk:
+
+\[
+\dfrac{x}{1-x-x^{2}}=\dfrac{1-\sqrt{5}}{2\sqrt{5}}\cdot\dfrac{1}{x-\dfrac{-1+\sqrt{5}}{2}}+\dfrac{-1-\sqrt{5}}{2\sqrt{5}}\cdot\dfrac{1}{x-\dfrac{-1-\sqrt{5}}{2}}=
+\]
+\[
+=\dfrac{1}{\sqrt{5}}\cdot\dfrac{1}{1-\dfrac{1+\sqrt{5}}{2}x}-\dfrac{1}{\sqrt{5}}\cdot\dfrac{1}{1-\dfrac{1-\sqrt{5}}{2}x}
+\]
+
+Tudjuk, hogy $\dfrac{1}{1-ax}=1+ax+a^{2}x^{2}+a^{3}x^{3}+\dots$,
+tehát
+
+\[
+F(x)=\dfrac{1}{\sqrt{5}}\left(1+\dfrac{1+\sqrt{5}}{2}x+\left(\dfrac{1+\sqrt{5}}{2}x\right)^{2}+\dots\right)-
+\]
+\[
+-\dfrac{1}{\sqrt{5}}\left(1+\dfrac{1-\sqrt{5}}{2}x+\left(\dfrac{1-\sqrt{5}}{2}x\right)^{2}+\dots\right)
+\]
+
+Ez alapján: 
+\[
+F_{n}=\dfrac{1}{\sqrt{5}}\left(\left(\dfrac{1+\sqrt{5}}{2}\right)^{n}-\left(\dfrac{1-\sqrt{5}}{2}\right)^{n}\right)
+\]
+\end{solution}
+
+Az eddigiekben láthattuk, hogy a generátorfüggvények segítségével
+megadhatjuk sorozatok általános tagjának képletét algebrai úton.
+
+\section{Catalan-számok}\label{sec:Catalan}
+\begin{description}
+{\large \item [{Szerző}] Lukács Andor (Didaktikai mesteri -- Matematika, I. év)}
+\end{description}
+\begin{problem}[Catalan-számok]
+Minden $n\ge1$ esetén legyen $C_{n+2}$ egy konvex $(n+2)$-szög
+háromszögekre való felbontásainak a száma olyan átlók (és a sokszög
+oldalai) segítségével, amelyek belső pontban nem metszik egymást.
+Az alábbi ábrán szemléltetjük az $n=3$ esetet ($C_{3}=5$):
+ 
+\begin{center}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=1.0cm,y=1.0cm]
+\clip(-1.5,-10.5) rectangle (15.5,-2.1);
+\draw[line width=.4pt] (10.,-10.) -- (12.,-10.) -- (12.618033988749895,-8.097886967409693) -- (11.,-6.922316462824747) -- (9.381966011250105,-8.097886967409693) -- cycle;
+\draw[line width=0.4pt] (0.,-6.) -- (2.,-6.) -- (2.618033988749895,-4.097886967409694) -- (1.,-2.922316462824747) -- (-0.6180339887498947,-4.097886967409693) -- cycle;
+\draw[line width=0.4pt] (6.,-6.) -- (8.,-6.) -- (8.618033988749895,-4.097886967409694) -- (7.,-2.922316462824747) -- (5.381966011250105,-4.097886967409693) -- cycle;
+\draw[line width=0.4pt] (12.,-6.) -- (14.,-6.) -- (14.618033988749895,-4.097886967409694) -- (13.,-2.922316462824747) -- (11.381966011250105,-4.097886967409693) -- cycle;
+\draw[line width=0.4pt] (2.,-10.) -- (4.,-10.) -- (4.618033988749895,-8.097886967409693) -- (3.,-6.922316462824747) -- (1.3819660112501053,-8.097886967409693) -- cycle;
+\draw [line width=0.4pt] (10.,-10.)-- (12.,-10.);
+\draw [line width=0.4pt] (12.,-10.)-- (12.618033988749895,-8.097886967409693);
+\draw [line width=0.4pt] (12.618033988749895,-8.097886967409693)-- (11.,-6.922316462824747);
+\draw [line width=0.4pt] (11.,-6.922316462824747)-- (9.381966011250105,-8.097886967409693);
+\draw [line width=0.4pt] (9.381966011250105,-8.097886967409693)-- (10.,-10.);
+\draw [line width=0.4pt] (0.,-6.)-- (2.,-6.);
+\draw [line width=0.4pt] (2.,-6.)-- (2.618033988749895,-4.097886967409694);
+\draw [line width=0.4pt] (2.618033988749895,-4.097886967409694)-- (1.,-2.922316462824747);
+\draw [line width=0.4pt] (1.,-2.922316462824747)-- (-0.6180339887498947,-4.097886967409693);
+\draw [line width=0.4pt] (-0.6180339887498947,-4.097886967409693)-- (0.,-6.);
+\draw [line width=0.4pt] (6.,-6.)-- (8.,-6.);
+\draw [line width=0.4pt] (8.,-6.)-- (8.618033988749895,-4.097886967409694);
+\draw [line width=0.4pt] (8.618033988749895,-4.097886967409694)-- (7.,-2.922316462824747);
+\draw [line width=0.4pt] (7.,-2.922316462824747)-- (5.381966011250105,-4.097886967409693);
+\draw [line width=0.4pt] (5.381966011250105,-4.097886967409693)-- (6.,-6.);
+\draw [line width=0.4pt] (12.,-6.)-- (14.,-6.);
+\draw [line width=0.4pt] (14.,-6.)-- (14.618033988749895,-4.097886967409694);
+\draw [line width=0.4pt] (14.618033988749895,-4.097886967409694)-- (13.,-2.922316462824747);
+\draw [line width=0.4pt] (13.,-2.922316462824747)-- (11.381966011250105,-4.097886967409693);
+\draw [line width=0.4pt] (11.381966011250105,-4.097886967409693)-- (12.,-6.);
+\draw [line width=0.4pt] (2.,-10.)-- (4.,-10.);
+\draw [line width=0.4pt] (4.,-10.)-- (4.618033988749895,-8.097886967409693);
+\draw [line width=0.4pt] (4.618033988749895,-8.097886967409693)-- (3.,-6.922316462824747);
+\draw [line width=0.4pt] (3.,-6.922316462824747)-- (1.3819660112501053,-8.097886967409693);
+\draw [line width=0.4pt] (1.3819660112501053,-8.097886967409693)-- (2.,-10.);
+\draw [line width=0.8pt] (0.,-6.)-- (2.618033988749895,-4.097886967409694);
+\draw [line width=0.8pt] (0.,-6.)-- (1.,-2.922316462824747);
+\draw [line width=0.8pt] (6.,-6.)-- (8.618033988749895,-4.097886967409694);
+\draw [line width=0.8pt] (8.618033988749895,-4.097886967409694)-- (5.381966011250105,-4.097886967409693);
+\draw [line width=0.8pt] (12.,-6.)-- (13.,-2.922316462824747);
+\draw [line width=0.8pt] (13.,-2.922316462824747)-- (14.,-6.);
+\draw [line width=0.8pt] (1.3819660112501053,-8.097886967409693)-- (4.,-10.);
+\draw [line width=0.8pt] (4.,-10.)-- (3.,-6.922316462824747);
+\draw [line width=0.8pt] (9.381966011250105,-8.097886967409693)-- (12.,-10.);
+\draw [line width=0.8pt] (9.381966011250105,-8.097886967409693)-- (12.618033988749895,-8.097886967409693);
+\begin{scriptsize}
+\draw [fill=black] (10.,-10.) circle (1.0pt);
+\draw[color=black] (9.70656367900068,-9.911223268383722) node {$A_1$};
+\draw [fill=black] (12.,-10.) circle (1.0pt);
+\draw[color=black] (12.337461099221592,-9.952331040574673) node {$A_2$};
+\draw [fill=black] (12.618033988749895,-8.097886967409693) circle (1.0pt);
+\draw[color=black] (12.830754365513013,-7.83528077274066) node {$A_3$};
+\draw [fill=black] (11.,-6.922316462824747) circle (1.0pt);
+\draw[color=black] (10.980904616920183,-6.760939834821157) node {$A_4$};
+\draw [fill=black] (9.381966011250105,-8.097886967409693) circle (1.0pt);
+\draw[color=black] (9.11050098223188,-7.9174963171225645) node {$A_5$};
+\draw [fill=black] (0.,-6.) circle (1.0pt);
+\draw[color=black] (-0.3031788494960696,-5.923769365861405) node {$A_1$};
+\draw [fill=black] (2.,-6.) circle (1.0pt);
+\draw[color=black] (2.2455030263429387,-5.882661593670454) node {$A_2$};
+\draw [fill=black] (2.618033988749895,-4.097886967409694) circle (1.0pt);
+\draw[color=black] (2.841565723111739,-3.8272729841228674) node {$A_3$};
+\draw [fill=black] (1.,-2.922316462824747) circle (1.0pt);
+\draw[color=black] (0.9917159745189104,-2.752932046203364) node {$A_4$};
+\draw [fill=black] (-0.6180339887498947,-4.097886967409693) circle (1.0pt);
+\draw[color=black] (-0.89924154626487,-3.909488528504771) node {$A_5$};
+\draw [fill=black] (6.,-6.) circle (1.0pt);
+\draw[color=black] (5.6985558903828855,-5.923769365861405) node {$A_1$};
+\draw [fill=black] (8.,-6.) circle (1.0pt);
+\draw[color=black] (8.226683880126417,-5.882661593670454) node {$A_2$};
+\draw [fill=black] (8.618033988749895,-4.097886967409694) circle (1.0pt);
+\draw[color=black] (8.843300462990694,-3.8272729841228674) node {$A_3$};
+\draw [fill=black] (7.,-2.922316462824747) circle (1.0pt);
+\draw[color=black] (6.9934507143978655,-2.752932046203364) node {$A_4$};
+\draw [fill=black] (5.381966011250105,-4.097886967409693) circle (1.0pt);
+\draw[color=black] (5.102493193614086,-3.909488528504771) node {$A_5$};
+\draw [fill=black] (12.,-6.) circle (1.0pt);
+\draw[color=black] (11.70029063026184,-5.923769365861405) node {$A_1$};
+\draw [fill=black] (14.,-6.) circle (1.0pt);
+\draw[color=black] (14.228418620005373,-5.882661593670454) node {$A_2$};
+\draw [fill=black] (14.618033988749895,-4.097886967409694) circle (1.0pt);
+\draw[color=black] (14.824481316774172,-3.8272729841228674) node {$A_3$};
+\draw [fill=black] (13.,-2.922316462824747) circle (1.0pt);
+\draw[color=black] (12.99518545427682,-2.752932046203364) node {$A_4$};
+\draw [fill=black] (11.381966011250105,-4.097886967409693) circle (1.0pt);
+\draw[color=black] (11.10422793349304,-3.909488528504771) node {$A_5$};
+\draw [fill=black] (2.,-10.) circle (1.0pt);
+\draw[color=black] (1.711101987860566,-9.911223268383722) node {$A_1$};
+\draw [fill=black] (4.,-10.) circle (1.0pt);
+\draw[color=black] (4.239229977604099,-9.87011549619277) node {$A_2$};
+\draw [fill=black] (4.618033988749895,-8.097886967409693) circle (1.0pt);
+\draw[color=black] (4.835292674372899,-7.83528077274066) node {$A_3$};
+\draw [fill=black] (3.,-6.922316462824747) circle (1.0pt);
+\draw[color=black] (2.9854429257800703,-6.760939834821157) node {$A_4$};
+\draw [fill=black] (1.3819660112501053,-8.097886967409693) circle (1.0pt);
+\draw[color=black] (1.0944854049962898,-7.9174963171225645) node {$A_5$};
+\end{scriptsize}
+\end{tikzpicture}
+\end{center}
+
+\noindent Írj fel egy rekurziót $C_{n+1}$-re!
+\end{problem}
+\begin{solution}
+Egyszerű számolással belátható, hogy $C_{1}=1,C_{2}=2,C_{3}=5$. Legyenek
+$A_{1},A_{2},\dots A_{n+3}$ egy $n+3$ oldalú sokszög csúcsai. Vegyük
+észre, hogy tetszőleges felbontás esetén, a sokszög $A_{1}A_{2}$
+oldala mindig pontosan egy, az aktuális felbontásban szereplő háromszögnek
+oldala: az $A_{1}A_{2}A_{k}$-nak, valamilyen $k\in\{3,4,\dots n+3\}$
+esetén, és emiatt $C_{n}=\sum_{k=3}^{n+3}T_{k},$
+ahol $T_{k}$ azoknak a felbontásoknak a száma, amelyekben megjelenik
+az $A_{1}A_{2}A_{k}$ háromszög. A $T_{k}$-t vissza tudjuk vezetni
+a korábbi $C_{j}$ értékekre, a következő módon: 
+\begin{center}
+\definecolor{zzttqq}{rgb}{0.6,0.2,0.} \definecolor{qqqqff}{rgb}{0.,0.,1.}
+\begin{tikzpicture}[line cap=round,line join=round,>=triangle 45,x=0.5cm,y=0.5cm]
+\clip(1.,-12.7) rectangle (14.5,0.1);
+\draw[line width=0.4pt] (6.,-12.) -- (10.,-12.) -- (13.064177772475912,-9.428849561253845) -- (13.758770483143632,-5.489618549205014) -- (11.758770483143634,-2.0255169340672587) -- (8.,-0.6574363607645841) -- (4.24122951685637,-2.025516934067256) -- (2.241229516856368,-5.489618549205009) -- (2.9358222275240875,-9.428849561253841) -- cycle;
+\fill[line width=0.4pt,color=zzttqq,fill=zzttqq,fill opacity=0.10000000149011612] (10.,-12.) -- (13.064177772475912,-9.428849561253845) -- (13.758770483143632,-5.489618549205014) -- (11.758770483143634,-2.0255169340672587) -- cycle;
+\fill[line width=0.4pt,color=zzttqq,fill=zzttqq,fill opacity=0.10000000149011612] (6.,-12.) -- (11.758770483143634,-2.0255169340672587) -- (8.,-0.6574363607645841) -- (4.24122951685637,-2.025516934067256) -- (2.241229516856368,-5.489618549205009) -- (2.9358222275240875,-9.428849561253841) -- cycle;
+\draw [line width=0.4pt] (6.,-12.)-- (10.,-12.);
+\draw [line width=0.4pt] (10.,-12.)-- (13.064177772475912,-9.428849561253845);
+\draw [line width=0.4pt] (13.064177772475912,-9.428849561253845)-- (13.758770483143632,-5.489618549205014);
+\draw [line width=0.4pt] (13.758770483143632,-5.489618549205014)-- (11.758770483143634,-2.0255169340672587);
+\draw [line width=0.4pt] (11.758770483143634,-2.0255169340672587)-- (8.,-0.6574363607645841);
+\draw [line width=0.4pt] (8.,-0.6574363607645841)-- (4.24122951685637,-2.025516934067256);
+\draw [line width=0.4pt] (4.24122951685637,-2.025516934067256)-- (2.241229516856368,-5.489618549205009);
+\draw [line width=0.4pt] (2.241229516856368,-5.489618549205009)-- (2.9358222275240875,-9.428849561253841);
+\draw [line width=0.4pt] (2.9358222275240875,-9.428849561253841)-- (6.,-12.);
+\draw [line width=1.2pt,color=qqqqff] (6.,-12.)-- (10.,-12.);
+\draw [line width=1.2pt,color=qqqqff] (10.,-12.)-- (11.758770483143634,-2.0255169340672587);
+\draw [line width=1.2pt,color=qqqqff] (11.758770483143634,-2.0255169340672587)-- (6.,-12.);
+\draw [line width=0.4pt,color=zzttqq] (10.,-12.)-- (13.064177772475912,-9.428849561253845);
+\draw [line width=0.4pt,color=zzttqq] (13.064177772475912,-9.428849561253845)-- (13.758770483143632,-5.489618549205014);
+\draw [line width=0.4pt,color=zzttqq] (13.758770483143632,-5.489618549205014)-- (11.758770483143634,-2.0255169340672587);
+\draw [line width=0.4pt,color=zzttqq] (11.758770483143634,-2.0255169340672587)-- (10.,-12.);
+\draw [line width=0.4pt,color=zzttqq] (6.,-12.)-- (11.758770483143634,-2.0255169340672587);
+\draw [line width=0.4pt,color=zzttqq] (11.758770483143634,-2.0255169340672587)-- (8.,-0.6574363607645841);
+\draw [line width=0.4pt,color=zzttqq] (8.,-0.6574363607645841)-- (4.24122951685637,-2.025516934067256);
+\draw [line width=0.4pt,color=zzttqq] (4.24122951685637,-2.025516934067256)-- (2.241229516856368,-5.489618549205009);
+\draw [line width=0.4pt,color=zzttqq] (2.241229516856368,-5.489618549205009)-- (2.9358222275240875,-9.428849561253841);
+\draw [line width=0.4pt,color=zzttqq] (2.9358222275240875,-9.428849561253841)-- (6.,-12.);
+\begin{scriptsize}
+  \draw (3.2426838677557385,-6.259909113061673) node[anchor=north west] {$(n+5-k) \text{-oldalú}$};
+\draw (10.066554842756481,-6.259910224941581) node[anchor=north west] {$(k-1) \text{-oldalú}$};
+\draw [fill=black] (6.,-12.) circle (1.0pt);
+\draw[color=black] (5.719001565177595,-12.225966560190215) node {$A_1$};
+\draw [fill=black] (10.,-12.) circle (1.0pt);
+\draw[color=black] (10.280246411000518,-12.228766189563579) node {$A_2$};
+\draw [fill=black] (13.064177772475912,-9.428849561253845) circle (1.0pt);
+\draw[color=black] (13.576477358324603,-9.27313913381917) node {$A_3$};
+\draw [fill=black] (13.758770483143632,-5.489618549205014) circle (1.0pt);
+\draw [fill=black] (11.758770483143634,-2.0255169340672587) circle (1.0pt);
+\draw[color=black] (11.931463459825762,-1.7400640819254292) node {$A_k$};
+\draw [fill=black] (8.,-0.6574363607645841) circle (1.0pt);
+\draw[color=black] (8.248626767788826,-0.2892496274866347) node {$A_{k+1}$};
+\draw [fill=black] (4.24122951685637,-2.025516934067256) circle (1.0pt);
+\draw [fill=black] (2.241229516856368,-5.489618549205009) circle (1.0pt);
+\draw [fill=black] (2.9358222275240875,-9.428849561253841) circle (1.0pt);
+\draw[color=black] (2.1535665409605176,-9.421940616325712) node {$A_{n+3}$};
+\end{scriptsize}
+\end{tikzpicture}
+\end{center}
+
+\par Vágjuk ki az $A_{1}A_{2}A_{k}$ háromszöget a sokszögből, így
+\begin{itemize} 
+
+\item $k=3$, vagy $k=n+3$ esetén egy-egy $n+2$ oldalú sokszög
+keletkezik, ezeket összesen $C_{n}+C_{n}$ módon tudjuk felbontani; 
+
+\item $k\in\{4,5,\dots n+2\}$ esetén keletkezik az $A_{2}A_{3}\dots A_{k}$
+és az $A_{k}\dots A_{n+3}A_{1}$ sokszög, ezek $k-1$, valamint $n+5-k$
+oldalúak, tehát a kettőt külön-külön $C_{k-3}$, illetve $C_{n+3-k}$
+módon tudjuk felbontani. \end{itemize} Az előbbiek alapján 
+\[
+C_{n+1}=C_{n}+C_{n}+\sum_{k=4}^{n+2}C_{k-3}C_{n+3-k}=C_{n}+C_{n}+\sum_{j=1}^{n-1}C_{j}C_{n-j},
+\]
+és ha egyezményesen bevezetjük a $C_{0}=1$ értéket, azt kapjuk, hogy
+\begin{equation}
+C_{n+1}=\sum_{j=0}^{n}C_{j}C_{n-j}=C_{0}C_{n}+C_{1}C_{n-1}+C_{2}C_{n-2}+\ldots+C_{n-2}C_{2}+C_{n-1}C_{1}+C_{n}C_{0},\quad\forall n\ge0.\label{eq:segner}
+\end{equation}
+
+A $(C_{n})$ sorozat a \emph{Catalan}\cprotect\footnote{Eugène Charles Catalan, 1814-1894, francia-belga matematikus, \url{https://en.wikipedia.org/wiki/Eugène_Charles_Catalan}}\emph{-számok}
+sorozata, \told\aref({eq:segner})+as{} rekurzió pedig a \emph{Segner}\cprotect\footnote{Segner János András, 1704-1777, magyar természettudós, matematikus,
+\url{https://hu.wikipedia.org/wiki/Segner_János_András}}\emph{-rekurzió} néven ismert.
+\end{solution}
+\begin{problem}
+Határozd meg a $(C_{n})$ sorozat általános tagját!
+\end{problem}
+\begin{solution}
+A $(C_{n})$ sorozat általános tagját a \told\aref({eq:segner})+as{}
+rekurzió alapján, a sorozat generátorfüggvényének segítségével határozzuk
+meg. Legyen 
+\[
+C(x)=\sum_{n=0}^{\infty}C_{n}x^{n}=C_{0}+C_{1}x+C_{2}x^{2}+\ldots
+\]
+Írhatjuk, hogy 
+\begin{align*}
+C^{2}(x) & =\left(\sum_{n=0}^{\infty}C_{n}x^{n}\right)\left(\sum_{n=0}^{\infty}C_{n}x^{n}\right)\\
+ & =\sum_{n=0}^{\infty}\left(\sum_{\substack{i+j=n\\
+i,j\geq0
+}
+}C_{i}C_{j}\right)x^{n}\\
+ & =\sum_{n=0}^{\infty}\left(\sum_{j=0}^{n}C_{j}C_{n-j}\right)x^{n}\\
+ & =\sum_{n=0}^{\infty}C_{n+1}x^{n}\\
+ & =\frac{1}{x}\cdot\sum_{n=0}^{\infty}C_{n+1}x^{n+1}\\
+ & =\frac{1}{x}\left(C(x)-C_{0}\right)\\
+ & =\frac{1}{x}\left(C(x)-1\right),
+\end{align*}
+tehát 
+\[
+xC^{2}(x)-C(x)+1=0.
+\]
+Ha az előbbi összefüggést $C(x)$-ben másodfokú egyenletnek tekintjük,
+akkor a megoldóképlet alapján 
+\[
+C(x)=\frac{1\pm\sqrt{1-4x}}{2x}.
+\]
+Mivel valójában a hatványsor konvergencia-intervallumán belül minden
+rögzített $x\ne0$ esetén külön megoldottuk a másodfokú egyenletet,
+ezért első ránézésre az előző képletben a ``$\pm$'' előjelek függnek
+$x$-től (különböző $x$ értékekhez különböző előjelek tartozhatnak).
+Viszont tudjuk, hogy a konvergencia-intervallumon belül $C$ folytonos
+függvény, ezért vagy minden $x\ne0$-ra ``$+$'' előjelű, vagy minden
+$x\ne0$-ra ``$-$'' előjelű a képletben megjelenő ``$\pm$''.
+Ugyanakkor, a $C$ függvény az $x=0$-ban is folytonos, tehát 
+\[
+\lim\limits_{x\to0}C(x)=\lim\limits_{x\to0^{+}}C(x)=C(0)=C_{0}=1
+\]
+kell teljesüljön. Mivel a l'Hospital-szabály alapján 
+\begin{align*}
+\lim\limits_{x\to0^{+}}\frac{1-\sqrt{1-4x}}{2x} & =\lim\limits_{x\to0^{+}}\frac{2}{2\sqrt{1-4x}}=1,\textnormal{ valamint}\\
+\lim\limits_{x\to0^{+}}\frac{1+\sqrt{1-4x}}{2x} & =\frac{2}{0^{+}}=+\infty,
+\end{align*}
+ezért a ``$+$'' előjelű megoldás nem lehet helyes, tehát a hatványsor
+konvergencia-intervallumán belül minden $x\ne0$ esetén 
+\[
+C(x)=\frac{1-\sqrt{1-4x}}{2x}.
+\]
+Ha felírjuk ennek a függvénynek a Maclaurin-sorát, akkor a megfelelő
+együtthatók megadják $(C_{n})$ sorozat általános tagjának a zárt
+alakját. Ehhez előbb tekintsük a $g(x)=\sqrt{1-4x}$ függvény Maclaurin-sorát.
+Írhatjuk, hogy 
+\begin{align*}
+g'(x) & =(-4)\cdot\left(\frac{1}{2}\right)\cdot(1-4x)^{-1/2},\\
+g''(x) & =(-4)^{2}\cdot\left(\frac{1}{2}\right)\cdot\left(-\frac{1}{2}\right)\cdot(1-4x)^{-3/2},\\
+g'''(x) & =(-4)^{3}\cdot\left(\frac{1}{2}\right)\cdot\left(-\frac{1}{2}\right)\cdot\left(-\frac{3}{2}\right)\cdot(1-4x)^{-5/2},\\
+ & \ \vdots\\
+g^{(n)}(x) & =(-4)^{n}\cdot\left(\frac{1}{2}\right)\cdot\left(-\frac{1}{2}\right)\cdot\left(-\frac{3}{2}\right)\cdots\left(-\frac{2n-3}{2}\right)\cdot(1-4x)^{-(2n-1)/2},
+\end{align*}
+tehát $g(0)=1$, $g'(0)=-2$, $g''(0)=-4$, $g'''(0)=(-8)\cdot1\cdot3$,
+és általában 
+\[
+g^{(n)}(0)=-2^{n}\cdot1\cdot3\cdot5\cdots(2n-3)=-2^{n}\cdot(2n-3)!!.
+\]
+Innen következik, hogy 
+\begin{align*}
+g(x) & =1-2x-\frac{2^{2}}{2!}\cdot(2n-3)!!\cdot x^{2}-\frac{2^{3}}{3!}\cdot(2n-3)!!\cdot x^{3}-\ldots\\
+ & =1-2x-\sum_{n=2}^{\infty}\frac{2^{n}}{n!}\cdot(2n-3)!!\cdot x^{n},
+\end{align*}
+tehát 
+\begin{align*}
+C(x) & =\frac{1-g(x)}{2x}=1+\sum_{n=2}^{\infty}\frac{2^{n-1}}{n!}\cdot(2n-3)!!\cdot x^{n-1}\\
+ & =1+\sum_{n=1}^{\infty}\frac{2^{n}}{(n+1)!}\cdot(2n-1)!!\cdot x^{n}.
+\end{align*}
+Tehát minden $n\ge1$ esetén 
+\[
+C_{n}=2^{n}\cdot\frac{1\cdot3\cdot5\cdots(2n-1)}{(n+1)!}=\frac{1}{n+1}\cdot2^{n}\cdot\frac{(2n)!}{n!\cdot(2^{n}\cdot n!)}=\frac{C_{2n}^{n}}{n+1}.
+\]
+\end{solution}
+
+\section*{Házi feladatok}
+\begin{problem}
+Mi a generátorfüggvénye az $a_{0}=0,a_{n+1}=2a_{n}+1$ sorozatnak? 
+\end{problem}
+
+\begin{solution}
+\[
+A(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dots
+\]
+
+\[
+2A(x)+1+x+x^{+}x^{3}+\dots=(2a_{0}+1)+(2a_{1}+1)x+(2a_{2}+1)x^{2}+\dots=
+\]
+\[
+=a_{1}+a_{2}x+a_{3}x^{2}+\dots
+\]
+
+Tehát 
+\[
+x(2A(x)+1+x+x^{2}+x^{3}+\dots)=A(x)-a_{0},
+\]
+azaz 
+\[
+2xA(x)+\dfrac{x}{1-x}=A(x).
+\]
+
+Tehát 
+\[
+A(x)=\dfrac{x}{(x-1)(2x-1)}
+\]
+\end{solution}
+\begin{problem}
+Mi a generátorfüggvénye az $a_{n}=n,n\geq0$ sorozatnak? 
+\end{problem}
+
+\begin{solution}
+\[
+A(x)=0+x+2x^{2}+3x^{3}+\dots=x(1+2x+3x^{2}+\dots)=\dfrac{x}{(1-x)^{2}}
+\]
+\end{solution}
+\begin{problem}
+Mi a generátorfüggvénye az $a_{n}=n\cdot2^{n},n\geq0$ sorozatnak? 
+\end{problem}
+
+\begin{solution}
+\[
+A(x)=0+2x+2\cdot2^{2}x^{2}+3\cdot2^{3}x^{3}+\dots=\dfrac{2x}{(1-2x)^{2}}
+\]
+\end{solution}
+\begin{problem}
+Minek a generátorfüggvénye az $F(x)=\dfrac{x}{x^{2}-1}$? 
+\end{problem}
+
+\begin{solution}
+Elemi törtekre bontva
+
+\[
+\frac{x}{x^{2}-1}=\frac{1}{2(x-1)}+\frac{1}{2(x+1)}
+\]
+
+\[
+\frac{1}{x-1}=-\sum_{n=0}^{\infty}x^{n}\Rightarrow\frac{1}{2(x-1)}=-\frac{1}{2}\sum_{n=0}^{\infty}x^{n}
+\]
+
+\[
+\frac{1}{x+1}=\sum_{n=0}^{\infty}(-1)^{n}x^{n}\Rightarrow\frac{1}{2(x+1)}=\frac{1}{2}\sum_{n=0}^{\infty}(-1)^{n}x^{n}
+\]
+
+\[
+F(x)=\sum_{n=0}^{\infty}\left(\frac{-1+(-1)^{n}}{2}\right)x^{n}
+\]
+
+Ez alapján a sorozattagok:
+
+\[
+a_{n}=\frac{-1+(-1)^{n}}{2}=\begin{cases}
+0, & \text{ha }n\text{ páros}\\
+1, & \text{ha }n\text{ páratlan}
+\end{cases}
+\]
+\end{solution}
+\begin{problem}
+Határozzuk meg az $a_{0}=a_{1}=1,a_{n+2}=4a_{n+1}-4a_{n},n\geq0$
+sorozat generátorfüggvényét és ennek segítségével számoljuk ki az
+általános tag képletét! 
+\end{problem}
+
+\begin{solution}
+\[
+A(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dots
+\]
+
+De mivel 
+\[
+a_{n+2}-4a_{n+1}+4a_{n}=0,
+\]
+szorozzuk mindkét oldalt $x^{n+2}$-nel és összegezzük $n\geq0$-tól:
+
+\[
+\sum_{n=0}^{\infty}(a_{n+2}-4a_{n+1}+4a_{n})x^{n+2}=0
+\]
+
+Vagyis: 
+\[
+\sum_{n=2}^{\infty}a_{n}x^{n}-4\sum_{n=1}^{\infty}a_{n}x^{n+1}+4\sum_{n=0}^{\infty}a_{n}x^{n+2}=0
+\]
+
+Alakítsuk ki az egyenletet $A(x)$-ben: 
+\[
+A(x)-a_{0}-a_{1}x-4xA(x)+4a_{0}x+4x^{2}A(x)=0
+\]
+
+Helyettesítsük be $a_{0}=a_{1}=1$:
+
+\[
+A(x)-1-x-4xA(x)+4x+4x^{2}A(x)=0\Rightarrow A(x)(4x^{2}-4x+1)=-3x+1\Rightarrow
+\]
+
+\[
+A(x)=\frac{3x-1}{(2x-1)^{2}}=\frac{\frac{3}{2}}{1-2x}-\frac{\frac{1}{2}}{(2x-1)^{2}}
+\]
+
+\[
+\frac{\frac{3}{2}}{1-2x}=\frac{3}{2}\left(1+2x+2^{2}x^{2}+2^{3}x^{3}+\dots\right)
+\]
+
+\[
+-\frac{\frac{1}{2}}{(2x-1)^{2}}=-\frac{1}{2}\left(1+2\cdot2x+3\cdot2^{2}x^{2}+4\cdot2^{3}x^{3}+\dots\right)
+\]
+
+Tehát 
+\[
+a_{n}=\frac{3}{2}\cdot2^{n}-\frac{1}{2}(n+1)\cdot2^{n}=2^{n-1}(2-n)
+\]
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Számítsuk ki a következő összeget:}}\emph{ }
+\[
+\binom{n}{1}+2\binom{n}{2}+\cdots+n\binom{n}{n}!
+\]
+\end{extraproblem}
+
+\bigskip{}
+
+\begin{solution}
+Vizsgáljuk meg az alábbi súlyozott binomiális összeg viselkedését
+a binomiális tétel segítségével. A klasszikus Newton-féle binomiális
+formula szerint:
+
+\[
+(1+x)^{n}=\sum_{k=0}^{n}\binom{n}{k}x^{k}.
+\]
+
+Deriváljuk mindkét oldalt az $x$ változó szerint:
+
+\[
+\frac{d}{dx}(1+x)^{n}=n(1+x)^{n-1},
+\]
+
+\[
+\frac{d}{dx}\left(\sum_{k=0}^{n}\binom{n}{k}x^{k}\right)=\sum_{k=1}^{n}k\binom{n}{k}x^{k-1}.
+\]
+
+Az így kapott összefüggés tehát:
+
+\[
+n(1+x)^{n-1}=\sum_{k=1}^{n}k\binom{n}{k}x^{k-1}.
+\]
+
+Most helyettesítsük be $x=1$-et:
+
+\[
+n(1+1)^{n-1}=\sum_{k=1}^{n}k\binom{n}{k}\cdot1^{k-1},
+\]
+
+\[
+n\cdot2^{n-1}=\sum_{k=1}^{n}k\binom{n}{k}.
+\]
+
+Tehát:
+
+\[
+\binom{n}{1}+2\binom{n}{2}+\cdots+n\binom{n}{n}=n\cdot2^{n-1}.
+\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Számítsuk ki a következő összeget:}} 
+\[
+\binom{n}{1}-2\binom{n}{2}+\cdots+(-1)^{n-1}n\binom{n}{n}!
+\]
+\end{extraproblem}
+
+\bigskip{}
+
+\begin{solution}
+Az összeg meghatározásához használjuk a generátorfüggvények elvét.
+Tekintsük a binomiális tétel következő módosított alakját:
+
+\[
+(1-x)^{n}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k}.
+\]
+
+Deriváljuk mindkét oldalt az $x$ szerint:
+
+\[
+\frac{d}{dx}(1-x)^{n}=-n(1-x)^{n-1},
+\]
+
+\[
+\frac{d}{dx}\left(\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k}\right)=\sum_{k=1}^{n}(-1)^{k}k\binom{n}{k}x^{k-1}.
+\]
+
+Az így kapott derivált alak:
+
+\[
+-n(1-x)^{n-1}=\sum_{k=1}^{n}(-1)^{k}k\binom{n}{k}x^{k-1}.
+\]
+
+Most helyettesítsünk be $x=1$-et:
+
+\[
+-n(1-1)^{n-1}=\sum_{k=1}^{n}(-1)^{k}k\binom{n}{k}\cdot1^{k-1},
+\]
+
+\[
+0=\sum_{k=1}^{n}(-1)^{k}k\binom{n}{k}.
+\]
+
+Vagyis:
+
+\[
+\binom{n}{1}-2\binom{n}{2}+\cdots+(-1)^{n-1}n\binom{n}{n}=0.
+\]
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+Határozzuk meg az 
+\[
+x_{n+3}=2x_{n+2}-x_{n+1}+2x_{n}\quad(n\geq0)
+\]
+rekurzióval definiált sorozat \textbf{generátorfüggvényét}, majd ebből
+kiindulva adjuk meg az általános tag képletét is egy választott kezdőérték-hármas
+alapján. 
+\end{extraproblem}
+
+\begin{solution}
+Megoldás 1 Legyen a generátorfüggvény: 
+\[
+X(x)=\sum_{n=0}^{\infty}x_{n}x^{n}
+\]
+
+A rekurzió: 
+\[
+x_{n+3}-2x_{n+2}+x_{n+1}-2x_{n}=0
+\]
+
+Alkalmazzuk a generátorfüggvényre: 
+\[
+\sum_{n=0}^{\infty}(x_{n+3}-2x_{n+2}+x_{n+1}-2x_{n})x^{n}=0
+\]
+
+Szétbontva: 
+\[
+\sum_{n=0}^{\infty}x_{n+3}x^{n}-2\sum_{n=0}^{\infty}x_{n+2}x^{n}+\sum_{n=0}^{\infty}x_{n+1}x^{n}-2\sum_{n=0}^{\infty}x_{n}x^{n}=0
+\]
+
+Minden tagot a $X(x)$ segítségével fejezünk ki: 
+\begin{align*}
+\sum_{n=0}^{\infty}x_{n+3}x^{n} & =\frac{X(x)-x_{0}-x_{1}x-x_{2}x^{2}}{x^{3}}\\
+\sum_{n=0}^{\infty}x_{n+2}x^{n} & =\frac{X(x)-x_{0}-x_{1}x}{x^{2}}\\
+\sum_{n=0}^{\infty}x_{n+1}x^{n} & =\frac{X(x)-x_{0}}{x}\\
+\sum_{n=0}^{\infty}x_{n}x^{n} & =X(x)
+\end{align*}
+
+Behelyettesítve: 
+\[
+\frac{X(x)-x_{0}-x_{1}x-x_{2}x^{2}}{x^{3}}-2\cdot\frac{X(x)-x_{0}-x_{1}x}{x^{2}}+\frac{X(x)-x_{0}}{x}-2X(x)=0
+\]
+
+Szorozzuk meg $x^{3}$-mal: 
+\[
+(X(x)-x_{0}-x_{1}x-x_{2}x^{2})-2x(X(x)-x_{0}-x_{1}x)+x^{2}(X(x)-x_{0})-2x^{3}X(x)=0
+\]
+
+Rendezzük: 
+\begin{align*}
+X(x)(1-2x+x^{2}-2x^{3}) & =x_{0}(2x-1-x^{2})+x_{1}x(-1+2x)-x_{2}x^{2}
+\end{align*}
+
+\textbf{Példa kezdőértékekkel:}\\
+
+Legyen például
+\[
+x_{0}=1,\quad x_{1}=0,\quad x_{2}=2
+\]
+
+Számláló: 
+\[
+x_{0}(2x-1-x^{2})+x_{1}x(-1+2x)-x_{2}x^{2}=2x-1-3x^{2}
+\]
+
+Nevező: 
+\[
+1-2x+x^{2}-2x^{3}
+\]
+
+\textbf{Végső alak:}\\
+
+\[
+\boxed{X(x)=\frac{2x-1-3x^{2}}{1-2x+x^{2}-2x^{3}}}
+\]
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Számítsuk ki a következő összeget: 
+\[
+C_{n}^{1}+2C_{n}^{2}+\cdots+nC_{n}^{n}!
+\]
+\end{extraproblem}
+
+\begin{solution}
+Ha keressük a $(C_{n}^{1},2C_{n}^{2},\cdots,nC_{n}^{n})$ generátorfüggvényét,
+akkor szintén a Newton-féle binomiális összegre kell támaszkodnunk,
+amely alapján írhatjuk a következőket: 
+\[
+(1+x)^{n}=C_{n}^{0}+C_{n}^{1}x+C_{n}^{2}x^{2}+\cdots+C_{n}^{n}x^{n}.
+\]
+Az egyenlőség mindkét oldalát deriválva kapjuk, hogy 
+\[
+n(1+x)^{n-1}=C_{n}^{1}+2C_{n}^{2}x+\cdots+nC_{n}^{n}x^{n-1},
+\]
+amelybe az $x=1$ értéket helyettesítve a keresett összefüggéshez
+jutunk. 
+\[
+n(1+1)^{n-1}=n2^{n-1}=C_{n}^{1}+2C_{n}^{2}+\cdots+nC_{n}^{n},
+\]
+tehát 
+\[
+C_{n}^{1}+2C_{n}^{2}+\cdots+nC_{n}^{n}=n2^{n-1}.
+\]
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Számítsuk ki a következő összeget: 
+\[
+C_{n}^{2}+2C_{n}^{3}+3C_{n}^{4}+\cdots+(n-1)C_{n}^{n}!
+\]
+\end{extraproblem}
+
+\begin{solution}
+Keressük meg a saját generátorfüggvényét. Az első feladathoz képest
+azt vesszük észre, hogy a kombinációs együtthatókat szorzó számok
+eggyel el vannak tolva balra (shift-left), tehát arra következtethetünk,
+hogy ezt a deriválásból származó $x$ hatványa adja, amelyet csökkentenünk
+kell. Ezek alapján a generátor függvény a következő alakban írható:
+\[
+\frac{(1+x)^{n}-1}{x}=C_{n}^{1}+C_{n}^{2}x+\cdots+C_{n}^{n}x^{n-1},
+\]
+amelyet deriválva $x$ szerint: 
+\[
+\frac{n(1+x)^{n-1}x-[(1+x)^{n}-1]}{x^{2}}=C_{n}^{2}+\cdots+(n-1)C_{n}^{n}x^{n-2},
+\]
+ha $x$ helyébe $1$-et teszünk, kapjuk a kért összefüggést: 
+\[
+\frac{n(1+1)^{n-1}-[(1+1)^{n}-1]}{1^{2}}=C_{n}^{2}+\cdots+(n-1)C_{n}^{n},
+\]
+vagyis 
+\[
+C_{n}^{2}+\cdots+(n-1)C_{n}^{n}=n2^{n-1}-2^{n}+1=(n-2)2^{n-1}+1.
+\]
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Feladat 1 Az $f(x)$ függvényre tetszőleges $x$ valós szám esetén
+teljesül, hogy $2\cdot f(x)+f(1-x)=x^{2}$.
+
+Milyen $n$ pozitív egész számra igaz, hogy $f(1)+f(2)+\dots+f(n)=19\cdot n$?
+
+(XII. Nemzetközi Magyar Matematika Verseny, 2003) 
+\end{extraproblem}
+
+\begin{solution}
+A feltétel szerint minden valós $x$-re teljesül, hogy 
+\begin{eqnarray*}
+2\cdot f(x)+f(1-x)=x^{2}.\quad(1)
+\end{eqnarray*}
+
+Helyettesítsünk (1)-ben $x$ helyébe $1-x$-et! 
+\begin{eqnarray*}
+2\cdot f(1-x)+f(x)={(1-x)}^{2}.\quad(2)
+\end{eqnarray*}
+
+Szorozzuk be (1) mindkét oldalát 2-vel! 
+\begin{eqnarray*}
+4\cdot f(x)+2\cdot f(1-x)=2\cdot x^{2}.\quad(3)
+\end{eqnarray*}
+
+A (3) és (2) egyenletek megfelelő oldalainak különbségét véve azt
+kapjuk, hogy: $3\cdot f(x)=2\cdot x^{2}-{(1-x)}^{2}$, innen pedig
+\begin{eqnarray*}
+f(x)=\frac{x^{2}+2x-1}{3}.\quad(4)
+\end{eqnarray*}
+
+Mivel (4) bármely valós $x$-re igaz, ezért:
+
+\[
+\begin{array}{c}
+f(1)=\frac{1^{2}+2\cdot1-1}{3},\\
+f(2)=\frac{2^{2}+2\cdot2-1}{3},\\
+.\\
+.\\
+.\\
+f(n)=\frac{n^{2}+2\cdot n-1}{3}.
+\end{array}
+\]
+
+Adjuk össze a kapott egyenletek megfelelő oldalait! Ekkor: 
+\begin{eqnarray*}
+f(1)+f(2)+\dots+f(n)=\frac{1^{2}+2^{2}+\dots+n^{2}+2\cdot(1+2+\dots+n)-n}{3}.\quad(5)
+\end{eqnarray*}
+
+Ismeretes, hogy $1^{2}+2^{2}+\dots+n^{2}=\frac{n\cdot(n+1)\cdot(2n+1)}{6}$
+és $1+2+\dots+n=\frac{n\cdot(n+1)}{2}$ ezért 
+\[
+f(1)+f(2)+\dots+f(n)=\frac{\frac{n\cdot(n+1)\cdot(2n+1)}{6}+2\cdot\frac{n\cdot(n+1)}{2}-n}{3},
+\]
+ahonnan rendezés után az alábbi összefüggés adódik: 
+\begin{eqnarray*}
+f(1)+f(2)+\dots+f(n)=\frac{2n^{2}+9n+1}{18}\cdot n.\quad(6)
+\end{eqnarray*}
+
+A feltétel miatt $\frac{2n^{2}+9n+1}{18}\cdot n=19\cdot n$, ahonnan
+az $n\ne0$-val való osztás után a $2n^{2}+9n-341=0$ egyenletre jutunk,
+amelynek megoldásai: $n_{1}=11$ és $n_{2}=-15,5$.
+
+Az $n_{2}$ nyilván nem felel meg a feltételnek, a feladat kérdésére
+tehát $n_{1}=11$ a válasz.
+
+Ellenőrizhető, hogy valóban $f(1)+f(2)+\dots+f(11)=19\cdot11=209$. 
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+Tekintsük az ${\displaystyle {A=\begin{pmatrix}a & b\\
+c & d
+\end{pmatrix}}}$ mátrixot és jelöljék $\lambda_{1},\lambda_{2}$ az 
+\[
+\lambda^{2}-(a+d)\lambda+\det A=0\phantom{xxx}(a,b,c,d\in\mathbb{R})
+\]
+egyenlet gyökeit. Lássuk be, hogy tetszőleges $n\in\mathbb{N}$, $n\geq2$,
+illetve az ${\displaystyle {I_{2}=\begin{pmatrix}1 & 0\\
+0 & 1
+\end{pmatrix}}}$ egységmátrix esetén 
+\begin{enumerate}
+\item ha $\lambda_{1}\neq\lambda_{2}$, akkor 
+\[
+{\displaystyle {A^{n}=\frac{\lambda_{1}^{n}-\lambda_{2}^{n}}{\lambda_{1}-\lambda_{2}}\cdot A-\det A\cdot\frac{\lambda_{1}^{n-1}-\lambda_{2}^{n-2}}{\lambda_{1}-\lambda_{2}}\cdot I_{2};}}
+\]
+\item ha $\lambda_{1}=\lambda_{2}=\lambda$, akkor 
+\[
+{\displaystyle {A^{n}=n\lambda^{n-1}\cdot A-(n-1)\det A\cdot\lambda^{n-2}\cdot I_{2}.}}
+\]
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+Elsősorban belátjuk, hogy minden $n\geq1$ természetes szám esetén
+léteznek az $x_{n}$ és $y_{n}$ valós számok úgy, hogy $A^{n}=x_{n}\cdot A+y_{n}\cdot I_{2}$.
+
+$n=1$ esetén mivel $A=1\cdot A+0\cdot I_{2}$, ezért $x_{1}=1$ és
+$y_{1}=0$.
+
+$n=2$ esetén, a Cayley-Hamilton-tétel alapján $A^{2}-(a+d)\cdot A+\det A\cdot I_{2}=0$,
+ahonnan $A^{2}=(a+d)\cdot A-\det A\cdot I_{2}$, így $x_{2}=a+d$
+és $y_{2}=-\det A$.
+
+Feltételezzük, hogy tetszőleges $n\geq1$ esetén léteznek az $x_{n},y_{n}\in R$
+úgy, hogy $A^{n}=x_{n}\cdot A+y_{n}\cdot I_{2}$, és bizonyítsuk ez
+a kijelentést $(n+1)$ - re. 
+\[
+\begin{array}{lcl}
+A^{n+1} & = & A^{n}\cdot A=(x_{n}\cdot A+y_{n}\cdot I_{2})\cdot A=x_{n}\cdot A^{2}+y_{n}\cdot A\\
+ & = & x_{n}(x_{2}\cdot A+y_{2}\cdot I_{2})+y_{n}\cdot A=(x_{2}x_{n}+y_{n})\cdot A+y_{2}x_{n}\cdot I_{2},
+\end{array}
+\]
+ahonnan 
+\[
+\left\{ \begin{array}{l}
+x_{n+1}=x_{2}\cdot x_{n}+y_{n}\in\mathbb{R}\\
+y_{n+1}=y_{2}\cdot x_{n}\in\mathbb{R}.
+\end{array}\right.
+\]
+
+Tehát léteznek $x_{n+1},y_{n+1}\in\mathbb{R}$ úgy, hogy $A^{n+1}=x_{n+1}\cdot A+y_{n+1}\cdot I_{2}$,
+így a matematikai indukció alapján bármely $n\geq1$ természetes szám
+esetén léteznek $x_{n},y_{n}$ valós számok úgy, hogy $A^{n}=x_{n}\cdot A+y_{n}\cdot I_{2}$.
+
+A fent használt $x_{n},y_{n}$ valós számok sorozatát felírhatjuk,
+mint a következő $(x_{n})_{n\geq0}$ és $(y_{n})_{n\geq0}$ rekurzív
+sorozatokat, ahol $x_{0}=0$, $y_{0}=1$ (mert $I_{2}=A^{0}=0\cdot A+1\cdot I_{2}$),
+$x_{1}=1$, $y_{1}=0$, ahol a rekurrens összefüggés: 
+\[
+\begin{array}{l}
+x_{n+1}=(a+d)\cdot x_{n}+y_{n}\\
+y_{n+1}=-\det A\cdot x_{n},
+\end{array}
+\]
+minden $n\geq0$ esetén fennáll.
+
+Ezek alapján 
+\[
+x_{n+1}=(a+d)\cdot x_{n}-\det A\cdot x_{n-1},\forall n\geq1,
+\]
+így az $(x_{n})_{n\geq0}$ sorozatot egy másodrendű lineáris homogén
+rekurzió adja meg, amelyhez rendelt karakterisztikus egyenlet $\lambda^{2}-(a+d)\lambda+\det A=0$,
+amelynek gyökei, a feladat feltételei alapján, $\lambda_{1}$ és $\lambda_{2}$.
+A Viéte-féle összefüggések alapján $\lambda_{1}+\lambda_{2}=a+d$
+és $\lambda_{1}\lambda_{2}=\det A$, ahonnan akkor 
+\[
+x_{n+1}=(\lambda_{1}+\lambda_{2})\cdot x_{n}-\lambda_{1}\lambda_{2}\cdot x_{n-1},\forall n\geq1
+\]
+\[
+\Leftrightarrow x_{n+1}-\lambda_{1}\cdot x_{n}=\lambda_{2}\cdot(x_{n}-\lambda_{1}\cdot x_{n-1}),\forall n\geq1.
+\]
+Jelöljük az $(a_{n})_{n\geq1}$ sorozat tagjait a következőképpen
+$a_{n}=x_{n}-\lambda_{1}\cdot x_{n-1}$. Így $a_{n+1}=\lambda_{2}\cdot a_{n},\forall n\geq1$,
+vagyis az $(a_{n})$ sorozat egy mértani haladvány, ezért $a_{n}=\lambda_{2}^{n-1}\cdot a_{1}$,
+ahonnan $x_{n}-\lambda_{1}\cdot x_{n-1}=\lambda_{2}^{n-1}\cdot(x_{1}-\lambda_{2}\cdot x_{0})=\lambda_{2}^{n-1}$,
+$\forall n\geq1$. Felírva ezeket az összefüggéseket $n=1,2,3,\ldots,n$
+esetén, beszorozva az egyenleteket megfelelőképpen és összegezve a
+kapott egyenleteket, a következőkhöz jutunk: 
+\[
+\left\{ \begin{array}{ll}
+x_{n}-\lambda_{1}\cdot x_{n-1}=\lambda_{2}^{n-1}\\
+x_{n-1}-\lambda_{1}\cdot x_{n-2}=\lambda_{2}^{n-2} & \phantom{x}/\cdot\lambda_{1}\\
+x_{n-2}-\lambda_{1}\cdot x_{n-3}=\lambda_{2}^{n-3} & \phantom{x}/\cdot\lambda_{1}^{2}\\
+\vdots\\
+x_{3}-\lambda_{1}\cdot x_{2}=\lambda_{2}^{2} & \phantom{x}/\cdot\lambda_{1}^{n-3}\\
+x_{2}-\lambda_{1}\cdot x_{1}=\lambda_{2}^{1} & \phantom{x}/\cdot\lambda_{1}^{n-2}\\
+x_{1}-\lambda_{1}\cdot x_{0}=1 & \phantom{x}/\cdot\lambda_{1}^{n-1}
+\end{array}\right.\Rightarrow\left\{ \begin{array}{l}
+x_{n}-\cancel{\lambda_{1}\cdot x_{n-1}}=\lambda_{2}^{n-1}\\
+\cancel{\lambda_{1}\cdot x_{n-1}}-\cancel{\lambda_{1}^{2}\cdot x_{n-2}}=\lambda_{1}\cdot\lambda_{2}^{n-2}\\
+\cancel{\lambda_{1}^{2}\cdot x_{n-2}}-\cancel{\lambda_{1}^{3}\cdot x_{n-3}}=\lambda_{1}^{2}\cdot\lambda_{2}^{n-3}\\
+\vdots\\
+\cancel{\lambda_{1}^{n-3}\cdot x_{3}}-\cancel{\lambda_{1}^{n-2}\cdot x_{2}}=\lambda_{1}^{n-3}\cdot\lambda_{2}^{2}\\
+\cancel{\lambda_{1}^{n-2}\cdot x_{2}}-\cancel{\lambda_{1}^{n-1}\cdot x_{1}}=\lambda_{1}^{n-2}\cdot\lambda_{2}^{1}\\
+\cancel{\lambda_{1}^{n-1}\cdot x_{1}}-\lambda_{1}^{n}\cdot x_{0}=\lambda_{1}^{n-1}
+\end{array}\right.
+\]
+\[
+\Rightarrow x_{n}=\lambda_{1}^{n-1}+\lambda_{1}^{n-2}\cdot\lambda_{2}+\lambda_{1}^{n-3}\cdot\lambda_{2}^{2}+\cdots+\lambda_{1}^{2}\cdot\lambda_{2}^{n-3}+\lambda_{1}\cdot\lambda_{2}^{n-2}+\lambda_{2}^{n-1}
+\]
+
+Ha $\lambda_{1}\neq\lambda_{2}$, akkor ${\displaystyle {x_{n}=\frac{\lambda_{1}^{n}-\lambda_{2}^{n}}{\lambda_{1}-\lambda_{2}}}}$.
+Ekkor ${\displaystyle {y_{n}=-\det A\cdot x_{n-1}=-\det A\cdot\frac{\lambda_{1}^{n-1}-\lambda_{2}^{n-1}}{\lambda_{1}-\lambda_{2}}}}$.
+Mivel $A^{n}=x_{n}\cdot A+y_{n}\cdot I_{2}$, ezért a $\lambda_{1}\neq\lambda_{2}$
+esetben 
+\[
+{\displaystyle {A^{n}=\frac{\lambda_{1}^{n}-\lambda_{2}^{n}}{\lambda_{1}-\lambda_{2}}\cdot A-\det A\cdot\frac{\lambda_{1}^{n-1}-\lambda_{2}^{n-2}}{\lambda_{1}-\lambda_{2}}\cdot I_{2}.}}
+\]
+
+Ha $\lambda_{1}=\lambda_{2}=\lambda$, akkor $x_{n}=n\cdot\lambda^{n-1}$.
+Ekkor $y_{n}=-\det A\cdot x_{n-1}=-\det A\cdot(n-1)\cdot\lambda^{n-2}$.
+Mivel $A^{n}=x_{n}\cdot A+y_{n}\cdot I_{2}$, ezért a $\lambda_{1}=\lambda_{2}$
+esetben 
+\[
+{\displaystyle {A^{n}=n\lambda^{n-1}\cdot A-(n-1)\det A\cdot\lambda^{n-2}\cdot I_{2}.}}
+\]
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+Adott a $p(x)=x^{2}-3x+2\in\mathbb{Z}[X]$ polinom. Mutassuk ki,
+hogy bármely $n\geq2$ természetes szám esetén létezik egy $(a_{n},b_{n})$
+egész számpár úgy, hogy a $q_{n}(x)=x^{n}-a_{n}x-b_{n}$ polinom osztható
+legyen a $p(x)$ polinommal, majd mutassuk ki, hogy az $a_{n}$ és
+$b_{n}$ kielégítik a $a_{n+1}=3a_{n}+b_{n}$ és $b_{n+1}=-2a_{n}$
+rekurrens összefüggéseket minden $n\geq2$ esetén. 
+\end{extraproblem}
+
+\begin{solution}
+A $p(x)=x^{2}-3x+2=(x-1)\cdot(x-2)$ polinom gyökei $x_{1}=1$ és
+$x_{2}=2$. Mivel a $p$ polinom osztja a $q_{n}$ polinomot, ezért
+a $p$ gyökei a $q_{n}$ gyökei is, azaz 
+\[
+\left\{ \begin{array}{l}
+q_{n}(1)=0\\
+q_{n}(2)=0
+\end{array}\right.\Rightarrow\left\{ \begin{array}{l}
+1-a_{n}-b_{n}=0\\
+2^{n}-2a_{n}-b_{n}=0
+\end{array}\right.\Rightarrow\left\{ \begin{array}{l}
+a_{n}+b_{n}=1\\
+2a_{n}+b_{n}=2^{n}
+\end{array}\right.
+\]
+
+A második egyenletből kivonva az első egyenletet megkapjuk a $a_{n}$
+általános tagját: $a_{n}=2^{n}-1,\forall n\geq2$. Ezt behelyettesítve
+az első egyenletbe, és kifejezve a $b_{n}$-et, megkapjuk a $(b_{n})$
+sorozat általános tagjának a képletét: $b_{n}=2-2^{n},\forall n\geq2$.
+
+Ezek alapján 
+\[
+3a_{n}+b_{n}=3\cdot(2^{n}-1)+2-2^{n}=(3-1)\cdot2^{n}-3+2=2^{n+1}-1=a_{n+1},\forall n\geq2,
+\]
+és 
+\[
+-2a_{n}=-2\cdot(2^{n}-1)=-2^{n+1}+2=2-2^{n+1}=b_{n+1},\forall n\geq2.
+\]
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Határozzuk meg a következő sorozat explicit képletét, és igazoljuk
+generátorfüggvénnyel a következőt! 
+\[
+\begin{cases}
+a_{0}=2,\\
+a_{1}=5,\\
+a_{n}=4\,a_{n-1}-4\,a_{n-2}+3^{n},\quad n\ge2.
+\end{cases}
+\]
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+Először oldjuk meg a homogén részt, majd keressünk partikuláris megoldást,
+végül ellenőrizzünk generátorfüggvénnyel.
+\begin{enumerate}
+\item \textbf{Homogén rész:} 
+\[
+h_{n}=4h_{n-1}-4h_{n-2},\quad r^{2}-4r+4=0\;\Rightarrow\;(r-2)^{2}=0\;\Rightarrow\;h_{n}=(C_{1}+C_{2}n)\,2^{n}.
+\]
+\item \textbf{Partikuláris megoldás:} próbáljuk $p_{n}=A\cdot3^{n}$: 
+\[
+A\cdot3^{n}=4A\cdot3^{n-1}-4A\cdot3^{n-2}+3^{n}\;\Rightarrow\;9A=(12A-4A)+9\;\Rightarrow\;A=9.
+\]
+Tehát $p_{n}=9\cdot3^{n}$. 
+\item \textbf{Általános megoldás:} 
+\[
+a_{n}=(C_{1}+C_{2}n)\,2^{n}+9\cdot3^{n}.
+\]
+Indulóértékek: 
+\[
+n=0:\;C_{1}+9=2\;\Rightarrow\;C_{1}=-7,\qquad n=1:\;2(C_{1}+C_{2})+27=5\;\Rightarrow\;C_{2}=-4.
+\]
+Így 
+\[
+\boxed{a_{n}=(-7-4n)\,2^{n}+9\,3^{n}.}
+\]
+\item \textbf{Generátorfüggvényes ellenőrzés:} Legyen 
+\[
+A(x)=\sum_{n=0}^{\infty}a_{n}x^{n}.
+\]
+A rekurziót átalakítva és parciális törtekre bontva kapjuk: 
+\[
+A(x)=\frac{2+(5-8)x}{1-4x+4x^{2}}\;+\;\frac{9x^{2}}{1-3x},
+\]
+mely visszafejtve megegyezik az explicit formulával. 
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Számítsuk ki az $b_{n}$ sorozat zárt alakját, és igazoljuk generátorfüggvénnyel!
+\[
+\begin{cases}
+b_{0}=1,\\
+b_{n}=2\sum_{k=0}^{n-1}b_{k}+5^{n},\quad n\ge1.
+\end{cases}
+\]
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+Használjuk a parciális összegek jelölését, majd oldjuk meg a kialakult
+rekurziót.
+\begin{enumerate}
+\item Legyen $S_{n}=\sum_{k=0}^{n}b_{k}$. Ekkor 
+\[
+b_{n}=2S_{n-1}+5^{n},\quad S_{n}=S_{n-1}+b_{n}=3S_{n-1}+5^{n},\;S_{0}=1.
+\]
+\item A lineáris nem homogén rekurzió: 
+\[
+S_{n}-3S_{n-1}=5^{n}.
+\]
+Homogén megoldás: $C\cdot3^{n}$. Partikuláris tipp: $D\cdot5^{n}$:
+\[
+D\cdot5^{n}-3D\cdot5^{n-1}=5^{n}\;\Rightarrow\;(5-3)D=1\;\Rightarrow\;D=\tfrac{1}{2}.
+\]
+Indulófeltétel $S_{0}=1$ adja $C+\tfrac{1}{2}=1$, tehát $C=\tfrac{1}{2}$.
+Így 
+\[
+S_{n}=\tfrac{1}{2}(3^{n}+5^{n}).
+\]
+\item Vissza $b_{n}$-hez: 
+\[
+b_{n}=2S_{n-1}+5^{n}=2\cdot\tfrac{1}{2}(3^{n-1}+5^{n-1})+5^{n}=3^{n-1}+6\cdot5^{n-1}.
+\]
+\[
+\boxed{b_{n}=3^{n-1}+6\cdot5^{n-1}.}
+\]
+\item \textbf{Generátorfüggvényes ellenőrzés:} Legyen 
+\[
+B(x)=\sum_{n=0}^{\infty}b_{n}x^{n}.
+\]
+A rekurzió kezelésével és parciális törtekre bontással kapjuk ugyanazt
+a zárt alakot. 
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Legyen $n$ egy természetes szám. Határozd meg azon $w$ szavak (betűk
+véges sorozatai) számát, amelyek teljesítik a következő három tulajdonságot: 
+\begin{itemize}
+\item[(1)] $w$ pontosan $n$ betűből áll, melyek mindegyike az $\{\texttt{a},\texttt{b},\texttt{c},\texttt{d}\}$
+ábécéből származik; 
+\item[(2)] $w$ páros sok \texttt{a} betűt tartalmaz; 
+\item[(3)] $w$ páros sok \texttt{b} betűt tartalmaz. 
+\end{itemize}
+\noindent (Például, $n=2$ esetén $6$ ilyen szó van: \texttt{aa},
+\texttt{bb}, \texttt{cc}, \texttt{dd}, \texttt{cd} és \texttt{dc}.) 
+\begin{flushright}
+(IMC, 2020) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Legyen $N=\{1,2,\ldots,n\}$. Tekintsünk egy $w$ szót, amely kielégíti
+a feltételeket, és legyenek $A,B,C,D\subset N$ azon pozíciók halmazai,
+ahol az \texttt{a}, \texttt{b}, \texttt{c} és \texttt{d} betűk találhatók
+a $w$-ben. A szavak értelmezése szerint $A\sqcup B\sqcup C\sqcup D=N$.
+Az $A$ és $B$ halmazok méretének párosnak kell lennie.
+
+Ahhoz, hogy megalkossuk az összes megfelelő $w$ szót, először válasszuk
+ki az $S=A\cup B$ halmazt; a feltételek szerint $|S|=|A|+|B|$ párosnak
+kell lennie. Jól ismert, hogy egy $n$-elemű halmaznak (ahol $n\ge1$)
+$2^{n-1}$ páros részhalmaza van, így $2^{n-1}$ lehetőség van $S$-re.
+
+Ha $S=\emptyset$, akkor tetszőlegesen választhatjuk $C\subset N$-t,
+és ekkor a $D=S\setminus C$ halmaz egyértelműen meghatározott. Mivel
+$N$-nek $2^{n}$ részhalmaza van, $2^{n}$ lehetőségünk van a $C$
+halmazra, és ezért $2^{n}$ megfelelő $w$ szó létezik $S=\emptyset$
+esetén.
+
+Egyébként, ha $k=|S|>0$, akkor ki kell választanunk egy tetszőleges
+$C$ részhalmazt az $N\setminus S$-ből és egy páros $A$ részhalmazt
+$S$-ből; ekkor $D=(N\setminus S)\setminus C$ és $B=S\setminus A$
+meghatározottak, és $|B|=|S|-|A|$ automatikusan páros lesz. $2^{n-k}$
+választási lehetőségünk van $C$-re és $2^{k-1}$ független választási
+lehetőségünk $A$-ra; tehát minden nem üres páros $S$ esetén $2^{n-k}\cdot2^{k-1}=2^{n-1}$
+megfelelő szó létezik.
+
+A nem üres páros $S$ halmazok száma $2^{n-1}-1$, így összesen a
+feltételeket kielégítő szavak száma 
+\[
+1\cdot2^{n}+(2^{n-1}-1)\cdot2^{n-1}=4^{n-1}+2^{n-1}.
+\]
+
+Legyen 
+\[
+A(z)=\sum_{k\ge0}\frac{z^{2k}}{(2k)!}=\frac{e^{z}+e^{-z}}{2}
+\]
+a páros sok \texttt{a} betűnek megfelelő elemi exponenciális generátorfüggvény,
+\[
+B(z)=\sum_{k\ge0}\frac{z^{2k}}{(2k)!}=\frac{e^{z}+e^{-z}}{2}
+\]
+pedig a \texttt{b} betűké. A \texttt{c} és \texttt{d} betűk esetén
+nincs megkötés, ezért 
+\[
+C(z)=D(z)=\sum_{k\ge0}\frac{z^{k}}{k!}=e^{z}.
+\]
+Az exponenciális generátorfüggvények tulajdonságai alapján 
+\[
+G(z)=A(z)B(z)C(z)D(z)=\frac{(e^{z}+e^{-z})^{2}}{4}\,e^{2z}=\frac{1}{4}\bigl(e^{4z}+2e^{2z}+1\bigr)
+\]
+a megadott tulajdonságokat teljesítő szavak számának megfelelő exponenciális
+generátorfüggvény, tehát az $n$-edik együttható 
+\[
+x_{n}=\frac{4^{n}+2\cdot2^{n}}{4}=4^{n-1}+2^{n-1},\qquad\forall n\ge1.
+\]
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Az $(a_{n})_{n\geq1}$ sorozatra $a_{1}=\frac{1}{2}$, $a_{2}=\frac{1}{3}$
+és $a_{n+2}=\frac{a_{n}a_{n+1}}{3a_{n}-2a_{n+1}}$, ha $n\geq1$.
+Határozzuk meg az általános tag képletét $n$ függvényében. \emph{(NMMV
+1992) }
+\end{extraproblem}
+
+\begin{solution}
+Vegyük a megadott képlet inverzét: 
+\[
+\frac{1}{a_{n+2}}=\frac{3a_{n}-2a_{n+1}}{a_{n}a_{n+1}}=\frac{3}{a_{n+1}}-\frac{2}{a_{n}}.
+\]
+A fenti átalakítást felhasználva bevezetjük a $b_{n}=\frac{1}{a_{n}}$,
+$n\geq1$ sorozatot. Ez értelmezhető, mivel $a_{n+2}$ csak akkor
+0, ha $a_{n}$ vagy $a_{n+1}$ egyenlő 0-val. Ez visszavezethető arra,
+hogy a sorozat bármelyik tagja csak akkor lehet 0, ha $a_{1}$ vagy
+$a_{2}$ egyenlő 0-val. Mivel ez nem teljesül a $b_{n}$ sorozat minden
+tagja értelmezhető. Behelyettsítjük $b_{n}$-et a fenti egyenletbe
+és egy állandó együtthatós, másodrendű lineáris homogén rekuziót kapunk:
+\[
+b_{n+2}=3b_{n+1}-2b_{n},\phantom{a}n\geq1.
+\]
+Ehhez hozzárendelhető az $r^{2}-3r+2=0$ karakterisztikus egyenlet.
+Innen $r_{1}=1$ és $r_{2}=2$. Melyek alapján léteznek a $c_{1},c_{2}\in\mathbb{R}$
+értékek úgy, hogy 
+\[
+b_{n}=c_{1}\cdot1^{n}+c_{2}\cdot2^{n}.
+\]
+Felhasználva, hogy $a_{1}=\frac{1}{2}$ és $a_{2}=\frac{1}{3}$ megkapjuk
+a $b_{1}=2$ és $b_{2}=3$ értékeket. Ezeket behelyettesítve megkapjuk,
+hogy $c_{1}=1$ és $c_{2}=\frac{1}{2}$. Tehát 
+\[
+b_{n}=2^{n-1}+1,\phantom{a}n\geq3.
+\]
+Visszatérve a sorozat értelmezéséhez megkapjuk az $a_{n}$ sorozat
+általános tagjának képletét is: 
+\[
+a_{n}=\frac{1}{2^{n-1}+1},\phantom{a}n\geq3.
+\]
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+ Legyen a $h$ hosszúságú pályán a balra lépés valószínűsége $p$,
+a jobbra lépés valószínűsége $q=1-p$. Melyik mezőre kell kezdetben
+helyezni a bolyongó pontot, hogy a játék megközelítőleg igazságos
+legyen? \emph{(Orosz Gyula: Rekurzív sorozatok)}
+\end{extraproblem}
+
+\begin{solution}
+Legyen $p_{i}$ annak a valószínűsége, hogy az $i.$ mezőn lévő bolyongó
+pont a bal oldalon hagyja el a pályát. Célunk, hogy az $i$-t úgy
+határozzuk meg, hogy $p_{i}$ megközelítőleg $\frac{1}{2}$ legyen.
+
+Ha az $i.$ mezőn állunk, akkor $p$ valószínűséggel lépünk az $(i-1)$-re
+és $q$ valószínűséggel az $(i+1)$-re. Ha az $(i-1).$ mezőre lépünk,
+akkor onnan $p_{i-1}$ valószínűséggel hagyjuk el a bal oldalon a
+pályát, valamint ha az $(i+1).$ mezőre lépünk, akkor $p_{i+1}$ ennek
+a valószínűsége. Erre a folyamatra az alábbi rekurziót írhatjuk fel:
+\[
+p_{i}=p\cdot p_{i-1}+q\cdot p_{i+1}
+\]
+Ez egy másodrendű lineáris homogén rekurzió melynek megoldásához kezdeti
+feltételekre van szükségünk. Ennek érdekére vesszük fel a 0. és a
+$(h+1).$ mezőket melyek értékéről elmondható, hogy $p_{0}=1$ és
+$p_{h+1}=0$. A rekurzió karakterisztikus egyenlete 
+\[
+q\cdot r^{2}-r+p=0,
+\]
+melynek diszkriminánsa $\Delta=1-4qp$. Két esetet fogunk tárgyalni
+az szerint, hogy a diszkrimináns nulla vagy nullánál nagyobb, mert
+a rekurzió megoldóképlete más a két esetben.
+
+Ha $\Delta=0$, akkor $p=q=\frac{1}{2}$ és $r_{1,2}=1$. Így a sorozat
+általános tagjának képlete: 
+\[
+p_{i}=a+b\cdot i.
+\]
+A kezdeti feltételeket felhasználva határozzuk meg az $a$, $b$ értéket:
+\[
+\left\{ \begin{array}{l}
+p_{o}=a=1\\
+p_{h+1}=a+b\cdot(h+1)=0
+\end{array}\right.
+\]
+Innen kapjuk, hogy $a=1$, $b=-\frac{1}{h+1}$ és $p_{i}=1-\frac{i}{h+1}$.
+Ebben az esetben a $p_{i}=\frac{1}{2}$ egyenlet megoldása $i=\frac{h+1}{2}$,
+ami $h=2k+1$ páratlan érték esetén a középső mező.
+
+Ha $\Delta>0$, akkor az egyenlet két megoldása $r_{1}=1$ és $r_{2}=\frac{p}{q}$.
+Vezessük be a $c=\frac{p}{q}$ jelölést, így a sorozat általános tagjának
+képlete: 
+\[
+p_{i}=a+b\cdot c^{i}.
+\]
+Ebben az esetben is a kezdeti feltételekből határozzuk meg az $a$,
+$b$ értékeket: 
+\[
+\left\{ \begin{array}{l}
+p_{o}=a+b=1\\
+p_{h+1}=a+b\cdot c^{h+1}=0
+\end{array}\right.
+\]
+Következik, hogy $a=-\frac{c^{h+1}}{1-c^{h+1}}$, $b=\frac{1}{1-c^{h+1}}$
+és 
+\[
+p_{i}=\frac{c^{i}-c^{h+1}}{1-c^{h+1}}.
+\]
+A keresett mező meghatározásához a $p_{i}=\frac{1}{2}$ egyenletet
+kell megoldanunk, melynek eredménye 
+\[
+i=\frac{\ln\left(\frac{1+c^{h+1}}{2}\right)}{\ln c}.
+\]
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Hány $n$ csúcsú $k$ levelű bináris fa létezik? 
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük ezek számát $b_{n}^{(k)}$-val. Könnyű belátni, hogy $b_{n}^{(k)}=0$,
+ha $k>\left\lfloor \frac{n+1}{2}\right\rfloor $. Egyszerű okoskodással
+ki lehet számítani a $k=1$ esetet, vagyis $b_{n}^{(1)}=2^{n-1}$
+tetszőleges $n\geq1$ természetes számra. Legyen $b_{0}^{(0)}=1$
+konvenció alapján.
+
+Akárcsak az előző feladatoknál, itt is a bal és jobb oldali részfákat
+vizsgáljuk meg. Ha a bal oldali részfában $i$ csúcs és $j$ levél
+van, akkor a jobb oldaliban $n-i-1$ csúcs és $k-j$ levél van. A
+$b_{i}^{(j)}b_{n-i-1}^{(k-j)}$ szorzat éppen ezeknek a fáknak a száma.
+Összegezve $k$ és $j$ szerint, a következő rekurzív képletet kapjuk:
+\begin{equation}
+b_{n}^{(k)}=2b_{n-1}^{(k)}+\sum_{i=1}^{n-2}\sum_{j=1}^{k-1}b_{i}^{(j)}b_{n-i-1}^{(k-j)}.\tag{1}
+\end{equation}
+
+Ennek a rekurzív egyenletnek a megoldására használjuk a következő
+generátorfüggvényt: 
+\[
+B^{(k)}(z)=\sum_{n=0}^{\infty}b_{n}^{(k)}z^{n},\quad\text{ahol }k\geq1.
+\]
+
+A (1) egyenlet mindkét oldalát $z^{n}$-nel megszorozva, majd összeadva
+$n=0,1,2,\dots$ értékekre, a következőt kapjuk: 
+\[
+\sum_{n=1}^{\infty}b_{n}^{(k)}z^{n}=2\sum_{n=1}^{\infty}b_{n-1}^{(k)}z^{n}+\sum_{n=1}^{\infty}\left(\sum_{i=1}^{n-2}\sum_{j=1}^{k-1}b_{i}^{(j)}b_{n-i-1}^{(k-j)}\right)z^{n}.
+\]
+
+\[
+\sum_{n=1}^{\infty}b_{n}^{(k)}z^{n}=2zB^{(k)}(z)+z\sum_{j=1}^{k-1}B^{(j)}(z)B^{(k-j)}(z).
+\]
+
+Innen: 
+\begin{equation}
+B^{(k)}(z)=\frac{z}{1-2z}\sum_{j=1}^{k-1}B^{(j)}(z)B^{(k-j)}(z).\tag{2}
+\end{equation}
+
+Lépésről lépésre haladva, felírhatjuk a következőket: 
+\begin{align*}
+B^{(2)}(z) & =\frac{z}{1-2z}\left(B^{(1)}(z)\right)^{2},\\
+B^{(3)}(z) & =\frac{2z^{2}}{(1-2z)^{2}}\left(B^{(1)}(z)\right)^{3},\\
+B^{(4)}(z) & =\frac{5z^{3}}{(1-2z)^{3}}\left(B^{(1)}(z)\right)^{4}.
+\end{align*}
+
+Az általános megoldást megpróbáljuk a következő alakban keresni: 
+\[
+B^{(k)}(z)=c_{k}\frac{z^{k-1}}{(1-2z)^{k-1}}\left(B^{(1)}(z)\right)^{k},
+\]
+
+ahol, amint láttuk: $c_{2}=1$, $c_{3}=2$, $c_{4}=5$. A (2) képletbe
+behelyettesítve a $c_{k}$ számokra a következő rekurzív összefüggést
+kapjuk: 
+\[
+c_{k}=\sum_{i=1}^{k-1}c_{i}c_{k-i}.
+\]
+
+Ezt szintén generátorfüggvények segítségével oldjuk meg. Ha $k=2$,
+akkor $c_{2}=c_{1}c_{1}$, és innen $c_{1}=1$. Legyen $c_{0}=1$.
+Ha $C(z)=\sum_{n=0}^{\infty}c_{n}z^{n}$ a $c_{n}$ számok generátorfüggvénye,
+akkor: 
+\[
+C(z)-1-z=(C(z)-1)^{2}\quad\Rightarrow\quad C^{2}(z)-3C(z)+z+2=0.
+\]
+
+Egyenletet megoldva: 
+\[
+C(z)=\frac{3-\sqrt{1-4z}}{2}.
+\]
+
+Mivel $C(0)=1$, csak a negatív előjelű gyök jó. Sorba fejtés után:
+\begin{align*}
+C(z) & =\frac{3}{2}-\frac{1}{2}(1-4z)^{1/2}\\
+ & =\frac{3}{2}-\frac{1}{2}\sum_{n=0}^{\infty}\binom{2n}{n}\frac{(-1)^{n-1}}{2n-1}z^{n}\\
+ & =1+\sum_{n=1}^{\infty}\frac{1}{2(2n-1)}\binom{2n}{n}z^{n}.
+\end{align*}
+
+Innen: 
+\[
+c_{n}=\frac{1}{2(2n-1)}\binom{2n}{n},\quad n\geq1.
+\]
+
+Mivel $b_{n}^{(1)}=2^{n-1}$, ha $n\geq1$, könnyen ellenőrizhető,
+hogy $B^{(1)}(z)=\frac{z}{1-2z}$. Tehát: 
+\[
+B^{(k)}(z)=\frac{1}{2(2k-1)}\binom{2k}{k}\sum_{n=0}^{\infty}\binom{2k+n-2}{n}2^{n}z^{2k+n-1}.
+\]
+
+Innen pedig: 
+\[
+b_{n}^{(k)}=\frac{1}{2k-1}\binom{2k}{k}\binom{n-1}{2k-2}2^{n-2k},
+\]
+
+vagy: 
+\[
+b_{n}^{(k)}=\frac{1}{n}\binom{2k}{k}\binom{n}{2k-1}2^{n-2k}.
+\]
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Mutassuk ki, hogy a $2x_{n}=\sqrt{3}x_{n-1}+y_{n-1}$ és $2y_{n}=-x_{n-1}+\sqrt{3}y_{n-1}$,
+$n\geq1$ összefüggéseket kielégítő valós számsorozatok periodikusak
+és periódusuk ugyanaz. 
+\begin{flushright}
+\textit{(MATLAP 2005/10, L:1205)} 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Mindkét összefüggést elosztva 2-vel, kapjuk, hogy 
+\[
+x_{n}=\frac{\sqrt{3}}{2}x_{n-1}+\frac{1}{2}y_{n-1}\quad\text{és}\quad y_{n}=-\frac{1}{2}x_{n-1}+\frac{\sqrt{3}}{2}y_{n-1}.
+\]
+Látható, hogy a megadott összefüggések jobb oldalai csak konstansokban
+térnek el, így felírható a következő 
+\[
+\begin{pmatrix}x_{n}\\
+y_{n}
+\end{pmatrix}=\begin{pmatrix}\frac{\sqrt{3}}{2} & \frac{1}{2}\\
+-\frac{1}{2} & \frac{\sqrt{3}}{2}
+\end{pmatrix}\cdot\begin{pmatrix}x_{n-1}\\
+y_{n-1}
+\end{pmatrix}.
+\]
+Tekintettel arra, hogy rekurzívan értelmezett az $(x_{n})_{n\geq0}$
+és $(y_{n})_{n\geq0}$ sorozat, felírható 
+\[
+\begin{pmatrix}x_{n}\\
+y_{n}
+\end{pmatrix}=\begin{pmatrix}\frac{\sqrt{3}}{2} & \frac{1}{2}\\
+-\frac{1}{2} & \frac{\sqrt{3}}{2}
+\end{pmatrix}\cdot\begin{pmatrix}x_{n-1}\\
+y_{n-1}
+\end{pmatrix}=\begin{pmatrix}\frac{\sqrt{3}}{2} & \frac{1}{2}\\
+-\frac{1}{2} & \frac{\sqrt{3}}{2}
+\end{pmatrix}^{2}\cdot\begin{pmatrix}x_{n-2}\\
+y_{n-2}
+\end{pmatrix}=\dots=\begin{pmatrix}\frac{\sqrt{3}}{2} & \frac{1}{2}\\
+-\frac{1}{2} & \frac{\sqrt{3}}{2}
+\end{pmatrix}^{n}\cdot\begin{pmatrix}x_{0}\\
+y_{0}
+\end{pmatrix}.
+\]
+Mivel a feladat a periodicitásra kérdez rá, jó ötlet átírni az együtthatómátrixot
+egy vele ekvivalens formába, felhasználva valamilyen periódikus függvényeket.
+Látható, hogy $\sin x$ és $\cos x$ szögfüggvények megfelel\H{e}k
+lesznek, hiszen periódikusak és bizonyos $x$-ekre visszakapjuk az
+eredeti együtthatóinkat. Célunk az, hogy úgy válasszuk ki a megfelelő
+ekvivalens alakot, hogy az együtthatómátrix minél nagyobb hatványraemelése
+során valamilyen könnyen kezelhető alakot véljünk felfedezni.
+
+Ha egyetlen szögfüggvényt akarunk csak felhasználni (pl. $\sin x$)
+a kapott együtthatómátrix (jel. $A$) a következő lenne 
+\[
+A=\begin{pmatrix}\sin\frac{\pi}{3} & \sin\frac{\pi}{6}\\
+-\sin\frac{\pi}{6} & \sin\frac{\pi}{3}
+\end{pmatrix},
+\]
+négyzete pedig 
+\[
+A^{2}=\begin{pmatrix}\sin^{2}\frac{\pi}{3}-\sin^{2}\frac{\pi}{6} & 2\sin\frac{\pi}{3}\cdot\sin\frac{\pi}{6}\\
+-2\sin\frac{\pi}{3}\cdot\sin\frac{\pi}{6} & \sin^{2}\frac{\pi}{3}-\sin^{2}\frac{\pi}{6}
+\end{pmatrix}.
+\]
+Mivel nem azonosak a megjelenő argumentumok, nehezebb lenne általánosítani
+még nagyobb hatványozás esetén. Próbáljuk meg két különboző szögfüggvény
+felhasználásával (így azonosak lesznek az argumentumok) mit kapnánk.
+\[
+A=\begin{pmatrix}\cos\frac{\pi}{6} & \sin\frac{\pi}{6}\\
+-\sin\frac{\pi}{6} & \cos\frac{\pi}{6}
+\end{pmatrix},
+\]
+négyzete pedig 
+\[
+A^{2}=\begin{pmatrix}\cos^{2}\frac{\pi}{6}-\sin^{2}\frac{\pi}{6} & 2\cos\frac{\pi}{6}\cdot\sin\frac{\pi}{6}\\
+-2\cos\frac{\pi}{6}\cdot\sin\frac{\pi}{6} & \cos^{2}\frac{\pi}{6}-\sin^{2}\frac{\pi}{6}
+\end{pmatrix}.
+\]
+Mivel $\cos2\alpha=\cos^{2}\alpha-\sin^{2}\alpha$ és $\sin2\alpha=2\sin\alpha\cdot\cos\alpha$,
+kapjuk hogy 
+\[
+A^{2}=\begin{pmatrix}\cos\frac{2\pi}{6} & \sin\frac{2\pi}{6}\\
+-\sin\frac{2\pi}{6} & \cos\frac{2\pi}{6}
+\end{pmatrix}.
+\]
+A következő sejtést 
+\[
+P(n):A^{n}=\begin{pmatrix}\cos\frac{n\pi}{6} & \sin\frac{n\pi}{6}\\
+-\sin\frac{n\pi}{6} & \cos\frac{n\pi}{6}
+\end{pmatrix},\forall n\geq1
+\]
+matematikai indukcióval bizonyítjuk. Látható volt fennebb, hogy $P(1),P(2)$
+teljesül. Feltételezzük, hogy $P(k)$ is teljesül: 
+\[
+P(k):A^{k}=\begin{pmatrix}\cos\frac{k\pi}{6} & \sin\frac{k\pi}{6}\\
+-\sin\frac{k\pi}{6} & \cos\frac{k\pi}{6}
+\end{pmatrix},\forall k\geq1.
+\]
+Be kell látni, hogy $P(k+1)$-re is teljesül az állítás. Ekkor definíció
+szerint 
+\[
+A^{k+1}=A^{k}\cdot A=\begin{pmatrix}\cos\frac{k\pi}{6} & \sin\frac{k\pi}{6}\\
+-\sin\frac{k\pi}{6} & \cos\frac{k\pi}{6}
+\end{pmatrix}\cdot\begin{pmatrix}\cos\frac{\pi}{6} & \sin\frac{\pi}{6}\\
+-\sin\frac{\pi}{6} & \cos\frac{\pi}{6}
+\end{pmatrix}.
+\]
+Így 
+\[
+A^{k+1}=\begin{pmatrix}\cos\frac{k\pi}{6}\cdot\cos\frac{\pi}{6}-\sin\frac{k\pi}{6}\cdot\sin\frac{\pi}{6} & \cos\frac{k\pi}{6}\cdot\sin\frac{\pi}{6}+\sin\frac{k\pi}{6}\cdot\cos\frac{\pi}{6}\\
+-\cos\frac{k\pi}{6}\cdot\sin\frac{\pi}{6}-\sin\frac{k\pi}{6}\cdot\cos\frac{\pi}{6} & \cos\frac{k\pi}{6}\cdot\cos\frac{\pi}{6}-\sin\frac{k\pi}{6}\cdot\sin\frac{\pi}{6}
+\end{pmatrix}
+\]
+Mivel $\cos(\alpha+\beta)=\cos\alpha\cdot\cos\beta-\sin\alpha\cdot\sin\beta$
+és $\sin(\alpha+\beta)=\sin\alpha\cdot\cos\beta+\sin\beta\cdot\cos\alpha$,
+így 
+\[
+A^{k+1}=\begin{pmatrix}\cos\frac{(k+1)\pi}{6} & \sin\frac{(k+1)\pi}{6}\\
+-\sin\frac{(k+1)\pi}{6} & \cos\frac{(k+1)\pi}{6}
+\end{pmatrix}=P(k+1),k\geq1.
+\]
+Tehát a matematikai indukció elve alapján beláttuk, hogy teljesül
+\[
+A^{n}=\begin{pmatrix}\cos\frac{n\pi}{6} & \sin\frac{n\pi}{6}\\
+-\sin\frac{n\pi}{6} & \cos\frac{n\pi}{6}
+\end{pmatrix},\forall n\in\mathbb{N^{*}}.
+\]
+Ekkor igaz, hogy 
+\[
+\begin{pmatrix}x_{n}\\
+y_{n}
+\end{pmatrix}=\begin{pmatrix}\cos\frac{n\pi}{6} & \sin\frac{n\pi}{6}\\
+-\sin\frac{n\pi}{6} & \cos\frac{n\pi}{6}
+\end{pmatrix}\cdot\begin{pmatrix}x_{0}\\
+y_{0}
+\end{pmatrix},\forall n\geq1.
+\]
+Következik, hogy 
+\[
+x_{n}=\cos\frac{n\pi}{6}x_{0}+\sin\frac{n\pi}{6}y_{0}\quad\text{és}\quad y_{n}=-\sin\frac{n\pi}{6}x_{0}+\cos\frac{n\pi}{6}y_{0},\forall n\geq1.
+\]
+Mivel $\cos x$ és $\sin x$ függvények periodikusak és periódusuk
+$2\pi$, így $x_{n+12}=x_{n}$ és $y_{n+12}=y_{n}$, $\forall n\geq1$.
+Látható, hogy a megadott számsorozatok periodikusak és periódusuk
+ugyanaz ($=12$).
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+\textbf{a.)} Határozd meg az $(a_{n})_{n\geq1}$ sorozat általános
+tagját, ha $a_{1}=1$ és 
+\[
+(n+1)!\cdot a_{n}-n!\cdot a_{n+1}=\frac{2n}{n^{4}+n^{2}+1}\cdot a_{n}\cdot a_{n+1},\quad\forall n\geq1.
+\]
+\\
+ \textbf{b.)} Számítsd ki a $\lim\limits_{n\to\infty}\frac{2^{n}}{a_{n}}$
+határértéket. 
+\begin{flushright}
+(\textit{EMMV 2016, XI. osztály, I. forduló, 3. feladat}) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+\textbf{a.)} Ha $a_{n}=0$, akkor $-n!\cdot a_{n+1}=0$, vagyis $a_{n+1}=0$,
+hiszen $n!\neq0,\forall n\in\mathbb{N}$. Ha $a_{n+1}=0$, akkor $(n+1)!\cdot a_{n}=0$,
+vagyis $a_{n}=0$, hiszen $n!\neq0,\forall n\in\mathbb{N}$. Vagyis
+$a_{n}=0\iff a_{n+1}=0,\forall n\geq1$. Ez visszavezethető arra,
+hogy a sorozat bármelyik tagja csak akkor lehet 0 ha $a_{1}=0$. De
+$a_{1}=1\neq0$, így a sorozat egyetlen tagja sem lehet 0. Mivel $a_{n}\neq0,\forall n\geq1$,
+végigosztunk az eredeti összefüggésben $a_{n}\cdot a_{n+1}$-el, így
+kapjuk hogy 
+\[
+\frac{(n+1)!}{a_{n+1}}-\frac{n!}{a_{n}}=\frac{2n}{n^{4}+n^{2}+1},\quad\forall n\geq1.
+\]
+Mivel $n^{4}+n^{2}+1=(n^{2}-n+1)(n^{2}+n+1)$, így az egyenlőség jobb
+oldalán szereplő törtet két tört összegeként írjuk fel. 
+\[
+\frac{2n}{n^{4}+n^{2}+1}=\frac{A}{n^{2}-n+1}+\frac{B}{n^{2}+n+1}=\frac{n^{2}(A+B)+n(A-B)+(A+B)}{(n^{2}-n+1)(n^{2}+n+1)}
+\]
+Ekkor a következő rendszert kell megoldani: 
+\[
+\begin{cases}
+A+B=0\\
+A-B=2
+\end{cases}\iff\begin{cases}
+A=-B\\
+-B-B=2
+\end{cases}\iff\begin{cases}
+A=1\\
+B=-1
+\end{cases},
+\]
+vagyis az eredeti törtünk a következő alakú lesz: 
+\[
+\frac{2n}{n^{4}+n^{2}+1}=\frac{1}{n^{2}-n+1}-\frac{1}{n^{2}+n+1}.
+\]
+Ekkor a rekurzív összefüggésünk a következő: 
+\[
+\frac{(n+1)!}{a_{n+1}}-\frac{n!}{a_{n}}=\frac{1}{n^{2}-n+1}-\frac{1}{n^{2}+n+1},\forall n\geq1.
+\]
+A kapott összefüggést leírjuk egymás alá $n:=1,2,3,...,n-2,n-1$ értékekre:
+\begin{align*}
+\frac{2!}{a_{2}}-\frac{1!}{a_{1}} & =\frac{1}{1^{2}-1+1}-\frac{1}{1^{2}+1+1}\\
+\frac{3!}{a_{3}}-\frac{2!}{a_{2}} & =\frac{1}{2^{2}-2+1}-\frac{1}{2^{2}+2+1}\\
+\vdots\\
+\frac{(n-1)!}{a_{n-1}}-\frac{(n-2)!}{a_{n-2}} & =\frac{1}{(n-2)^{2}-(n-2)+1}-\frac{1}{(n-2)^{2}+(n-2)+1}\\
+\frac{n!}{a_{n}}-\frac{(n-1)!}{a_{n-1}} & =\frac{1}{(n-1)^{2}-(n-1)+1}-\frac{1}{(n-1)^{2}+(n-1)+1}
+\end{align*}
+Mivel $(k-1)^{2}-(k-1)+1=k^{2}-2k+1-k+2=k^{2}-3k+3=k^{2}-4k+4+k-2+1=(k-2)^{2}+(k-2)+1,\forall k\geq1$,
+így összegezve a fennebb felírt összefüggéseket, kapjuk hogy: 
+\[
+\frac{n!}{a_{n}}-\frac{1!}{a_{1}}=1-\frac{1}{(n-1)^{2}+(n-1)+1}\iff\frac{n!}{a_{n}}-1=1-\frac{1}{n^{2}-n+1},\forall n\geq1.
+\]
+Ekkor az általános tag képlete: 
+\[
+a_{n}=\frac{n!\cdot(n^{2}-n+1)}{2n^{2}-2n+1},\forall n\geq1.
+\]
+\textbf{b.)} Mivel $0\leq n!,\forall n\geq1$ és $0\leq2^{n},\forall n\geq1$,
+így 
+\[
+0\leq\frac{2^{n}}{n!}=\frac{2}{1}\cdot\frac{2\cdot2\cdot...\cdot2}{2\cdot3\cdot...\cdot(n-1)}\cdot\frac{2}{n}\leq\frac{2}{1}\cdot1\cdot\frac{2}{n}\leq\frac{4}{n},\forall n\geq1,
+\]
+így a fogó-tétel alapján 
+\[
+0\leq\lim\limits_{n\to\infty}\frac{2^{n}}{n!}\leq\lim\limits_{n\to\infty}\frac{4}{n}=0\Rightarrow\lim\limits_{n\to\infty}\frac{2^{n}}{n!}=0.
+\]
+Ekkor 
+\begin{align*}
+\lim\limits_{n\to\infty}\frac{2^{n}}{a_{n}} & =\lim\limits_{n\to\infty}\frac{2^{n}}{\frac{n!\cdot(n^{2}-n+1)}{2n^{2}-2n+1}}=\lim\limits_{n\to\infty}\frac{2^{n}\cdot(2n^{2}-2n+1)}{n!\cdot(n^{2}-n+1)}=\\
+ & =\lim\limits_{n\to\infty}\frac{2^{n}}{n!}\cdot\lim\limits_{n\to\infty}\frac{n^{2}(2-\frac{2}{n}+\frac{1}{n^{2}})}{n^{2}(1-\frac{1}{n}+\frac{1}{n^{2}})}=0\cdot2=0.
+\end{align*}
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+Adj meg egy explicit képletet a következő sorozatra:
+$$f_{n+1}=3f_n-f_{n-1}-5f_{n-2}, \text{ ahol } f_1=1, f_2=9, f_3=1.$$
+\end{extraproblem}
+
+\begin{solution}
+Mivel a megadott rekurzió lineáris, ezért a karakterisztikus polinomja:
+$$x^3-3x^2+x+5=0.$$
+Vegyük észre, hogy $x_1=-1$ a polinomnak gyöke, innen
+$$x^3-3x^2+x+5=(x+1)(x^2-4x+5)=(x+1)(x-2+i)(x-2-i).$$
+Tehát a karakterisztikus polinom gyökei: $x_1=-1$, $x_2=2-i$, $x_3=2+i$.\\
+Az $f_n$ álatlános alakja:
+$$f_n=c_1x_1^n+c_2x_2^n+c_3x_3^n=c_1(-1)^n+c_2(2-i)^n+c_3(2+i)^n.$$
+A rekurzió első pár értékét felhasználva:\\
+\[
+\begin{cases}
+-c_1+c_2(2-i)+c_3(2+i)=1\\
+c_1+c_2(2-i)^2+c_3(2+i)^2=9\\
+-c_1+c_2(2-i)^3+c_3(2+i)^3=1\\
+\end{cases}
+\iff
+\begin{cases}
+-c_1+c_2(2-i)+c_3(2+i)=1\\
+c_1+c_2(3-4i)+c_3(3+4i)=9\\
+-c_1+c_2(2-11i)+c_3(2+11i)=1\\
+\end{cases}\\
+\begin{cases}
+c_1=3\\
+c_2=1\\
+c_3=1\\
+\end{cases}
+\]
+Az $f_n$ álatlános alakja:
+$$f_n=3(-1)^n+(2-i)^n+(2+i)^n.$$
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+Három számot, $a_{1},a_{2},a_{3}$ véletlenszerűen és visszatevés
+nélkül kiválasztunk az $\{1,2,3,\ldots,1000\}$ halmazból. Ezután
+három másik számot, $b_{1},b_{2},b_{3}$ véletlenszerűen és visszatevés
+nélkül kiválasztunk a megmaradt 997 szám közül.
+
+Legyen $p$ annak a valószínűsége, hogy egy alkalmas forgatással az
+$a_{1}\times a_{2}\times a_{3}$ méretű téglatest elfér a $b_{1}\times b_{2}\times b_{3}$
+méretű dobozban úgy, hogy a téglatest oldalai párhuzamosak a doboz
+oldalaival.
+
+Ha $p$ legegyszerűbb alakban felírt tört, akkor mi a számláló és
+a nevező összegének értéke?
+
+\emph{(1993 AIME, 7-es számú probléma) }
+\end{extraproblem}
+
+\begin{solution}
+Legyen $x_{1}>x_{2}>x_{3}>x_{4}>x_{5}>x_{6}$, ahol mindegyik $x_{i}$
+a kiválasztott 6 különböző szám egyike. Feltehetjük, hogy ezek a számok
+csökkenő sorrendben vannak rendezve.
+
+Azt kell meghatároznunk, hogy hányféleképpen lehet a 6 szám közül
+3-at a doboz dimenzióinak, 3-at pedig a téglatest dimenzióinak választani
+úgy, hogy a téglatest elférjen a dobozban (megfelelő forgatás után).
+
+Ez azt jelenti, hogy a téglatest mindhárom dimenziója kisebb vagy
+egyenlő kell legyen a doboz megfelelő dimenziójánál. Azt is tudjuk,
+hogy a számok mind különbözőek, így valójában szigorúan kisebbnek
+kell lenniük minden irányban -- azaz egy-egy dimenzió sorrendjét
+be lehet állítani.
+
+A helyes kiosztás akkor történik, ha a doboz méretei nagyobbak, mint
+a téglatestéi minden irányban. Ez egy olyan kombinatorikai struktúra,
+amit a Catalan-számok írnak le.
+
+A $n$-edik Catalan-szám: 
+\[
+C_{n}=\frac{\binom{2n}{n}}{n+1}
+\]
+
+Esetünkben $n=3$, tehát a megfelelő kiosztások száma: 
+\[
+\frac{\binom{6}{3}}{4}=\frac{20}{4}=5
+\]
+
+Az összes lehetséges kiosztás száma: 
+\[
+\binom{6}{3}=20
+\]
+
+Ezért a keresett valószínűség: 
+\[
+\frac{\binom{6}{3}/4}{\binom{6}{3}}=\frac{1}{4}
+\]
+
+A legegyszerűbb tört: $\frac{1}{4}$, így a számláló és nevező összege:
+\[
+\boxed{005}
+\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Határozd meg az alábbi sorozat generálófüggvényét:
+\end{extraproblem}
+
+\[
+a_{n}=\binom{n}{2}=\frac{n(n-1)}{2},\quad n\geq0
+\]
+
+\begin{solution}
+A generálófüggvényt a következőképpen definiáljuk:
+
+\[
+G(x)=\sum_{n=0}^{\infty}a_{n}x^{n}=\sum_{n=0}^{\infty}\binom{n}{2}x^{n}
+\]
+
+Mivel 
+\[
+\binom{n}{2}=\frac{1}{2}(n^{2}-n),
+\]
+ezért a sorozat generálófüggvénye átírható így:
+
+\[
+G(x)=\sum_{n=0}^{\infty}\frac{1}{2}(n^{2}-n)x^{n}=\frac{1}{2}\sum_{n=0}^{\infty}(n^{2}-n)x^{n}=\frac{1}{2}\left(\sum_{n=0}^{\infty}n^{2}x^{n}-\sum_{n=0}^{\infty}nx^{n}\right)
+\]
+
+Ismeretes generálófüggvények:
+
+\[
+\sum_{n=0}^{\infty}nx^{n}=\frac{x}{(1-x)^{2}},\qquad\sum_{n=0}^{\infty}n^{2}x^{n}=\frac{x(x+1)}{(1-x)^{3}}
+\]
+
+Ezért:
+
+\[
+G(x)=\frac{1}{2}\left(\frac{x(x+1)}{(1-x)^{3}}-\frac{x}{(1-x)^{2}}\right)
+\]
+
+Tegyük közös nevezőre és egyszerűsítsük:
+
+\[
+G(x)=\frac{1}{2}\cdot\frac{x(x+1)(1-x)-x(1-x)}{(1-x)^{3}}=\frac{1}{2}\cdot\frac{x^{2}(1-x)}{(1-x)^{3}}=\frac{x^{2}}{2(1-x)^{2}}
+\]
+
+A generálófüggvény tehát:
+
+\[
+\boxed{\sum_{n=0}^{\infty}\binom{n}{2}x^{n}=\frac{x^{2}}{2(1-x)^{3}}}
+\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Legyen a sorozat az alábbi rekurzióval megadva: 
+\[
+a_{0}=0,\quad a_{1}=1,\quad a_{n}=2a_{n-1}+1\quad\text{minden }n\geq2
+\]
+
+Határozd meg a sorozat generálófüggvényét: 
+\[
+G(x)=\sum_{n=0}^{\infty}a_{n}x^{n}
+\]
+\end{extraproblem}
+
+\begin{solution}
+Írjuk fel a generálófüggvényt: 
+\[
+G(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\dots
+\]
+
+Használjuk ki a rekurziót: 
+\[
+a_{n}=2a_{n-1}+1\quad(n\geq2)
+\]
+
+Szorzunk meg mindkét oldalt $x^{n}$-nel és összegezzük $n\geq2$-től:
+\[
+\sum_{n=2}^{\infty}a_{n}x^{n}=\sum_{n=2}^{\infty}(2a_{n-1}+1)x^{n}=2\sum_{n=2}^{\infty}a_{n-1}x^{n}+\sum_{n=2}^{\infty}x^{n}
+\]
+
+Az első összeg indexét toljuk le egyel: 
+\[
+\sum_{n=2}^{\infty}a_{n-1}x^{n}=x\sum_{n=1}^{\infty}a_{n}x^{n}=x(G(x)-a_{0})=xG(x)
+\]
+
+A második összeg egy geometriai sor: 
+\[
+\sum_{n=2}^{\infty}x^{n}=\frac{x^{2}}{1-x}
+\]
+
+Tehát: 
+\[
+\sum_{n=2}^{\infty}a_{n}x^{n}=2xG(x)+\frac{x^{2}}{1-x}
+\]
+
+Most bontsuk fel $G(x)$ első két tagját: 
+\[
+G(x)=a_{0}+a_{1}x+\sum_{n=2}^{\infty}a_{n}x^{n}=0+x+\sum_{n=2}^{\infty}a_{n}x^{n}=x+2xG(x)+\frac{x^{2}}{1-x}
+\]
+
+Rendezzük: 
+\[
+G(x)=x+2xG(x)+\frac{x^{2}}{1-x}
+\]
+
+Vigyük át a $G(x)$-es tagokat bal oldalra: 
+\[
+G(x)-2xG(x)=x+\frac{x^{2}}{1-x}\Rightarrow G(x)(1-2x)=x+\frac{x^{2}}{1-x}
+\]
+
+Most hozzuk közös nevezőre a jobb oldalt: 
+\[
+x+\frac{x^{2}}{1-x}=\frac{x(1-x)+x^{2}}{1-x}=\frac{x-x^{2}+x^{2}}{1-x}=\frac{x}{1-x}
+\]
+
+Így: 
+\[
+G(x)(1-2x)=\frac{x}{1-x}\Rightarrow G(x)=\frac{x}{(1-x)(1-2x)}
+\]
+
+A generálófüggvény:
+
+\[
+\boxed{G(x)=\sum_{n=0}^{\infty}a_{n}x^{n}=\frac{x}{(1-x)(1-2x)}}
+\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Számítsuk ki a következő összeget:}}\emph{ }
+\[
+\binom{n}{0}-2\binom{n}{1}+\cdots+(-1)^{n}(n+1)\binom{n}{n}!
+\]
+\end{extraproblem}
+
+\begin{solution}
+A kérdéses összeg meghatározásához célszerű egy
+jól megválasztott generátorfüggvényt alkalmazni. Induljunk ki a binomiális
+tétel következő formájából:
+
+\[
+(1-x)^{n}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k}.
+\]
+
+Most szorozzuk meg ezt az egyenlőséget $x$-szel:
+
+\[
+x(1-x)^{n}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k+1}=\sum_{k=1}^{n+1}(-1)^{k-1}\binom{n}{k-1}x^{k}.
+\]
+
+Deriváljuk az így kapott kifejezést:
+
+\[
+\frac{d}{dx}\left[x(1-x)^{n}\right]=(1-x)^{n}-nx(1-x)^{n-1},
+\]
+
+másrészt:
+
+\[
+\frac{d}{dx}\left[\sum_{k=1}^{n+1}(-1)^{k-1}\binom{n}{k-1}x^{k}\right]=\sum_{k=1}^{n+1}(-1)^{k-1}k\binom{n}{k-1}x^{k-1}.
+\]
+
+Most képezzük az alábbi két kifejezés különbségét:
+
+\[
+(1-x)^{n}-x(1-x)^{n}=(1-x)^{n}(1-x)=(1-x)^{n+1},
+\]
+
+illetve a megfelelő binomiális sorozatkülönbséget:
+
+\[
+\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k}-\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k+1}=\sum_{k=0}^{n}(-1)^{k}\binom{n}{k}x^{k}-\sum_{k=1}^{n+1}(-1)^{k-1}\binom{n}{k-1}x^{k}.
+\]
+
+Végül helyettesítsünk $x=1$-et:
+
+\[
+(1-1)^{n}-1\cdot(1-1)^{n}=0-0=0,
+\]
+
+illetve:
+
+\[
+\binom{n}{0}-2\binom{n}{1}+\cdots+(-1)^{n}(n+1)\binom{n}{n}=\begin{cases}
+0, & \text{ha }n\geq1,\\
+-1, & \text{ha }n=1.
+\end{cases}
+\]
+
+Azaz:
+
+\[
+\sum_{k=0}^{n}(-1)^{k}(k+1)\binom{n}{k}=\begin{cases}
+0, & \text{ha }n\geq1,\\
+-1, & \text{ha }n=1.
+\end{cases}
+\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Számítsuk ki a következő összeget:}}\emph{ 
+\[
+\frac{\binom{n}{0}}{1}+\frac{\binom{n}{1}}{2}+\cdots+\frac{\binom{n}{n}}{n+1}!
+\]
+}
+\end{extraproblem}
+
+\begin{solution}
+ Induljunk ki ismét a binomiális tételből:
+
+\[
+(1+x)^{n}=\sum_{k=0}^{n}\binom{n}{k}x^{k}.
+\]
+
+Integráljuk mindkét oldalt az $x\in[0,t]$ intervallumon:
+
+\[
+\int_{0}^{t}(1+x)^{n}dx=\sum_{k=0}^{n}\binom{n}{k}\int_{0}^{t}x^{k}dx.
+\]
+
+Bal oldal:
+
+\[
+\int_{0}^{t}(1+x)^{n}dx=\frac{(1+t)^{n+1}-1}{n+1}.
+\]
+
+Jobb oldal:
+
+\[
+\sum_{k=0}^{n}\binom{n}{k}\cdot\frac{t^{k+1}}{k+1}.
+\]
+
+Ez tehát:
+
+\[
+\frac{(1+t)^{n+1}-1}{n+1}=\sum_{k=0}^{n}\frac{\binom{n}{k}}{k+1}t^{k+1}.
+\]
+
+Most legyen $t=1$:
+
+\[
+\frac{2^{n+1}-1}{n+1}=\sum_{k=0}^{n}\frac{\binom{n}{k}}{k+1}.
+\]
+
+Ez éppen:
+
+\[
+\frac{\binom{n}{0}}{1}+\frac{\binom{n}{1}}{2}+\cdots+\frac{\binom{n}{n}}{n+1}=\frac{2^{n+1}-1}{n+1}.
+\]
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Hányféleképpen helyezhetünk el 5 zárójelpárt a $2\cdot3\cdot4\cdot5\cdot6\cdot7$
+szorzatban úgy, hogy a műveletek elvégzésekor mindig egy zárójelen
+belüli két tényezőt kell összeszoroznunk? Például $((2\cdot(3\cdot(4\cdot5)\cdot(6\cdot7))$
+zárójelezéssel írhatjuk le.) 
+\end{extraproblem}
+
+\begin{solution}
+Vizsgáljuk meg a feladatot kisebb esetekre! Jelöljük $b_{n}$ -nel
+azt az értéket, ahányféleképpen egy n- tényezős szorzatban1n $n-1$
+zárójelpár elhelyezhető. Ekkor a feladatunk $b_{6}$ meghatározása.
+Egy 1-tényezős szorzat 1-féleképp zárójelezhető (úgy, hogy nem teszünk
+bele zárójelet), így $b_{1}=1.$ Egy 2-tényezős szorzat is 1-féleképp
+zárójelezhető: $(2\cdot3)$, így $b_{2}=1.$ Egy 3-tényezős szorzat
+2-féleképp zárójelezhető: $((2\cdot3)\cdot4)$ és $(2\cdot(3\cdot4)),$
+így $b_{3}=2.$ Egy 4-tényezős szorzat 5-féleképp zárójelezhető. Megfigyelhetjük,
+hogy a legkülső zárójelpár mindig a műveletsor legelején és legvégén
+áll (hiszen az utolsó szorzás elvégzésekor már csak két tényező szerepel,
+és ez a zárójelpár ezeket határolja). Próbáljuk meg a 4-tényezős szorzat
+zárójelezéseit visszavezetni a korábbi esetekre! Csoportosítsuk az
+eseteket aszerint, hogy melyik szorzást végezzük el legutoljára! A
+következőkben jelöljük az utoljára elvégzett szorzás jelét, és ennek
+helye szerint tagoljuk oszlopokra az eseteket: $(2\textcolor{red}{\cdot}((3\cdot4)\cdot5))$,
+$(2\textcolor{red}{\cdot}(3\cdot(4\cdot5)))$, $((2\cdot3)\textcolor{red}{\cdot}(4\cdot5))$,
+$(((2\cdot3)\cdot4)\textcolor{red}{\cdot}5)$, $((2\cdot(3\cdot4))\textcolor{red}{\cdot}5)$
+Vegyük észre, hogy ha az utolsó szorzásjel a 2 és a 3 közötti, akkor
+ennek elvégzése előtt egy 1- tényezős (2) és egy 3-tényezős $(3\cdot4\cdot5)$
+szorzatot kell egymástól függetlenül zárójeleznünk. Ha az utolsó szorzásjel
+a 3 és a 4 közötti, akkor ennek elvégzése előtt egy 2-tényezős $2\cdot3$
+és egy másik 2-tényezős $(4\cdot5)$ szorzatot kell egymástól függetlenül
+zárójeleznünk. Ha pedig az utolsó szorzás- jel a 4 és az 5 közötti,
+akkor ennek elvégzése előtt egy 3-tényezős $(2\cdot3\cdot4)$ és egy
+1-tényezős (5) szorzatot kell egymástól függetlenül zárójeleznünk.
+Így a $b_{4}=b_{1}\cdot b_{3}+b_{2}\cdot b_{2}+b_{3}\cdot b_{1}$
+összefüggést kapjuk. Ugyanez a gondolatmenet továbbvihető a $b$ sorozat
+következő néhány tagjának meghatározására: $b_{5}=b_{1}\cdot b_{4}+b_{2}\cdot b_{3}+b_{3}\cdot b_{2}+b_{4}\cdot b_{1}=1\cdot5+1\cdot2+2\cdot1+5\cdot1=14$
+és $b_{6}=b_{1}\cdot b_{5}+b_{2}\cdot b_{4}+b_{3}\cdot b_{3}+b_{4}\cdot b_{2}+b_{5}\cdot b_{1}=14+5+4+5+14=42.$
+Tehát a feladatban szereplő 6-tényezős $2\cdot3\cdot4\cdot5\cdot6\cdot7$
+szorzatban 42-féleképpen helyezhetünk el 5 zárójelpárt. 
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+Hányféleképpen lehet 24 egyforma robotot kiosztani négy szerelősorra
+úgy, hogy legalább három robot jusson minden sorra? 
+\end{extraproblem}
+
+\begin{solution}
+Ha tekintjük az $(a_{n})_{n\geq0}$ sorozatot, ahol $a_{n}=$ hányféleképpen
+lehet $n$ azonos robotot kiosztani négy szerelősorra úgy, hogy legalább
+három robot jusson minden sorra. Ekkor az $(a_{n})_{n\geq0}$ sorozathoz
+rendelt generátorfüggvény: 
+\[
+A(x)=a_{0}+a_{1}x+a_{2}x^{2}+a_{3}x^{3}+\ldots,
+\]
+ahol mivel négy szerelősor van, és minden szerelősorra legalább három
+robot kerül, ezért a robotok száma legalább $3\cdot4=12$. Ezek alapján
+$a_{n}=0,\ \forall n<12$. Tehát 
+\[
+A(x)=a_{12}x^{12}+a_{13}x^{13}+a_{14}x^{14}+\ldots.
+\]
+Hogyan tudnánk másképp felírni az $A(x)$-et? Ha minden szerelősorra
+legalább három robot jut, akkor az első, második, harmadik és a negyedik
+szerelősorra $3,4,5,\ldots$ robot is juthat. 
+\[
+\begin{array}{lcl}
+A(x) & = & (x^{3}+x^{4}+x^{5}+\ldots)\cdot(x^{3}+x^{4}+\ldots)\cdot(x^{3}+x^{4}+\ldots)\cdot(x^{3}+x^{4}+\ldots)\\
+ & = & (x^{3}+x^{4}+x^{5}+\ldots)^{4}=(x^{3})^{4}\cdot(1+x+x^{2}+\ldots)^{4}\\
+ & = & x^{12}\cdot\left(\dfrac{1}{1-x}\right)^{4}=x^{12}\cdot(1-x)^{-4}.
+\end{array}
+\]
+Így az $A(x)$ generátorfüggvény esetén az $a_{24}$ az $x^{24}$
+együtthatója. Ahhoz, hogy ezt a számot megkapjuk szükségünk lesz az
+$(1-x)^{-4}$ függvény Taylor-sorba fejtésére.
+
+Legyen $f:[0,1)\rightarrow\mathbb{R}$, $f(x)=(1-x)^{-4}$. Ekkor
+\[
+\begin{array}{l}
+f'(x)=(-1)\cdot(-4)\cdot(1-x)^{-5},\\
+f''(x)=(-1)^{2}\cdot(-4)\cdot(-5)\cdot(1-x)^{-6},\\
+f'''(x)=(-1)^{3}\cdot(-4)\cdot(-5)\cdot(-6)\cdot(1-x)^{-7},\\
+\vdots\\
+f^{(n)}(x)=(-1)^{n}\cdot(-1)^{n}\cdot\dfrac{(n+3)!}{3!}\cdot(1-x)^{-(n+4)}=\dfrac{(n+3)!}{3!}\cdot(1-x)^{-(n+4)}.
+\end{array}
+\]
+
+Ekkor az $f$ függvény Taylor-sorba fejtése az $x_{0}=0$ körül: 
+\[
+\begin{array}{lcl}
+f(x) & = & f(0)+\dfrac{f'(0)}{1!}x+\dfrac{f''(0)}{2!}x^{2}+\dfrac{f'''(0)}{3!}x^{3}+\ldots+\dfrac{f^{(n)}(0)}{n!}x^{n}\ldots\\
+ & = & {\displaystyle {\sum_{n=0}^{\infty}}\dfrac{f^{(n)}(0)}{n!}x^{n}={\displaystyle {\sum_{n=0}^{\infty}}\dfrac{\dfrac{(n+3)!}{3!}\cdot(1-0)^{-(n+4)}}{n!}x^{n}={\displaystyle {\sum_{n=0}^{\infty}}C_{n+3}^{3}x^{n}.}}}
+\end{array}
+\]
+
+Tehát 
+\[
+A(x)=x^{12}\cdot(1-x)^{-4}=x^{12}\cdot{\displaystyle {\sum_{n=0}^{\infty}}C_{n+3}^{3}x^{n}={\displaystyle {\sum_{n=0}^{\infty}}C_{n+3}^{3}x^{n+12}.}}
+\]
+Így az $x^{24}$ együtthatóját akkor kapjuk meg, amikor az összegzésbe
+$n=12$, vagyis $a_{24}=C_{12+3}^{3}=C_{15}^{3}=\dfrac{13\cdot14\cdot15}{3!}=455$.
+Tehát $24$ robotot $455$-féleképpen lehet elosztani négy szerelősorra
+úgy, hogy minden szerelősorra jusson legalább három robot. 
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Legyen a $(c_{n})$ sorozat úgy definiálva, hogy 
+\[
+\begin{cases}
+c_{0}=1,\quad c_{1}=2,\\
+c_{n}=5\,c_{n-1}-6\,c_{n-2}+2^{n},\quad n\ge2.
+\end{cases}
+\]
+\begin{enumerate}
+\item Határozzuk meg $c_{n}$ explicit zárt alakját. 
+\item Igazoljuk az eredményt generátorfüggvénnyel. 
+\end{enumerate}
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+\textbf{1. Homogén rész és partikuláris tipp.} 
+\[
+h_{n}=5h_{n-1}-6h_{n-2},\quad r^{2}-5r+6=0\;\Rightarrow\;(r-2)(r-3)=0,
+\]
+tehát $h_{n}=A\cdot2^{n}+B\cdot3^{n}$.
+
+A nem‐homogén tag $2^{n}$, de mivel $2$ gyök a karakterisztikusból,
+próbáljuk 
+\[
+p_{n}=C\cdot n\cdot2^{n}.
+\]
+Helyettesítve: 
+\[
+C\,n\,2^{n}=5C\,(n-1)2^{n-1}-6C\,(n-2)2^{n-2}+2^{n}.
+\]
+Osszuk $2^{n-2}$-vel és rendezzük: 
+\[
+4Cn=10C(n-1)-6C(n-2)+4.
+\]
+Bontva: 
+\[
+4Cn=10Cn-10C-6Cn+12C+4\;\Longrightarrow\;0=(10C-6C-4C)n+(2C+4)\;\Longrightarrow\;2C+4=0,
+\]
+így $C=-2$. Tehát 
+\[
+p_{n}=-2n\,2^{n}.
+\]
+
+\textbf{2. Általános megoldás és konstansok.} 
+\[
+c_{n}=A\,2^{n}+B\,3^{n}-2n\,2^{n}.
+\]
+Indulófeltételek: 
+\[
+n=0:\;A+B=1,\quad n=1:\;2A+3B-4=2\;\Longrightarrow\;2A+3B=6.
+\]
+Megoldva: 
+\[
+\begin{cases}
+A+B=1,\\
+2A+3B=6,
+\end{cases}\quad\Longrightarrow\;A=-3,\;B=4.
+\]
+Így 
+\[
+\boxed{c_{n}=-3\cdot2^{n}+4\cdot3^{n}-2n\,2^{n}.}
+\]
+
+\textbf{3. Generátorfüggvényes ellenőrzés.}
+
+Legyen 
+\[
+C(x)=\sum_{n=0}^{\infty}c_{n}\,x^{n}.
+\]
+A rekurzióból 
+\[
+\sum_{n\ge2}c_{n}x^{n}=5x\sum_{n\ge2}c_{n-1}x^{n-1}-6x^{2}\sum_{n\ge2}c_{n-2}x^{n-2}+\sum_{n\ge2}2^{n}x^{n}.
+\]
+Bevezetve a teljes $C(x)$ és az első két tagot külön: 
+\[
+C(x)-1-2x=5x\bigl(C(x)-1\bigr)-6x^{2}C(x)+\frac{4x^{2}}{1-2x}.
+\]
+Rendezve: 
+\[
+C(x)\bigl(1-5x+6x^{2}\bigr)=1-3x+\frac{4x^{2}}{1-2x},
+\]
+\[
+C(x)=\frac{1-3x}{(1-2x)(1-3x)}+\frac{4x^{2}}{(1-2x)(1-3x)}=\frac{1-3x+4x^{2}}{(1-2x)(1-3x)}.
+\]
+Parciális törtekre bontva visszafejtve kapjuk a fenti $c_{n}$-et.
+\end{solution}
+\vspace{1em}
+
+\begin{extraproblem}[Kovács Levente]
+Legyen $(d_{n})$ a következő rekurzív sorozat: 
+\[
+\begin{cases}
+d_{0}=0,\;d_{1}=1,\\
+d_{n}=3\,d_{n-1}+2\,d_{n-2}+n,\quad n\ge2.
+\end{cases}
+\]
+\begin{enumerate}
+\item Határozzuk meg $d_{n}$ explicit alakját. 
+\item Igazoljuk a végeredményt generátorfüggvénnyel. 
+\end{enumerate}
+\end{extraproblem}
+
+\vspace{1em}
+
+\begin{solution}
+\textbf{1. Homogén és partikuláris rész.}
+
+Homogén: 
+\[
+h_{n}=3h_{n-1}+2h_{n-2},\quad r^{2}-3r-2=0\;\Rightarrow\;r=\frac{3\pm\sqrt{17}}{2},
+\]
+tehát 
+\[
+h_{n}=A\!\left(\frac{3+\sqrt{17}}{2}\right)^{n}+B\!\left(\frac{3-\sqrt{17}}{2}\right)^{n}.
+\]
+
+A nem‐homogén tag $n$ polinom fokú, próbáljuk 
+\[
+p_{n}=Cn+D.
+\]
+Helyettesítve: 
+\[
+Cn+D=3[C(n-1)+D]+2[C(n-2)+D]+n.
+\]
+Rendezzük: 
+\[
+Cn+D=3Cn-3C+3D+2Cn-4C+2D+n
+\]
+\[
+\Longrightarrow\;0=(5C-C+1)n+(5D-7C-D)\;\Longrightarrow\;4C+1=0,\;4D-7C=0
+\]
+\[
+C=-\tfrac{1}{4},\quad D=\tfrac{7}{16}.
+\]
+Így 
+\[
+p_{n}=-\tfrac{1}{4}n+\tfrac{7}{16}.
+\]
+
+\textbf{2. Általános megoldás és konstansok.} 
+\[
+d_{n}=Ar_{1}^{n}+Br_{2}^{n}-\tfrac{1}{4}n+\tfrac{7}{16},
+\]
+ahol $r_{1,2}=(3\pm\sqrt{17})/2$. Indulófeltételekből $n=0,1$ meghatározhatók
+$A,B$.
+
+\textbf{3. Generátorfüggvényes ellenőrzés.}
+
+Legyen 
+\[
+D(x)=\sum_{n=0}^{\infty}d_{n}x^{n}.
+\]
+A rekurzió generátorfüggvényes alakja: 
+\[
+D(x)-x=3x\bigl(D(x)\bigr)+2x^{2}D(x)+\sum_{n\ge2}nx^{n}.
+\]
+Az utolsó sorozat zárt alakja $\frac{x}{(1-x)^{2}}$. Összerendezve:
+\[
+D(x)\bigl(1-3x-2x^{2}\bigr)=x+\frac{x}{(1-x)^{2}},
+\]
+\[
+D(x)=\frac{x(1-x)^{2}+x}{(1-x)^{2}(1-3x-2x^{2})}=\frac{x(2-2x+x^{2})}{(1-x)^{2}(1-3x-2x^{2})}.
+\]
+Parciális törtekre bontva és visszafejtve megkapjuk a fenti explicit
+$d_{n}$-et. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Legyen a $h$ hosszúságú pályán a balra lépés valószínűsége $p$,
+a jobbra lépés valószínűsége $q=1-p$. Melyik mezőre kell kezdetben
+helyezni a bolyongó pontot, hogy a játék a legtovább tartson? (A bolyongásnak
+akkor van vége, ha a pont valamelyik oldalon elhagyja a pályát.) 
+\end{extraproblem}
+
+\begin{solution}
+Jelölje $L_{i}$ az átlagos lépésszámot, ha a bolyongó pont az $i.$
+mezőn van. A feladat $L_{i}$ maximumhelyének meghatározása. Az $i.$
+mezőről két irányba léphetünk: vagy az $(i-1).$, vagy az $(i+1).$
+mezőre. Ez alapján az alábbi rekurzív összefüggést írhatjuk fel 
+\[
+L_{i}=p\cdot(1+L_{i-1})+q\cdot(1+L_{i+1}).
+\]
+Az egyenlet első tagja úgy értelmezhető, hogy a pont $p$ valószínűséggel
+az $(i-1).$ mezőre kerül, tehát lép egyet, plusz még annyit, amennyi
+átlagosan az $(i-1).$ mezőn állva várható, vagyis $L_{i-1}$-et.
+Hasonlóan a második tag a jobbra lépést írja le. Ha a pont a fiktív
+mezőkre kerül, a játéknak vége lesz, tehát $L_{0}=L_{h+1}=0.$ Átalakítva
+az 
+\[
+qL_{i+1}=L_{i}-pL_{i-1}-1,\phantom{a}L_{0}=L_{h+1}=0
+\]
+inhomogén másodrendű rekurziót kapjuk. Ennek megoldásához bevezetjük
+a $d_{i}=L_{i}-L_{i-1}$ különbségsorozatot, mely felhasználásával
+az inhomogén rekurziót homogén rekurzióvá alakíthatjuk át 
+\[
+qd_{i+1}=qL_{i+1}-qL_{i}=L_{i}-pL_{i-1}-1-(L_{i-1}-pL_{i-2}-1)=d_{i}-pd_{i-1.}
+\]
+Ha a különbségsorozat képletét meg tudjuk határozni, akkor $L_{i}$
+is kifejezhető, hiszen: 
+\begin{align*}
+d_{1} & =L_{1}-L_{0}\\
+d_{2} & =L_{2}-L_{1}\\
+d_{3} & =L_{3}-L_{2}\\
+ & \cdots\\
+d_{i} & =L_{i}-L_{i-1},\\
+\end{align*}
+mely egyenleteket összeadva kapjuk, hogy $L_{i}-L_{0}=\sum\limits_{j=1}^{i}d_{j}$
+és mivel $L_{0}=0$, ezért $L_{i}=\sum\limits_{j=1}^{i}d_{j}$. A
+továbbiakban a $qr^{2}-r+p=0$ karakterisztikus egyenlet vizsgálatát
+ismét két részletben végezzük el.
+
+Ha $p=q=\frac{1}{2}$, akkor az egyenlet két gyöke $r_{1,2}=1$, így
+a $d$ sorozat $d_{i}=a+b\cdot i$ alakú. Mivel a $d$ sorozat peremfeltételeit
+nem ismerjük, ezért az $a$ és $b$ állandókat az $L$ sorozat kezdeti
+feltételeinek felhasználásával határozzuk meg. Először is $L_{h+1}=0$,
+ezért $L_{h+1}=\sum\limits_{i=1}^{h+1}d_{i}=a\cdot(h+1)+b\cdot\frac{(h+1)(h+2)}{2}=0$.
+A másik egyenlet meghatározásához kiszámoljuk a sorozat első néhány
+tagját és felhasználjuk $L$ rekurzív képletét: 
+\[
+L_{0}=0,\phantom{a}L_{1}=d_{1}=a+b,\phantom{a}L_{2}=L_{1}+d_{2}=a+b+a+2b=2a+3b
+\]
+\[
+L_{2}=\frac{L_{1}-pL_{0}-1}{q}=\frac{L_{1}-1}{\frac{1}{2}}=2L_{1}-2,\phantom{i}\textrm{ahonnan}\phantom{i}2a+3b=2a+2b-2.
+\]
+Így az alábbi egyenletrendszert kapjuk 
+\[
+\left\{ \begin{array}{l}
+a+b\cdot\frac{h+2}{2}=0\\
+2a+3b=2a+2b-2,
+\end{array}\right.
+\]
+melynek megoldása $b=-2$ és $a=h+2$. Így $d_{i}=h+2-2i$ és 
+\[
+L_{i}=\sum\limits_{j=1}^{i}d_{j}=(h+2)i-2\cdot\frac{i(i+1)}{2}=-i^{2}+i+ih=i\cdot(h+1-i).
+\]
+A maximumot $i=\frac{h+1}{2}$ helyen kapjuk, ami tulajdonképpen a
+pálya közepe. Ha $h=2k-1$ alakú, akkor $i=k$ és $L_{k}=k^{2}$ a
+maximum lépésszám.
+
+Ha $p\neq q$, akkor legyen $p<q$. Ekkor a karakterisztikus egyenlet
+két gyöke $r_{1}=\frac{p}{q}$ és $r_{2}=1$. Legyen $c=\frac{p}{q}$
+és ekkor $d_{i}=a\cdot c^{i}+b$ alakba írható. Az egyik feltétel
+ismét az $L_{h+1}=\sum\limits_{i=1}^{h+1}$ összefüggésből adódik:
+\[
+L_{h+1}=a\cdot c\cdot\frac{1-c^{h+1}}{1-c}+b\cdot(h+1)=0.
+\]
+Továbbá a másik egyenlethez ismét meghatározzuk az első néhány tagot:
+\[
+L_{0}=0,\phantom{i}L_{1}=d_{1}=ac+b,\phantom{i}L_{2}=L_{1}+d^{2}=ac+b+ac^{2}+b=ac(c+1)+2b.
+\]
+A rekurzív alakot felhasználva 
+\[
+L_{2}=\frac{L_{1}-pL_{0}-1}{q}=\frac{L_{1}-1}{q}=\frac{ac+b-1}{q},\phantom{i}\textrm{tehát}\phantom{i}ac(c+1)+2b=\frac{ac+b-1}{q}.
+\]
+Az így kapott egyenletrendszer 
+\[
+\left\{ \begin{array}{l}
+a\cdot c\cdot\frac{1-c^{h+1}}{1-c}+b\cdot(h+1)=0\\
+qac(c+1)+2bq=ac+b-1,
+\end{array}\right.
+\]
+melynek megoldása $b=-\frac{1}{q-p}$, $a=\frac{h+1}{p(1-c^{h+1})}$
+és $L_{i}$ általános alakja: 
+\[
+L_{i}=ib+ac\frac{1-c^{i}}{1-c}=-\frac{i}{q-p}+\frac{c(h+1)}{p(1-c^{h+1)}}\cdot\frac{1-c^{i}}{1-c}=-\frac{i}{q-p}+\frac{h+1}{q-p}\cdot\frac{1-c^{i}}{1-c^{h+1}}.
+\]
+Például egy $h=10$ hosszúságú pályán, ha $p=\frac{1}{3}$, $q=\frac{2}{3}$,
+akkor megközelítőleg az $L_{i}$ szélsőértékhelye 3, valamint a felvett
+szélsőérték 20.
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Adott $a>0$ és $p\in\mathbb{N}$, $p\geq2$ szám segítségével értelmezzük
+az $(a_{n})_{n\in\mathbb{N}}$ sorozatot a következő módon: 
+\[
+a_{0}=a,\quad a_{n+1}=a_{n}+\frac{1}{a_{n}^{p-1}+1},\forall n\in\mathbb{N}.
+\]
+a.) Konvergens-e az $(a_{n})_{n\geq1}$ sorozat?\\
+ b.) Számítsd ki a következő határértéket 
+\[
+\lim\limits_{n\to\infty}\frac{a_{n}}{\sqrt[p]{n}}.
+\]
+\begin{flushright}
+\textit{(EMMV 2013, XI. osztály, 4. feladat)} 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+a.) Tegyük fel, hogy a sorozat konvergens, ekkor létezik $l\in\mathbb{R}$
+határték, úgy hogy $\lim\limits_{n\to\infty}{a_{n}}=l$. Így az is
+igaz, hogy $\lim\limits_{n\to\infty}{a_{n+1}}=l$. Határértékre térve
+a rekurziós összefüggésben, kapjuk hogy 
+\[
+l=l+\frac{1}{l^{p-1}+1},\quad\text{vagyis}\quad\frac{1}{l^{p-1}+1}=0.
+\]
+Egy tört akkor és csakis akkor lehet egyenlő nullával, ha a számlálója
+nulla, ami esetünkben nem áll fenn, így az összefüggés nem lehet igaz.
+Mivel egy hamis összefüggéshez jutottunk abból a feltevésből, hogy
+a megadott sorozat konvergens, kijelenthető, hogy $(a_{n})_{n\geq1}$
+sorozat nem konvergens.
+
+Mivel $a_{n}>0,\forall n\in\mathbb{N}$ és $p\in\mathbb{N}$, $p\geq2$
+esetén $a_{n}^{p-1}+1>0$, így $a_{n+1}-a_{n}=\frac{1}{a_{n}^{p-1}+1}>0$,
+vagyis $(a_{n})_{n\geq1}$ szigorúan növekvő sorozat.
+
+Tehát $(a_{n})_{n\geq1}$ sorozat nem konvergens, ugyanakkor szigorúan
+növekvő, így létezik határértéke: $\lim\limits_{n\to\infty}{a_{n}}=+\infty.$\\
+ b.) A kiszámolandó határértékben a gyökvonás rendje "zavaró", így
+azt figyelembe véve kellene egy vele ekvivalens, de könnyebben megközelíthető
+alakra hozni a kiszámolandó határértéket. Innen jön az ötlet a következő
+átalakításokra (a.)-ból tudjuk, hogy $a_{n}>0,\forall n\in\mathbb{N}$,
+így $a_{n}^{p}>0,\forall p\in\mathbb{N},p\geq2$): 
+\[
+\lim_{n\rightarrow\infty}\frac{a_{n}}{\sqrt[p]{n}}=\lim_{n\rightarrow\infty}\sqrt[p]{\frac{a_{n}^{p}}{n}}=\sqrt[p]{\lim_{n\rightarrow\infty}\frac{a_{n}^{p}}{n}}=\sqrt[p]{s}.
+\]
+Mivel teljesülnek a Ceasáro--Stolz-tétel feltételei ($b_{n}=n$ sorozat
+esetén $(b_{n})_{n\in\mathbb{N}}$ szigorúan növekvő és $\lim_{n\rightarrow\infty}b_{n}=+\infty$),
+$s$ határérték kiszámítására alkalmazzuk: 
+\[
+\begin{aligned}h=\lim_{n\rightarrow\infty} & \frac{a_{n+1}^{p}-a_{n}^{p}}{n+1-n}=\lim_{n\rightarrow\infty}\left[\left(a_{n}+\frac{1}{a_{n}^{p-1}+1}\right)^{p}-a_{n}^{p}\right].\end{aligned}
+\]
+
+\vspace{2mm}
+ Felhasználva a binomiális tételt, kapjuk hogy 
+\[
+\begin{aligned}h= & \lim_{n\rightarrow\infty}\left[\sum_{k=0}^{p}C_{p}^{k}a_{n}^{p-k}\frac{1}{\left(a_{n}^{p-1}+1\right)^{k}}-a_{n}^{p}\right]\\
+= & \lim_{n\rightarrow\infty}\left[C_{p}^{0}a_{n}^{p-0}\cdot1+\sum_{k=1}^{p}C_{p}^{k}a_{n}^{p-k}\frac{1}{\left(a_{n}^{p-1}+1\right)^{k}}-a_{n}^{p}\right]\\
+= & \lim_{n\rightarrow\infty}\sum_{k=1}^{p}C_{p}^{k}a_{n}^{p-k}\frac{1}{\left(a_{n}^{p-1}+1\right)^{k}}.
+\end{aligned}
+\]
+
+Kibontva a határértékben levő összeget, majd határértékre térve és
+felhasználva azt hogy $\lim\limits_{n\to\infty}{a_{n}^{p}}=+\infty,\forall p\in\mathbb{N},p\geq2$,
+kapjuk hogy 
+\[
+\begin{aligned}h= & \lim_{n\rightarrow\infty}\left(C_{p}^{1}\frac{a_{n}^{p-1}}{a_{n}^{p-1}+1}+C_{p}^{2}\frac{a_{n}^{p-2}}{\left(a_{n}^{p-1}+1\right)^{2}}+\ldots+C_{p}^{p}\frac{1}{\left(a_{n}^{p-1}+1\right)^{p}}\right)\\
+= & C_{p}^{1}=p.
+\end{aligned}
+\]
+Ekkor létezik a $h$ határérték és $h=p$, így Cezáro--Stolz-tétel
+alapján létezik $s$ határérték is, ahol $s=h=p.$ Innen következik,
+hogy a keresett határérték 
+\[
+\lim_{n\rightarrow\infty}\frac{a_{n}}{\sqrt[p]{n}}=\sqrt[p]{p}.
+\]
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Az $(a_{n})_{n\in\mathbb{N}^{*}}$ valós számsorozatot az $a_{n+1}+1=a\cdot a_{n}$,
+$n\geq1$ és $a_{1}=\frac{a}{a-1}$, $a\in(1,\infty)$, rekurzióval
+értelmezzük. 
+\begin{enumerate}
+\item[a)] Határozzuk meg a sorozat általános tagját! 
+\item[b)] Igazoljuk, hogy 
+\[
+{\sum}_{k=0}^{n}\frac{(a-1)^{2}a_{2k+1}+1}{(a-1)a_{k+1}-1}=\frac{a_{n+1}}{a^{n-1}}\left(a_{n+1}-\frac{2}{a-1}\right)+\frac{2a-1}{(a-1)^{2}},
+\]
+bármely $n\in\mathbb{N}^{*}$ és $a>1$ esetén! 
+\item[c)] Számítsuk ki a következő határértéket: 
+\[
+\lim_{n\to\infty}\frac{1}{n}\sum_{k=2}^{n+1}\sqrt[k]{a_{k}}.
+\]
+\end{enumerate}
+\begin{flushright}
+\textit{( Matlap 2024/03/L:3716)} 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+a.) Az általános tag megsejtéséhez írjuk fel a sorozat néhány tagját:
+
+\[
+\begin{aligned}a_{1} & =\frac{a}{a-1}=\frac{a-1+1}{a-1}=1+\frac{1}{a-1}\\
+a_{2} & =a\cdot\left(1+\frac{1}{a-1}\right)-1=a+\frac{a}{a-1}-1=a+\frac{a-a+1}{a-1}=a+\frac{1}{a-1}\\
+a_{3} & =a\cdot\left(a+\frac{1}{a-1}\right)-1=a^{2}+\frac{a}{a-1}-1=a^{2}+\frac{a-a+1}{a-1}=a^{2}+\frac{1}{a-1}\\
+a_{4} & =a\cdot\left(a^{2}+\frac{1}{a-1}\right)-1=a^{3}+\frac{a}{a-1}-1=a^{3}+\frac{a-a+1}{a-1}=a^{3}+\frac{1}{a-1}.
+\end{aligned}
+\]
+
+A fenti tagok alapján megállapíthatjuk azt a sejtést, hogy a sorozat
+általános tagja $a_{n}=a^{n-1}+\frac{1}{a-1}$ bármely $n\geq1$ esetén.
+Ezt a matematikai indukció módszerével igazoljuk: $P(n):a_{n}=a^{n-1}+\frac{1}{a-1}$,
+$\forall n\geq1$.
+
+A kiszámított tagok alapján megállapíthatjuk, hogy $P(1)$, $P(2)$,
+$P(3)$ és $P(4)$ igazak. Feltételezzük, hogy tetszőleges $k\geq1$
+esetén $P(k)$ igaz és bizonyítsuk be, hogy $P(k+1)$ is teljesülni
+fog. A rekurziós képletet használva
+
+\[
+\begin{aligned}a_{k+1} & =a\cdot a_{k}-1=a\cdot\left(a^{k-1}+\frac{1}{a-1}\right)-1\\
+ & =a^{k}+\frac{a}{a-1}-1=a^{k}+\frac{a-a+1}{a-1}=a^{k}+\frac{1}{a-1}.
+\end{aligned}
+\]
+
+Tehát $P(k+1)$ is igaz. A matematikai indukció elve alapján kijelenthető,
+hogy a sorozat általános tagja $a_{n}=a^{n-1}+\frac{1}{a-1}$ bármely
+$n\geq1$ esetén.\\
+
+b.) Behelyettesítjük az a) alpontban megkapott általános képletet,
+egyszerűsítünk, használjuk a mértani haladvány összegképletét, majd
+ezt átrendezve megkapjuk a kért alakot: 
+\begin{align*}
+\sum\limits_{k=0}^{n}\frac{(a-1)^{2}a_{2k+1}+1}{(a-1)a_{k+1}-1} & =\sum\limits_{k=0}^{n}\frac{(a-1)^{2}\left(a^{2k}+\frac{1}{a-1}\right)+1}{(a-1)\left(a^{k}+\frac{1}{a-1}\right)-1}\\
+ & =\sum\limits_{k=0}^{n}\frac{(a-1)^{2}a^{2k}+a-1+1}{(a-1)a^{k}+1-1}\\
+ & =\sum\limits_{k=0}^{n}\frac{(a-1)^{2}a^{2k}+a}{(a-1)a^{k}}=(a-1)\sum\limits_{k=0}^{n}a^{k}+\frac{a}{a-1}\sum\limits_{k=0}^{n}\frac{1}{a^{k}}\\
+ & =(a-1)\cdot\frac{a^{n+1}-1}{a-1}+\frac{a}{a-1}\cdot\frac{\frac{1}{a^{n+1}}-1}{\frac{1}{a}-1}\\
+ & =a^{n+1}-1+\frac{a}{a-1}\cdot\frac{1-a^{n+1}}{a^{n+1}}\cdot\frac{a}{1-a}\\
+ & =a^{n+1}-1-\frac{a^{2}}{(a-1)^{2}}\left(\frac{1}{a^{n+1}}-1\right)\\
+ & =\frac{1}{a^{n-1}}\left(a^{2n}-\frac{1}{(a-1)^{2}}\right)+\frac{a^{2}-(a-1)^{2}}{(a-1)^{2}}\\
+ & =\frac{1}{a^{n-1}}\left(a^{n}+\frac{1}{a-1}\right)\left(a^{n}-\frac{1}{a-1}\right)+\frac{2a-1}{(a-1)^{2}}\\
+ & =\frac{a_{n+1}}{a^{n-1}}\left(a_{n+1}-\frac{2}{a-1}\right)+\frac{2a-1}{(a-1)^{2}}.
+\end{align*}
+\\
+ c.) A ${\displaystyle \lim\limits_{n\to\infty}\frac{1}{n}\sum\limits_{k=2}^{n+1}\sqrt[k]{a_{k}}}$
+határértéket a Cesaro--Stolz-tétel alkalmazásával számoljuk ki, amit
+megtehetünk, mert a $b_{n}=n$, $n\geq1$ sorozat szigorúan növekvő
+és $\lim\limits_{n\to\infty}n=+\infty$: 
+\[
+\begin{aligned}\lim\limits_{n\to\infty}\frac{1}{n}\sum\limits_{k=2}^{n+1}\sqrt[k]{a_{k}} & =\lim\limits_{n\to\infty}\frac{\sum\limits_{k=2}^{n+1}\sqrt[k]{a_{k}}}{n}=\lim\limits_{n\to\infty}\frac{\sum\limits_{k=2}^{n+2}\sqrt[k]{a_{k}}-\sum\limits_{k=2}^{n+1}\sqrt[k]{a_{k}}}{n+1-n}\\
+ & =\lim\limits_{n\to\infty}\sqrt[n+2]{a_{n+2}}.
+\end{aligned}
+\]
+
+A kapott határértéket a Cauchy--d'Alambert-tétellel ($a_{n+1}>0,\forall n\geq1$)
+számoljuk tovább behelyettesítve az általános tag képletét: 
+\[
+\begin{aligned}\lim\limits_{n\to\infty}\sqrt[n+2]{a_{n+2}}= & \lim\limits_{n\to\infty}\frac{a_{n+3}}{a_{n+2}}=\lim\limits_{n\to\infty}\frac{a^{n+2}+\frac{1}{a-1}}{a^{n+1}+\frac{1}{a-1}}=\lim\limits_{n\to\infty}\frac{a+\frac{1}{a-1}\cdot\frac{1}{a^{n+1}}}{1+\frac{1}{a-1}\cdot\frac{1}{a^{n+1}}}\\
+= & \frac{a+0}{1+0}=a.
+\end{aligned}
+\]
+Tehát a keresett határérték 
+\[
+\lim\limits_{n\to\infty}\frac{1}{n}\sum\limits_{k=2}^{n+1}\sqrt[k]{a_{k}}=a.
+\]
+\end{solution}
+\begin{extraproblem}[Gergely Verona, Száfta Antal]
+Hány olyan $\{a,b,c\}$ három különböző pozitív egész számot tartalmazó
+halmaz létezik, amelyre teljesül, hogy: 
+\[
+a\cdot b\cdot c=11\cdot21\cdot31\cdot41\cdot51\cdot61
+\]
+\end{extraproblem}
+
+\begin{solution}
+Először is faktorizáljuk az adott számokat: 
+\begin{align*}
+21 & =3\cdot7\\
+51 & =3\cdot17
+\end{align*}
+
+Így a teljes szorzat prímtényezőkre bontva: 
+\[
+3\cdot3\cdot7\cdot11\cdot17\cdot31\cdot41\cdot61
+\]
+
+Feladatunk az, hogy e 8 tényezőt három nem üres halmazra osszuk úgy,
+hogy az azok szorzataként kapott három szám különböző legyen.
+
+Egy ilyen felosztás megfelel annak, hogy a 8 tényezőt három nem üres
+részhalmazba rendezzük. A nem üres halmazokra való felosztások számát
+a másodfajú Stirling-számok adják, azaz: 
+\[
+S(8,3)=966
+\]
+
+De mivel két azonos tényezőnk is van (a két darab 3-as), bizonyos
+eseteket többször számolunk. Akkor lép fel duplikáció, amikor a két
+3-as külön halmazba kerül. Ezt komplementer módon számoljuk: 
+\[
+\text{Túlbecslés: }\frac{S(8,3)-S(7,3)-1}{2}=\frac{966-301-1}{2}=332
+\]
+
+Tehát a három nem üres halmaz esetében helyes felosztások száma: 
+\[
+966-332=634
+\]
+
+Hasonlóan vizsgáljuk azokat az eseteket is, amikor két vagy csak egy
+halmaz nem üres. Ezekhez a Stirling-számok: 
+\begin{align*}
+S(8,2) & =266, & S(7,2) & =63\\
+S(8,1) & =1, & S(7,1) & =1
+\end{align*}
+
+Így a korrekciók után ezek az esetek: 
+\begin{align*}
+S(8,2)-\frac{S(8,2)-S(7,2)}{2} & =266-\frac{203}{2}=164.5\\
+S(8,1)-\frac{S(8,1)-S(7,1)}{2} & =1-0=1
+\end{align*}
+
+A teljes lehetséges felosztások száma tehát: 
+\[
+\frac{S(8,3)+S(8,2)+S(8,1)+S(7,3)+S(7,2)+S(7,1)+1}{2}=
+\]
+\[
+\frac{966+266+1+301+63+1+1}{2}=\frac{1599}{2}=730
+\]
+
+Ez azonban tartalmaz néhány olyan esetet is, ahol az $a,b,c$ számok
+nem különbözőek, például $(1,1,x)$ vagy $(3,3,x)$. Ezek száma 2,
+így a helyes válasz: 
+\[
+\boxed{728}
+\]
+\end{solution}
+

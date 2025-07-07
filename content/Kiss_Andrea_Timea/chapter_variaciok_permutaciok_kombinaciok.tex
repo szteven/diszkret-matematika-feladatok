@@ -1,0 +1,1378 @@
+
+\chapter{Variációk, permutációk, kombinációk}\label{chap:perm}
+\begin{description}
+	{\large \item [{Szerző:}] Kiss Andrea-Tímea (Korszerű módszerek a matematikatanításban, Didaktikai mesteri -- Matematika, 
+		II. év)}
+	
+\end{description}
+%Könyvészet: \cite{diszkretmatek,andreescu2013102,ASzi}
+\begin{problem}[\cite{ASzi}]
+\label{fel1} Egy polcon $5$ különböző trófeát kell elhelyeznünk.
+Hányféleképpen tehetjük meg ezt? 
+\end{problem}
+
+\begin{problem}
+\label{fel2} Hány különböző számjegyekből álló négyjegyű természetes
+szám képezhető az $1,5,7,9$ számjegyekből? 
+\end{problem}
+
+\begin{problem}
+\label{fel3} Móniék a moziban a harmadik sor 10., 11., 12., 13.,
+14., 15. helyeit foglalták le. Hányféleképpen foglalhatja el a helyét
+Móni és öt barátja? 
+\end{problem}
+
+\textit{Oldjuk meg a fenti feladatokat, majd fogalmazzuk meg a feladványokban
+rejlő közös tulajdonságot!}
+\begin{solution}
+{\bf A \ref{fel1}. gyakorlat megoldása:}
+
+Feltételezzük, hogy a polcon balról jobbra a trófeák pozíciója 1.,
+2., 3., 4. és 5. Először vizsgáljuk meg az egyszerűbb eseteket.
+\begin{itemize}
+\item Ha 1 trófeánk van, akkor ezt egyféleképpen tehetjük fel a polcra:
+T1. 
+\item Ha 2 trófeánk van, akkor ezeket két különböző sorrendben helyezhetjük
+el: T1, T2 vagy T2, T1. 
+\item Ha 3 trófea van, akkor az előző két trófeához hozzá kell rakni valahova
+a T3-at, amit háromféleképpen tehetünk meg: az előző két trófea elé,
+mögé, vagy közéjük. Így az előbbi 2 sorrend mindegyikéből 3 különböző
+három trófeát tartalmazó sor készíthető: $2\cdot3=6$ lehetséges sorrend. 
+\item Ha 4 trófea van, akkor a T4 trófeát be kell illeszteni az előző három
+trófea által alkotott sorba, amit négyféleképpen tehetünk meg: a sor
+elejére, az 1. és 2. trófea közé, a 2. és 3. közé, vagy a sor végére.
+Ezért az előbbi 6 sorrend mindegyikéből 4 különböző négy trófeát tartalmazó
+sor készíthető: $6\cdot4=24$ lehetséges sorrend. 
+\item Ha 5 trófeánk van, akkor a T5 trófeát az előző négy trófeát tartalmazó
+sorba öt különböző helyre tehetjük. Így az előző 24 sorrend mindegyikéből
+5 különböző sorrend alakítható: $24\cdot5=120$ lehetséges sorrend. 
+\end{itemize}
+Tehát öt trófea 120-féleképpen rendezhető sorrendbe.
+
+\textit{Megjegyzés:} Ha $t_{n}$-nel jelöljük $n$ különböző trófea
+összes lehetséges sorba rendezésének számát, akkor fennáll az 
+\begin{equation}
+t_{n+1}=(n+1)\cdot t_{n},\forall n\in\mathbb{N}^{*}\label{permutacio_rekurzio}
+\end{equation}
+rekurzív összefüggés, mert minden $n$ trófeát tartalmazó sor esetén
+az $(n+1).$ trófeát $n+1$ lehetséges helyre szúrhatjuk be, így $t_{n}$
+sorrend mindegyikéből $n+1$ különböző $n+1$ trófeát tartalmazó sor
+alakítható ki.
+
+{\bf A \ref{fel2}. gyakorlat megoldása:}
+
+Azokat az $\overline{abcd}$ négyjegyű természetes számokat keressük,
+amelyekre az $a,b,c,d$ számjegyek páronként különbözőek és $a,b,c,d\in\{a,b,c,d\}$.
+
+Ekkor az $\overline{abcd}$ négyjegyű szám esetén az $a$ számjegy
+$4$ féle lehet. Ezen a négy eset mindegyikében a $b$ számjegynek
+már csak 3 félét tudunk választani, ezért az első két számjegyet $4\cdot3=12$-féleképpen
+lehet lerögzíteni.
+
+Amikor a $c$ számjegyet szeretnénk lerögzíteni, akkor figyelembe
+kell vegyük, hogy az $1,5,7,9$ számjegyekből már kettőt felhasználtunk
+az első két számjegy rögzítésénél. Az előbbi $12$ darab $\overline{ab}$
+szám mindegyikéhez így a $c$ számjegyet már csak kétféleképpen tudjuk
+megválasztani, ezért összesen $12\cdot2=24$ darab $\overline{abc}$
+számot tudok képezni.
+
+A négy számjegy közül a rögzítéshez még csak egyet nem használtunk
+fel, ezért ez egyértelműen az utolsó pozícióra kerül, így az így képezhető
+$\overline{abcd}$ számok számossága $24$ lesz.
+
+\textit{Megjegyzés}: Győződjünk meg arról, hogy a számjegyek rögzítésének
+sorrendjétől eltekinthetünk. Akármilyen sorrendbe is rögzítsük a számjegyeket,
+mindig ugyanaz a $24$ négyjegyű számot képezzük.
+
+{\bf A \ref{fel3}. gyakorlat megoldása:}
+
+Feltételezzük, hogy a hat barát a helyüket balról jobbra egyesével
+foglalják el.
+
+A 10. helyre kezdetben bárki leülhet a hat barát közül, viszont a
+11. helyre már csak a maradék öt állva maradt ember közül valaki.
+A 12. helyre már csak a 10. és 11. helyeket nem elfoglaló négy barát
+közül valaki ülhet, a 13. helyre hasonló gondolatmenettel három, a
+14. helyre kettő, valamint a 15. helyre már csak az egyedül állva
+maradt személy ülhet.
+
+Bárki is kezdje a sort és folytassa tovább, a lehetőségek száma mindig
+a fent leírtak alapján alakul. Így $6\cdot5\cdot4\cdot3\cdot2\cdot1=720$-féleképpen
+tudja elfoglalni a helyét a moziban a hat barát. 
+\end{solution}
+\textit{Az előző három feladat mindegyikében $n$ különböző elem összes
+lehetséges sorba rendezéseinek számát vizsgáltuk.}
+
+\begin{definition}{permutacio}
+Valamely $n$ elemű $A$ halmaz összes eleméből szerkesztett rendezett
+halmazt az $A$ halmaz egy \textbf{permutáció}jának nevezzük.
+\end{definition}
+
+Jelöljük $n$ különböző elem összes sorba rendezéseinek számát, vagyis
+valamely $n$ elemű $A$ halmaz összes permutációinak számát \textbf{$P_{n}$}-nel.
+(\textit{n-ed rendű permutáció})
+\begin{theorem}{perm}
+\[
+P_{n}=n!,n\in\mathbb{N},\text{ ahol }n!=1\cdot2\cdot\ldots\cdot n
+\]
+\end{theorem}
+
+\textit{Megjegyzés}: 
+\begin{itemize}
+\item $P_{0}=1$ 
+\end{itemize}
+\begin{proof}
+\Aref{permutacio_rekurzio}-es összefüggés alapján itt is érvényes
+lesz a 
+\[
+P_{k+1}=(k+1)\cdot P_{k},\forall k\in\mathbb{N}^{*}
+\]
+rekurzív összefüggés. 
+\[
+\begin{array}{llcl}
+k=n-1\text{ -re:} & P_{n} & = & n\cdot P_{n-1}\\
+k=n-2\text{ -re:} & P_{n-1} & = & (n-1)\cdot P_{n-2}\\
+k=n-3\text{ -re:} & P_{n-2} & = & (n-2)\cdot P_{n-3}\\
+ & \vdots\\
+k=2\text{ -re:} & P_{3} & = & 3\cdot P_{2}\\
+k=1\text{ -re:} & P_{2} & = & 2\cdot P_{1}
+\end{array}
+\]
+egyenlőségek megfelelő oldalait összeszorozva kapjuk, hogy 
+\[
+\begin{array}{c}
+P_{n}\cdot P_{n-1}\cdot P_{n-2}\cdot\ldots\cdot P_{2}=n\cdot(n-1)\cdot(n-2)\cdot\ldots\cdot3\cdot2\cdot P_{1}\cdot P_{n-1}\cdot P_{n-2}\cdot\ldots\cdot P_{2}\\
+\Leftrightarrow P_{n}=1\cdot2\cdot3\cdot\ldots\cdot(n-1)\cdot n=n!
+\end{array}
+\]
+\end{proof}
+\begin{problem}[\cite{ASzi}]
+\label{fel4} Egy hattagú társaság tagjai egy titkárt és egy írnokot
+kell kiválasszanak. Hány különböző módon tehetjük meg? Ha az írnok
+és titkár mellé egy küldöncöt is kell választanunk, akkor ez hányszorosára
+növeli a lehetséges választások számát? 
+\end{problem}
+
+\begin{problem}[\cite{diszkretmatek}]
+\label{fel5} Egy versenyen 100-an vesznek részt, de csupán az első
+tíz sorrendjét rögzítik. Hányféle (a krónikákban nyilvántartott) eredménye
+lehet a versenynek? 
+\end{problem}
+
+\textit{Oldjuk meg a fenti feladatokat, majd fogalmazzuk meg a feladványokban
+rejlő közös tulajdonságot!}
+\begin{solution}
+{\bf\ref{fel4}. gyakorlat megoldása:}
+
+A titkárt hat ember közül kell kiválasztanunk, tehát erre 6 lehetőségünk
+van. Minden kiválasztott titkárhoz a megmaradt öt tag közül bárkit
+választhatunk írnoknak, tehát összesen $6\cdot5=30$ lehetőségünk
+van.
+
+Ha a társaság tagjait 1-től 6-ig megszámozzuk, és a számpárok első
+tagja a titkárt, míg a második az írnokot azonosítja, akkor a következő
+felsorolás az összes lehetséges esetet mutatja be: 
+\[
+\begin{array}{cccccc}
+ & (2,1) & (3,1) & (4,1) & (5,1) & (6,1)\\
+(1,2) &  & (3,2) & (4,2) & (5,2) & (6,2)\\
+(1,3) & (2,3) &  & (4,3) & (5,3) & (6,3)\\
+(1,4) & (2,4) & (3,4) &  & (5,4) & (6,4)\\
+(1,5) & (2,5) & (3,5) & (4,5) &  & (6,5)\\
+(1,6) & (2,6) & (3,6) & (4,6) & (5,6)
+\end{array},
+\]
+amely számpárok megadják az $\{1,2,3,4,5,6\}$ halmaz összes kételemű
+rendezett részhalmazát. Vegyük észre, hogy nem számít az, hogy melyik
+pozícióra melyik szerepet tesszük, mert a táblázat szimmetrikus. Tehát
+ha az $(a,b)$ számpár megjelenik, akkor a $(b,a)$ is.
+
+A küldöncöt a titkár és az írnok minden lehetséges választása esetén
+a megmaradt négy tag közül kell kiválasztanunk, ez a négyszeresére
+növeli a lehetséges választások számát.
+
+{\bf\ref{fel5}. gyakorlat megoldása:}
+
+A $100$ versenyző közül 10-et kell kiválasztanunk úgy, hogy a kiválasztási
+sorrend számít.
+
+A válasz a már ismert gondolatmenetet követi. A 100 versenyző közül
+bármelyik lehet első. A második helyre már csak 99-en pályázhatnak,
+az első két helyre tehát $100\cdot99$-féleképpen futhatnak be. Ha
+az első kettő már megvan, a harmadik helyet $98$-an szerezhetik meg,
+és így tovább. Ezt a gondolatmenetet folytatva, az első tíz helyen
+$100\cdot99\cdot\ldots\cdot91$-féleképpen végezhettek a versenyzők.
+
+Ebben az esetben, ha a versenyzőket 1-től 100-ig megszámozzuk, és
+a pozíciók a helyezések számát jelölik, akkor tulajdonképpen az $\{1,2,\ldots,100\}$
+halmaz tízelemű rendezett részhalmazainak számát keressük. 
+\end{solution}
+\textit{Az előző két feladatban $n$ különböző elemből kiválasztott
+$k$ elem összes lehetséges sorba-rendezéseinek számát vizsgáltuk.}
+
+\begin{definition}{def:var}
+Valamely $n$ elemű $A$ halmaz egy $k$ elemű rendezett részhalmazát
+az $A$ halmaz egy \textbf{$k$-ad osztályú variáció}jának nevezzük.
+\end{definition}
+
+Jelöljük egy $n$ elemű halmaz $k$-ad osztályú variációinak számát
+$V_{n}^{k}$-val. (\textit{variáció $n$ alapon $k$})
+\begin{theorem}{thm:var}
+\[
+V_{n}^{k}=n\cdot(n-1)\cdot(n-2)\cdot\ldots\cdot(n-k+1)=\frac{n!}{(n-k)!},\forall k,n\in\mathbb{N},0\leq k\leq n.
+\]
+\end{theorem}
+
+\textit{Megjegyzés:} 
+\begin{itemize}
+\item Ha $k>n$, akkor $V_{n}^{k}=0$. 
+\item $V_{n}^{n}=P_{n},\forall n\in\mathbb{N}$. 
+\item $V_{n}^{0}=1$, $\forall n\in\mathbb{N}$. 
+\end{itemize}
+\begin{proof}
+Jelöljük $A$-val az $n$ elemű halmazunkat. Minden $k$ elemű $X$
+rendezett részhalmazból pontosan $(n-k)$ darab $(k+1)$ elemű rendezett
+részhalmazt szerkeszthetünk, ha az $X$-hez $(k+1)$-edik elemként
+hozzáadjuk az $A\setminus X$ valamelyik elemét. Így minden $(k+1)$
+elemű rendezett részhalmazt megkapunk, tehát 
+\[
+V_{n}^{k+1}=V_{n}^{k}\cdot(n-k),\forall n\in\mathbb{N}^{*},k\in\mathbb{N},0\leq k\leq n.
+\]
+A fenti rekurzív összefüggést írjuk fel $k=k,k-1,\ldots,2,1$-re:
+\[
+\begin{array}{llcl}
+k=k-1\text{ -re:} & V_{n}^{k} & = & (n-k+1)\cdot V_{n}^{k-1}\\
+k=k-2\text{ -re:} & V_{n}^{k-1} & = & (n-k+2)\cdot V_{n}^{k-2}\\
+k=k-3\text{ -re:} & V_{n}^{k-2} & = & (n-k+3)\cdot V_{n}^{k-3}\\
+ & \vdots\\
+k=2\text{ -re:} & V_{n}^{3} & = & (n-2)\cdot V_{n}^{2}\\
+k=1\text{ -re:} & V_{n}^{1} & = & (n-1)\cdot V_{n}^{1}
+\end{array}.
+\]
+A fenti egyenlőségek megfelelő oldalait összeszorozva kapjuk, hogy
+\[
+\begin{array}{c}
+V_{n}^{k}\cdot V_{n}^{k-1}\cdot\ldots\cdot V_{n}^{2}=V_{n}^{1}\cdot(n-1)\cdot(n-2)\cdot\ldots\cdot(n-k+1)\cdot V_{n}^{k-1}\cdot V_{n}^{k-2}\cdot\ldots\cdot V_{n}^{2}\\
+\Leftrightarrow V_{n}^{k}=n\cdot(n-1)\cdot(n-2)\cdot\ldots\cdot(n-k+1)=\dfrac{n!}{(n-k)!}.
+\end{array}
+\]
+\end{proof}
+\begin{problem}[\cite{ASzi}]
+\label{fel6} A terroristák hat túsz közül hármat szabadon akarnak
+engedni. Hány különböző módon lehetséges ez? 
+\end{problem}
+
+\begin{problem}
+\label{fel7} Egy vendégségbe hét vendég érkezett. A vendégek egymást
+egyszeri kézfogással üdvözölték. Hány kézfogás történt? 
+\end{problem}
+
+\begin{problem}[\cite{ASzi}]
+\label{fel8} Egy ötöslottón a 90 számból húznak ki ötöt. Hányféleképpen
+tölthető ki a lottószelvény? 
+\end{problem}
+
+\textit{Oldjuk meg a fenti feladatokat, majd fogalmazzuk meg a feladványokban
+rejlő közös tulajdonságot!}
+\begin{solution}
+{\bf\ref{fel6}. gyakorlat megoldása:}
+
+Számozzuk meg a túszokat 1-től 6-ig. Mivel a túszokat egyszerre engedik
+szabadon, itt nem a rendezett számhármasokat kell megszámolnunk, hanem
+az $\{1,2,3,4,5,6\}$ halmaz háromelemű részhalmazait.
+
+Mivel az $\{1,2,3,4,5,6\}$ halmaznak $V_{6}^{3}=\dfrac{6!}{(6-3)!}=6\cdot5\cdot4=120$
+rendezett háromelemű részhalmaza van, és három különböző elemet $P_{3}=3!=6$-féleképpen
+lehet sorba rendezni. Ez azt jelenti, hogy minden $\{a,b,c\}$ háromelemű
+részhalmazt a rendezett részhalmazok között pontosan hatszor számolunk
+meg: $(a,b,c),(a,c,b),(b,a,c),(b,c,a),(c,a,b),(c,b,a)$.
+
+Ezért $\dfrac{V_{6}^{3}}{P_{3}}=\dfrac{120}{6}=20$ háromelemű részhalmaza
+van az $\{1,2,3,4,5,6\}$ halmaznak, ami alapján a túszokat is 20-féleképpen
+engedhetik szabadon a terroristák.
+
+{\bf\ref{fel7}. gyakorlat megoldása:}
+
+A hét vendég közül mindig egyszerre csak kettő fog kezet egymással,
+és páronként csak egyszer fognak kezet. Ezért a fenti kérdésnek megfelel
+a következő feladvány: A hét vendég közül hányféleképpen választható
+ki egyszerre két vendég?
+
+Ha számítana a vendégek kiválasztásának sorrendje, akkor $V_{7}^{2}=\dfrac{7!}{(7-2)!}=7\cdot6=42$-féleképpen
+lehetne összesen kiválasztani 7 vendégből 2-t. Viszont bármely $A$
+és $B$ vendég kézfogása az $(A,B)$ és $(B,A)$ rendezett részhalmazzal
+is leírható, ezért a fenti összeszámlálásban minden kézfogást kétszer
+számoltunk.
+
+Ezek alapján a kézfogások száma $\dfrac{42}{2}=21$ lesz.
+
+{\bf\ref{fel8}. gyakorlat megoldása:}
+
+Ha az $\{1,2,3,\ldots,90\}$ halmaz rendezett ötelemű részhalmazaira
+lennénk kíváncsiak, akkor a válasz $V_{90}^{5}$ lenne.
+
+Viszont a számok kiválasztásának sorrendjét nem kell figyelembe vegyük,
+így a lottószelvényen bejelölt öt szám $P_{5}$ lehetséges sorbarendezései
+mind ugyanazon kitöltési lehetőségnek bizonyulnak.
+
+Ezért $\dfrac{V_{90}^{5}}{P_{5}}=\dfrac{\dfrac{90!}{(90-5)!}}{5!}=\dfrac{90!}{85!\cdot5!}$-féleképpen
+tölthető ki a lottószelvény. 
+\end{solution}
+\textit{Az előző három feladatban $n$ különböző elemből $k$ elem
+összes lehetséges kiválasztásának számát vizsgáltuk úgy, hogy a kiválasztási
+sorrendet nem vettük figyelembe.}
+
+\begin{definition}{kombinacio}
+Valamely $n$ elemű $A$ halmaz egy $k$ elemű részhalmazát az $A$
+halmaz egy \textbf{$k$-ad osztályú kombináció}jának nevezzük.
+\end{definition}
+
+Jelöljük egy $n$ elemű halmaz $k$-ad osztályú kombinációinak számát
+$C_{n}^{k}$-val. (\textit{kombináció $n$ alapon $k$})
+\begin{theorem}{komb}
+\[
+C_{n}^{k}=\dfrac{V_{n}^{k}}{P_{k}}=\dfrac{n!}{(n-k)!k!},\forall n,k\in\mathbb{N},0\leq k\leq n.
+\]
+\end{theorem}
+
+\textit{Megjegyzés:} 
+\begin{itemize}
+\item Ha $k>n$, akkor $C_{n}^{k}=0$. 
+\item $C_{n}^{0}=1$, $\forall n\in\mathbb{N}$ esetén. 
+\item $C_{n}^{k}=C_{n}^{n-k}$, $\forall n,k\in\mathbb{N},0\leq k\leq n.$ 
+\end{itemize}
+\begin{proof}
+Egy $n$ elemű halmaz rendezett $k$ elemű részhalmazainak számát
+megadja $V_{n}^{k}$. Ebben minden ,,rendezetlen'' részhalmaz többszörösen
+is szerepel, méghozzá annyiszor, ahányféleképpen $k$ elem sorba rendezhető
+($P_{k}$).
+
+Így ha a rendezett $k$ elemű részhalmazok számát elosztjuk $P_{k}$-val,
+akkor éppen a $k$ elemű részhalmazok számát kapjuk, vagyis $C_{n}^{k}=\dfrac{V_{n}^{k}}{P_{k}}$. 
+\end{proof}
+
+\section*{Házi feladatok}
+\begin{problem}
+Határozzuk meg az $\{a_{1},a_{2},\ldots,a_{100}\}$ halmaz azon részhalmazainak
+számát, amelynek az $\{a_{1},a_{5}\}$ halmaz részhalmaza, de az $a_{7}$
+nem eleme! 
+\end{problem}
+
+\begin{solution}
+Keressük azokat az $X\subseteq\{a_{1},a_{2},\ldots,a_{100}\}$ részhalmazokat,
+ahol $\{a_{1},a_{5}\}\subseteq X$ és $a_{7}\notin X$. Ekkor tulajdonképpen
+az $X$ halmaz felírható, mint $X=Y\cup\{a_{1},a_{5}\}$, ahol $Y\subseteq\{a_{2},a_{3},a_{4},a_{6},a_{8},a_{9},\ldots a_{100}\}$
+tetszőleges részhalmaz.
+
+Mivel $|\{a_{2},a_{3},a_{4},a_{6},a_{8},a_{9},\ldots,a_{100}\}|=|\{a_{1},a_{2},\ldots,a_{100}\}\setminus\{a_{1},a_{5},_{7}\}|=100-3=97$,
+ezért $0\leq|Y|\leq97$. 
+\begin{itemize}
+\item ha $|Y|=0$, akkor az $Y$ halmaz $C_{97}^{0}$-féle lehet 
+\item ha $|Y|=1$, akkor az $Y$ halmaz $C_{97}^{1}$-féle lehet 
+\item ha $|Y|=2$, akkor az $Y$ halmaz $C_{97}^{2}$-féle lehet 
+\item $\vdots$ 
+\item ha $|Y|=97$, akkor az $Y$ halmaz $C_{97}^{97}$-féle lehet 
+\end{itemize}
+Így az $Y$ halmaz összesen $C_{97}^{0}+C_{97}^{1}+\ldots+C_{97}^{97}$
+-féle lehet. Hozzuk ezt az összeget zárt formára. Az $Y$ halmaz az
+$\{a_{2},a_{3},a_{4},a_{6},a_{8},a_{9},\ldots,a_{100}\}$ $97$ elemű
+halmaz tetszőleges részhalmaza, amiknek száma $2^{97}$. Ezért 
+\[
+C_{97}^{0}+C_{97}^{1}+\ldots+C_{97}^{97}=2^{97},
+\]
+
+ami alapján az $Y$, és így az $X$ halmaz is $2^{97}$-féle lehet.
+
+\textit{Megjegyzés:} A fenti összefüggés általánosítható: 
+\[
+C_{n}^{0}+C_{n}^{1}+\ldots+C_{n}^{n}=2^{n},\forall n\in\mathbb{N}.
+\]
+\end{solution}
+\begin{problem}[\cite{ASzi}]
+Egy osztályban $13$ lány és $12$ fiú tanul. Találomra kiválasztunk
+két lányt és egy fiút versmondásra, két lányt és egy fiút színházjegyvásárlásra,
+valamint két lányt és egy fiút tűzoltósági felkészítőre. Hányféleképpen
+állíthatunk össze ilyen kilenctagú csapatot? 
+\end{problem}
+
+\begin{solution}
+A versmondásra a két lányt $C_{13}^{2}$, az egy fiút $C_{12}^{1}$
+módon választhatjuk ki, tehát összesen $C_{13}^{2}\cdot C_{12}^{1}$
+különböző versmondó csapatot tudunk összeállítani.
+
+A megmaradt $13-2=11$ lány és $12-1=11$ fiú közül színházjegyvásárlásra
+a két lányt $C_{11}^{2}$, az egy fiút pedig $C_{11}^{1}$ módon választhatjuk
+ki, így összesen $C_{11}^{2}\cdot C_{11}^{1}$ különböző jegyvásárló
+csapat állítható össze.
+
+A többiekből, vagyis a $11-2=9$ lány és $11-1=10$ fiú közül a tűzoltósági
+felkészítőre a két lányt $C_{9}^{2}$, az egy fiút pedig $C_{10}^{1}$
+módon választhatjuk ki, így összesen $C_{9}^{2}\cdot C_{10}^{1}$
+különböző felkészítőre járó csapatot állíthatunk össze.
+
+Tehát a kilencfős csapat $C_{13}^{2}\cdot C_{12}^{1}\cdot C_{11}^{2}\cdot C_{11}^{1}\cdot C_{9}^{2}\cdot C_{10}^{1}=\dfrac{13\cdot12}{2}\cdot12\cdot\dfrac{11\cdot10}{2}\cdot11\cdot\dfrac{9\cdot8}{2}\cdot10=13\cdot12^{2}\cdot11^{2}\cdot10^{2}\cdot9$
+különböző összetétellel rendelkezhet. 
+\end{solution}
+\begin{problem}[\cite{ASzi}]
+\label{fel11} Az $1,2,3,4,5,6,7,8,9$ számjegyekből hány darab olyan
+kilencjegyű szám alkotható, amelynek számjegyei egymástól különbözőek,
+és 
+\begin{enumerate}
+\item[a)] az $1$-es közvetlenül a $2$-es előtt áll, 
+\item[b)] az $1$-es előbb áll, mint a $2$-es? 
+\item[a)] Mivel az $1$-es közvetlenül a $2$-es előtt áll, ezért a $12$-t
+tekintsük egy ,,számjegynek''.
+
+Így azokat a ,,nyolcjegyű'', különböző ,,számjegyekből'' felépülő
+természetes számokat számát keressük, amelyek az $12,3,4,5,6,7,8,9$
+,,számjegyekből'' alakíthatóak.
+
+Minden ilyen számot megkapunk az $12,3,4,5,6,7,8,9$ számok összes
+permutációjaként, ezért $P_{8}=8!$ ilyen szám létezik.
+\item[b)] \textit{1. megoldás:} A keresett kilencjegyű szám számjegyei közül
+két pozícióra rakjuk be az $1$ és $2$ számjegyeket. Ezt a két pozíciót
+a kilencből $C_{9}^{2}=\dfrac{9\cdot8}{2}$-féleképpen választhatjuk
+ki. Viszont ekkor ezekben az esetekben a két pozíció közül az elsőre
+rakjuk az $1$-est, míg a másodikra a $2$-est, a feltételeknek megfelelően.
+
+A további $3,4,5,6,7,8,9$ hét számjegyet a maradék hét pozícióra
+$P_{7}$-féleképpen helyezhetem el.
+
+Ezért a keresett számok száma $C_{9}^{2}\cdot P_{7}=\dfrac{9!}{2}$.
+
+\textit{2. megoldás:} Minden $\varphi$ permutációhoz hozzárendeljük
+azt, amelyiket a $\varphi$-ből úgy kapunk, hogy az $1$-est és a
+$2$-est felcseréljük. Így az $1,2,3,4,5,6,7,8,9$ számjegyek permutációit
+kettesével csoportosíthatjuk. Mivel minden csoportból pontosan egy
+származtat nekünk megfelelő számot, ezért a kívánt számok száma $\dfrac{P_{9}}{2}=\dfrac{9!}{2}$. 
+
+\end{enumerate}
+Hány különböző módon lehet $10$ embert egy kerek asztal köré leültetni? 
+\end{problem}
+
+\begin{solution}
+Ha a helyek $1$-től $10$-ig meg lennének számozva, akkor erre a
+tíz helyre a tíz embert $P_{10}$-féleképpen lehetne leültetni.
+
+Jelöljük az ülésrendet $(a_{1},a_{2},\ldots,a_{10})$-zel, ahol a
+képzeletbeli helyszámozásoknak megfelelően az $i$-edik helyen az
+$a_{i}$ személy ül. Mivel a székek nincsenek megszámozva, ezért a
+kerek asztalnál az 
+\[
+\begin{array}{c}
+(a_{1},a_{2},\ldots,a_{10})\\
+(a_{10},a_{1},a_{2},\ldots,a_{9})\\
+(a_{9},a_{10},a_{1},a_{2},\ldots,a_{8})\\
+\vdots\\
+(a_{2},a_{3},\ldots,a_{10},a_{1})
+\end{array}
+\]
+rendezett halmazok ugyanazt az ültetést származtatják, mert az asztal
+körül csak az számít, hogy ki kinek a szomszédja.
+
+Ezért minden lehetséges ülésrend $10$ permutációt származtat, ezért
+az ülésrendek száma $\dfrac{P_{10}}{10}=9!$. 
+\end{solution}
+\begin{problem}[\cite{andreescu2013102}]
+Egy pók mind a nyolc lábára egy-egy zoknit és cipőt húz. Hány különböző
+sorrendben veheti fel a zoknijait és cipőit, ha minden lábán először
+a zoknit kell felhúznia a cipő előtt? 
+\end{problem}
+
+\begin{solution}
+Számozzuk meg a pók lábait $1$-től $8$-ig, és jelöljük $a_{k}$-val
+a zoknit és $b_{k}$-val a cipőt, amely a $k$-adik lábára kerül.
+
+A zoknik és cipők egy lehetséges sorrendje a $16$ szimbólum ($a_{1},b_{1},a_{2},b_{2},\ldots,a_{8},b_{8}$)
+egy lehetséges permutációja, amelyben minden $a_{k}$ megelőzi a hozzátartozó
+$b_{k}$-t, minden $1\leq k\leq8$ esetén.
+
+A $16$ szimbólum összes lehetséges permutációjának száma $P_{16}=16!$.
+\Aref{fel11}-es gyakorlat megoldásában használt gondolatmenet alapján,
+az összes permutáció felében az $a_{1}$ megelőzi $b_{1}$-et, azaz
+$\dfrac{16!}{2}$ permutációban.
+
+Hasonlóan, az $a_{2}$ megelőzi a $b_{2}$-t ezeknek a permutációknak
+pontosan felében, azaz $\dfrac{16!}{2^{2}}$ permutációban.
+
+Ezt folytatva arra a következtetésre jutunk, hogy minden $a_{k}$
+megelőzi a hozzátartozó $b_{k}$-t pontosan $\dfrac{16!}{2^{8}}$
+permutációban. Ezért a pók összesen $\dfrac{16!}{2^{8}}$ módon tud
+felöltözni. 
+\end{solution}
+\begin{problem}[\cite{andreescu2013102}]
+Hányféleképpen lehet kiválasztani az első $18$ pozitív egész szám
+közül ötöt úgy, hogy ezek közül bármely két szám közötti különbség
+(abszolút értéke) legalább $2$ legyen? 
+\end{problem}
+
+\begin{solution}
+Legyenek az $a_{1}<a_{2}<a_{3}<a_{4}<a_{5}$ a választott számok.
+
+Tudjuk, hogy $a_{1},a_{2},a_{3},a_{4},a_{5}\in\{1,2,3,\ldots,18\}$
+és az $a_{1},a_{2},a_{3},a_{4},a_{5}$ bármely két szám közötti különbség
+(abszolút értéke) legalább $2$.
+
+Az $a_{1}<a_{2}<a_{3}<a_{4}<a_{5}$ növekvő sorrend és a fent leírtak
+alapján az $a_{1}<a_{2}-1<a_{3}-2<a_{4}-3<a_{5}-4$ növekvő sorrend
+szintén fennáll, valamint ekkor a $(b_{1},b_{2},b_{3},b_{4},b_{5})=(a_{1},a_{2}-1,a_{3}-2,a_{4}-3,a_{5}-4)$
+számokra teljesülnek a $b_{1}<b_{2}<b_{3}<b_{4}<b_{5}$ és $b_{1},b_{2},b_{3},b_{4},b_{5}\in\{1,2,3,\ldots,14\}$
+tulajdonságok.
+
+A $(b_{1},b_{2},b_{3},b_{4},b_{5})$ rendezett halmaznak, ahol $b_{1}<b_{2}<b_{3}<b_{4}<b_{5}$,
+tulajdonképpen megfelel az $\{1,2,3,\ldots,14\}$ halmaz egy ötelemű
+részhalmaza, mivel a halmaz elemeinek sorrendje egyértelmű.
+
+Mivel az $\{1,2,3,\ldots,14\}$ halmaznak $C_{14}^{5}=\dfrac{14!}{(14-5)!5!}=2002$
+ötelemű részhalmaza van összesen, ezért a fenti feltételeknek megfelelően
+a $(b_{1},b_{2},b_{3},b_{4},b_{5})$ számötös is $2002$-féle lehet
+összesen.
+
+A 
+\[
+\begin{array}{c}
+(b_{1},b_{2},b_{3},b_{4},b_{5})=(a_{1},a_{2}-1,a_{3}-2,a_{4}-3,a_{5}-4)\\
+\Leftrightarrow(a_{1},a_{2},a_{3},a_{4},a_{5})=(b_{1},b_{2}+1,b_{3}+2,b_{4}+3,b_{5}+4)
+\end{array}
+\]
+kölcsönosen egyértelmű megfeleltetés alapján az első $18$ pozitív
+egész szám közül $2002$-féle módon választhatjuk ki az $a_{1}<a_{2}<a_{3}<a_{4}<a_{5}$
+számokat úgy, hogy bármely két kiválasztott szám különbsége legalább
+$2$ legyen. 
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Domokos Ábel]
+Legyen $n\in\mathbb{N}^{*}$ és $A=\{1,2,\dots,n\}$. Határozd meg
+azon $f:A\to A$ növekvő függvények számát, amelyekre $|f(x)-f(y)|\leq|x-y|$,
+$\forall x,y\in A$. \emph{(Olimpiada Națională de Matematică, Etapa
+finală, Problema 3, 2014)}
+\end{extraproblem}
+
+\begin{solution}
+Vegyük észre, hogy $f(k+1)-f(k)\leq|k+1-k|=1$. Vezessük be a következő
+jelölést: $a_{k}=f(k+1)-f(k)$, ekkor $a_{k}\in\{0,1\},\quad k=1,2,\dots,n-1$.
+
+Rögzítsük le az $f(0)=a$, $f(n)=b$ értékeket. Ekkor kapjuk, hogy\\
+ $b-a=(f(n)-f(n-1))+(f(n-1)-f(n-2))+\dots+(f(1)-f(0))=a_{n-1}+a_{n-2}+\dots+a_{0}$.
+A kívánt egyenlőség eléréséhez $b-a$ tagjának 1-nek kell lennie az
+összegből, a többi pedig 0. Mindezt $C_{n-1}^{b-a}$ módon valósíthatjuk
+meg.
+
+Az $f$ függvény megszerkesztéseinek száma adott $a$, $b$ értékek
+esetén tehát $C_{n-1}^{b-a}$, de az $a$, $b$ számokat sokféleképpen
+választhatjuk. Ezek kiválasztásait is, ha figyelembe vesszük, akkor
+megkapjuk az összes lehetséges $f$ függvényt. A számolások a következőképpen
+alakulnak: 
+\begin{align*}
+\sum_{0\leq a\leq b\leq n}C_{n-1}^{b-a} & =\sum_{k=0}^{n-1}(n-k)C_{n-1}^{k}=\sum_{k=0}^{n-1}nC_{n-1}^{k}-\sum_{k=0}^{n-1}kC_{n-1}^{k}\\
+ & =n\sum_{k=0}^{n-1}C_{n-1}^{k}-\sum_{k=1}^{n-1}kC_{n-1}^{k}=n2^{n-1}-\sum_{k=1}^{n-1}kC_{n-1}^{k}\\
+ & =n2^{n-1}-\sum_{k=1}^{n-1}(n-1)C_{n-2}^{k-1}\\
+ & =n2^{n-1}-(n-1)2^{n-2}\\
+ & =(n+1)2^{n-2}
+\end{align*}
+\end{solution}
+
+\begin{extraproblem}[Csapó Hajnalka]
+Hány olyan téglalap található az alábbi ábrákon, amelyek oldalai
+rácsvonalak? 
+\begin{center}
+\includegraphics[width=0.6\textwidth]{\string"content/Kiss_Andrea_Timea/HF02_1\string".png} 
+\par\end{center}
+\end{extraproblem}
+
+\begin{solution}
+A téglalapot egy koordináta-rendszerbe helyezzük úgy, hogy két egymásra
+merőleges oldaltartó egyenese párhuzamos legyen a koordinátatengelyekkel.
+Ekkor egy téglalapot két számpár - $(a,b)$ és $(c,d)$ - határoz
+meg, ahol $a,b\in\{0,1,\dots,n\}$ és $c,d\in\{0,1,\dots,m\}$, $a\neq b$,
+$c\neq d$. Ezeket a számpárokat összesen $C_{n+1}^{2}\cdot C_{m+1}^{2}$
+féle módon választhatjuk ki, tehát $\frac{nm(m+1)(n+1)}{4}$ téglalap
+látható az ábrán. Ez a két ábrán 60 ill. 945 téglalapot jelent.
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+~
+\begin{itemize}
+\item[a)] Hány olyan négyzet található az alábbi ábrákon, amelyek oldalai rácsvonalak?
+Általánosítsunk! 
+\begin{center}
+\includegraphics[width=0.6\textwidth]{\string"content/Kiss_Andrea_Timea/HF02_2.png\string"} 
+\par\end{center}
+\item[b)] Hány olyan négyzet van a fenti ábrákon, amelynek csúcsa az adott
+rácsnak rácspontja? 
+\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+a) Az első ábra esetén 16 darab 1 egység oldalú, 9 db 2 egység oldalú,
+4 db 3 egység oldalú és 1 db 4 egység oldalú négyzet van. Tehát $1^{2}+2^{2}+3^{2}+4^{2}=30$
+négyzet látható az első ábrán.\\
+ A második ábrán $6\cdot9$ db egység oldalú, $5\cdot8$ db 2 egység
+oldalú, $4\cdot7$ db 3 egység oldalú, $3\cdot6$ db 4 egység oldalú,
+$2\cdot5$ db 5 egység oldalú és $1\cdot4$ db 6 egység oldalú négyzet
+látható, azaz összesen $154$.
+
+Általánosan: Ha a rács $m\times n$-es, ahol $m\le n$, akkor összesen
+${\displaystyle {\sum_{i=1}^{m}{i\cdot(n-m+i)}}}$ darab négyzet látható.
+
+b) Az első ábrán az előzőek mellett még 4 típusú négyzet szerkeszthető:
+az 1-es típusúból 9 db van, a 2-es típusúból 1 db, a 3-as típusúból
+$2\cdot4$ db, a 4-es típusúból pedig 2 darab. Ez még 20 négyzetet
+jelenet, tehát összesen 50 négyzet van. 
+\begin{center}
+\includegraphics[width=0.3\textwidth]{\string"content/Kiss_Andrea_Timea/HF02_21.jpg\string"} 
+\par\end{center}
+A második ábrán $1\cdot4+3\cdot6+5\cdot8+2\cdot(7\cdot4+1\cdot4+6\cdot3+5\cdot2+5\cdot2+4\cdot1)=210$
+négyzet van még, tehát összesen $364$. 
+\begin{center}
+\includegraphics[width=0.6\textwidth]{\string"content/Kiss_Andrea_Timea/HF02_22.jpg\string"}
+\par\end{center}
+\end{solution}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+Hányféleképpen festhetjük ki 6 különböző színűre egy kocka lapjait,
+ha egymásba forgatható példányokból csak egyet-egyet akarunk? 
+\end{extraproblem}
+
+\begin{solution}
+A lehetséges színeket jelöljük $c_{1},c_{2},c_{3},c_{4},c_{5},c_{6}$-al.
+Tegyük fel, hogy az összes lehetséges módon kifestettük a kockákat.
+Ahhoz, hogy ezeket megszámoljuk, eslő lépésben alulra forgatjuk minden
+kocka $c_{1}$ színű lapját. Ekkor a $c_{2}$ színú lap bizonyos kockáknál
+felül, másoknál a kocka valamely oldalán helyezkedi el.
+
+Tekintsük azokat a kockákat, amelyeknél a $c_{2}$ színű lap felül
+van. Ezeknek az oldalai a $c_{3},c_{4},c_{5},c_{6}$ színekre vannak
+festve. Forgassuk mindenik kocka $c_{3}$ színű lapját magunk fele.
+A $c_{1}$ és $c_{3}$ színű oldalakat rögzítve már nem tudjuk a kockákat
+forgatni, ezért a kockák jobb, bal és hátsó lapját a maradék $3$
+színnel bármilyen módon színezve különböző kockákat kapunk. Ezt a
+színezést $3!$-féleképpen tudjuk megtenni.
+
+Most tekintsük azokat a kockákat, amelyeknek a jobb, bal, első, vagy
+hátsó lapja van $c_{2}$ színűre festve. Ezt a $c_{2}$ színű lapot
+fordítsuk magunk felé. Ekkor a kockák alsó $c_{1}$ színű és első
+$c_{2}$ színű lapja rögzítve van, így nem tudjuk tovább forgatni.
+A fennmaradó $4$ oldalon bármilyen módon permutálható a megmaradt
+$4$ szín, vagyis $4!$ ilyen kocka van. Összesen $3!+4!=(1+4)\cdot3!=5\cdot3!=\frac{5!}{4}$
+féle színezése lehet a kockáknak. 
+\end{solution}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+Egy zsákban 10 különböző pár cipő van. Mi a valószínűsége, hogy ha
+kiveszünk belőle 6 darabot, lesz köztük legalább egy pár? 
+\end{extraproblem}
+
+\begin{solution}
+Összesen $2\cdot10=20$ cipő van. Mivel ezek 10 különböző pár jobb-
+és bal cipői, $20$ különböző cipő van a zsákban. A zsákból $6$ cipőt
+kihúzva összesen $C_{20}^{6}=\frac{20!}{(20-6)!\cdot6!}=\frac{20!}{14!\cdot6!}$
+féle eredményhez juthatunk. Ahhoz, hogy megszámoljuk hány olyan eset
+van, amikor van legalább egy pár cipő, megszámolhatjuk, hogy hány
+eset lehetséges amikor egy pár cipő sincs és ezt az összes eset számából
+kivonjuk. Ahhoz, hogy egy pár cipő se legyen a kihúzott cipők között,
+minden kihúzott cipő különböző pár jobb-, vagy bal cipője közül húztak
+ki a pár egyik felét $C_{10}^{6}$ féle képpen tudjuk kiválasztani
+és mivel ezek mindegyike lehet jobb, vagy bal egyenként, $2^{6}$
+eset van egy pár-kombináció esetén, hogy azoknak konkrétan melyik
+felét húztuk ki. Így tehát $C_{10}^{6}\cdot2^{6}=\frac{10!}{(10-6)!\cdot6!}\cdot2^{6}=\frac{10!}{4!\cdot6!}$
+eset lehetséges amikor egy pár sincs a kihúzott cipők között.
+
+\[
+p=\frac{\frac{20!}{14!\cdot6!}-\frac{10!}{4!\cdot6!}\cdot2^{6}}{\frac{20!}{14!\cdot6!}}=\frac{20\cdot19\cdot...\cdot15-10\cdot9\cdot...\cdot5\cdot2^{6}}{20\cdot19\cdot...\cdot15}=
+\]
+\[
+=1-\frac{20}{20}\cdot\frac{18}{19}\cdot\frac{16}{18}\cdot\frac{14}{17}\cdot\frac{12}{16}\cdot\frac{10}{15}=\frac{323-112}{323}=0.65325
+\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+Adott $n$ különböző tárgy és $r$ doboz ($n,r\geq1$). Helyezzük
+a tárgyakat a dobozokba úgy, hogy az 1. dobozba $k_{1}$ tárgy kerüljön,
+a 2. dobozba $k_{2}$ tárgy, ..., az $r$-edik dobozba $k_{r}$ tárgy,
+ahol $k_{1}+k_{2}+\cdots+k_{r}=n$. Hányféleképpen lehetséges ez?
+(Az egyes dobozokban számít a tárgyak sorrendje.)
+\end{extraproblem}
+Adjatok példát: $n=10$, $k_{1}=2$, $k_{2}=4$, $k_{3}=3$, $k_{4}=1$
+esetén.\emph{ (Pécsi Tudományegyetem: ``Kombinatorika jegyzet és
+feladatgyűjtemény'', 2011)}
+\begin{solution}
+Az 1. dobozba $\binom{n}{k_{1}}$-féleképpen választhatók meg a $k_{1}$
+tárgy. Ezután a 2. dobozba a megmaradt $n-k_{1}$ közül választhatjuk
+ki a $k_{2}$-t: $\binom{n-k_{1}}{k_{2}}$. A 3. dobozba a megmaradt
+$n-k_{1}-k_{2}$ közül választhatjuk a $k_{3}$-at: $\binom{n-k_{1}-k_{2}}{k_{3}}$,
+és így tovább.
+
+Lehetőségek száma:
+
+\[
+\binom{n}{k_{1}}\binom{n-k_{1}}{k_{2}}\binom{n-k_{1}-k_{2}}{k_{3}}\cdots\binom{n-k_{1}-\cdots-k_{r-1}}{k_{r}}
+\]
+
+Egyszerűsítve:
+
+\[
+\frac{n!}{k_{1}!\cdot k_{2}!\cdots k_{r}!}
+\]
+
+Ez megegyezik annak a számával, hogy az $n$ elemet hányféleképpen
+tudjuk \emph{ismétléses permutációval} elosztani $r$ csoportba $k_{1},k_{2},\dots,k_{r}$
+elemszámmal:
+
+\[
+P_{n}^{(k_{1},k_{2},\dots,k_{r})}=\frac{n!}{k_{1}!\cdot k_{2}!\cdots k_{r}!}
+\]
+
+Példa:
+
+$n=10$, $k_{1}=2$, $k_{2}=4$, $k_{3}=3$, $k_{4}=1$
+
+\[
+\begin{array}{cccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\hline 1 & 1 & 2 & 2 & 2 & 2 & 3 & 3 & 3 & 4
+\end{array}\quad\text{vagy}\quad\begin{array}{cccccccccc}
+1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10\\
+\hline 2 & 3 & 1 & 2 & 2 & 2 & 3 & 3 & 4 & 1
+\end{array}\quad\text{stb.}
+\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+Az $1,1,1,2,2,3,3$ számjegyekből
+\end{extraproblem}
+
+\begin{enumerate}
+\item hány hétjegyű számot lehet készíteni? 
+\item hány 13-mal kezdődő szám képezhető? 
+\end{enumerate}
+\emph{(Pécsi Tudományegyetem: ``Kombinatorika jegyzet és feladatgyűjtemény'',
+2011)}
+\begin{solution}
+~
+\begin{itemize}
+\item[a)] Különböztessük meg egymástól az azonos számjegyeket (színezzük őket).
+Ekkor $7!=5040$ sorrend létezik. Viszont az azonos számok sorrendjeit
+többször számoltuk:
+
+A 2-esek és 3-asok felcserélései nem számítanak különbözőnek, tehát:
+\[
+\frac{7!}{3!}=840
+\]
+
+Ha a 2-esek és 3-asok színezésétől is eltekintünk: 
+\[
+\frac{7!}{3!\cdot2!\cdot2!}=210
+\]
+
+Ez a megoldás a kérdés eredeti feltételének megfelelő.
+\item[b)] A szám kezdődjön 13-mal. Fixáljuk az első két számjegyet: $1,3$.
+Marad $5$ hely a $5$ számjegynek: két $1$-es, két $2$-es és egy
+$3$-as.
+
+A lehetséges elrendezések száma: 
+\[
+\frac{5!}{2!\cdot2!\cdot1!}=30
+\]
+
+\end{itemize}
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+Hány olyan $(x_{1},x_{2},x_{3},x_{4})$ természetes páratlan számokból
+álló számnégyes van, amelyre teljesül, hogy: $x_{1}+x_{2}+x_{3}+x_{4}=98$? 
+\end{extraproblem}
+
+\begin{solution}
+Mivel $x_{1},x_{2},x_{3},x_{4}$ páratlan számok, így ezeket átírhatjuk
+a következőképpen: $x_{i}=2k_{i}-1$, $\forall i\in\{1,2,3,4\}$,
+ahol $k_{i}\in\mathbb{N}^{*}$ \\
+ Ekkor 
+\[
+2k_{1}-1+2k_{2}-1+2k_{3}-1+2k_{4}-1=98
+\]
+\[
+2(k_{1}+k_{2}+k_{3}+k_{4})=102
+\]
+\[
+k_{2}+k_{2}+k_{3}+k_{4}=51
+\]
+\\
+Le tudjuk modellezni a feladatot. Veszünk 51 darab 1-est és ezeket
+valamilyen módon szétválasztjuk 3 darab $|$ választóval (azért, hogy
+4 részre bontsuk az 1-es sort). Pl: \\
+ 11111111 | 1111111111111111111 | 1111111111111111 | 11111111 \\
+ Ez a szétválasztás megfelelne a $(8,19,16,8)$ számnégyesnek. Ha
+a választóvonalat a sor elejére vagy végére rakjuk vagy esetleg két
+választó vonalat rakunk egymás mellé, akkor megjelennek a $0$ értékek
+is, ami nekünk nem lesz jó, hiszen $k_{i}\in\mathbb{N}^{*}$. Tehát
+csak az egyesek közé rakhatunk választékot, emiatt csak 50 lehetséges
+helyre tehetjük a 3 választékot valamilyen sorrendben. Következtetésképpen
+${\displaystyle {C_{50}^{3}}=19600}$ olyan számnégyes van, ami teljesíti
+a feladat követelményeit. 
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+A $\{1000,1001,1002,\ldots,200\}$ halmazban hány olyan egymásutáni
+egész számpár van, amelyek összegezve egyik helyi értéken sem lépünk
+túl a 9-es számjegyen, tehát nincs szükség átvitelre a következő helyi
+értékre?
+\end{extraproblem}
+
+\begin{solution}
+Válasszunk ki egy $\overline{abcd}$ számot, ekkor az utána lévő szám
+egyértelmű, innen arra következtethetünk, hogy $a=1$, vagyis a keresett
+szám $1\overline{bcd}$ alakú. \\
+-Ha $b,c$ vagy $d$ számjegyek közül valamelyik $5,6,7$ vagy $8$,
+akkor ebben az esetben biztos, hogy átvisszük a helyi értéket. \\
+-Ha $c=9$, de $d\neq9$, akkor megint biztos, hogy átvitel lesz (pl.
+1492+1493) \\
+-Ha $b=9$, de $c\neq9$ vagy $d\neq9$, akkor is átvitel lesz.
+
+Vegyük észre, hogy csak a következő alakú számok lehetnek megfelelőek:
+$1\overline{bcd}$ , $1\overline{bc}9$ , $1\overline{b}99$ , $1999$
+\\
+Mivel $b,c,d\in\{0,1,2,3,4\}$, így összesen $5^{3}+5^{2}+5+1=156$
+ilyen számpárunk lehet.
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+ Hány olyan legfeljebb ötjegyű szám van, amelynek minden jegye különböző,
+és a számjegyei balról jobbra csökkenő sorrendben követik egymást? 
+\end{extraproblem}
+
+\begin{solution}
+Ha meghatározzuk, hogy mely számjegyek szerepeljenek egy ilyen számban,
+azokat már csak egyféle sorrendben (csökkenő sorrendben) írhatjuk
+egymás mellé. Elég tehát azt megnéznünk, hányféleképpen választhatjuk
+ki a keresett számokban szereplő számjegyeket.
+
+Ha a keresett szám ötjegyű, akkor a 10 számjegyből $C_{10}^{5}$-féleképpen
+választhatunk ki 5-öt, így ennyi ötjegyű szám felel meg a feltételnek
+( 0 -val nem kezdődhet szám, de a kiválasztott 5 számjegy legnagyobbika
+biztosan nem 0). Hasonlóképpen a keresett négyjegyű számokból $C_{10}^{4}$,
+a háromjegyűekből $C_{10}^{3}$, a kétjegyűekből pedig $C_{10}^{2}$
+darabot találunk. Az egyjegyű számok esetében már figyelnünk kell
+arra, hogy a 0 -t nem választhatjuk, így ott $C_{9}^{1}$ lehetőséget
+kapunk.
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Egy zsákban 10 különböző pár cipő található. Hányféleképpen vihetünk
+magunkkal a zsákból 6 darab cipőt úgy, hogy legyen közöttük összetartozó
+pár? 
+\end{extraproblem}
+
+\begin{solution}
+A jó esetek számát megkaphatjuk úgy, ha az összes eset számából kivonjuk
+a rossz esetek számát . A zsákban lévő 20 cipő közül 6-ot összesen
+$C_{20}^{6}$ féleképpen vehetünk ki. Ezek közül rossz esetnek számít,
+ha nincsen összetartozó pár a kivett cipők között, vagyis mind a 6
+cipő különböző párból való. Erre $C_{10}^{6}\cdot2^{6}$ lehetőségünk
+van, hiszen ki kell választanunk a 10 párból 6-ot, majd minden ilyen
+párból a bal vagy a jobb cipőt.
+
+Tehát a kedvező esetek száma $C_{20}^{6}-C_{10}^{6}\cdot2^{6}=38760-13440=25320$.\\
+ Megjegyzés: a rossz esetek számát a $\frac{20\cdot18\cdot16\cdot14\cdot12\cdot10}{6!}$
+képlettel is megkaphatjuk (az első kiválasztott cipő 20 -féle lehet,
+a második már csak a fennmaradó 9 párból valamelyik, azaz 18 -féle
+stb., majd leosztunk a lehetséges sorrendek számával, hiszen a magunkkal
+vitel során nem számít a 6 cipő kiválasztásának sorrendje).
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Hány olyan legfeljebb négyjegyű természetes szám van, amelynek számjegyei
+között több 2-es szerepel, mint 1-es? \emph{(Arany Dániel Matematikai
+Tanulóverseny 2014/2015; haladók, I. kategória, 1. forduló) }
+\end{extraproblem}
+
+\begin{solution}
+Megoldás 1 A számok maximum négyjegyűek, tehát a vizsgált számokat
+tekinthetjük négyjegyűeknek úgy, hogy a szám elejére nullákat írunk
+(például a 21-t 0021-ként kezeljük).
+
+Ha egy $2$-es és $0$ $1$-es szerepel akkor a $2$-es négy helyen
+állhat, a többi három helyen pedig $8$-féle számot irhatunk, összesen
+$4\cdot8^{3}=2048$ szám.
+
+Ha két $2$-es és nulla $1$-es szerepel akkor a négy helyből kettön
+$2$-es áll, a többi két helyen pedig $8$-féle számot irhatunk, összesen
+$\binom{4}{2}\cdot8^{2}=384$ szám.
+
+Ha két $2$-es és egy $1$-es szerepel akkor, összesen $\binom{4}{2}\cdot\binom{2}{1}\cdot8=96$
+szám.
+
+Ha három $2$-es és nulla $1$-es szerepel akkor, összesen $\binom{4}{3}\cdot8=32$
+szám.
+
+Ha három $2$-es és egy $1$-es szerepel akkor, összesen $\binom{4}{3}\cdot1=4$
+szám.
+
+Ha négy $2$-es és nulla $1$-es szerepel akkor, összesen $1$ szám.
+
+Tehát $2048+384+96+32+4+1=2565$ megfelelő szám van. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+ Hány olyan ötjegyű tízes számrendszerbeli pozitív egész szám van,
+amelyben a számjegyek szorzata 50-re végződik? \emph{(OKTV 2013/2014;
+II. kategória, 1. forduló) }
+\end{extraproblem}
+
+\begin{solution}
+Megoldás 2 A feladat szerint olyan ötjegyű számokat kell találni,
+amelyek számjegyeinek szorzata 50-re végződik. Ha egy szám $50$-re
+végződik, akkor osztható $50=2\cdot5^{2}$-nel, de nem osztható $100$-al.
+A szorzatban tehát pontosan egy $2$-es és legalább két $5$-ös szerepel.
+
+A számjegyek között pontosan egy páros szám szerepelhet, amely lehet
+2 vagy 6,(4-es nem lehet mert akkor két kettes lenne a szorzatban)
+és legalább két 5-ösnek is szerepelnie kell.
+
+1. Ha a számban pontosan két 5-ös szerepel:
+
+A két 5-ös helyét 5 hely közül kell kiválasztani, tehát ennek a számítása:
+$\binom{5}{2}=10\text{ féle mód van.}$ Az egyetlen páros számjegy
+lehet 2 vagy 6, tehát 2 választásunk van. A páros számjegy helyét
+3 hely közül választhatjuk ki: $\binom{3}{1}=3\text{ féle mód van.}$
+A maradék két helyre pedig 4-4 számjegyet választhatunk (1, 3, 7,
+9), tehát a lehetőségek száma: $4\cdot4=16\text{ féle mód van.}$
+Tehát, ha pontosan két 5-ös szerepel:
+\[
+10\cdot2\cdot3\cdot16=960\text{ féle szám van.}
+\]
+
+2. Ha a számban pontosan három 5-ös szerepel:
+
+A három 5-ös helyét 5 hely közül kell kiválasztani, tehát ennek a
+számítása: $\binom{5}{3}=10\text{ féle mód van.}$Az egyetlen páros
+számjegy lehet 2 vagy 6, tehát 2 választásunk van. A páros számjegy
+helyét 2 hely közül választhatjuk ki: $\binom{2}{1}=2\text{ féle mód van.}$
+A maradék egy helyre pedig 4 féle számjegy választható (1, 3, 7, 9):
+$4$ féle mód van. Tehát, ha pontosan három 5-ös szerepel:
+\[
+10\cdot2\cdot2\cdot4=160\text{ féle szám van.}
+\]
+
+3. Ha a számban pontosan négy 5-ös szerepel:
+
+A négy 5-ös helyét 5 hely közül kell kiválasztani, tehát ennek a számítása:
+$\binom{5}{4}=5\text{ féle mód van.}$Az egyetlen páros számjegy
+lehet 2 vagy 6, tehát 2 választásunk van.
+
+Tehát, ha pontosan négy 5-ös szerepel: 
+\[
+5\times2=10\text{ féle szám van.}
+\]
+
+Összeadva az összes lehetőséget, a végső eredmény:
+\[
+960+160+10=1130
+\]
+
+Tehát összesen $1130$ olyan ötjegyű szám van, amelynek számjegyeinek
+szorzata 50-re végződik.
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+Tíz diák vízitúrára menne, kapnak is túravezetőt, de csak egy három-
+és egy ötszemélyes csónak áll rendelkezésükre. A kisebb csónakban
+az egyik utasnak eveznie, a másiknak kormányoznia kell, a harmadik
+utas csak pihen. A nagyobbik csónakban ül a túravezető, ő kormányoz,
+mellette négy túrázó fér el, ők mind evezni fognak. Hányféleképpen
+állítható össze a tíz diákból a túrán részt vevők 7 fős csoportja?
+\end{extraproblem}
+
+\begin{solution}
+Először kiválasztunk a tíz diák közül hármat, ők majd a kisebb csónakba
+ülnek. Mindhármukra más-más feladat hárul, tehát itt számít a kiválasztottak
+sorrendje. Ezért a kiválasztási lehetőségek száma: 
+\[
+10\cdot9\cdot8=720.
+\]
+
+Most a többi hét diák közül választunk négyet, ők ülnek a túravezetővel
+a nagyobbik csónakba. Egyforma a beosztásuk, tehát itt nem számít
+a kiválasztottak sorrendje. Ezért a kiválasztási lehetőségek száma:
+\[
+\binom{7}{4}=\frac{7!}{4!\cdot3!}=35.
+\]
+
+Bárhogyan választjuk is ki az első csónakba a 3 diákot, hozzájuk 35-féleképpen
+választhatók a második csónak utasai, tehát összesen: 
+\[
+10\cdot9\cdot8\cdot\binom{7}{4}=720\cdot35=25200
+\]
+módon állítható össze a tíz diákból a túrán részt vevők csoport.
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+Hányféle (nem feltétlenül értelmes) anagramma alkotható a PARALELOGRAMMA
+szó betűiből?
+\end{extraproblem}
+
+\begin{solution}
+Ha a 14 betű mindegyike különböző lenne, az $14!$-féle lehetséges
+sorrendet jelentene. Gondolatban színezzük be az azonos betűket különböző
+színűre. Mivel két ``L'' betűt használtunk fel, minden esetet kétszer
+számoltunk: akkor, amikor a ``piros L'' betű van előrébb, és akkor
+is, amikor a ``kék'' van előrébb, de a többi betű sorrendje változatlan.
+Így a $14!$-féle lehetőségnek csak a fele lesz az, amelyben nem különböztetjük
+meg az ``L'' betűket.
+
+De még így is kétszer számoltunk minden különböző esetet, a két azonos
+``M'' betű miatt, valamint ismét kétszer az ``R'' betűk miatt.
+Így további $2\cdot2$-vel kell még osztanunk. ``A'' betűből négy
+darab is van, amelyek egymáshoz képest vett sorrendje szintén nem
+számít, így minden megmaradt esetet $4!$-szor számoltunk.
+
+A 14 betű, amelyek közt rendre 2, 2, 2, 4 azonos betű van, tehát az
+alábbi módon rakható ki:
+
+\[
+\frac{14!}{2!\cdot2!\cdot2!\cdot4!}
+\]
+
+Megjegyzés: A tört nevezőjében a 2-es tényezők helyett írhattunk volna
+$2!$-t is.
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+Legyen $A=\{1,2,3,\dots,20\}$ az első 20 pozitív egész szám halmaza.
+Hány olyan részhalmaza van az $A$ halmaznak, amelyben pontosan 5
+páratlan szám szerepel? 
+\end{extraproblem}
+
+\begin{solution}
+Az $A$ halmaz páratlan elemei: $\{1,3,5,7,9,11,13,15,17,19\}$. A
+feladatban pontosan 5 páratlan számot kell választanunk ezen 10 páratlan
+szám közül. Ennek a kiválasztásnak a száma: 
+\[
+\binom{10}{5}=\frac{10\cdot9\cdot8\cdot7\cdot6}{5\cdot4\cdot3\cdot2\cdot1}=252
+\]
+Az $A$ halmaz páros elemei: $\{2,4,6,8,10,12,14,16,18,20\}$. A páros
+számok közül bármilyen számú elemet választhatunk (0-tól 10-ig), így
+a választás lehetőségeinek száma: 
+\[
+\sum_{k=0}^{10}\binom{10}{k}=2^{10}=1024
+\]
+Mivel a páratlan számok és a páros számok kiválasztása független,
+az összes lehetséges részhalmazok száma a két szám szorzataként adódik:
+
+\[
+\binom{10}{5}\cdot2^{10}=252\cdot1024=258048
+\]
+
+Az $A$ halmaznak 258,048 olyan részhalmaza van, amely pontosan 5
+páratlan számot tartalmaz. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Egy csomag francia kártyát megkevertünk, majd egyesével elkezdjük
+kihúzni a lapokat. Hányadik helyen a legvalószínűbb a második ász
+kihúzása? 
+\end{extraproblem}
+
+\begin{solution}
+A francia kártya paklija $52$ lapos, $4$ ász található benne. Legyen
+\[
+\mathcal{E}(k)=\text{a második ász a \ensuremath{k}-adik helyen kerül kihúzásra},\quad k=2,3,4,\ldots,50.
+\]
+Az $\mathcal{E}(k)$ esemény bekövetkezéséhez az alábbiaknak kell
+teljesülniük: 
+\begin{itemize}
+\item az első $(k-1)$ helyen pontosan $1$ ász kerül kihúzásra, ez $C_{k-1}^{1}$
+féleképpen tehető meg; 
+\item a $k$-adik helyen kihúzzuk a második ászt, ezt egyféleképpen tehetjük
+meg; 
+\item a $(k+1)$-edik kártya húzásától az 52. kártya húzásáig akárhogyan
+húzhatjuk a pakliban maradó két ászt, erre $C_{52-k}^{2}$ féleképpen
+van lehetőség. 
+\end{itemize}
+Ezért az $\mathcal{E}(k)$ kedvező eseteinek a száma 
+\[
+K(k)=C_{k-1}^{1}\cdot C_{52-k}^{2}=(k-1)\cdot\frac{(52-k)\cdot(51-k)}{2},
+\]
+az összes esetek száma pedig 
+\[
+N(k)=C_{52}^{4}=\frac{52\cdot51\cdot50\cdot49}{24}.
+\]
+Az előbbiek alapján az $\mathcal{E}(k)$ esemény valószínűsége 
+\[
+P(\mathcal{E}(k))=\frac{K(k)}{N(k)}=(k-1)\cdot(52-k)\cdot(51-k)\frac{12}{52\cdot51\cdot50\cdot49},
+\]
+ami akkor maximális, ha $(k-1)\cdot(52-k)\cdot(51-k)$ maximális (miközben
+$2\leq k\leq50$). Az $f\colon[2,50]\to\mathbb{R}$, $f(x)=(x-1)\cdot(52-x)\cdot(51-x)$
+függvény maximumhelyét keressük. Mivel 
+\[
+f'(x)=3x^{2}-208x+2755,
+\]
+ezért a maximumhely meghatározásához az $f'(x)=0$ egyenletet oldjuk
+meg. Az egyenletnek két gyöke van, ezek közül az $x_{0}\approx17,5$
+a keresett maximumhely. Mivel $f(18)>f(17)$, ezért a második ász
+kihúzása a $18$-adik helyen a legvalószínűbb (és a valószínűsége
+$\frac{17\cdot561}{270725}\approx0,03522$).
+
+\textbf{Megjegyzés.} A megoldás befejezhető derivált használata nélkül
+is, ha észrevesszük, hogy 
+\begin{itemize}
+\item $\frac{K(k+1)}{K(k)}>1$, ha $k<17$; 
+\item $\frac{K(k+1)}{K(k)}<1$, ha $k>18$, 
+\end{itemize}
+tehát elégséges a $K(k)$ értékeket összehasonlítani $k=17$ és $k=18$
+esetén. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Egy $n$ elemű halmaznak hány olyan részhalmaza van, amelynek elemeinek
+száma osztható $3$-mal? 
+\end{extraproblem}
+
+\begin{solution}
+A feladatunk az, hogy számoljuk ki az 
+\[
+S_{n}=\sum_{\substack{k=0\\
+3\mid k
+}
+}^{n}C_{n}^{k}
+\]
+összeget. Legyen $\omega=\cos\frac{2\pi}{3}+i\sin\frac{2\pi}{3}$,
+tehát $1+\omega+\omega^{2}=0$ és ezért 
+\[
+S_{n}=\frac{1}{3}\Bigl[(1+1)^{n}+(1+\omega)^{n}+(1+\omega^{2})^{n}\Bigr].
+\]
+Mivel $1+\omega=-\omega^{2}=\cos\frac{\pi}{3}+i\sin\frac{\pi}{3}=\omega$
+és $1+\omega^{2}=\cos\frac{\pi}{3}-i\sin\frac{\pi}{3}$, az előző
+összefüggésből következik, hogy
+
+\[
+S_{n}=\frac{1}{3}\left(2^{n}+2\cos\frac{n\pi}{3}\right).
+\]
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Hány téglalap látható a $7\times7$-es sakktáblán? \emph{(Felvidéki
+Magyar Matematika Verseny, XXIX. 1. évfolyam)}
+\end{extraproblem}
+
+\begin{solution}
+Egy $7\times7$-es sakktáblán nyolc vízszintes és nyolc függőleges
+sor van. Egy téglalap előállítható két ilyen vízszintes és két függőleges
+sor metszéspontjai által. Ebből a nyolc vízszintes vagy függőleges
+sorból kettőt $C_{8}^{2}$ féleképpen tudunk kiválasztani, de ahhoz,
+hogy ebből téglalapunk legyen két ilyen párra van szükségünk: egy
+pár vízszintes és egy pár függőleges egyenesre. Minden pár, minden
+másik párral egy új téglalapot alkot, ezért a létrejövő téglalapok
+száma: 
+\[
+\left(C_{8}^{2}\right)^{2}=\left(\frac{8!}{2!\cdot6!}\right)^{2}=\left(\frac{8\cdot7}{2}\right)^{2}=28^{2}=784.
+\]
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Igazoljuk az alábbi azonosságot: 
+\[
+1\cdot C_{n}^{1}+2\cdot C_{n}^{2}+3\cdot C_{n}^{3}+\dots+n\cdot C_{n}^{n}=n\cdot2^{n-1}.
+\]
+\end{extraproblem}
+
+\begin{solution}
+A feladat megoldható a kombináció képletének és a binomiális tételnek
+a felhasználásával is, de ebben a megoldásban az a célunk, hogy a
+kettős összeszámlálás módszerére adjunk egy példát. Ennek nyomán megfogalmazunk
+egy olyan feladatot, melyet kétféle összeszámlálással megoldva az
+egyenlet két oldalán szereplő kifejezéseket kapjuk. Ehhez a feladathoz
+a következő kérdésre keressük a választ: egy n tagú társaságból hányféleképpen
+tudunk k tagú bizottságot kiválasztani úgy, hogy a bizottság elnöke
+bárki lehet?
+
+Az első gondolatmenetben abból indulunk ki, hogy a bizottságok $k\in\{1,2,\dots,n\}$
+tagból állhatnak. Ha egy $k$ tagú bizottságot szeretnénk, akkor azt
+$C_{n}^{k}$ féleképpen választhatjuk ki, melynek minden tagja lehet
+ugyanúgy elnök is, így a különböző $k$ tagú bizottságok száma $k\cdot C_{n}^{k}$.
+Ezt felhasználva a lehetséges bizottságok számát pedig az alábbi összegzés
+adja meg: 
+\[
+\sum\limits_{k=1}^{n}k\cdot C_{n}^{k}=1\cdot C_{n}^{1}+2\cdot C_{n}^{2}+\dots+n\cdot C_{n}^{n}.
+\]
+
+A második gondolatmenetben abból indulunk ki, hogy minden tag lehet
+elnök, ami $n$ lehetőség. Továbbá megvizsgáljuk, hogy melléjük milyen
+bizottságok állíthatóak elő. Ha egy valakit megválasztunk elnöknek,
+akkor a maradék $n-1$ tag mindegyikéről elmondható, hogy vagy benne
+van a bizottságban vagy nem, ezért összesen $2^{n-1}$ lehetőség van
+erre. Így az összes lehetséges bizottság száma $n\cdot2^{n-1}$.
+
+Mivel mindkét eredmény ugyanazt a feladatot oldja meg, ezért az azonosság
+valóban teljesül. 
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Egy dobozból, amelyben $8$ piros és bizonyos számú fehér, számozott
+golyó van, egymás után, visszatevés nélkül $1280$- féleképpen húzható
+ki $3$ golyó úgy, hogy két piros, vagy két fehér golyó ne következzen
+egymás után. Hány fehér golyó van a dobozban? \emph{(Pécsi Tudományegyetem:
+}\textit{Kombinatorika jegyzet és feladatgyűjtemény},\emph{ 2011) }
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük $x$-el a dobozban lévő fehér golyók számát. Ha csak egyszínű
+golyókat húznánk ki, akkor lenne közte két piros, vagy két fehér golyó
+úgy hogy egymás után következnek, szóval ez az eset nincs benne a
+megszámolt 1280-ban.
+
+Ha két fehér golyót húzunk pontosan, akkor a harmadik piros lesz.
+Ahhoz, hogy ne legyen két fehér egymás után húzva a sorrend: fehér-piros-fehér
+lesz. Mivel a golyók számozottak, más-más húzásnak számít ha két fehér
+golyót felcserélve húzunk ki, vagyis számít a sorrend. Ezt $V_{x}^{2}\cdot V_{8}^{1}$
+féleképpen tehetjük meg, figyelembe véve azt, hogy a két fehér golyó
+ne kövesse egymást.
+
+Ha két piros golyót húzunk pontosan, akkor a harmadik fehér lesz.
+Ahhoz, hogy ne legyen két piros egymás után húzva a sorrend: piros-fehér-piros
+lesz. Mivel a golyók számozottak, más-más húzásnak számít ha két piros
+golyót felcserélve húzunk ki, vagyis számít a sorrend. Ezt $V_{x}^{1}\cdot V_{8}^{2}$
+féleképpen tehetjük meg, figyelembe véve azt, hogy a két piros golyó
+ne kövesse egymást.
+
+Mivel máshogy nem húzható ki a $3$ golyó a feltételeknek megfelelően,
+ekkor a feladat adatai szerint: 
+\[
+V_{x}^{2}\cdot V_{8}^{1}+V_{x}^{1}\cdot V_{8}^{2}=1280\iff\frac{x!}{(x-2)!}\cdot8+\frac{x!}{(x-1)!}\cdot56=1280
+\]
+\[
+\iff8x(x-1)+56x=1280.
+\]
+Ekkor $8x^{2}+48x-1280=0$ másodfokú egyenlet gyökei $10$ és $-16$.
+Mivel a golyók száma pozitív mennyiség a feladat megoldása $x=10$
+lesz, vagyis $10$ fehér golyó volt a dobozban. 
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+$2n$ különböző magasságú ember hányféleképpen tud két $n$-hosszúságú
+sorba állni úgy, hogy az első sorban mindenki alacsonyabb legyen,
+a hátsó sorban a megfelelő helyen állónál? 
+\begin{flushright}
+(Pécsi Tudományegyetem: \textit{"Kombinatorika jegyzet és feladatgyűjtemény"},
+2011) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Minden helyes sorba rendezés kölcsönösen egyértelműen megfeleltethető
+a $2n$ személy egy párosításának, hiszen ha a párokat kialakítjuk,
+akkor azzal egyértelműen meghatároztuk azt is, hogy egy-egy párból
+ki áll az első és ki a hátsó sorba, mert különböző magasságú emberek.
+A párosítások száma abból adódik, hogy hányféleképpen tudunk kiválasztani
+2 embert a megmaradt csoportból, amit kombinációval tudunk kiszámolni
+(hiszen nem számít a kiválasztás sorrendje, mert csak a kiválasztás
+után hasonlítják össze őket magasság szerint, ami egyértelmű): 
+\begin{align*}
+\binom{2n}{2}\cdot\binom{2n-2}{2}\cdot\ldots\binom{2}{2} & =\frac{2n\cdot(2n-1)}{2}\cdot\frac{(2n-2)\cdot(2n-3)}{2}\cdot\ldots\cdot\frac{2\cdot1}{2}\\
+ & =\frac{(2n)!}{2^{n}}
+\end{align*}
+Tehát $\frac{(2n)!}{2^{n}}$ féleképpen lehet $2n$ különböző magasságú
+embert két $n$-hosszúságú sorba állítani úgy, hogy az első sorban
+mindenki alacsonyabb legyen, a hátsó sorban a megfelelő helyen állónál. 
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+A törpék és óriások közös vacsorán vesznek részt. A rendezvényszervező
+9 óriást és 4 törpét egy kerekasztal köré kell leültessen. Mivel a
+törpék közismerten mogorvák, ezért az est sikeressége érdekében nem
+ültetheti őket egymás mellé. Hányféle ültetés lehetséges, ha a forgatással
+egymásba vihető ültetéseket \textbf{különbözőnek} tekintjük? Mi van
+akkor, hogy \textbf{nem} tekintjük különbözőnek?
+\end{extraproblem}
+
+\begin{solution}
+Számozzuk meg az ülőhelyeket 1-től 13-ig. Előbb oldjunk meg egy könnyebb
+feladatot. Tekintsük el attól, hogy az 1 és 13 helyeken ülők egymás
+mellett ülnek. Ültessük le a törpéket az első 9 hely valamelyikére
+tetszőlegesen. Ez $C_{9}^{4}$ lehetőség, majd kérjük meg a legmagasabb
+sorszámú helyen ülő törpét, hogy üljön a hárommal nagyobb sorszámú
+helyre. Kérjük meg a második legnagyobb sorszámú helyen ülő törpét,
+hogy üljön a kettővel nagyobb sorszámú helyre, és így tovább, míg
+a legutolsó törpe marad a helyén. A törpék az 1, 13 helyeket nem nézve
+biztosan nem ülnek egymás mellett és minden a könnyített feladatnak
+megfelelő helyes ültetést megkaphatunk így, ezért összesen $C_{9}^{4}$-féleképpen
+ültethetünk.
+
+Most térjünk vissza az eredeti feladatra. A $C_{9}^{4}=126$-ban beleszámoltuk
+azokat az eseteket is, amikor az 1. és 13. helyeken törpe ül, de azon
+kívül nincsenek szomszédos törpék. Ezekből összesen $\frac{7\cdot8}{2}=28$
+van (Két törpe ül az 1., 13. helyeken. A maradék kettőből 7 esetben
+ülhet a kisebb sorszámú a 3. helyen. 6 esetben ülhet a 4. helyen és
+így tovább). Összesen tehát $126-28=98$-féleképpen szervezheti meg
+a rendezvényszervező az ültetést.\\
+
+Ha nem tekintjük különbözőnek a forgatással egymásba vihető eseteket,
+akkor közelítsük meg másképp a feladatot. Vegyünk egy tetszőleges
+ültetést. Körben haladva mindegyik törpe esetén írjuk le, hogy a tőle
+balra ülő legközelebbi törpe hány helyre ül. Négy számot kell leírjunk,
+amelyek mind 1-nél nagyobbak és összegük 13. Ennek a négy számnak
+a sorrendje nem egyértelműen, de meghatároz egy ültetést. A forgatás
+miatt például a 2 3 3 5 és 5 2 3 3 ugyanannak az ültetésnek felelnek
+meg. Számoljuk össze, hogy a számnégyesek hány különböző ültetésben
+fordulhatnak elő.
+
+A lehetséges eseteket foglaljuk táblázatba.
+
+\begin{table}[h!]
+\centering %
+\begin{tabular}{|c|ccccc|}
+\hline 
+2, 2, 2, 7 & 2 2 2 7 &  &  & $\leftarrow$ & 1 eset\tabularnewline
+2, 2, 3, 6 & 3 6 2 2 & 3 2 6 2 & 3 2 2 6 & $\leftarrow$ & 3 eset\tabularnewline
+2, 2, 4, 5 & 4 5 2 2 & 4 2 5 2 & 4 2 2 5 & $\leftarrow$ & 3 eset\tabularnewline
+2, 3, 3, 5 & 2 5 3 3 & 2 3 5 3 & 2 3 3 5 & $\leftarrow$ & 3 eset\tabularnewline
+2, 3, 4, 4 & 2 3 4 4 & 2 4 3 4 & 2 4 4 3 & $\leftarrow$ & 3 eset\tabularnewline
+3, 3, 3, 4 & 3 3 3 4 &  &  & $\leftarrow$ & 1 eset\tabularnewline
+\hline 
+\end{tabular}\caption{Lehetséges kombinációk}
+\label{tab:my_label}
+\end{table}
+
+Látható, hogy összesen 14 ültetési lehetőség van.
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+Mutassuk meg, hogy ha $0<m\leq k<n$, akkor az $\binom{n}{k}$
+és $\binom{n}{m}$ számoknak van 1-nél nagyobb közös osztója. \emph{(Róka
+Sándor: Válogatás Erdős Pál kedvenc feladataiból) }
+\end{extraproblem}
+
+\begin{solution}
+
+Az állítás igaz, ha $n=p$ prím, hiszen ekkor $\binom{p}{k}$ és $\binom{p}{m}$
+is osztható $p$-vel.
+
+Nézzünk egy példát. Miért van a $\binom{28}{5}$ és $\binom{28}{3}$
+számoknak 1-nél nagyobb közös osztója?
+
+Ha a $\binom{28}{5}$ és $\binom{28}{3}$ számok relatív prímek, akkor
+az egyenlőség miatt $\binom{28}{3}$ osztója $\binom{5}{3}$-nak,
+ami a két szám nagyságára figyelve lehetetlen. Tehát hibás a feltevés,
+hogy $\binom{28}{5}$ és $\binom{28}{3}$ relatív prímek.
+
+Lássuk a bizonyítást!
+
+\[
+\binom{n}{k}\cdot\binom{k}{m}=\binom{n}{m}\cdot\binom{n-m}{k-m}
+\]
+
+hiszen
+
+\[
+\frac{n!}{k!(n-k)!}\cdot\frac{k!}{m!(k-m)!}=\frac{n!}{m!(n-m)!}\cdot\frac{(n-m)!}{(k-m)!(n-k)!}
+\]
+
+Ha az $\binom{n}{m}$ és $\binom{n}{k}$ számok relatív prímek, akkor
+az egyenlőség miatt $\binom{n}{m}$ osztója $\binom{k}{m}$-nek.
+
+Az oszthatóság miatt $\binom{n}{m}\leq\binom{k}{m}$ is teljesül (ugyanis
+$\binom{k}{m}\neq0$), de ez a $0<m\leq k<n$ feltételek esetén nem
+áll fenn.
+
+Feltevésünk hamis volt, azaz az $\binom{n}{m}$ és $\binom{n}{k}$
+számoknak van 1-nél nagyobb közös osztója.
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+ Bizonyítsuk be, hogy bármely társaságban található két olyan ember,
+akinek abban a társaságban ugyanannyi ismerőse van. \emph{(OTV 1966,
+II. 1.)}
+\end{extraproblem}
+
+\begin{solution}
+Legyen a társaság tagjainak száma $n$. Társaságról van szó, tehát
+$n\geq2$. Ekkor a társaság egy tagjának $0$ vagy $1$, vagy $\ldots$,
+vagy $n-1$ ismerőse lehet jelen. Nem lehet azonban olyan is, akinek
+nincs ismerőse a társaságban, meg olyan is, akinek a társaság minden
+tagja ismerőse, mert akkor az utóbbinak ismernie kellene az előbbit
+is, és így az előbbinek is lenne ismerőse. Ha mindenki megmondja,
+hogy hány ismerőse van jelen, akkor az $n$ ember legfeljebb $n-1$
+különböző számot mondhat (az $1,2,3,...,n-1$ vagy $0,1,2,..,n-2$
+számok között válogathatnak), tehát legalább ketten ugyanazt a számot
+mondják, vagyis ugyanannyi ismerősük van jelen.
+\end{solution}
+
+

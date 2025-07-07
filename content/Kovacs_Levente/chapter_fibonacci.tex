@@ -1,0 +1,1162 @@
+
+\chapter{Fibonacci-számok}\label{chap:Fibonacci}
+\begin{description}
+{\large \item [{Szerző:}] Kovács Levente (Didaktikai mesteri -- Matematika, II.
+év)}
+\end{description}
+
+\section*{Rövid történelmi áttekintő}
+
+Leonardo Fibonacci, más néven Leonardo Pisano, az egyik leghíresebb
+középkori olasz matematikus volt, aki körülbelül 1170-ben született
+Pisában. Fiatalkorát Észak-Afrikában töltötte, ahol apja kereskedelmi
+megbízottként dolgozott, és itt ismerkedett meg az arab matematikával.
+1202-ben írta meg híres művét, a \textit{Liber Abaci}-t, amelyben
+bemutatta az arab-indiai számrendszert Európának \cite{fibonacci2002}.
+Ez a könyv forradalmasította a számolást a római számokkal szemben,
+és elősegítette a modern számjegyek elterjedését. A műben szerepel
+egy híres nyúlszaporodási probléma, amelyből származik a róla elnevezett
+Fibonacci-sorozat. Bár maga Fibonacci nem tulajdonított különösebb
+jelentőséget a sorozatnak, később a matematika és a természettudomány
+számos területén felfedezték annak jelentőségét \cite{devlin2011}.
+Munkássága hatással volt a kereskedelemre, a könyvelésre és az algebra
+fejlődésére is. Fibonacci az elsők között volt, akik bevezették Európában
+a zéró fogalmát \cite{boyer2011}. Művei hozzájárultak a reneszánsz
+kori tudományos gondolkodás megalapozásához. Halálának pontos ideje
+nem ismert, de valószínűleg 1250 körül hunyt el Pisában \cite{oconnor}.
+
+\section*{Rövid elméleti összefoglaló}
+\begin{definition}{def:Fib}
+Az $(f_{n})_{n\in\mathbb{N}};\ f_{1}=f_{2}=1;\ f_{n+2}=f_{n+1}+f_{n}$
+rekurzív sorozatot \textit{Fibonacci-sorozatnak} nevezzük.
+\end{definition}
+\begin{problem}
+Határozzuk meg azokat az $(f_{n})_{n\in\mathbb{N}}$ sorozatokat,
+amelyekre az 
+\begin{equation}
+f_{n+2}+af_{n+1}+bfx_{n}=0\label{thm1}
+\end{equation}
+egyenlet teljesül, ahol $a,b\in\mathbb{R}^{*}$! 
+\end{problem}
+
+\begin{solution}
+Ha a megoldásokat $f_{n}=r^{n}$ mértani haladvány alakban keressük,
+bármely $n\in\mathbb{N}$ és $r\in\mathbb{R}^{*}$ esetén, akkor a
+(\ref{thm1}) egyenletből következik, hogy 
+\[
+r^{n+2}+ar^{n+1}+br^{n}=0.
+\]
+Mivel az $f_{n}=0,\forall n\in\mathbb{N}$ triviális megoldástól különböző
+sorozatokat keresünk, ezért a (\ref{thm1}) egyenletet elosztva $r^{n}\not=0$-val,
+az 
+\[
+r^{2}+ar+b=0
+\]
+$r$-ben másodfokú egyenletet kapjuk. Ha ennek két különböző valós
+gyöke van és ezek $r_{1}\not=r_{2}$, akkor az $(Y_{n})_{n\in\mathbb{N^{*}}}={r_{1}}^{n}$
+és $(Z_{n})_{n\in\mathbb{N^{*}}}={r_{2}}^{n}$ sorozatok megoldásai
+a (\ref{thm1}) egyenletnek.
+
+A továbbiakban egy segédtételre lesz szükségünk.
+\begin{theorem}{thm:fib}
+A $(\ref{thm1})$ egyenlet összes megoldása 
+\[
+f_{n}=c_{1}y_{n}+c_{2}z_{n},\forall n\in\mathbb{N^{*}},
+\]
+vagyis 
+\[
+f_{n}=c_{1}r_{1}^{n}+c_{2}r_{2}^{n},\forall n\in\mathbb{N^{*}}
+\]
+alakú, ahol $c_{1},c_{2}$ tetszőleges, valós konstansok. 
+\end{theorem}
+
+A Fibonacci-sorozat esetén a $(\ref{thm1})$ általános egyenletben
+$a=b=-1$, így a karakterisztikus egyenlete 
+\[
+r^{2}-r-1=0
+\]
+alakú, ahonnan kapjuk, hogy a gyökök $r_{1,2}=\frac{1\pm\sqrt{5}}{2}$.
+Az $x_{1}=x_{2}=1$ kezdőértékek segítségével kiszámíthatjuk a $c_{1},c_{2}$
+konstansokat, így végül az 
+\[
+f_{n}=\frac{1}{2}\left[\left(1+\frac{1}{\sqrt{5}}\right)\left(\frac{1+\sqrt{5}}{2}\right)^{n}+\left(1-\frac{1}{\sqrt{5}}\right)\left(\frac{1-\sqrt{5}}{2}\right)^{n}\right]
+\]
+eredményhez jutunk. Így a fenti összefüggés megadja a Fibonacci-sorozat
+$n.$ tagjának az értékét. 
+\end{solution}
+\vspace{1em}
+
+\begin{definition}
+A Fibonacci-sorozat egymást követő tagjai arányát vizsgálva, amikor
+$n\rightarrow\infty$, az 
+\[
+\frac{f_{n+1}}{f_{n}}\approx\frac{\sqrt{5}-1}{2}\approx1,618=:\phi
+\]
+értéket kapjuk, amit \textit{aranymetszésnek} nevezünk.
+\end{definition}
+Ha egy kört két részre osztunk $\frac{1}{\phi}$ arányban, akkor a
+keletkező kisebb rész által bezárt szöget \textit{aranyszögnek} nevezzük,
+ami megközelítőleg $137,5^{\circ}$.
+
+\begin{figure}[h]
+\centering \includegraphics[width=2.915cm,height=2.9cm]{\string"content/Kovacs_Levente/GoldenAngle\string".png}
+\caption{A piros színnel jelölt szög az aranyszög.}
+\label{fig1} 
+\end{figure}
+
+
+\section*{Házi feladatok}
+\begin{problem}
+Egy nyári tábor résztvevői a kiránduláson a rajzon látható hegyet
+másszák meg. A hegyre két meredek ösvény vezet, valamint egy szerpentin,
+ami több helyen találkozik az ösvényekkel. Itt át lehet térni a szerpentinről
+a meredek ösvényekre, vagy fordítva (ezeket az \ref{fig2} ábrán betűkkel
+jelöltünk). A tábor résztvevői az A pontból mentek fel a hegyen az
+I pontnál lévő zászlóhoz úgy, hogy mindig vagy a szerpentinen, vagy
+valamelyik meredek ösvényen haladtak. Legfeljebb hányan lehettek,
+ha végül megállapították, hogy mindenki különböző úton jutott fel
+a hegy tetejére? (Két út különböző, ha legalább egy szakaszuk nem
+ugyanaz) \cite{Moz2}.
+\end{problem}
+\begin{figure}
+\centering \includegraphics[width=\linewidth]{\string"content/Kovacs_Levente/hegy\string".png}
+\caption{}
+\label{fig2} 
+\end{figure}
+
+\begin{solution}
+A (\ref{fig3}) ábra alapján az $A$ pontból indulva vizsgáljuk meg,
+hogy hányféleképpen juthatunk a betűkkel jelzett pontokba. Az ábrán
+fel vannak tüntetve minden pont mellé az odavezető utak száma. Nézzük,
+hogy ezeket hogyan is kapjuk.
+
+\begin{figure}[h]
+\centering \includegraphics[width=0.3\linewidth]{\string"content/Kovacs_Levente/ut\string".png}
+\caption{}
+\label{fig3} 
+\end{figure}
+
+Az \textbf{A} kiindulási pontba csak \textbf{1-féleképpen} juthatunk.
+
+Úgy szintén a \textbf{B pontba} csak a szerpentinen mehetünk, azaz
+\textbf{1-féleképpen} juthatunk.
+
+A \textbf{C pontba} mehetünk az $A$-ból a meredek ösvényen vagy $B$-ből
+a szerpentinen, ez \textbf{2 lehetőség}.
+
+\textbf{A D pontba} mehetünk C-ből a szerpentinen vagy B-ből a meredeken.
+Mivel C-be 2-féleképpen juthattunk, így ehhez a 2-féle C-be vezető
+úthoz a CD szakaszt hozzávéve kétféle D-be vezető utat kapunk. B-be
+csak 1 út vezetett, így B-n keresztül csak 1 út vezet D-be, vagyis
+D-be összesen $2+1=\textbf{3-féleképpen}$ juthatunk.
+
+\textbf{Az E pontba} juthatunk D-ből vagy C-ből. A D-be vezető 3 úthoz
+a DE szakaszt hozzávéve 3 különböző, E-be vezető utat kapunk. Ugyanígy
+a C-be vezető 2 úthoz a CE szakaszt hozzávéve 2 különböző, E-be vezető
+utat kapunk. Nyilvánvalóan más utat kapunk E-be, ha C-n át megyünk,
+és mást, ha D-n át, így ez $3+2=\textbf{5}$ út mind különböző.
+
+\textbf{Az F pontba} vezető utak száma: mivel F-be E-ből vagy D-ból
+juthatunk, az előzőekhez hasonlóan F-be annyiféle különböző úton lehet
+menni, amennyi az E-be és a D-be vezető utak számának az összege,
+azaz $5+3=\textbf{8-féleképpen}$.
+
+\textbf{A G pontba} ugyanígy annyiféleképpen juthatunk, ahányféleképpen
+F-be meg E-be, így a G-be vezető különböző utak száma: $8+5=\textbf{13}$.
+
+\textbf{A H pontba} ez alapján $13+8=\textbf{21}$ különböző út vezet,
+az \textbf{I pontban} levő zászlóhoz pedig $21+13=\textbf{34}$ különböző
+út.
+
+Tehát ha mindannyian különböző úton mentek fel, akkor nem lehettek
+többen 34-nél. Ha éppen 34-en voltak, akkor minden útvonalon végighaladt
+egy kiránduló a táborozók közül.
+
+Vegyük észre, hogy mindegyik pontba annyiféleképpen juthatunk, ahányféleképpen
+az előző két pontba összesen, így sorra véve a pontokba vezető utak
+számát (\textbf{A, B, C, D, E, F, G, H, I}), a következő sorozatot
+kapjuk: $1,1,2,3,5,8,13,21,34$. Ez a sorozat a Fibonacci-sorozat
+egy részsorozata. 
+\end{solution}
+\begin{problem}
+Előttünk van egy lépcső, melyen úgy akarunk felmenni, hogy egyszerre
+mindig egy vagy két lépcsőfokot lépünk. A lépcső aljáról (első lépcsőfoktól)
+indulva hányféleképpen mehetünk fel az $n$-edik lépcsőfokra? 
+\end{problem}
+
+\begin{solution}
+Legyen $f(n)$ az $n$-edik lépcsőfokra való feljutás módjainak száma.
+Mivel minden lépésben egy vagy két lépcsőfokot léphetünk, az $n$-edik
+lépcsőfokra csak kétféleképpen juthatunk el: 
+\begin{itemize}
+\item az $(n-1)$-edik lépcsőfokról, ha egyet lépünk, 
+\item az $(n-2)$-edik lépcsőfokról, ha kettőt lépünk. 
+\end{itemize}
+Példa: legyen $n=3$: A következő lehetőségek vannak: 
+\begin{itemize}
+\item 1 + 1 + 1 
+\item 1 + 2 
+\item 2 + 1 
+\end{itemize}
+\[
+f(3)=f(2)+f(1)=2+1=3
+\]
+
+A fentiek alapján az alábbi rekurzió adódik: 
+\[
+f(n)=f(n-1)+f(n-2),
+\]
+ahol $f(1)=1,\quad f(2)=2$. 
+\end{solution}
+\begin{problem}
+Egy emeletes házat úgy akarunk kifesteni, hogy minden szintet vagy
+csupa fehérre, vagy csupa kékre festünk, de két szomszédos szintet
+nem festünk fehérre. Hányféleképpen festhetünk ki egy házat, ha a
+szintek száma $n$? 
+\end{problem}
+
+\begin{solution}
+Legyen $F_{n}$ azon a festéseknek a száma, amelyekben az $n$-edik
+szint \emph{fehér} és $K_{n}$ azon a festéseknek a száma, amelyekben
+az $n$-edik szint \emph{kék}. A megkötés miatt: 
+\begin{itemize}
+\item Ha az $n$-edik szint fehér, akkor az $(n-1)$-edik csak kék lehet,
+vagyis $F_{n}=K_{n-1}$. 
+\item Ha az $n$-edik szint kék, akkor az $(n-1)$-edik lehet bármi, vagyis
+$K_{n}=F_{n-1}+K_{n-1}$. 
+\end{itemize}
+Jelölje $a_{n}$ az összes festési lehetőséget. Számoljunk néhány
+értéket: 
+\begin{itemize}
+\item $n=2$: \quad{}$f\ k$, $k\ f$, $k\ k$, vagyis $F_{2}=K_{1}=1$,
+\quad{}$K_{2}=F_{1}+K_{1}=1+1=2$, \quad{}$a_{2}=1+2=3$ 
+\item $n=3$: \quad{}$f\ k\ f$, $k\ f\ k$, $f\ k\ k$, $k\ f\ f$, $k\ k\ k$,
+vagyis $F_{3}=K_{2}=2$, \quad{}$K_{3}=F_{2}+K_{2}=1+2=3$, \quad{}$a_{3}=2+3=5$ 
+\item $n=4$: \quad{}$f\ k\ f\ k$, $k\ f\ k\ f$, $k\ k\ f\ k$, $k\ f\ k\ k$,
+$k\ k\ k\ f$, $f\ k\ k\ k$, $f\ k\ k\ f$, $k\ k\ k\ k$, vagyis
+$F_{4}=K_{3}=3$, \quad{}$K_{4}=F_{3}+K_{3}=2+3=5$, \quad{}$a_{4}=3+5=8$. 
+\end{itemize}
+Indukcióval bizonyítható, hogy a rekurzió a következő:
+
+\[
+F_{n}=K_{n-1},\quad K_{n}=F_{n-1}+K_{n-1},
+\]
+\[
+a_{n}=F_{n}+K_{n},
+\]
+
+ahol a kezdőértékek: 
+\[
+F_{1}=1,\quad K_{1}=1,\quad a_{1}=F_{1}+K_{1}=2.
+\]
+\end{solution}
+\begin{problem}
+Határozzuk meg, hogy hány darab olyan $n$ hosszúságú bináris számsorozat
+létezik, amelyben nincs két egymást követő nulla? Például $n=2$ esetén
+$01;10;11\rightarrow3$ db. 
+\end{problem}
+
+\begin{solution}
+Jelöljük $a_{n}$-nel azon $n$ hosszúságú bináris számsorozatok számát,
+amelyekben nem szerepel két egymást követő nulla. Vizsgáljuk meg:
+\begin{itemize}
+\item $n=1$: A lehetséges sorozatok: $\{0,1\}$, tehát $a_{1}=2$. 
+\item $n=2$: Az engedélyezett sorozatok: $\{01,10,11\}$, tehát $a_{2}=3$. 
+\end{itemize}
+Egy érvényes $n$ hosszúságú sorozat felépítéséhez nézzük meg az utolsó
+számjegyét:
+\begin{itemize}
+\item Ha 1-gyel végződik, akkor az előző $n-1$ bit bármelyik érvényes $(n-1)$-hosszúságú
+sorozat lehet. Ez $a_{n-1}$ lehetőséget jelent. 
+\item Ha 0-val végződik, akkor az $(n-1)$. bitnek mindenképp 1-nek kell
+lennie (hogy elkerüljük a „00”-t), és az első $n-2$ bit bármilyen
+érvényes $(n-2)$-hosszúságú sorozat lehet. Ez $a_{n-2}$ lehetőséget
+jelent. 
+\end{itemize}
+Ezért $n\ge3$ esetén: 
+\[
+a_{n}=a_{n-1}+a_{n-2},
+\]
+ahol $a_{1}=2$ és $a_{2}=3$. 
+\end{solution}
+\begin{problem}
+Igazoljuk, hogy 
+\[
+f_{2}+f_{4}+f_{6}+...+f_{2n}=f_{2n+1}-1,\forall\ n\in\mathbb{N}^{*}
+\]
+esetén, ahol $f_{n}$ az $n$-edik Fibonacci-szám! 
+\end{problem}
+
+\begin{solution}
+Legyen $A(n)$ a fenti állítás a Fibonacci-számokra vonatkozóan.
+
+$A(1)$ esetén 
+\[
+f_{2\cdot1}=f_{2\cdot1+1}-1
+\]
+\[
+f_{2}=f_{3}-1
+\]
+\[
+1=2-1
+\]
+
+\noindent Tegyük fel, hogy
+
+\[
+A(k):\quad f_{2}+f_{4}+f_{6}+f_{8}+\cdots+f_{2k}=f_{2k+1}-1.
+\]
+
+\noindent Ekkor az indukciós feltevés és a Fibonacci-képlet $f_{n+2}=f_{n+1}+f_{n}$
+alapján:
+
+\[
+\begin{aligned}f_{2}+f_{4}+f_{6}+f_{8}+\cdots+f_{2(k+1)} & =(f_{2}+f_{4}+f_{6}+\cdots+f_{2k})+f_{2(k+1)}\\
+ & =f_{2k+1}-1+f_{2(k+1)}\\
+ & =f_{2k+1}-1+f_{2k+2}\\
+ & =f_{2k+1}+f_{2k+2}-1\\
+ & =f_{2k+3}-1\\
+ & =f_{2(k+1)+1}-1,
+\end{aligned}
+\]
+
+tehát következik $A(k+1)$ is. Ezért $A(k)\Rightarrow A(k+1)$.
+
+Az indukció elve alapján tehát $A(n)$ igaz minden $n\in\mathbb{N}^{*}$
+esetén.
+\end{solution}
+\begin{problem}
+Igazoljuk, hogy 
+\[
+{f_{1}}^{2}+{f_{2}}^{2}+...+{f_{n}}^{2}=f_{n}\cdot f_{n+1},\forall\ n\in\mathbb{N}^{*}
+\]
+esetén, ahol $f_{n}$ az $n$-edik Fibonacci-szám! 
+\end{problem}
+
+\begin{solution}
+Legyen $A(n)$ a fenti állítás a Fibonacci-számokra vonatkozóan. Matematikai
+indukcióval bizonyítjuk az állítást.
+
+$A(1)$ esetén: 
+\[
+f_{1}^{2}=1^{2}=1=f_{1}f_{2},
+\]
+hiszen $f_{1}=f_{2}=1$. Tehát az állítás igaz $n=1$-re.
+
+\noindent Tegyük fel, hogy az állítás igaz $n=k$-ra, azaz: 
+\[
+f_{1}^{2}+f_{2}^{2}+\cdots+f_{k}^{2}=f_{k}f_{k+1}.
+\]
+
+\noindent Bizonyítsuk be, hogy az állítás igaz $n=k+1$-re is: 
+\[
+f_{1}^{2}+f_{2}^{2}+\cdots+f_{k}^{2}+f_{k+1}^{2}=f_{k+1}f_{k+2}.
+\]
+
+\noindent Az indukciós feltevés alapján: 
+\[
+f_{1}^{2}+f_{2}^{2}+\cdots+f_{k}^{2}=f_{k}f_{k+1}.
+\]
+
+\noindent Adjuk mindkét oldalhoz $f_{k+1}^{2}$-et: 
+\[
+f_{1}^{2}+f_{2}^{2}+\cdots+f_{k}^{2}+f_{k+1}^{2}=f_{k}f_{k+1}+f_{k+1}^{2}.
+\]
+
+\noindent A jobb oldalon kiemelhető $f_{k+1}$: 
+\[
+f_{k}f_{k+1}+f_{k+1}^{2}=f_{k+1}(f_{k}+f_{k+1})=f_{k+1}f_{k+2},
+\]
+hiszen a Fibonacci-számok definíciója szerint $f_{k+2}=f_{k}+f_{k+1}$.
+
+Mivel az állítás igaz $n=1$-re, és ha igaz $n=k$-ra, akkor igaz
+$n=k+1$-re is, az indukció elve alapján az $A(n)$ igaz minden $n\geq1$
+természetes számra.
+
+\[
+\boxed{\sum_{i=1}^{n}f_{i}^{2}=f_{n}f_{n+1}}
+\]
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Csapó Hajnalka, Domokos Ábel]
+Igazoljuk, hogy minden nem nulla természetes szám esetén:
+
+\[
+F_{n-1}\cdot F_{n+1}-F_{n}^{2}=(-1)^{n}.
+\]
+\end{extraproblem}
+
+\begin{solution}
+A matematikai indukció módszerével bizonyítjuk.
+
+\textbf{Ellenőrzés:}
+
+\[
+n=1
+\]
+
+Ekkor: 
+\[
+F_{0}=0,\quad F_{1}=1,\quad F_{2}=1
+\]
+\[
+F_{0}\cdot F_{2}-F_{1}^{2}=0\cdot1-1^{2}=-1=(-1)^{1}
+\]
+Teljesül. 
+\[
+n=2
+\]
+
+Ekkor: 
+\[
+F_{1}=1,\quad F_{2}=1,\quad F_{3}=2
+\]
+\[
+F_{1}\cdot F_{3}-F_{2}^{2}=1\cdot2-1^{2}=-1=(-1)^{2}
+\]
+Teljesül.
+
+\textbf{Indukciós lépés:} Feltételezzük, hogy az állítás igaz egy
+adott $n$-re: 
+\[
+F_{n-1}\cdot F_{n+1}-F_{n}^{2}=(-1)^{n}
+\]
+
+és bizonyítsuk be, hogy igaz $n+1$-re is: 
+\[
+F_{n}\cdot F_{n+2}-F_{n+1}^{2}=(-1)^{n+1}
+\]
+
+Felhasználjuk a Fibonacci definíciót: $F_{n+2}=F_{n+1}+F_{n}$
+
+Ekkor: 
+\[
+F_{n}\cdot F_{n+2}-F_{n+1}^{2}=F_{n}(F_{n+1}+F_{n})-F_{n+1}^{2}=F_{n}F_{n+1}+F_{n}^{2}-F_{n+1}^{2}
+\]
+\[
+=(F_{n}F_{n+1}-F_{n+1}^{2})+F_{n}^{2}=-F_{n+1}(F_{n+1}-F_{n})+F_{n}^{2}
+\]
+
+Mivel $F_{n+1}-F_{n}=F_{n-1}$, ez: 
+\[
+=-F_{n+1}F_{n-1}+F_{n}^{2}=-(F_{n-1}F_{n+1}-F_{n}^{2})
+\]
+
+Az indukciós feltevés szerint: 
+\[
+F_{n-1}F_{n+1}-F_{n}^{2}=(-1)^{n}\Rightarrow-(F_{n-1}F_{n+1}-F_{n}^{2})=-(-1)^{n}=(-1)^{n+1}
+\]
+
+Tehát az állítás igaz minden $n\geq1$-re. 
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+Hány 2-vel, 3-mal, 4-gyel, 5-tel osztható Fibonacci-szám van az első
+2025 Fibonacci-szám között? 
+\end{extraproblem}
+
+\begin{solution}
+A 2-vel való osztási maradékok sorozata a rekurzió alapján:
+
+$0,1,1,0,1,1,0,1,1\dots$, azaz azonnal megállapítható, hogy $F_{3k}\equiv0\mod 3$,
+$F_{3k+1}\equiv F_{3k+2}\equiv0\mod 3$, tehát a páros számok $F_{0},F_{3},F_{6},\dots F_{2025}$,
+azaz összesen 676 szám.
+
+A 3-mal való osztási maradékok sorozata a rekurzió alapján: $0,1,1,2,0,2,2,1,0,1,1,2\dots$,
+azaz a maradékok sorozatának periódusa 8, viszont minden negyedik
+osztható 3-mal, azaz a 3 többszörösei $F_{0},F_{4},F_{8},\dots F_{2024}$,
+azaz összesen 507 szám.
+
+A 4-gyel való osztási maradékok sorozata a rekurzió alapján: $0,1,1,2,3,1,0,1,1,2,3,1\dots$,
+azaz a maradékok sorozatának periódusa 6 és minden hatodik szám osztható
+4-gyel, azaz a 4 többszörösei $F_{0},F_{6},F_{1}2,\dots F_{2022}$,
+azaz összesen 375 szám.
+
+Az 5-tel való osztási maradékok sorozata a rekurzió alapján: 
+\[
+0,1,1,2,3,0,3,3,1,4,0,4,4,3,2,0,2,2,4,1,0,1,1,2,3,0,\dots
+\]
+ azaz a maradékok sorozatának periódusa 20, viszont minden ötödik
+osztható 5-tel, azaz az 5 többszörösei $F_{0},F_{5},F_{1}0,\dots F_{2025}$,
+azaz összesen 406 szám. 
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Egy fiú a földszintről indul és felfelé megy a lépcsőn,
+lépésenként találomra egy vagy két lépcsőfokot haladva. Mindegyik
+emeletre 17 lépcsőfok vezet. Hányféleképpen érhet fel az $n$-edik
+emeletre? (Csak a lépcsőkön történő, felfelé irányuló lépéseket vesszük
+számításba.)}}\textit{ (Matlap 2006)}
+\end{extraproblem}
+
+\begin{solution}
+\textbf{(1. megközelítés)} Legyen $x_{k}$ annak a lehetőségeknek
+a száma, ahányféleképpen eljuthatunk a $k$-adik lépcsőfokra. A legelső
+lépcsőfokra ($k=1$) nyilvánvalóan csak egyféleképpen léphetünk fel:
+$x_{1}=1$. A második lépcsőfokra két különböző módon juthatunk: vagy
+kétszer egyet lépünk, vagy egyből kettőt, tehát $x_{2}=2$.
+
+Általánosan, a $k$-adik fokra két úton érkezhetünk:
+
+vagy az $(k-1)$-edik fokra értünk előzőleg, és onnan léptünk egyet,
+
+vagy a $(k-2)$-edik fokon álltunk, és onnan ugrottunk kettőt.
+
+Ez alapján:
+
+\[
+x_{k}=x_{k-1}+x_{k-2},
+\]
+
+azaz a $x_{k}$ sorozat a Fibonacci-sorozat szabályait követi. Mivel
+17 lépcsőfok vezet az emeletre, a kérdés az $x_{17}$ meghatározása.
+A Fibonacci-sorozat első néhány tagja:
+
+\[
+x_{1}=1,\quad x_{2}=2,\quad x_{3}=3,\quad x_{4}=5,\quad x_{5}=8,\quad x_{6}=13,\quad\ldots
+\]
+
+A 17-edik tag értéke: $x_{17}=2584$.
+
+Tehát a fiú \textbf{2584-féleképpen} juthat fel egy emeletre. Következésképpen
+az $n$-edik emelet elérésének módjainak száma is: $2584^{n}$.
+
+\textbf{(2. megközelítés)} Alternatívaként a különböző feljutási lehetőségek
+számát kombinatorikus módszerrel is kiszámíthatjuk. Tegyük fel, hogy
+a fiú $k$ darab kétlépéses és $(17-2k)$ darab egy lépéses lépést
+tesz meg. Ekkor a teljes lépésszám: $k+(17-2k)=17-k$.
+
+A lépések sorrendjének megválasztására $\binom{17-k}{k}$ mód van.
+Összesen tehát:
+
+\[
+S=\sum_{k=0}^{8}\binom{17-k}{k}=\binom{17}{0}+\binom{16}{1}+\binom{15}{2}+\cdots+\binom{9}{8}=2584.
+\]
+
+Így tehát ismét azt kapjuk, hogy $x_{17}=2584$, vagyis a fiú pontosan
+ennyi különböző módon érhet fel egy emeletre. 
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Adott $n$ ház egy sorban. A házakat le szeretnénk
+festeni a zöld és barna színek egyikével. Hányféle olyan festés létezik,
+amelyben nincs két egymás melletti barna ház?}}
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük $a_{n}$-nal azoknak a festési módoknak a számát, amelyek
+kielégítik a feltételt $n$ darab ház esetén. Mivel minden ház lehet
+barna (B) vagy zöld (Z), egyetlen ház esetén nyilvánvalóan két lehetőségünk
+van ($a_{1}=2$). Két ház esetén a lehetséges kombinációk: BZ, ZB,
+ZZ (a BB tilos), tehát $a_{2}=3$.
+
+Most tekintsük az általános $n$-edik esetet. A sorban első ház kétféleképpen
+lehet befestve:
+
+\textbf{Ha zöld:} akkor a maradék $n-1$ ház bármilyen, a feltételnek
+megfelelő módon színezhető, azaz $a_{n-1}$ különböző lehetőség áll
+rendelkezésre.
+
+\textbf{Ha barna:} akkor a második ház csak zöld lehet (a BB kombináció
+nem engedélyezett). A fennmaradó $n-2$ ház szabadon festhető, a feltétel
+szerint, így ezek száma $a_{n-2}$.
+
+Ezek alapján az alábbi rekurzió adódik:
+
+\[
+a_{n}=a_{n-1}+a_{n-2},\quad\text{ahol }a_{1}=2,\quad a_{2}=3.
+\]
+
+Ez pontosan a Fibonacci-sorozat definícióját követi, eltolva indexekkel:
+$a_{n}=F_{n+1}$, ahol $(F_{n})$ a Fibonacci-számok sorozata. Így:
+
+\[
+a_{n}=F_{n+1}.
+\]
+
+Zárt alakban, Binet-formulával kifejezve:
+
+\[
+a_{n}=\frac{1}{\sqrt{5}}\left[\left(\frac{1+\sqrt{5}}{2}\right)^{n+1}-\left(\frac{1-\sqrt{5}}{2}\right)^{n+1}\right].
+\]
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+Hány olyan részhalmaza van az $f\{1,2,\ldots,n\}$ halmaznak, amelyek
+elemei között nincs két egymásutáni szám? 
+\end{extraproblem}
+
+\begin{solution}
+Jelölje $x_{n}$ ezt a számot. Itt $x_{1}=2$ (mert jó az $\emptyset$
+és az $\{1\}$), $x_{2}=3$ (jó: $\emptyset$, $\{1\}$, $\{2\}$,
+nem jó: $\{1,2\}$), $x_{3}=5$ (jó: $\emptyset$, $\{1\}$, $\{2\}$,
+$\{3\}$, $\{1,3\}$, nem jó: $\{1,2\}$, $\{2,3\}$, $\{1,2,3\}$).
+
+Legyen $n\geq3$ tetszőleges, és tekintsük az $f\{1,2,\ldots,n\}$
+halmaz olyan $H$ részhalmazait, amelyek elemei között nincs két egymásutáni
+szám. Csoportosítsuk ezeket így:
+\begin{itemize}
+\item[I.] Ha $n\in H$, akkor $n-1\notin H$ és annyi $H$ részhalmaz van,
+amennyi az $x_{n-2}$ érték. 
+\item[II.] Ha $n\notin H$, akkor annyi $H$ részhalmaz van, amennyi az $x_{n-1}$
+érték. 
+\end{itemize}
+Ezért $x_{n}=x_{n-2}+x_{n-1}$, és kapjuk, hogy $x_{n}=F_{n+2}$,
+ahol $n\geq1$ és $F_{1}=F_{2}=1$.
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Egy fiú a földszintről indul és felfelé megy a lépcsőn, lépésenként
+találomra egy vagy két lépcsőfokot haladva. Mindegyik emeletre 17
+lépcsőfok vezet. Hányféleképpen érhet fel az n-edik emeletre? (Csak
+a lépcsőkön történő, felfelé irányuló lépéseket vesszük számításba.)
+(Matlap 2006) 
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük $x_{k}$-val a $k$-adik lépcsőfokra jutás lehetőségeit.
+Az első lépcsőfokra egyféleképpen lehet jutni: $x_{1}=1$. A második
+lépcsőfokra kétféleképpen juthat: kétszer lép egy lépcsőfokot, vagy
+egyszer lép két lépcsőfokot: $x_{2}=2$. A $k$-adik lépcsőfokra úgy
+juthat, hogy a $(k-2)$-edik lépcsőfokról lép a $k$-adikra, vagy
+a $(k-1)$-edikről a $k$-adikra, tehát $x_{k}=x_{k-2}+x_{k-1}$.
+Ez azt jelenti, hogy $x_{k}$ egy Fibonacci-féle sorozat $k$-adik
+tagja. Tehát $x_{17}$-et kell meghatározni, például a tagok felsorolása
+által: $1,\ 2,\,3,\,5,\ 8,\ 13,\ 21,\ 34,\ 55,\ 89,\ 144,\ 233,\ 377,\ 610,\ 987,\ 2584,\dots$.\\
+ Tehát $x_{17}=2584$-féleképpen juthat fel egy emeletre, következik,
+hogy az $n$-edik emeletre való feljutási lehetőségek száma: $2584^{n}$. 
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Egy macska egy 10 szintes lépcső legfelső szintjéről szeretne lejutni
+a talajra néhány ugrással. Hányféleképpen teheti ezt meg, ha egyszerre
+mindig csak 1 vagy 2 szintet ugorhat lefelé, de nem ugorhat rá az
+alulról 4. lépcsőre? 
+\end{extraproblem}
+
+\begin{solution}
+Ha a 4. lépcsőfok kihagyására vonatkozó feltételtől eltekintenénk,
+akkor éppen a Fibonacci-sorozat tagjait kapnánk: 1, 2, 3, 5, 8, 13,
+21, 34, 55, 89. Így összesen 89 útvonal lenne, amelyekből ki kell
+vonnunk a rossz -- tehát a 4. lépcsőfokot érintő -- utak számát.
+A 10. lépcsőfokról a 4. lépcsőfokig 6 lépcsőt kell megtenni, tehát
+itt éppen annyi út vezet, mint amennyi a 6. lépcsőfokról a talajra
+vezetne, vagyis az előbbi sorozat 6. tagja, ami a 13. A 4. lépcsőfokról
+a talajig 5 út vezet, így a 4. lépcsőfokot érintő útvonalak száma
+$13\cdot5=65$. Vagyis a jó útvonalak száma $89-65=24$. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Fibonacci-sorozatnak nevezzük az $F_{1}=1$, $F_{2}=1$, $F_{n}=F_{n-1}+F_{n-2}$
+($n\ge3$) kikötésekkel értelmezett sorozatot. Bizonyítsuk be, hogy
+ha $0<p<n$, akkor az $F_{2p+1}+F_{2p+3}+\ldots+F_{2n+1}$ és $F_{2p}+F_{2p+2}+\ldots+F_{2n}$
+számok nem lehetnek a Fibonacci-sorozat tagjai.\emph{ (IV. Nemzetközi
+Magyar Matematika Verseny) }
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük az első számot $A$-val, a másodikat $B$-vel! A Fibonacci-sorozat
+definícióját felhasználva 
+\[
+A+B=F_{2p+2}+F_{2p+4}+\ldots+F_{2n+2}
+\]
+\[
+A-B=F_{2p-1}+F_{2p+1}+\ldots+F_{2n-1}
+\]
+
+Továbbá $A=(A+B)-B$ miatt $A=F_{2n+2}-F_{2p}$, és $B=A-(A-B)$ miatt
+$B=F_{2n+1}-F_{2p-1}$. A sorozat nyilvánvalóan növekvő és tagjai
+pozitívak, továbbá $F_{2n+2}=F_{2n+1}+F_{2n}$, így hát $A=F_{2n+2}-F_{2p}>F_{2n+2}-F_{2n}=F_{2n+1}$,
+de nyilván $A<F_{2n+2}$. Teljesen hasonló módon $F_{2n}<B<F_{2n+1}$,
+mivel azonban a sorozat monoton növekszik, ezért két szomszédos tagja
+között nem lehet újabb tag, tehát $A$ és $B$ valóban nem a Fibonacci-sorozat
+tagjai. 
+\end{solution}
+\begin{figure}
+\centering \includegraphics[width=0.5\linewidth]{\string"content/Kovacs_Levente/Fibo\string".png}
+\label{Fibo} \caption{}
+\end{figure}
+
+\begin{extraproblem}[Kiss Andrea-Tímea]
+A \aref{Fibo}.ábrán látható 26 mezőből álló ,,tábla'' hányféleképpen
+fedhető 13 ,,dominóval''? Egy-egy dominó két szomszédos mezőt fed
+le. (Az egymásba forgatható megoldásokat különbözőnek tekintjük.) 
+\end{extraproblem}
+
+\begin{solution}
+Ha a már dominóval lefedett ábrát az egyetlen függőleges 2 hosszú
+szakasza mentén (azaz "12 óránál") elvágjuk, akkor két eset lehetséges:
+vagy nem vágunk el dominót, vagy pontosan két dominót vágunk el. Ugyanis,
+ha egyetlen dominót vágnánk ketté, akkor az kikényszerítené, hogy
+a 26 mező ,,külső'' 13 mezőjét és a ,,belső'' 13 mezőjét is úgy
+kellene lefednünk dominókkal, hogy minden dominó vagy két külső, vagy
+két belső mezőt fedne le, ami (mivel 13 nem páros) lehetetlen.
+
+\medskip{}
+
+\textbf{a)} Ha nem vágunk el dominót. Az ábrát ,,kiterítve'' $13\times2$
+méretű téglalapot kell lefednünk dominókkal. (Ez egy "klasszikus"
+Fibonacci feladat.)\\
+ Megmutatjuk, hogy tetszőleges $n\times2$ méretű téglalapot $f_{n+1}$
+féleképpen fedhetünk le (ahol $f_{n}$ az $f_{1}=f_{2}=1;\quad f_{n+2}=f_{n}+f_{n+1}$
+rekurzióval definiált Fibonacci-sorozat.)
+
+\medskip{}
+
+Jelölje $l_{n}$ az $n\times2$ méretű téglalap megfelelő lefedéseinek
+a számát. Az $1\times2$ és a $2\times2$ méretű téglalapokat nyilván
+$l_{1}=1$, illetve $l_{2}=2$ féleképpen fedhetjük le, míg, ha $n>2$,
+akkor az $n\times2$ méretű téglalap esetén a bal felső sarokban lévő
+mezőt vagy egy álló dominóval fedjük le, és ekkor a maradék $(n-1)\times2$
+méretű téglalapot $l_{n-1}$-féleképpen fedhetjük le; vagy egy fekvő
+dominóval fedjük le, ami kikényszeríti, hogy ezen dominó alatt lévő
+két mezőt szintén egy fekvő dominóval fedjünk le, és ekkor a maradék
+$(n-2)\times2$ méretű téglalap $l_{n-2}$-féleképpen fedhető le.
+Azaz ekkor $l_{n}=l_{n-1}+l_{n-2}$, ami (a fenti $l_{1},l_{2}$ értékek
+mellett) azt jelenti, hogy a lefedések száma valóban $l_{n}=f_{n+1}$.
+Mivel most $n=13$, ezen az ágon $f_{14}=377$ eset van.
+
+\medskip{}
+
+\textbf{b)} Ha két dominót vágunk ketté. Ekkor a két szétvágott dominót
+az ábrából elhagyva és a maradék ábrát ,,kiterítve'': $11\times2$
+méretű téglalapot kell lefednünk dominókkal.
+
+\medskip{}
+
+Ez az az előző \textbf{a)} pont 2-vel kisebb méretben; azaz ekkor
+$f_{12}=144$ eset van.
+
+\medskip{}
+
+Tehát összesen $377+144=\boxed{521}$ eset van.
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Legyen adott az alábbi sorozat: 
+
+\[
+a_{n}=F_{n+1}+2F_{n},\quad\text{ahol }F_{n}\text{ a Fibonacci-számok sorozata.}
+\]
+\end{extraproblem}
+
+\begin{solution}
+~
+\begin{enumerate}
+\item Határozzuk meg az $a_{n}$ sorozat generátorfüggvényét! 
+\item Fejezzük ki az $a_{n}$ sorozatot zárt alakban a Binet-formula segítségével! 
+\item A Fibonacci-sorozat generátorfüggvénye: 
+\[
+F(x)=\sum_{n=0}^{\infty}F_{n}x^{n}=\frac{x}{1-x-x^{2}}
+\]
+
+A megadott sorozat: 
+\[
+a_{n}=F_{n+1}+2F_{n}
+\]
+Ez alapján a generátorfüggvény: 
+\[
+A(x)=\sum_{n=0}^{\infty}a_{n}x^{n}=\sum_{n=0}^{\infty}(F_{n+1}+2F_{n})x^{n}=\sum_{n=0}^{\infty}F_{n+1}x^{n}+2\sum_{n=0}^{\infty}F_{n}x^{n}
+\]
+
+Tudjuk, hogy: 
+\[
+\sum_{n=0}^{\infty}F_{n+1}x^{n}=\frac{F(x)}{x}\quad\text{és}\quad\sum_{n=0}^{\infty}F_{n}x^{n}=F(x)
+\]
+
+Ezért: 
+\[
+A(x)=\frac{F(x)}{x}+2F(x)=\left(\frac{1}{x}+2\right)\cdot\frac{x}{1-x-x^{2}}=\frac{1+2x}{1-x-x^{2}}
+\]
+
+\item A Fibonacci-számok zárt alakja: 
+\[
+F_{n}=\frac{1}{\sqrt{5}}\left(\varphi^{n}-\bar{\varphi}^{n}\right),\quad\text{ahol }\varphi=\frac{1+\sqrt{5}}{2},\;\bar{\varphi}=\frac{1-\sqrt{5}}{2}
+\]
+
+Ez alapján: 
+\[
+\begin{aligned}a_{n} & =F_{n+1}+2F_{n}=\frac{1}{\sqrt{5}}\left(\varphi^{n+1}-\bar{\varphi}^{n+1}+2\varphi^{n}-2\bar{\varphi}^{n}\right)\\
+ & =\frac{1}{\sqrt{5}}\left(\varphi^{n}(\varphi+2)-\bar{\varphi}^{n}(\bar{\varphi}+2)\right)
+\end{aligned}
+\]
+
+Mivel: 
+\[
+\varphi+2=\frac{5+\sqrt{5}}{2},\quad\bar{\varphi}+2=\frac{5-\sqrt{5}}{2}
+\]
+
+A végső zárt alak: 
+\[
+a_{n}=\frac{1}{\sqrt{5}}\left[\left(\frac{5+\sqrt{5}}{2}\right)\varphi^{n}-\left(\frac{5-\sqrt{5}}{2}\right)\bar{\varphi}^{n}\right].
+\]
+
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Határozd meg az $m^{2}+n^{2}$ maximális értékét, ha az $m,n$ olyan
+1981-nél kisebb pozitív egész számok, amelyek teljesítik az 
+\begin{equation}
+(n^{2}-mn-m^{2})^{2}=1\label{eq:fib_ta1}
+\end{equation}
+összefüggést! 
+\begin{flushright}
+(IMO, 1981) 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Ha az $(m,n)$ pár teljesíti \aref({eq:fib_ta1}) összefüggést és $0<m<n$,
+akkor $m<n\le2m$ és 
+\begin{align*}
+(n^{2}-mn-m^{2})^{2} & =\left((n-m)^{2}+mn-2m^{2}\right)^{2}\\
+ & =\left((n-m)^{2}+m(n-m)-m^{2}\right)^{2}\\
+ & =\left(m^{2}-m(n-m)-(n-m)^{2}\right),
+\end{align*}
+tehát az $(n-m,m)$ számpár is teljesíti \aref({eq:fib_ta1}) összefüggést
+és $n-m\le m$. Következésképpen, ha egy kiinduló $(m,n)$, $0<m<n$
+számpárt lépésenként helyettesítünk az $(n-m,m)$ számpárral, akkor
+az új számpár is teljesíti az összefüggést és $0<n-m\le m$. Ezért
+véges sok lépés után le kell álljon a folyamat. Viszont a leállás
+csak egy $(k,k)$ számpárban történhet ($k\in\mathbb{N}^{*}$) és
+az ilyen számpárok közül egyedül az $(1,1)$ teljesíti \aref({eq:fib_ta1})
+összefüggést.
+
+Az előbb vázolt gondolatmenetből viszont az következik, hogy az összes
+olyan $(m,n)$ számpár, amely teljesíti \aref({eq:fib_ta1}) összefüggést
+elérhető az $(1,1)$ számpárból a $(k,l)\mapsto(l,k+l)$ transzformációval
+(esetleg a végén még végre kell hajtani egy $(k,l)\mapsto(l,k)$ transzformációt
+is az utolsó lépésben, ha $m>n$).
+
+Az $(1,1)$ számpárból a következők érhetők el a transzformációval:
+\[
+(1,1)\mapsto(1,2)\mapsto(2,3)\mapsto(3,5)\mapsto(5,8)\mapsto\dots\mapsto(F_{k},F_{k+1})\mapsto\dots,
+\]
+ahol $F_{k}$-val jelöltük a $k$-adik Fibonacci-számot.
+
+Tehát \aref({eq:fib_ta1}) összefüggést teljesítő számpárok egymásutáni
+Fibonacci-számokból állnak. Az utolsó, 1981-nél kisebb Fibonacci-szám
+$F_{17}=1597,$ tehát a feladatban feltett kérdésre a válasz 
+\[
+F_{16}^{2}+F_{17}^{2}=987^{2}+1597^{2}=3524578.
+\]
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Előbb igazold, hogy ha létezik olyan $(x,y,z)$ pozitív egészekből
+álló számhármas, amely teljesíti az 
+\begin{equation}
+x^{2}+y^{2}+1=xyz\label{eq:ta5}
+\end{equation}
+egyenletet, akkor $z=3$, majd határozd meg az összes megoldását az
+egyenletnek! 
+\end{extraproblem}
+
+\begin{solution}
+Tételezzük fel, hogy $(x,y,z)$ olyan megoldás, amelyre $z\ne3$.
+Ebben az esetben $x\ne y,$ mivel ellenkező esetben teljesülne az
+$x^{2}(z-2)=1$ összefüggés, ami lehetetlen. \Aref({eq:ta5}) egyenletet
+hozzuk az 
+\[
+(yz-x)^{2}+y^{2}+1=(yz-x)yz
+\]
+ekvivalens alakra. Ebből az alakból következik, hogy ha $(x,y,z)$
+pozitív egészekből álló megoldása az egyenletnek, akkor $(yz-x,y,z)$
+is az, mivel $x(yz-x)=xyz-x^{2}=y^{2}+1>0$. Az előző tárgyalás és
+a szimmetria alapján ugyanakkor feltételezhetjük, hogy a kiinduló
+$(x,y,z)$ olyan megoldás, amelyre teljesül, hogy $x>y$ és $x+y$
+minimális. Viszont ekkor $x^{2}>y^{2}+1=x(yz-x)$, tehát $x>yz-x$.
+Tehát az új $(yz-x,y,z)$ vagy $(y,yz-x,z)$ megoldások közül az amelyiknek
+az első tagja nagyobb, mint a második ellentmond annak, hogy a kiinduló
+megoldás első két tagjának összege minimális volt. Összefoglalva,
+csak akkor van megoldása az egyenletnek, ha $z=3.$
+
+Vizsgáljuk meg a $z=3$ esetet, vagyis oldjuk meg az 
+\begin{equation}
+x^{2}+y^{2}+1=3xy\label{eq:ta6}
+\end{equation}
+egyenletet a pozitív egészeken! Észrevesszük, hogy $(1,1)$ az egyetlen
+olyan megoldás, amelyre $x=y$. Ha $(x,y)$ egy másik pozitív egészekből
+álló megoldás, akkor feltételezhetjük a szimmetria miatt, hogy $x>y\ge1$.
+\Aref({eq:ta6}) egyenlet ekvivalens az 
+\[
+y^{2}+(3y-x)^{2}+1=3y(3y-x)
+\]
+egyenlettel, ezért $(y,3y-x)$ is pozitív egészekből álló megoldás,
+mert $x(3y-x)=3xy-x^{2}=y^{2}+1>0$. Ugyanakkor $y\ge3y-x$ is teljesül,
+mivel ez az egyenlőtlenség ekvivalens az $xy\ge y^{2}+1$ igaz egyenlőtlenséggel
+(mert $x>y$). Ha a szerkesztett új megoldásban egyenlőség áll fent,
+vagyis $y=3y-x$, akkor láttuk, hogy ez a megoldás csak az $(1,1)$
+lehet, tehát $x=2$ és $y=1$. Az összes többi esetben viszont a kiinduló
+$(x,y),$ $x>y$ megoldásból szerkesztettünk egy \emph{kisebb} $(y,3y-x)$,
+$y>3y-x$ megoldást.
+
+Az előbbi eredmények alapján, ha iteráljuk a szerkesztést, véges sok
+lépés után el kell jutnunk a tetszőleges $(x,y),$ $x>y$ megoldásból
+a $(k,l)\mapsto(l,3l-k)$ transzformációval az $(1,1)$ megoldásba.
+Az előző feladat megoldásához hasonlóan ez azt jelenti, hogy az egyenlet
+összes olyan $(x,y)$ megoldása, amelyre $x>y$ az $(x_{1},y_{1})=(1,1)$
+megoldásból generálható az 
+\[
+(x_{n},y_{n})=(y_{n+1},3y_{n+1}-x_{n+1})
+\]
+\emph{fordított rekurzió} segítségével véges sok lépésben. A rekurzió
+alapján $x_{n}=y_{n+1}$ és $x_{n-1}=3x_{n}-x_{n+1}$, valamint $x_{1}=y_{1}=1.$
+Viszont ez az $(x_{n})$ sorozat pontosan a páratlan indexű tagokból
+álló Fibonacci-sorozat, tehát \aref({eq:ta6}) egyenlet megoldásai
+az $(1,1)$, $(F_{2k+1},F_{2k-1})$ és $(F_{2k-1},F_{2k+1})$ alakú
+számpárok. 
+\end{solution}
+\begin{extraproblem}
+Andrea azt állítja, hogy ismer a Fibonacci-számokra egy másik képletet:
+$F_{n}=\left\lceil e^{n/2-1}\right\rceil ,\quad n=1,2,$\ldots ,
+
+ahol e = 2{,}718281828\ldots a természetes logaritmus alapja.
+
+Igaza van? 
+\end{extraproblem}
+
+\begin{solution}
+A képlet $n=1,2,\ldots,10$ esetén működik, $n=11$-re viszont már
+nem jó: ekkor ugyanis 91-et ad. A hiba $n$-nel együtt növekszik.
+
+\[
+F_{n}\sim\frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^{n}=(0{,}447\ldots)\cdot(1{,}618\ldots)^{n}
+\]
+
+Andrea képletében a kerekítés jelentősége folyamatosan elhalványul:
+
+\[
+\left\lceil e^{n/2-1}\right\rceil \sim e^{n/2-1}=(0{,}367\ldots)\cdot(1{,}648\ldots)^{n},
+\]
+
+az Andrea-féle számok és a Fibonacci-számok hányadosa így:
+
+\[
+\frac{\left\lceil e^{n/2-1}\right\rceil }{F_{n}}\approx\frac{(0{,}367\ldots)\cdot(1{,}648\ldots)^{n}}{0{,}447\ldots}=(0{,}822\ldots)\cdot(1{,}018\ldots)^{n}.
+\]
+
+Mivel a hatvány alapja nagyobb, mint 1, az eltérés „minden határon
+túl” növekszik, amint $n$ egyre nagyobb. 
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Fibonacci-sorozatnak nevezzük az $F_{1}=1$, $F_{2}=1$, $F_{n}=F_{n-1}+F_{n-2}$
+($n\ge3$) kikötésekkel értelmezett sorozatot. Bizonyítsuk be, hogy
+ha $0<p<n$, akkor az $F_{2p+1}+F_{2p+3}+\ldots+F_{2n+1}$ és $F_{2p}+F_{2p+2}+\ldots+F_{2n}$
+számok nem lehetnek a Fibonacci-sorozat tagjai. 
+\begin{flushright}
+\textit{(NMMV, 1995, XII. osztály, 6. feladat)} 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük el 
+\[
+\begin{aligned}A= & F_{2p+1}+F_{2p+3}+\ldots+F_{2n+1}\\
+B= & F_{2p}+F_{2p+2}+\ldots+F_{2n}.
+\end{aligned}
+\]
+A rekurzív összefüggés alapján 
+\[
+\begin{aligned}A+B= & (F_{2p+1}+F_{2p})+(F_{2p+3}+F_{2p+2})+\ldots+(F_{2n+1}+F_{2n})\\
+= & F_{2p+2}+F_{2p+4}+\ldots+F_{2n+2},
+\end{aligned}
+\]
+valamint 
+\[
+\begin{aligned}A-B= & (F_{2p+1}-F_{2p})+(F_{2p+3}-F_{2p+2})+\ldots+(F_{2n+1}-F_{2n})\\
+= & F_{2p-1}+F_{2p+1}+\ldots+F_{2n-1}.
+\end{aligned}
+\]
+Ekkor igaz, hogy 
+\[
+A=(A+B)-B=F_{2n+2}-F_{2p},
+\]
+valamint 
+\[
+B=A-(A-B)=F_{2n+1}-F_{2p-1}.
+\]
+A Fibonacci-sorozat nyilvánvalóan szigorúan növekvő sorozat (első
+két tagjától eltekintve, melyek egyenlőek), valamint tagjai pozitívak.
+Mivel $0<p<n$, így $F_{2p}<F_{2n}$ így 
+\[
+F_{2n+1}=F_{2n+2}-F_{2n}<F_{2n+2}-F_{2p}=A.
+\]
+De $A=F_{2n+2}-F_{2p}<F_{2n+2}$ is teljesül, így beláttuk, hogy $F_{2n+1}<A<F_{2n+2}$.\\
+ Hasonlóan mivel $F_{2p-1}<F_{2n-1}$ 
+\[
+F_{2n}=F_{2n+1}-F_{2n-1}<F_{2n+1}-F_{2p-1}=B,
+\]
+és $B=F_{2n+1}-F_{2p-1}<F_{2n+1}$. Beláttuk, hogy $F_{2n}<B<F_{2n+1}$.
+
+Tehát $F_{2n+1}<A<F_{2n+2}$ és $F_{2n}<B<F_{2n+1}$ teljesül, de
+a Fibonacci-sorozat szigorúan monoton növekvő (első két tagjától eltekintve),
+így két szomszédos tagja között nem lehet újabb tag, ezért kijelenthető
+hogy $A$ és $B$ valóban nem a Fibonacci-sorozat tagjai.
+\end{solution}
+\subsection*{Érdekességek az aranymetszésről, melyekkel a diákok figyelme
+is felkelthető:} 
+\begin{itemize}
+\item A természetben (például az emberi testen vagy csigák mészvázán) és
+művészetben is gyakran megjelenik, természetes egyensúlyt teremtve
+a szimmetria és az aszimmetria között.(lásd \ref{1}., \ref{2}. ábra) 
+\item Gyakori megjelenése miatt a geometriában már ókori matematikusok is
+tanulmányozták az aranymetszést. Bizonyíthatóan az ókori Egyiptomban
+is értették és használták ezt a törvényszerűséget. Az i. e. 2600 körül
+épült gízai nagy piramis arányaiban is felfedezhető az aranymetszés
+aránya. (lásd \ref{6}. ábra) 
+\item Az aranymetszés jelölése, a $\phi$ (görög nagy fí betű) Pheidiász
+görög szobrász nevéből származik. 
+\item A művészetekben való alkalmazásának elsődleges oka a triviális szimmetriától
+különböző kellemes hatást kiváltó szabályos "aszimmetria" keresése
+volt. 
+\item Leonardo da Vinci tudatosan alkalmazta az aranymetszést az alkotásaiban,
+valamint ő volt az, aki először állította, hogy az ember csontjait
+tekintve $\phi$ arányú építőkövekből áll. (lásd \ref{3}. ábra) 
+\item A gyakorlati igazolást Adolph Zeising \textit{A kísérleti esztétikából}
+című műben publikálja nagyszámú embercsoporton végzett mérésekből. 
+\item Az embereken végzett kísérlet is azt mutatta, hogy minél kevésbé tér
+el az egyed az aranymetszés arányától, annál vonzóbbnak, szebbnek
+tűnik. (lásd \ref{4}., \ref{5}. ábra) 
+\end{itemize}
+\begin{figure}[h!]
+\centering \includegraphics[scale=0.8]{\string"content/Kovacs_Levente/1\string".jpg}
+\vspace{2mm}
+ \caption{Fibonacci-sorozat tagjai reprezentálva}
+\label{1}
+\end{figure}
+
+\begin{figure}[h!]
+\centering \includegraphics[scale=0.4]{\string"content/Kovacs_Levente/3\string".jpg}
+\vspace{2mm}
+ \caption{Leonardo da Vinci, \textit{Mona Lisa}}
+\label{2}
+\end{figure}
+
+\begin{figure}[h!]
+\centering \includegraphics[scale=1.7]{\string"content/Kovacs_Levente/8\string".jpg}
+\vspace{2mm}
+ \caption{A Nagy Piramis, a piramis alapélének a fele (átlag 115,18 m) és oldallapjainak
+a magassága (kb. 186,42 m) az aranymetszés szerint aránylik egymáshoz}
+\label{6}
+\end{figure}
+
+\begin{figure}[h!]
+\centering \includegraphics[scale=0.3]{\string"content/Kovacs_Levente/2\string".jpg}
+\vspace{2mm}
+ \caption{Leonardo da Vinci, az ún. \textbf{Vitruvius-tanulmány}, \textit{„Az
+ember kinyújtott karjainak hossza megegyezik a magasságával. A haja
+tövétől az álla hegyéig terjedő szakasz egytizede a magasságnak; az
+álla hegyétől a feje tetejéig terjedő szakasz egynyolcada a magasságának;
+a mellkasa tetejétől a haja tövéig egyhetede az egész embernek.”}}
+\label{3}
+\end{figure}
+
+\newpage{}
+\begin{figure}[h!]
+\centering \includegraphics[scale=0.7]{\string"content/Kovacs_Levente/6\string".jpg}
+\vspace{2mm}
+ \caption{Balról jobbra: Marilyn Monroe filmsztár, Dammak Jázmin, Miss Universe
+Hungary 2008, Angelina Jolie filmsztár. A homlokvonal, szem és száj
+az aranymetszés arányában helyezkedik el a szépségek arcain}
+\label{4}
+\end{figure}
+
+\begin{figure}[h!]
+\centering \includegraphics[scale=0.7]{\string"content/Kovacs_Levente/7\string".jpg}
+\vspace{2mm}
+ \caption{Albert Einstein, Fizikai Nobel-díj, 1921. Látható, hogy a hosszabb
+orr-része, és lefelé görbülő szemek miatt nem követi az arc az aránymetszés
+arányait (baloldalon). A jobb oldali fotón az aranymetszésre korrigált
+arc látható.}
+\label{5}
+\end{figure}
+
+\begin{extraproblem}[Sógor Bence]
+Határozd meg az 
+\[
+\sum_{k\geq0}\frac{1}{F_{2k+1}+1}
+\]
+összeg értékét, ahol $F_{2k+1}$ a $2k+1$-edik Fibonacci-számot jelöli. 
+\end{extraproblem}
+
+\begin{solution}
+Próbáljuk meg kifejezni a Fibonacci-számokat csak $\varphi=\frac{1+\sqrt{5}}{2}$
+segítségével. A Fibonacci-számokra tudjuk, hogy $F_{n}=\frac{\varphi^{n}-\overline{\varphi}^{n}}{\sqrt{5}}$,
+ahol $\varphi=\frac{1+\sqrt{5}}{2}$ és $\overline{\varphi}=\frac{1-\sqrt{5}}{2}$.
+Mivel $\overline{\varphi}=-\frac{1}{\varphi}$, ezért az összegben
+levő törtet az alábbi átalakításokat használva írhatjuk fel. 
+\[
+F_{2k+1}=\frac{\varphi^{2k+1}-\frac{-1}{\varphi}^{2k+1}}{\sqrt{5}}=\frac{\varphi^{4k+2}+1}{\sqrt{5}\varphi^{2k+1}}
+\]
+Innen 
+\[
+\frac{1}{F_{2k+1}+1}==\frac{\sqrt{5}\varphi^{2k+1}}{\varphi^{4k+2}+\sqrt{5}\varphi^{2k+1}+1}
+\]
+Az $u=\varphi^{2k+1}$ jelölést bevezetve feltudjuk bontani a törtet
+két $\frac{A}{u+a}$, $\frac{B}{u+b}$ alakú kifejezés összegére.
+Az alábbi észrevételeket és átalakításokat használva is eljuthatunk
+a felbontáshoz. Tujduk, hogy $\varphi^{2}=\varphi+1$. 
+\[
+\frac{\varphi^{2k+1}}{\varphi^{4k+2}+\sqrt{5}\varphi^{2k+1}+1}=\frac{\varphi^{2k}(\varphi^{2}-1)}{\varphi^{2k+2}\varphi^{2k}+(2\varphi-1)\varphi\varphi^{2k}+1}
+\]
+
+\[
+\frac{\varphi^{2k}(\varphi^{2}-1)}{\varphi^{2k+2}\varphi^{2k}+(2\varphi^{2}-\varphi)\varphi^{2k}+1}=\frac{\varphi^{2k}(\varphi^{2}-1)}{\varphi^{2k+2}\varphi^{2k}+(\varphi^{2}+1)\varphi^{2k}+1}
+\]
+\[
+\frac{\varphi^{2k+2}-\varphi^{2k}}{\varphi^{2k+2}\varphi^{2k}+\varphi^{2k+2}+\varphi^{2k}+1}=\frac{1}{\varphi^{2k}+1}-\frac{1}{\varphi^{2k+2}+1}.
+\]
+
+Ezek alapján, 
+\[
+\sum_{k\geq0}\frac{1}{F_{2k+1}+1}=\sqrt{5}\sum_{k\geq0}\frac{1}{\varphi^{2k}+1}-\frac{1}{\varphi^{2k+2}+1}=\frac{\sqrt{5}}{2}.
+\]
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+Legyen $a$ és $b$ két egész szám. Határozzuk meg $a$ értékét,
+ha ismert, hogy az $x^{2}-x-1$ polinom osztója az 
+\[
+ax^{17}+bx^{16}+1
+\]
+kifejezésnek. \emph{(1988 AIME, 13-as számú probléma) }
+\end{extraproblem}
+
+\begin{solution}
+Tegyük fel, hogy $x^{2}-x-1=0$. Ez a Fibonacci-rekurzióval azonos:
+\[
+x^{n}=F_{n}(x),\text{ ahol }x^{2}=x+1\text{ és }F_{n+2}=F_{n+1}+F_{n}
+\]
+
+Ebből következik: 
+\[
+x^{n+2}=F_{n+1}x+F_{n}\quad\text{(rekurzió alapján)}
+\]
+
+Írjuk át az eredeti kifejezést Fibonacci-formában: 
+\begin{align*}
+ax^{17}+bx^{16}+1 & =a(F_{17}x+F_{16})+b(F_{16}x+F_{15})+1\\
+ & =(aF_{17}+bF_{16})x+(aF_{16}+bF_{15}+1)
+\end{align*}
+
+Mivel $x^{2}-x-1=0$ irracionális gyökei miatt $x\notin\mathbb{Q}$,
+a fenti kifejezés akkor nulla, ha mindkét együttható külön-külön nulla:
+\[
+\begin{cases}
+aF_{17}+bF_{16}=0\\
+aF_{16}+bF_{15}+1=0
+\end{cases}
+\]
+
+Oldjuk meg a rendszert. Használjuk a Fibonacci-számokat: 
+\begin{align*}
+F_{15} & =610\\
+F_{16} & =987\\
+F_{17} & =1597
+\end{align*}
+
+Első egyenletből: 
+\[
+a=-\frac{bF_{16}}{F_{17}}=-\frac{987b}{1597}
+\]
+Behelyettesítve a második egyenletbe: 
+\[
+-\frac{987^{2}b}{1597}+610b+1=0\Rightarrow\text{megoldva: }a=987
+\]
+
+\textbf{Válasz: } $\boxed{987}$
+\end{solution}
+
+

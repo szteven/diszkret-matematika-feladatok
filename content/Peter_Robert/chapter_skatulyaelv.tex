@@ -1,0 +1,1068 @@
+\chapter{A skatulyaelv}\label{chap:skatulya}
+\begin{description}
+	{\large 
+	\item [{Szerző:}] Péter Róbert (Didaktikai mesteri -- Matematika, I. év)
+}
+\end{description}
+\textbf{Skatulyaelv általánosan: }Ha $m$ testet szétosztunk $n$ dobozba
+és $m>n$, akkor legalább két test azonos dobozba fog kerülni. 
+%Könyvészet: \cite{diszkretmatek,elte}
+
+\section*{Házi feladatok}
+\begin{problem}
+	Egy vonaton 400 ember utazik. Bizonyítsuk be, hogy utazik rajta két
+	olyan utas, akiknek ugyanazon a napon van a születésnapja! Mi történik
+	akkor, ha még felszáll 333 ember a vonatra? \\
+	
+\end{problem}
+
+\begin{solution}
+	Egy évben 365 nap van, ezért 365 skatulyát kell használnunk. De mivel
+	szökőév is van ezért legyen 366 skatulyánk. Sorra vesszük a születési
+	dátumokat és helyezzük be őket a skatulyákba, míg el nem érünk a 367.
+	emberig. Ebben az esetben mind a 366 skatulya megtelt, így a 367.
+	ember valamelyik skatulyába kell kerüljön, ami azt jelenti, hogy biztosan
+	lesz két ember, aki ugyanazon a napon született.
+	
+	Miután felszállt még 333 ember, így 733 ember lett a vonaton. Ha mindegyiket
+	skatulyákba helyeznénk, akkor biztosan lenne 3 olyan ember aki ugyanazon
+	a napon született, mivel $2\cdot366=732$, így a 733. ember egy olyan
+	skatulyába kerül, ahol van már 2 ember, aki ugyanazon a napon született. 
+\end{solution}
+\begin{problem}
+	Van 80 golyónk, közülük 35 piros, 25 zöld, 15 sárga, 5 fekete. Legkevesebb
+	hány darabot kell kivenni, hogy biztosan legyen köztük 
+	
+	\item a) piros; 
+	
+	\item b) piros vagy fekete; 
+	
+	\item c) piros és fekete; 
+	
+	\item d) két különböző színű; 
+	
+	\item e) valamelyik színből legalább három? \\
+	
+\end{problem}
+
+\begin{solution}
+	a) 46-ot. 45-öt ugyanis még ki lehet húzni piros nélkül $(25+15+5=45)$,
+	de ha 46-ot húzunk ki, akkor csak 34 golyó marad meg a 80-ból, nem
+	maradhat meg mindegyik piros.
+	
+	b) 41-et. 40-et ugyanis még ki lehet húzni piros nélkül $(25+15=40)$,
+	de ha 41-et húzunk ki, akkor csak 39 golyó marad meg a 80-ból, nem
+	maradhat meg az összes piros is és az összes fekete is (35 + 5 = 40).
+	
+	c) 76-ot. 75-öt ugyanis még ki lehet húzni fekete nélkül (35 + 25
+	+ 15 = 75), de ha 76-ot húzunk ki, akkor csak 4 golyó marad meg a
+	80-ból, nem maradhat meg mindegyik fekete. Ugyanezen okból 76 golyó
+	kihúzása esetén az összes piros se maradhat meg (lásd az a) alpontot),
+	tehát a kihúzottak között piros és fekete is lesz.
+	
+	d) 36-ot. Ha még nincs a kihúzottak között két különböző színű, akkor
+	a kihúzottak mind azonos színűek. A legtöbb azonos színű pirosból
+	van, 35. Tehát 35 golyót még ki lehet húzni úgy, hogy ne legyenek
+	köztük különböző színűek, de 36 golyó kihúzása esetén már biztosan
+	lesznek köztük különbözőek is.
+	
+	e) 9-et. Ha nem teljesül a feltétel, akkor mindegyik színből legfeljebb
+	két golyó van. Négyféle szín van, tehát a kihúzott golyók száma legfeljebb
+	$4\cdot2=8$. Ez lehetséges is, mindegyik színből van legalább 2 golyó.
+	Tehát 8 kihúzott golyó esetén még előfordulhat, hogy nem teljesül
+	a feltétel, 9-nél már biztosan teljesül. 
+\end{solution}
+\begin{problem}
+	Van G darab golyónk, közülük P piros, Z zöld, S sárga és F fekete. 
+	
+	\item a) Tudjuk, hogy legkevesebb 5 darabot kell kivenni, hogy biztosan
+	legyen köztük piros. Határozzuk meg F és G értékét, ha ismert, hogy
+	Z = 1, \\
+	S = 2, P = 3. 
+	
+	\item b) Tudjuk, hogy legkevesebb 10 darabot kell kivenni, hogy biztosan
+	legyen köztük piros és fekete. Határozzuk meg S és G értékét, ha ismert,
+	hogy \\
+	P = 2, F = 3, Z= 4! \\
+	
+\end{problem}
+
+\begin{solution}
+	a) Legkevesebb $F+S+Z+1$ húzás esetén lesz biztosan piros a kihúzott
+	golyók között. Most tehát $F+S+Z+1=5$, amiből $F=1$ és $G=F+S+Z+P=7$.
+	
+	b) Legkevesebb $Z+S+max(P,F)+1$ húzás esetén lesz biztosan piros
+	is és fekete is a kihúzott golyók között. Ezek szerint $4+S+3+1=10$,
+	amiből $S=2,G=F+S+Z+P=11$. 
+\end{solution}
+\begin{problem}
+	Adott 21 különböző pozitív egész szám, mindegyik kisebb 70-nél. Mutassuk
+	meg, hogy páronkénti különbségeik közt van négy egyenlő! \\
+	
+\end{problem}
+
+\begin{solution}
+	A 21 számból $\frac{21\cdot20}{2}=210$ számpár készíthető. Ezeknek
+	210 lehetséges pozitív különbsége van: a lehetséges legkisebb az 1,
+	a legnagyobb a 69, tehát a különbségek lehetséges értékei csak 69-félék
+	lehetnek. $3\cdot69<210$, így valóban lesz olyan különbség érték,
+	amelyik négyszer is előfordul a párokban képzett különbségek között. 
+\end{solution}
+\begin{problem}
+	Legyen a, b és c három egész szám! Bizonyítsuk be, hogy az $abc(b-a)(c-a)(c-b)$
+	szorzat osztható 6-tal! \\
+	
+\end{problem}
+
+\begin{solution}
+	Ha a három szám közül valamelyik páros, akkor a szorzat biztosan osztható
+	2-vel. Viszont ha mindhárom számunk páratlan, akkor a szorzatban megjelenő
+	különbség lesz páros, így a szorzat szintén osztható lesz 2-vel.
+	
+	Most azt kell belátnunk, hogy a szorzat osztható 3-mal. A 3-mal való
+	osztás során a maradékok 0,1,2 lehetnek. Ha az egyik szám osztási
+	maradéka 0, akkor a szorzat osztható 3-mal. Viszont ha két szám osztási
+	maradéka megegyezik, akkor a különbségük lesz osztható 3-mal.
+	
+	Tehát ha a szorzat osztható 2-vel és 3-mal is, akkor osztható lesz
+	6-tal is. 
+\end{solution}
+\begin{problem}
+	Adott 4 természetes szám. Bizonyítsuk be, hogy közülük legalább kettő
+	azonos maradékot ad 3-mal osztva! \\
+	
+\end{problem}
+
+\begin{solution}
+	A 3-mal való osztási maradékok 0,1,2 lesznek. Így 3 skatulyánk lesz
+	amelybe tesszük a számokat az osztási maradékok alapján. Ha az első
+	3 szám esetében a maradékok különbözőek, de a 4. szám maradéka biztosan
+	meg fog egyezni, egy már skatulyában lévő számmal. Tehát lesz legalább
+	két szám, amelynek az osztási maradéka megegyezik. 
+\end{solution}
+\begin{problem}
+	Adott egy 3\texttimes 3-as, 9 egység-négyzetből álló négyzet. Minden
+	egység-négyzetbe a következő számok egyikét írjuk: -1, 0, vagy 1.
+	Bizonyítsuk be, hogy a sorok, oszlopok és átlók összegei között van
+	két egyenlő! \\
+	
+\end{problem}
+
+\begin{solution}
+	Mivel 3x3-as négyzetrácsunk van, ezért lesz 3 sorösszegünk, 3 oszlopösszegünk
+	és 2 átlóösszegünk, ami összesen 8 összeget alkot. A -1, 0, 1 számokból
+	-3, -2, -1, 0, 1, 2 ,3 összegeket alkothatjuk, ami 7 féle összeget
+	jelent. A skatulyaelv alapján, lesz a sorok, oszlopok és átlók összegei
+	közül lesz két egyforma összeg. 
+\end{solution}
+\begin{problem}
+	Egy diáknak 9 feladatot kell megoldania egy hét alatt. Magyarázzuk
+	meg, miért igaz, hogy a diáknak legalább az egyik napon nem kevesebb
+	mint 2 feladatot kell megoldania! 
+\end{problem}
+
+\begin{solution}
+	Ha a diák minden nap megold 1 feladatot, akkor marad még 2 feladata,
+	így lesz olyan nap, amikor nem kevesebb mint két feladatot kell megoldjon. 
+\end{solution}
+\begin{problem}
+	El lehet-e szállítani 7 kéttonnás teherautóval 50 kőtömböt, melyek
+	súlya $250, 251, 252, \dots, 299$ kg? (A kövek nem darabolhatók, a
+	teherautók csak egyszer vehetők igénybe, és mindegyikre legfeljebb
+	2 tonna teher rakható.) \\
+	
+\end{problem}
+
+\begin{solution}
+	Ha 50 kőtömböt kell hét teherautóra rakni, akkor lesz olyan teherautó,
+	amelyre legalább nyolc kőtömb kerül, hiszen $7\cdot7=49<50$. A nyolc
+	legkisebb kőtömb össztömege azonban nagyobb, mint $8\cdot250=2000$
+	kg, azaz több mint két tonna. A leírt szabályokkal tehát az elszállítás
+	nem lehetséges. 
+\end{solution}
+\begin{problem}
+	Egy falánk ember 10 édességet evett meg egy cukros dobozból, amiben
+	3-féle édesség van. Találjuk meg n legnagyobb lehetséges értékét,
+	amiről biztosan állítható, hogy a falánk ember legalább n édességet
+	evett meg az azonos fajtából. \\
+	
+\end{problem}
+
+\begin{solution}
+	3 féle édesség van, ezért 3 skatulyánk amelyekbe különválasszuk az
+	édességeket fajtájuk szerint. Mivel 10 édességet evett meg, ezért
+	minden édességből legalább hármat megevett,vagyis $3\cdot3=9$ darabot,
+	így még maradt 1 édesség a 3 fajta közül. Tehát a falánk ember legalább
+	4 édességet evett meg az egyik fajtából. 
+\end{solution}
+\begin{problem}
+	Hat osztálytárs részt vesz a “találjuk el a célt” versenyben. Mutassuk
+	meg, hogy közülük legalább kettőnek azonos számú találata van, ha
+	a találatok száma összesen 14. \\
+	
+\end{problem}
+
+\begin{solution}
+	Tegyük fel, hogy minden gyereknek különböző találata volt, vagyis
+	0,1,2,3,4,5 lehet a találatok száma. Ha a találatok számát összegezzük
+	$0+1+2+3+4+5=15$ kapunk eredményül, de csak 14 lehet a találatok
+	száma, ezért egyik gyerek pontszámát 1-gyel kell csökkentsünk, ami
+	azt eredményezi, hogy lesz két gyerek, akinek azonos számú találata
+	lesz. 
+\end{solution}
+\begin{problem}
+	Tizenhat csapat játszik egy futball versenyen, ahol mindenki játszik
+	mindenki ellen. Bizonyítsuk be, hogy minden meccs után van legalább
+	két csapat, akik ugyanannyi meccset játszottak. \\
+	
+\end{problem}
+
+\begin{solution}
+	A 16 csapat $\frac{16\cdot15}{2}=120$ meccset játszik. Kezdetben
+	minden csapatnak 0 meccse van. 1 meccs után két csapatnak lesz 1 meccse,
+	2 meccs után 4 csapatnak lesz valahány meccs stb. Ezt a gondolatmenetet
+	követve, minden meccs után valamelyik két csapatnak nő a meccsszáma
+	1-gyel. Mivel 16 csapat van, ezért minden csapat legfeljebb 15 meccset
+	játszhat. Viszont nem lehet, hogy egy csapat egyetlen meccset se játsszon.
+	
+	A következtetéseket levonva mindig lesz két olyan csapat, akinek ugyanannyi
+	meccse van. 
+\end{solution}
+\begin{problem}
+	Egy 70 cm oldalhosszúságú négyzet alakú céltáblára 50 lövést adunk
+	le. Jól célzunk, egyetlen lövésünk sem kerüli el a táblát. Igazoljuk,
+	hogy a találati pontok között van két olyan, amelynek távolsága kisebb,
+	mint 15 cm! \\
+\end{problem}
+
+\begin{solution}
+	Tekintsük a céltáblát egy sakktáblának, ami 7x7-es, vagyis 49 mezőnk
+	lesz. Mivel 50 lövés van, ezért lesz olyan mező, ahova 2 lövés érkezik.
+	Be kell látnunk,hogy két találati pont távolsága kisebb, mint 15 cm.
+	
+	A sakktábla minden mezője 10 cm oldalú négyzet, aminek az átlója Pitagorasz
+	tétel alapján $\sqrt{200}\approx14,1cm<15cm$.
+	
+	Tehát lesz két olyan pontunk amelynek a távolsága kisebb mint 15 cm.
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+	Legyen adott 51 egész szám, melyek mindegyike a {[}1, 100{]} intervallumba
+	esik. Bizonyítsd be, hogy mindig létezik két olyan szám a kiválasztottak
+	között, melyek különbsége legfeljebb 1. 
+\end{extraproblem}
+
+\begin{solution}
+	Osszuk az {[}1, 100{]} intervallumot 50 darab két elemű intervallumra,
+	például így:
+	
+	\[
+	(1,2),(3,4),(5,6),\ldots,(99,100)
+	\]
+	
+	Így $50$ db „skatulya” jön létre, minden skatulyába két egymást követő
+	szám tartozik, vagyis olyan számok, melyek különbsége legfeljebb $1$.
+	Vegyük észre ha $51$ számot választunk az $[1,100]$ tartományból,
+	akkor a $50$ skatulyából legalább egybe kettő szám is kerülni fog.
+	Mivel minden skatulyán belüli számok különbsége legfeljebb 1, ezért
+	ez a két szám is legfeljebb 1-gyel tér el egymástól. 
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+	Bizonyítsuk be, hogy bármely 8 darab egész szám között van legalább
+	kettő, amelyeknek a különbsége osztható 7-tel.
+\end{extraproblem}
+
+\begin{solution}
+	A 7-tel történő osztásnál hétféle maradék lehet, azaz a 7-tel való
+	osztás szempontjából a számok: 
+	\[
+	7k,\ 7k+1,\ 7k+2,\ 7k+3,\ 7k+4,\ 7k+5,\ 7k+6
+	\]
+	alakban írhatók. Legyen az ilyen alakú számoknak egy-egy ``skatulyája''.
+	Ez összesen hét darab doboz. Tegyük be a 8 darab szám mindegyikét
+	a megfelelő dobozba. Legalább egy dobozba legalább két számnak kell
+	kerülnie.
+	
+	Abban a dobozban, amelyben egynél több szám van, vegyük két számnak
+	a különbségét. Ez a különbség osztható 7-tel.
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+	Bizonyítsuk be, hogy bármely $a,b,c,d$ egész számokból képzett 
+	\[
+	(a-b)(a-c)(a-d)(b-c)(b-d)(c-d)
+	\]
+	szorzat osztható 12-vel.
+\end{extraproblem}
+
+\begin{solution}
+	Mivel $12=2\cdot2\cdot3$, a 12-vel való oszthatóságot úgy bizonyíthatjuk,
+	hogy megmutatjuk egy tényezőnek a 3-mal való oszthatóságát és két
+	tényezőnek a 2-vel való oszthatóságát.
+	
+	A 3-mal való oszthatóság szempontjából a számoknak háromféle alakjuk
+	lehet: $3k,\ 3k+1,\ 3k+2$ \ ($k\in\mathbb{Z}$). Válasszunk 3 ilyen
+	``skatulyát''\ és ezekbe tegyük bele az $a,b,c,d$ számokat. Legalább
+	az egyikbe, legalább két szám kerül. Ebből a kettőnek a különbsége
+	osztható 3-mal. A szorzat osztható 3-mal, mert ez a különbség (vagy
+	az ellentettje) ott van a hat tényező között.
+	
+	\textit{Ennek belátásához} meg kell vizsgálnunk, hogy négy szám közül
+	hányféle módon választhatunk ki kettőt. Válasszunk ki elsőnek az $a$-t.
+	Mellé másodiknak választhatjuk $b$-t, $c$-t, $d$-t. Ez eddig 3
+	lehetőség. Az $a$-val több lehetőség nem lehet. Tekintsük a $b$
+	választását. Az $a$-val már választottunk, így $b$ mellé $c$-t
+	vagy $d$-t választhatjuk. Ez két újabb lehetőség, az előzőekkel együtt
+	ez 5 lehetőség. A $c$ mellé csak a $d$-t választhatjuk. Ez egy újabb
+	lehetőség. Az eddigiekkel együtt ez 6 lehetőség, több már nincs.
+	
+	Tehát négy számból kettőt, 6 féle módon választhatunk ki. A 6 tényező
+	az összes lehetőség.
+	
+	A 2-vel való oszthatóság vizsgálatánál gondoljunk arra, hogy az $a,b,c,d$
+	számok között párosak is, páratlanok is lehetnek. Ezek vagy úgy oszlanak
+	meg, hogy két páros és két páratlan van közöttük, vagy az egyik fajtából
+	legalább 3 darab van.
+	
+	Ha két páros van és két páratlan, akkor a két páros különbsége is
+	páros, a két páratlan különbsége is páros, tehát 6 tényező közül kettő
+	osztható 2-vel.
+	
+	Ha akár 3 páratlan, akár 3 páros közül választunk ki kettőt, akkor
+	abból a három számból már biztosan lehet 2-t találni, melyek különbsége
+	páros. Most is a 6 tényező közül legalább kettő osztható 2-vel.
+	
+	Ezzel be van bizonyítva a $3\cdot2\cdot2=12$-vel való oszthatóság.
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+	Legyenek az $x_{1},x_{2},\dots,x_{11}$ tetszőleges egész számok.
+	Az $a_{1},a_{2},\dots,a_{11}$ számok a $\{-1,0,1\}$ halmazbeli értékeket
+	vehetik fel, de úgy, hogy nem mind egyenlők 0-val. Igaz-e, hogy van
+	olyan értéke az $a_{1}x_{1}+a_{2}x_{2}+\dots+a_{11}x_{11}$ kifejezésnek,
+	ami $2002$-vel osztható?\textit{ (XI. Nemzetközi Magyar Matematikaverseny,
+		2002, XII. osztály)} 
+\end{extraproblem}
+
+\begin{solution}
+	Tekintsük az összes olyan összeget, amely $b_{1}x_{1}+b_{2}x_{2}+\dots+b_{11}x_{11}$
+	alakú, ahol minden $b_{i}$ $0$ vagy $1$ lehet. Ez összesen $2^{11}=2048$
+	különböző összeg. A \textbf{skatulyaelv} szerint ezek között van kettő,
+	amelyek $2002$-vel vett osztási maradéka megegyezik.
+	
+	Legyenek ezek $c_{1}x_{1}+c_{2}x_{2}+\dots+c_{11}x_{11}$ és $d_{1}x_{1}+d_{2}x_{2}+\dots+d_{11}x_{11}$.
+	A két kifejezés különbsége formálisan 
+	\[
+	(c_{1}-d_{1})x_{1}+(c_{2}-d_{2})x_{2}+\dots+(c_{11}-d_{11})x_{11}.
+	\]
+	Ez az előbbiek miatt osztható lesz $2002$-vel és minden $c_{i}-d_{i}$
+	érték az $a_{i}$-k értékkészletébe tartozik.
+	
+	Tehát lesznek megfelelő $a_{i}$-k, amelyekre az összeg osztható lesz
+	$2002$-vel.
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+	Hány olyan hatjegyű szám létezik, amelyben van két azonos számjegy?
+	És hány ilyen 15-jegyű szám létezik?
+\end{extraproblem}
+
+\begin{solution}
+	Az összes hatjegyű számok száma $10^{6}-10^{5}$, elegendő a különböző
+	számjegyekből álló számokat megszámolni.
+	
+	Egy ilyen szám első számjegye $9$-féle lehet (a $0$ nem megengedett),
+	a második számjegy szintén $9$-féle (ez már lehet $0$, de nem lehet
+	azonos az első számjeggyel), a harmadik számjegy $8$-féle stb. A
+	jó számok száma mindezek alapján 
+	\[
+	10^{6}-10^{5}-9\cdot8\cdot7\cdot6\cdot5=763920.
+	\]
+	
+	A 15-jegyű számoknak a \textbf{skatulyaelv} alapján mindig van két
+	azonos számjegye. Ezek száma: 
+	\[
+	10^{15}-10^{14}.
+	\]
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+	Legfeljebb hány pozitív egész számot adhatunk meg úgy, hogy semelyik
+	kettő összege és különbsége se legyen osztható 2015-tel? 
+\end{extraproblem}
+
+\begin{solution}
+	Két szám különbsége pontosan akkor osztható 2015-tel, ha ugyanannyi
+	a 2015-ös maradékuk. Két szám összege pedig pontosan akkor osztható
+	2015-tel, ha vagy mindkét szám osztható 2015-tel, vagy az egyik 2015-ös
+	maradéka $n$, a másiké 2015-n (ahol $1\leq n\leq2014$ ).\\
+	Készítsünk 1008 db skatulyát a 2015-ös maradékok alapján a következőképpen:
+	egy skatulyába kerüljenek a 0 maradékot adó számok, a következőbe
+	az 1 vagy 2014 maradékot adók, a következőbe a 2 vagy 2013 maradékot
+	adók, és így tovább - általában az $n$ és a 2015 - $n$ maradékot
+	adó számok kerülnek azonos skatulyába -, végül az utolsóba az 1007
+	vagy 1008 maradékot adók. Ekkor pontosan abban az esetben lesz két
+	szám összege vagy különbsége 2015-tel osztható, ha ezek ugyanabba
+	a skatulyába kerülnek.
+	
+	Az eddigiek alapján 1008-nál több számot biztosan nem tudunk megadni,
+	hiszen ekkor a skatulyaelv miatt valamelyik skatulyába egynél több
+	szám kerülne. 1008 számot viszont meg tudunk adni úgy, hogy mindegyik
+	különböző skatulyába kerüljön, például az $1,2,3,\ldots,1007,2015$
+	számok teljesítik ezt a feltételt.\\
+	Tehát legfeljebb 1008 számot adhatunk meg a kívánt módon.
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+	a.)Igazoljuk, hogy 16 egész szám között mindig van néhány, amelyek
+	összege 16-tal osztható. (Egytagú összeget is megengedünk.)\\
+	b) Igazoljuk, hogy a 10-es számrendszerben felírt 16-jegyű pozitív
+	egész számnak van néhány egymást követő számjegye, melyek szorzata
+	négyzetszám. (Egytényezős szorzatot is megengedünk.\\
+	
+\end{extraproblem}
+
+\begin{solution}
+	a) Legyenek a számok $a_{1},a_{2},...,a_{16}$ . Tekintsük az 
+	\[
+	a_{1},a_{1}+a_{2},a_{1}+a_{2}+a_{3},...,a_{1}+a_{2}+...+a_{1}6
+	\]
+	összegeket! Ezek száma éppen 16. Ha valamelyik osztható 16-tal, akkor
+	készen vagyunk. Ellenkező esetben a skatulya-elv miatt lesz kettő,
+	melynek a 16-os maradéka megegyezik. A több tagból állóból kivonva
+	a kevesebb tagból állót, a kapott összeg 16-tal osztható lesz. b)
+	Legyen $n=a_{1}a_{2}...a_{16}$ a kiválasztott szám. Ha az számjegyek
+	valamelyike 0, 1, 4 vagy 9, akkor készen vagyunk. Feltehetjük, hogy
+	$a_{i}\in\{2,3,5,6,7,8\}$ . Ekkor bármelyik szorzat, amely egymást
+	követő számjegyekből képezhető 
+	\[
+	2^{a}3^{b}5^{c}7^{d}
+	\]
+	alakú lesz, ahol $a,b,c,d$ természetes számok. Elegendő belátnunk,
+	hogy van olyan szorzat, amelyben minden kitevő páros. Tekintsük az
+	\[
+	a_{1},a_{1}a_{2},a_{1}a_{2}a_{3},...,a_{1}a_{2}...a_{16}
+	\]
+	szorzatokat! Paritás alapján az ( a,b ,c ,d ) kitevő 4-esek 16 különböző
+	osztályába sorolhatók: (ptl, ptl, ptl, ptl), … , (ps, ps, ps, ps).
+	Ha az utolsó osztályba kerül kitevő 4-es, akkor készen vagyunk. Ellenkező
+	esetben lesz két olyan kitevő 4-es, amelyik azonos osztályban van.
+	Tegyük fel, hogy ezek az $a_{1}...a_{k}$ és $a_{1}...a_{l}$ szorzatokhoz
+	tartoznak, ahol $k>l.$ Ekkor 
+	\[
+	\frac{a_{1}...a_{k}}{a_{1}...a_{l}}=a_{l+1}...a_{k}
+	\]
+	olyan szorzat, melyhez tartozó $a,b,c,d$ kitevő 4-es minden kitevője
+	páros. Ezt akartuk belátni. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+	Egy nemzetközi konferencián 200 tudós vesz részt. Mindegyikük legfeljebb
+	4 nyelven beszél, továbbá bármely három között van kettő, akik beszélnek
+	közös nyelven. Bizonyítsuk be, hogy van olyan nyelv, amit közülük
+	legalább 26-an beszélnek. \emph{(KöMaL, 2006) }
+\end{extraproblem}
+
+\begin{solution}
+	Tegyük fel, hogy van két olyan tudós, akik nem beszélnek közös nyelvet.
+	Mivel bármely három ember között van kettő, akik megértik egymást,
+	így ha ehhez a két emberhez kiválasztunk még egy harmadikat, akkor
+	ő beszél közös nyelvet a két ember valamelyikével. Ezen a két emberen
+	kívül még 198 van, így a két ember valamelyike legalább 99 emberrel
+	beszél közös nyelvet; nevezzük ezek egyikét A-nak. Mivel egy ember
+	legfeljebb 4 nyelvet beszél, a skatulya-elv alapján ebből a 99 emberből
+	legalább 25 beszél egy közös nyelvet. Az A-t is beleszámítva tehát
+	van 26 ember, aki egy nyelvet beszél.
+	
+	Ha nincs két olyan ember, aki nem érti meg egymást, akkor mindenki
+	mindenkivel tud beszélgetni. Válasszunk ki egy B embert; ekkor ő 199
+	emberrel tud beszélni. Mivel egy ember legfeljebb 4 nyelvet beszél,
+	ismét a skatulya-elv alapján B legalább 50 emberrel beszél egy bizonyos
+	nyelven.
+	
+	Mindkét esetben beláttuk, hogy van olyan nyelv, amit legalább 26-an
+	beszélnek. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+	Adott 20 különböző pozitív egész szám, mindegyik kisebb 70-nél. Mutassuk
+	meg, hogy páronkénti különbségeik közt van négy egyenlő. \emph{(1974,
+		Arany Dániel verseny II. forduló) }
+\end{extraproblem}
+
+\begin{solution}
+	Megoldás 2 Képzeljük el a 20 számot a számegyenesen, és vágjuk fel
+	az egyenest a legkisebb és a legnagyobb számnál. Így egy olyan szakaszt
+	kapunk, ami kisebb 70 egységnél, és ezen 18 pontot helyezhetünk el.
+	Ha most az e szakasz mentén levő 18 pontot is feldaraboljuk, akkor
+	19 kisebb szeletet kapunk. Most állítjuk, hogy ezek között a 19 szelet
+	között biztosan lesz négy egyenlő hosszúságú. Ha minden hosszúságú
+	szeletből legfeljebb három darab lenne, akkor a szeletek összhossza
+	legalább:
+	
+	\[
+	1+1+1+2+2+2+3+3+3+\dots+6+6+6+7=70
+	\]
+	
+	Ez azonban meghaladja a 70-et, tehát biztos, hogy van olyan szelet,
+	ami legalább négyszer előfordul. 
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+	Egy $5\times5$ kiterjedésű négyzet 25 egységnégyzetre van osztva,
+	amik mind pirosra vagy kékre vannak festve. Bizonyítsuk be, hogy létezik
+	4 olyan egyszínű négyzet, amik 2 sor és 2 oszlop kereszteződésénél
+	fekszenek az eredeti négyzetben.
+\end{extraproblem}
+
+\begin{solution}
+	Először tekintsük az egyik oszlop egységnégyzeteit a fiókoknak. A
+	skatulya-elv alapján következik, hogy a kiválasztott oszlopban dominálni
+	fog az egyik szín. Hasonló módon dominálni fog az egyik szín a többi
+	oszlopban is.
+	
+	Ezután most az 5 oszlop fogja a fiókokat jelenteni, míg a szétosztandó
+	tulajdonságok az egyes oszlopok domináló színei. A skatulya-elv értelmében
+	következik, hogy a domináló szín legalább 3 oszlopban ugyanaz. Így
+	3 ilyen oszlop van, és mindegyikben legalább 3 ugyanolyan színű egységnégyzet
+	van.
+	
+	Tegyük fel, hogy ez a szín a kék! Továbbá, számozzuk meg az eredeti
+	négyzet sorait 1-től 5-ig és tekintsünk 5 fiókot ugyanezekkel a számokkal
+	megszámozva!
+	
+	Ezután rendeljük a három tekintett oszlopban található kék egységnégyzetekhez
+	azoknak a soroknak számát, amelyekhez tartoznak. Így a feladat 9 (vagy
+	több) egész szám 5 fiókba, az 1, 2, 3, 4 és 5 számokhoz való hozzárendelésére
+	egyszerűsödik. Minden egész számot a megfelelő számú fiókba kell helyezni.
+	
+	Most be kell bizonyítanunk, hogy létezik 2 olyan fiók, hogy mindegyikben
+	legalább 2 szám van. Első ránézésre látható, hogy létezik olyan fiók,
+	amiben legalább 2 szám van. Két eset lehetséges.
+	
+	Az elsőben feltesszük, hogy létezik egy olyan fiók, amiben legalább
+	3 szám van. Ekkor a visszamaradó 6 számot a 4 visszamaradó fiókba
+	kell szétosztani. A skatulya-elv értelmében következik, hogy az egyik
+	fiók legalább 2 számot tartalmaz. Ez a fiók a 3 számot tartalmazó
+	fiókkal együtt megoldja a feladatot.
+	
+	A második esetben tekintsünk egy olyan fiókot, amiben 2 szám van.
+	A visszamaradó 7 számot ekkor a visszamaradó 4 fiókba kell szétosztani.
+	A skatulya-elv értelmében az egyik fiók legalább 2 számot tartalmaz,
+	és így készen is van a feladat.
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+	Az 1-től $n^{2}$-ig terjedő egész számokat tetszőlegesen helyezzük
+	el az $n\times n$-es sakktábla mezőin. Tekintsük a következő kijelentést:
+	Létezik két olyan szomszédos oldallal rendelkező mező, amelyeken a
+	rajtuk lévő két szám különbsége nagyobb, mint 5. Igazolja, hogy
+	\begin{itemize}
+		\item[\foreignlanguage{english}{a)}] Az állítás nem mindig teljesül az $n=5$ esetben; 
+		\item[\foreignlanguage{english}{b)}] Az állítás mindig igaz az $n>5$ esetben. 
+	\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+	\textbf{a)} Vegyük az $5\times5$-ös sakktáblát és írjuk sorba a számokat,
+	1-től 5-ig az első sorba, 6-tól 10-ig a második sorba és így tovább,
+	végül a 21-től a 25-ig az utolsó sorba. A maximális különbség így
+	5-tel egyenlő.
+	
+	\textbf{b)} Az előző feladathoz hasonló módon az a mező, amelyik az
+	$n^{2}$ egészet tartalmazza, az 1-et tartalmazó mezőről legfeljebb
+	$2(n-1)$ mezőn keresztül érhető el. Mivel az 1-et most $n^{2}-1$-el
+	növeljük, a skatulya-elvből következik, hogy lesz egy olyan lépés,
+	ahol az emelés nem kevesebb mint 
+	\[
+	\frac{2(n^{2}-1)}{n-1}.
+	\]
+	Ha $n\geq10$, akkor az 
+	\[
+	\frac{2n+1}{n}>5,
+	\]
+	és következésképpen az állítás mindig teljesül.
+	
+	Amikor $n=9$, a növekedés 1 és 81 között $81-1=80$ és legfeljebb
+	16 lépésben elérhető (8 vízszintes és 8 függőleges lépés). Ha a lépések
+	száma legfeljebb 15, akkor a skatulya-elv szerint van egy olyan lépés,
+	ahol az emelés nem kevesebb, mint 
+	\[
+	\frac{15}{80}.
+	\]
+	Ez a szám nyilván nagyobb mint 5. Tegyük fel, hogy pontosan 16 lépés
+	van. Ekkor 
+	\[
+	\frac{80}{16}=5,
+	\]
+	és ha létezik egy olyan lépés, ahol a növekedés kevesebb mint 5, akkor
+	a teljes növekedés 76, legalábbis a fennmaradó 15 lépésben. A skatulya-elv
+	alapján, van legalább egy lépés, ahol az emelkedés nem kevesebb, mint
+	\[
+	\frac{76}{15},
+	\]
+	azaz az emelkedés több mint 5.
+	
+	Végül tekintsük azt az esetet, amikor nincs sem olyan lépés, amelyben
+	a növekedés több mint 5, sem olyan, amikor kevesebb. Tehát minden
+	lépésben 5 az emelkedés, vagyis az 1-ből kiindulva a szomszédos mezőkön
+	a számok a következők lesznek: 6, 11, 16, 21 és így tovább. Másrészt
+	nem csak ez a lehetséges út 1 és 81 között, hanem több ilyen út létezik.
+	Ez azt jelenti, hogy a megfelelő mezőkön az egész számok nem mind
+	ugyanazok, vagyis a növekedés nem 5, és minden lépésben meg lehet
+	ismételni a gondolatmenetet. Következik, hogy az állítás igaz $n=9$
+	esetén is. Hasonló úton bebizonyítható, hogy az állítás az $n=6$,
+	$n=7$ és $n=8$ esetekben is igaz.
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+	Egy cipőboltban 12 pár cipőt helyeznek el 5 különböző polcon. Bizonyítsuk
+	be, hogy legalább egy polcon legalább 3 pár cipő van. 
+\end{extraproblem}
+
+\begin{solution}
+	A skatulyaelv kimondja, hogy ha $n$ tárgyat $k$ skatulyába helyezünk,
+	és $n>k$, akkor legalább egy skatulyába legalább
+	
+	\[
+	\lceil n/k\rceil
+	\]
+	
+	tárgy kerül.
+	
+	Ebben az esetben: 
+	\begin{itemize}
+		\item A cipők (12 pár) a tárgyak. 
+		\item A polcok (5 darab) a skatulyák. 
+	\end{itemize}
+	Mivel a cipők száma egész, a legjobb esetben minden polcon legfeljebb
+	2 pár cipő lenne. De mivel $12$ nem osztható pontosan $5$-tel, legalább
+	egy polcon 3 pár cipőnek kell lennie.
+	
+	Következtetés: Bármilyen elosztás esetén legalább egy polcon legalább
+	3 pár cipő lesz. 
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+	Egy halmazban 20 különböző egész szám található. Bizonyítsuk be,
+	hogy mindig létezik két nem üres, különböző részhalmaz, amelyek elemeinek
+	összege megegyezik. 
+\end{extraproblem}
+
+\begin{solution}
+	Vegyük észre, hogy egy $S$ halmaz összes nem üres részhalmazának
+	összegeit vizsgáljuk. Egy $n$ elemű halmaznak
+	
+	\[
+	2^{n}-1
+	\]
+	
+	nem üres részhalmaza van.
+	
+	Ebben az esetben: 
+	\begin{itemize}
+		\item A halmaz 20 különböző egész számot tartalmaz. 
+		\item A halmaz nem üres részhalmazainak száma:
+		
+		\[
+		2^{20}-1=1,048,575.
+		\]
+		
+	\end{itemize}
+	Mivel minden részhalmazhoz tartozik egy részösszeg, és a számok maximumösszege
+	véges, az összes lehetséges különböző részösszeg száma nem lehet nagyobb,
+	mint a legnagyobb lehetséges összeg.
+	
+	A lehetséges maximális részhalmaz-összegek száma akkor érhető el,
+	ha a számok a lehető legkisebbek és pozitívak. Ha például az elemek
+	az első 20 természetes szám lennének ($\{1,2,3,\dots,20\}$), akkor
+	a legnagyobb lehetséges összeg:
+	
+	\[
+	1+2+\dots+20=\frac{20\cdot21}{2}=210.
+	\]
+	
+	Tehát az összes részhalmaz összege legfeljebb 210 különböző érték
+	lehet, de a részhalmazok száma több mint egymillió. A skatulyaelv
+	alapján, mivel több részhalmaz van, mint lehetséges összegérték, biztosan
+	léteznie kell két különböző részhalmaznak, amelyek összege megegyezik.
+	
+	Következtetés: Mindig léteznek különböző, nem üres részhalmazok, amelyek
+	összege azonos. 
+\end{solution}
+\begin{extraproblem}[Kis Andrea-Tímea]
+	Igazoljuk, hogy létezik a $7$-nek két olyan természetes kitevőjű,
+	különböző hatványa, amelyeknek különbsége osztható $2025$-tel. 
+\end{extraproblem}
+
+\begin{solution}
+	A $7$-nek pontosan akkor létezik két olyan természetes kitevőjű hatványa,
+	amelyeknek különbsége osztható $2025$-tel, ha a $7$-nek létezik
+	két olyan hatványa, amelyeknek a $2025$-tel való osztási maradékuk
+	megegyező.
+	
+	\textit{Red. ad abs.:} Feltételezzük, hogy a $7$-nek nem létezik
+	két olyan természetes kitevőjű hatványa, amelyeknek a $2025$-tel
+	való osztási maradékuk megegyező. Ez azt jelenti, hogy a $7$ összes
+	természetes kitevőjű hatványa különböző maradékot ad $2025$-tel osztva.
+	
+	A $2025$-tel való osztási maradékok $2025$-félék lehetnek, ezek
+	a $0,1,\ldots,2024$.
+	
+	Ha például vennénk a $7,7^{2},7^{3},\ldots,7^{2025},7^{2026}$ hatványokat,
+	akkor $2025$ skatulyában $2026$ számot kellene elrendezzek a legrosszabb
+	esetben a $2025$-tel való osztási maradékuk alapján. Így a skatulyaelv
+	alapján biztos kerül egy skatulyába két hatvány, ami alapján ellentmondáshoz
+	jutottunk.
+	
+	Tehát létezik a $7$-nek két olyan természetes kitevőjű, különböző
+	hatványa, amelyeknek különbsége osztható $2025$-tel. 
+\end{solution}
+\begin{extraproblem}[Kis Andrea-Tímea]
+	Igazoljuk, hogy $n\geq2$ focicsapatból álló bajnokság esetén, ahol
+	bármely két focicsapat legfentebb egyszer játszik egymással, mindig
+	lesz két olyan csapat, amelyek lejátszott mérkőzéseinek száma egyenlő
+	lesz. 
+\end{extraproblem}
+
+\begin{solution}
+	Az $n$ focicsapatból ha egyet kiválasztunk, akkor ez az egy csapat
+	lejátszhat $1,2,\ldots,n-1$ mérkőzést.
+	
+	Ez az állítás igaz bármelyik csapatra, vagyis mind az $n$ csapat
+	összesen $n-1$ lejátszott mérkőzésszámmal rendelkezhet.
+	
+	Ha az $1,2,\ldots,n-1$ mérkőzésszámokat skatulyáknak tekintem, akkor
+	az $n$ csapatot $n-1$ skatulyába kell elhelyeznem. Ez a skatulyaelv
+	alapján azt jelenti, hogy lesz két olyan csapat, amelyek ugyanannyi
+	mérkőzést játszottak le. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+	Tekintsük a Gauss-féle egész számok $\mathbb{Z}[i]=\{a+ib|a,b\in\mathbb{Z}\}$
+	halmazát. 
+	\begin{enumerate}
+		\item[(a)] Igazold, hogy bárhogyan is választunk ki öt elemet a halmazból, van
+		köztük két olyan $z_{1}$ és $z_{2}$ elem, amelyre $\frac{z_{1}+z_{2}}{2}\in\mathbb{Z}[i]$.
+		\item[(b)] Igazold, hogy bárhogyan is választunk ki $13$ elemet a halmazból,
+		van köztük három olyan $z_{1},z_{2}$ és $z_{3}$ elem, amelyre $\frac{z_{1}+z_{2}+z_{3}}{3}\in\mathbb{Z}[i]$. 
+	\end{enumerate}
+	\begin{flushright}
+		(OMMO 2025, megyei szakasz, XII. osztály) 
+		\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+	~
+	\begin{enumerate}
+		\item[(a)] Vizsgáljuk az öt elem valós és képzetes részének a paritását. Az
+		öt elem közt biztosan van három olyan, amelyek valós részének ugyanaz
+		a paritása. Ezen három elem közül két elem képzetes részének a paritása
+		megegyezik. Erre a két számra igaz, hogy $\frac{z_{1}+z_{2}}{2}\in\mathbb{Z}[i]$.
+		\item[(b)] A $\mathbb{Z}[i]$ halmaz minden eleméhez rendeljük hozzá a 
+		\[
+		(0;0),(0;1),(0;2),(1;0),(1;1),(1;2),(2;0),(2;1),(2;2)
+		\]
+		számpárok egyikét aszerint, hogy a valós és a képzetes résznek mennyi
+		a 3-mal való osztási maradéka. Például a 
+		\[
+		z=13-2i
+		\]
+		-nek az $(1;1)$ számpár felel meg. Rendezzük ezeket a számpárokat
+		a következő táblázatba:
+		
+		\[
+		\begin{tabular}{|c|c|c|}
+			\hline  (0;0)  &  (0;1)  &  (0;2)\\
+			\hline  (1;0)  &  (1;1)  &  (1;2)\\
+			\hline  (2;0)  &  (2;1)  &  (2;2)\\
+			\hline   &   &  
+		\end{tabular}
+		\]
+		
+		Tegyük fel, hogy a $13$ elemet elhelyeztük a nekik megfelelő cellákba.
+		Mivel három sor van, a skatulya elv alapján az egyik sorba legalább
+		$5$ elem kerül. Két esetet különböztetünk meg:
+		
+		\emph{I. eset.} Ha az adott sorban, amelyben az öt elem található,
+		van olyan cella, amelyikbe három elem kerül, akkor ezeknek az elemeknek
+		az átlaga teljesíti a megadott feltételt.
+		
+		\emph{II. eset.} Ha az adott sorban, amelyben az öt elem található,
+		mindegyik cellában legfeljebb két elem van, akkor az adott sor mindegyik
+		cellájában van elem, és ezek átlaga fogja teljesíteni a megadott feltételt. 
+		
+	\end{enumerate}
+	\textbf{Megjegyzés.} Igazolható, hogy a (b) alpont állítása teljesül
+	már $9$ tetszőlegesen választott elem esetén is. Eredetileg ezt akarták
+	feladni a versenyen, hiányos megoldással, ezt leszavaztuk hogy túl
+	nehéz, és ekkor ötöltük ki Sanyival a $13$-mast. Ha lesz időm, beírom
+	a $9$-es verziót megoldását is valamikor. Egyelőre csak egy nagyon
+	tárgyalásos megoldásunk van, emiatt elég hosszú. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+	Bizonyítsuk be, hogy minden $n$ pozitív egész szám esetén léteznek
+	az egymástól különböző $r$ és $s$ pozitív egész számok úgy, hogy
+	$3^{r}-3^{s}$ szám osztható legyen az $n$ számmal. \emph{(Felvidéki
+		Magyar Matematika Verseny, XXII. 3. évfolyam) }
+\end{extraproblem}
+
+\begin{solution}
+	Használjuk a skatulya elvet. Tekintsük a következő $n+1$ darab természetes
+	számot: $3^{1},3^{2},3^{3},\dots,3^{n},3^{n+1}$. Közülük $n$-nel
+	való osztás után legalább kettőnek ugyanazt a maradékot kell adnia,
+	mert összesen $n$ lehetséges maradék van: $0,1,2,\dots,n-1$. A kérdéses
+	két szám legyen $3^{r}$ és $3^{s}$. Így teljesül, hogy $3^{r}=kn+z$
+	és $3^{s}=mn+z$, ahol $k$ és $m$ megfelelő nem negatív egész számok,
+	a $z$ pedig a lehetséges maradékok egyike. Így $3^{r}-3^{s}=(k-m)n$,
+	vagyis az állítást bizonyítottuk. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+	Bizonyítsuk be, hogy egy $nk+1$ tagú sorozatban vagy van $n+1$
+	szám, amelyek a sorozatbeli sorrendjükben szigorúan növekednek, vagy
+	van $k+1$ szám, amelyek a sorozatbeli sorrendjükben monotonan csökkennek.
+	\emph{(Egy nevezetes Erdős-Szekeres feladat) }
+\end{extraproblem}
+
+\begin{solution}
+	A sorozat minden tagja mellé képzeletben odaírjuk, hogy mekkora a
+	leghosszabb, vele kezdődő monoton növekvő sorozat. Ha a sorozat két
+	tagja mellé ugyanaz a szám kerül, akkor közülük az amelyik előrébb
+	van nem kisebb az utóbbinál. Másrészt az is nyilvánvaló, hogy ha valamelyik
+	tag mellé az $n+1$ szám kerül akkor kész vagyunk (vagy $n+1$-nél
+	nagyobb): van $n+1$ tagú szigorúan növekvő sorozat. Ha nincs ilyen
+	szám, akkor minden szám alá $1,2,3,...,n$ értékek közül kerülhet
+	valamelyik. Mivel összesen $nk+1$ szám van, ezért biztosan van $k+1$
+	olyan tagja a sorozatnak, amelyek alá ugyanaz a szám kerül. Ezek viszont
+	a korábbi megállapítás alapján egy monoton csökkenő sorozatot fognak
+	alkotni, így teljesül a másik feltétel. 
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+	Igazoljuk, hogy bárhogyan is választunk ki a $2000$-nél nem nagyobb
+	pozitív egész számok közül $1001$-et, biztosan lesz a kiválasztottak
+	között két olyan szám, amelyek különbsége $4$. \textit{(NMMV, Dunaszerdahely,
+		2000, 9. évfolyam, 3. feladat)} 
+\end{extraproblem}
+
+\begin{solution}
+	$2000$-nél nem nagyobb pozitív egész számok halmaza: \\
+	$\{1,2,3,\ldots,2000\}$, a halmaz $2000$ elemet tartalmaz. Rendezzük
+	el ezeket a számokat egy 4x500-as táblázatba, úgy, hogy egy adott
+	sorban négyesével növeljük a számok értékét, és az első oszlopba $1,2,3,4$
+	számokat írjuk be! Ezzel lényegében egy sorba rendezzük a $4$-el
+	való osztási maradékjaik szerint megegyező számokat. Mivel $2000=4\cdot500$
+	minden számunk benne lesz a táblázatban. 
+	\[
+	\begin{array}{cccccc}
+		1 & 5 & 9 & \ldots & 1993 & 1997\\
+		2 & 6 & 10 & \ldots & 1994 & 1998\\
+		3 & 7 & 11 & \ldots & 1995 & 1999\\
+		4 & 8 & 12 & \ldots & 1996 & 2000
+	\end{array}
+	\]
+	
+	Minden sorban $500$ szám található. Tekintsük a $4$ sort egy-egy
+	doboznak. Tekintve, hogy $1001=4\cdot250+1$, "legrosszabb" esetben
+	minden sorból kiválasztunk $250$ elemet, majd a skatulyaelv alapján
+	($1001>1000$) lesz egy olyan sor, amelyből legalább $251$ elemet
+	választunk ki.
+	
+	Mivel azonban az 500 páros szám, azért csak 250 számot választhatunk
+	ki úgy, hogy ne legyen köztük két szomszédos tag az adott sorból.
+	Az előbb meghatározottak alapján lesz egy sorunk ahol legalább $251$
+	elemet választunk ki. Ezen két információ együttesen azt jelenti,
+	hogy valamelyik sorból kiválasztunk két szomszédos elemet, ezek különbsége
+	pedig 4 lesz (hiszen a sorokat úgy szerkesztettük hogy a négyessével
+	mentünk felfele, így két szomszédos tag különbsége éppen $4$ lesz).
+	Ezzel az igazolandó állítást bebizonyítottuk.
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+	Legfeljebb hányat választhatunk ki az első ezer pozitív egész közül
+	úgy, hogy egyik se ossza a másikat? 
+\end{extraproblem}
+
+\begin{solution}
+	Először is vegyük észre, hogy ha az utolsó 500 számot kiválasztjuk,
+	akkor egyik sem lesz osztója egy másiknak. 501, 502, $\dots$, 1000
+	számok közül a legkisebb az 501. Ennel a legkisebb tőle különböző
+	egész számú többszöröse az 1002. Tehát a többi számnak is bármely
+	egész számú többszöröse nagyobb lesz, mint 1000.
+	
+	Igazoljuk, hogy bárhogy választanánk ki 501 számot lesz 2 ami osztja
+	egymást. Vegyük észre, hogy minden pozitív egész szám felírható $2^{m}\cdot p$
+	alakban, ahol p egy páratlan szám. Mivel 500 páratlan szám van 1-től
+	1000-ig ezért, ha 501 számot választunk, akkor lesz kettő, amelyiknek
+	a $2^{m}\cdot p$ alakú felbontásában a $p$ megegyezik. Két ilyen
+	szám közül a kisebb osztja a nagyobbat, hiszen ha $m_{2}>m_{1}$ akkor
+	$2^{m_{2}}\cdot p:(2^{m_{1}}\cdot p)=2^{m_{2}-m_{1}}$.
+	
+	Tehát legfeljebb 500 számot tudunk kiválasztani a feladatnak megfelelően. 
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+	Mutassuk meg, hogy ha az $1,2,3,\dots,2n$ számok közül kiválasztunk
+	$n+1$ darab számot, azok között mindig lesz kettő olyan, hogy az
+	egyik a másiknak osztója. \emph{(Róka Sándor: Válogatás Erdős Pál
+		kedvenc feladataiból) }
+\end{extraproblem}
+
+\begin{solution}
+	A $2n$ darab számot beosztjuk $n$ darab kupacba, amely kupacoknak
+	megvan az a tulajdonsága, hogy bármelyik kupacból két számot véve
+	az egyik osztja a másikat. Ha ezt meg tudjuk tenni, akkor bizonyítottuk
+	az állítást. A kupacok a következők lesznek:
+	
+	\[
+	[1,2,4,8,\dots],\quad[3,6,12,24,\dots],\quad[5,10,20,40,\dots],\dots
+	\]
+	
+	$2n$-ig $n$ darab páratlan szám van, tehát $n$ darab kupacunk van,
+	és a kupacokban $2n$-ig mindegyik számnak van helye.
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+	Felírtam néhány $24$-nél nem nagyobb pozitív egész számot a táblára.
+	Ezekből bárhogyan választok néhányat (lehet egyet, vagy az összeset
+	is), azok összegei különbözőek. Legfeljebb hány szám lehet a táblán?
+	\emph{(Róka Sándor: Válogatás Erdős Pál kedvenc feladataiból)}
+\end{extraproblem}
+
+\begin{solution}
+	$5$ számot könnyű találni, például: $1,2,4,8,16$.
+	
+	$6$ szám is választható: $11,17,20,22,23,24.$
+	
+	$8$ szám nem lehet a táblán, mert $8$ számból $2^{8}-1=255$ összeget
+	képezhetünk, ám az összegek értéke legfeljebb $24+23+\dots+17=164$
+	lehet. Így a skatulyaelv miatt vannak azonos értékű összegek.
+	
+	$7$ szám sem lehet a táblán. Tegyük fel, hogy mégis. Ha csak a kéttagú
+	összegek különbözőségét nézzük, akkor két-két különböző szám különbsége
+	nem lehet azonos. Emiatt a lehető legnagyobb számok $x,x-1,x-2,x-4,x-7,x-12,x-17$.
+	Ezek összege, a legnagyobb összeg még $x=24$-re is kisebb $127$-nél,
+	azonban $7$ számból $2^{7}-1=127$ összeget képezhetünk, így a skatulyaelv
+	miatt vannak azonos értékű összegek.
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+	17 tudós mindegyike levelezést folytat az összes többivel. Összesen
+	háromféle témáról leveleznek, de bármelyik pár mindig csak ugyanarról
+	az egy témáról. Bizonyítsuk be, hogy van közöttük legalább három olyan
+	tudós, akik közül bármely kettő azonos témáról levelez egymással.
+\end{extraproblem}
+
+\begin{solution}
+	\textit{Kiválasztva egy $T_{1}$ tudóst, ez legalább az egyik témáról
+		legalább 6 tudóssal levelez}, hiszen különben legfeljebb 15 tudóssal
+	levelezhetne. Jelöljük ezt a témát $t_{1}$-gyel, és csak azokkal
+	a tudósokkal foglalkozzunk, akik $T_{1}$-gyel $t_{1}$-ről leveleznek.
+	
+	Ha ezek közt van kettő, akik egymással is $t_{1}$-ről leveleznek,
+	akkor ezek és $T_{1}$ egy kívánt hármast alkotnak. Ha viszont ezek
+	mind csak a másik két témáról leveleznek, akkor --- \textit{a skatulyaelv
+		szerint} --- kiválaszthatunk közülük egy $T_{2}$ tudóst úgy, hogy
+	ez legalább az egyik témáról --- mondjuk $t_{2}$-ről --- legalább
+	3-mal levelez.
+	
+	Ha a három közül valamelyik kettő szintén $t_{2}$-ről levelez, akkor
+	ez a kettő és $T_{2}$ csak a $t_{2}$ témáról leveleznek egymás között;
+	ha pedig mindnyájan a harmadik, $t_{3}$ témáról leveleznek, akkor
+	ők azok, akik hárman egymással ugyanarról a témáról, $t_{3}$-ról
+	leveleznek, s így a bizonyítást befejeztük.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+	Egy gulyában két falu 65 tehene legel, amelyek lehetnek vörösek,
+	fehérek, feketék vagy tarkák. Igazoljuk, hogy ha nincs öt különböző
+	korú, azonos színű tehén, akkor van három azonos színű, egyidős tehén
+	ugyanabból a faluból.
+\end{extraproblem}
+
+\begin{solution}
+	A bizonyításhoz a \textbf{skatulya-elvet} alkalmazzuk.
+	
+	\textbf{1. Skatulya meghatározása:}
+	
+	- A gulyában \textbf{65 tehén} van, amelyek \textbf{két faluból} származnak.
+	
+	- A tehenek \textbf{négy különböző színűek} lehetnek: \textit{vörös,
+		fehér, fekete, tarka}.
+	
+	- Azt is tudjuk, hogy nincs \textbf{öt azonos korú és azonos színű
+		tehén}.
+	
+	- Bizonyítani kell, hogy létezik \textbf{három azonos színű és egyidős
+		tehén ugyanabból a faluból}.
+	
+	\textbf{Maximális különbözőség kiszámítása:}
+	
+	- Ha egy adott színt vizsgálunk, akkor az azonos színű tehenek legfeljebb
+	\textbf{4 különböző korúak} lehetnek, hiszen 5 azonos korú tehén egy
+	színből nem létezhet.
+	
+	- Ha $k$ a különböző életkorok száma egy adott szín esetén, akkor
+	a négy szín összesen legfeljebb:
+	
+	\[
+	4k\times4=16k
+	\]
+	
+	tehenet tartalmazhat.
+	
+	- Mivel a gulya összesen 65 tehenet tartalmaz, ezért:
+	
+	\[
+	16k\geq65
+	\]
+	
+	- Innen következik, hogy:
+	
+	\[
+	k\geq5
+	\]
+	
+	tehát legalább \textbf{5 különböző életkor} létezik.
+	
+	\textbf{Három azonos színű és egyidős tehén ugyanabból a faluból:}
+	
+	- Mivel egy adott szín és adott korcsoport esetén legfeljebb \textbf{4
+		tehén} lehet, és ezek két faluból származnak, ezért vagy \textbf{(2,2)
+		arányban oszlanak meg}, vagy az egyik faluban legalább \textbf{3}
+	tehén található.
+	
+	- Ha létezik olyan korcsoport és szín, ahol az egyik faluban legalább
+	három tehén van, akkor megtaláltuk a kívánt \textbf{három azonos színű,
+		egyidős tehén ugyanabból a faluból}.
+	
+	\textbf{Következtetés:} A feladat állítása igaz, tehát mindig létezik
+	\textbf{három azonos színű és egyidős tehén ugyanabból a faluból}.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+	100 kavicsot 50 kupacba rendezünk úgy, hogy egyik kupac sem üres.
+	Igazoljuk, hogy a kupacok két csoportba oszthatók úgy, hogy a két
+	csoportban egyenlő számú, azaz 50-50 kavics legyen.
+\end{extraproblem}
+
+\begin{solution}
+	A feladat egy \textbf{kombinatorikus skatulya-elv} alkalmazására épülő
+	bizonyítás.
+	
+	\textbf{1. Két csoportba osztás lehetősége}
+	
+	Mivel az összes kavics száma \textbf{100}, és a célunk az, hogy ezt
+	két egyenlő részre, azaz \textbf{50-50 kavicsra} osszuk, olyan megfelelő
+	kupacválogatást kell találnunk, amely ezt biztosítja.
+	
+	\textbf{2. Az elrendezések vizsgálata}
+	
+	Tekintsük a kupacok bármely lehetséges elosztását két tetszőleges
+	csoportba. Ekkor az egyes csoportokban lévő kavicsszámokat egy \textbf{egész
+		számok halmazaként} értelmezhetjük, amelyeket különböző módokon választhatunk
+	ki a kupacok közül.
+	
+	Az összes kavics számának fele \textbf{50}, így olyan részhalmazt
+	keresünk a kupacok kavicsszámaiból, amelynek az összege \textbf{50}.
+	
+	\textbf{3. Skatulya-elv alkalmazása:}
+	
+	A \textbf{Szűkített összeghalmaz-elv} szerint ha van egy halmazunk
+	($S$) pozitív egész számokból, amelyek összege 100, akkor mindig
+	létezik egy részhalmaz, amelynek összege pontosan \textbf{50}.
+	
+	Ez abból következik, hogy az egyes kupacok kavicsszámait növekvő sorrendben
+	összeadva egyszer el kell érnünk az 50-et, vagy ha túllépnénk azt,
+	akkor előtte léteznie kell egy olyan részösszegnek, amely pontosan
+	\textbf{50}.
+	
+	Mivel a kupacokban lévő kavicsok száma pozitív egész szám, és összegük
+	pontosan 100, mindig találunk egy olyan megfelelő kiválasztást, amely
+	kielégíti a feladat feltételeit.
+	
+	\textbf{Következtetés:} Mindig létezik egy olyan két csoportra bontás,
+	amely pontosan 50-50 kavicsot tartalmaz.
+\end{solution}

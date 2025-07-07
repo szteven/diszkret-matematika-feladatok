@@ -1,0 +1,1470 @@
+
+\chapter{Fák}\label{chap:fak}
+
+
+\section{Alapfogalmak}\label{sec:fak_alapok}
+\begin{description}
+	{\large \item [{Szerző:}] Szélyes Klaudia (Didaktikai mesteri -- Matematika, I.
+		év)}
+\end{description}
+
+\subsection*{Mi az a fa gráf?}
+
+A fa egy olyan gráf, amely összefüggő, és nem tartalmaz kört. Ez azt
+jelenti, hogy a gráf bármely két csúcsa között pontosan egy út vezet.
+Mivel nincs benne kör, és minden csúcs elérhető minden másiktól, ezért
+a fa struktúrája különösen hasznos sok gyakorlati területen.
+
+Példaként említhetjük a víz- és csatornahálózatokat, valamint az elektromos
+hálózatokat. Az emberi érrendszer -- különösen az artériák vagy a
+vénák hálózata -- szintén fagráfként modellezhető. Ezek hátránya,
+hogy ha egy él megsérül vagy elzáródik, a gráf már nem lesz összefüggő,
+ami például az érrendszer esetén sejtpusztuláshoz vezethet.
+
+A fa adatszerkezetek szempontjából is fontos, mivel homogén, dinamikus
+és hierarchikus struktúrákat lehet vele ábrázolni.
+
+\subsection*{Alapfogalmak:}
+\begin{itemize}
+	\item \textbf{Csúcs (csomópont)}: A fának, mint gráf csomóponthalmazának
+	egy eleme.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image1\string".png}
+		\par\end{center}
+	\item \textbf{Levél}: Olyan csúcs, amelynek nincs utóda.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image3\string".png}
+		\par\end{center}
+	\item \textbf{Belső elem}: Olyan csúcs, amelynek legalább egy utóda van.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image4\string".png}
+		\par\end{center}
+	\item \textbf{Él}: Kapcsolat két csúcs között.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image5\string".png}
+		\par\end{center}
+	\item \textbf{Út}: Egy olyan csúcssorozat, amelyet élek kötnek össze.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image6\string".png}
+		\par\end{center}
+	\item \textbf{Részfa}: Egy csúcsból és annak összes utódjából álló fa.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image7\string".png}
+		\par\end{center}
+	\item \textbf{Szint}: A gyökértől való távolság alapján meghatározott csúcsok
+	halmaza.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image8\string".png}
+		\par\end{center}
+	\item \textbf{Gyökér}: A fa legfelső szintjén lévő csúcs.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image2\string".png}
+		\par\end{center}
+	\item \textbf{Magasság}: A gyökértől egy levélig vezető leghosszabb út hossza.
+	\begin{center}
+		\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/image9\string".png}
+		\par\end{center}
+\end{itemize}
+
+\subsection*{Rendezett és rendezetlen fák}
+
+Egy \textbf{rendezetlen} fában nem számít az élek sorrendje, azaz
+az, hogy egy csúcsból milyen sorrendben ágaznak ki az utódok. Ezzel
+szemben egy \textbf{rendezett} fában az élek sorrendje fontos: például
+az első, második stb. gyermek külön jelentéssel bír. 
+\begin{center}
+\includegraphics[width=0.5\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/rendezett rendezetlen\string".png}
+\par\end{center}
+Ekvivalensnek tekinthető a két fa, ha rendezetlen fákról van szó.
+Ha viszont rendezett fákról beszélünk, akkor a sorrend számít, így
+a két fa különbözőnek minősül.
+
+\begin{theorem}{thm:fa-min2level}
+Ha egy fának legalább két csúcsa van, akkor abban biztosan legalább
+két levél található.
+\end{theorem}
+\begin{proof}[Bizonyítás (vázlat).]
+Vegyünk egy leghosszabb utat a fában,
+jelöljük a végpontjait $v_{1}$ és $v_{k}$-val. Ezek a csúcsok nem
+lehetnek több él részei, mert akkor hosszabb út is létezne -- ez
+ellentmondás. Ezért ezek biztosan levelek. (Kép: leghosszabb út, kör
+és hosszabb út kizárása)
+\end{proof}
+
+\begin{theorem}{thm:fa-n-n-1}
+Egy $n$ csúcsú fa pontosan $n-1$ élből áll.
+\end{theorem}
+\begin{proof}
+Indukcióval bizonyítható. Alapeset: ha a fa
+1 csúcsból áll, nincs benne él; ha 2 csúcsból, akkor pontosan egy
+él kapcsolja őket össze. - Indukciós lépés: ha feltételezzük, hogy
+$k$ csúcs esetén a fa $k-1$ élből áll, akkor $n$ csúcsú fa esetén
+eltávolítva egy levelet és élét, $(n-1)$ csúcsú fát kapunk, amiben
+indukciós feltevés szerint $n-2$ él van. Visszatéve a levelet, a
+fa élszáma $n-1$ lesz.
+\end{proof}
+
+\begin{theorem}{thm:fak-jellemzese}
+Egy gráf akkor és csak akkor fa, ha összefüggő és pontosan $n-1$
+éle van. Ez a karakterizációs tétel nagyon hasznos algoritmusok tervezésénél
+és gráfok elemzésénél.
+\end{theorem}
+
+\begin{definition}[Kiegyensúlyozott fák]{def:kiegyensulyozott}
+Egy fa kiegyensúlyozottnak tekinthető, ha bármely csomópont bal és
+jobb részfájának magasságkülönbsége legfeljebb 1. 
+\end{definition}
+Az ilyen struktúrák
+különösen hatékonyak keresési műveletek szempontjából, mert minimalizálják
+a fa magasságát, így gyorsabb hozzáférést biztosítanak az adatokhoz.
+
+\begin{definition}[Erdő]{def:Erdo}
+Az erdő fák különálló gyűjteménye. Ha egy fából eltávolítunk egy élt,
+az erdővé válik, azaz több összefüggő komponensre bomlik. Az erdő
+minden komponense egy-egy fa.
+\end{definition}
+
+\begin{definition}[Feszítőfa]{def:feszitofa}
+Egy gráf \textbf{feszítőfája} olyan részgráf, amely tartalmazza az
+eredeti gráf összes csúcsát, összefüggő és nem tartalmaz kört, tehát
+fa.
+\end{definition}
+
+\begin{theorem}{thm:feszitofa}
+Minden összefüggő gráfnak van feszítőfája.
+\end{theorem}
+\begin{proof}
+Vegyük az összefüggő gráfot, és kezdjünk el eltávolítani
+köröket úgy, hogy közben az összefüggőség ne szűnjön meg. Amikor már
+nincs több kör, a kapott részgráf feszítőfa lesz.
+\begin{center}
+	\includegraphics[width=0.85\linewidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/feszitofa_biz\string".png}
+	\par\end{center}
+\end{proof}
+
+
+
+\section*{Házi feladatok}
+\begin{problem}
+Egy versenyen $n$ $(n=47)$ csapat játszik egyenes kieséses rendszerben:
+\begin{itemize}
+\item A csapatokat párokba állítják. 
+\item A győztes továbbjut a következő fordulóba. 
+\item A vesztes kiesik. 
+\item Ha páratlan számú csapat van, valaki meccs nélkül jut tovább. 
+\end{itemize}
+\vspace{1em}
+
+\textbf{Kérdések:} 
+\begin{enumerate}
+\item Hány mérkőzés szükséges, hogy kiderüljön, ki a bajnok? 
+\item Hány fordulóra van szükség? 
+\item Milyen gráffal szemléltethető ez a rendszer? 
+\item Hány mérkőzés kell ahhoz, hogy biztosan megtudjuk, melyik csapat lett
+a második? Indokolja válaszát! 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+	\begin{enumerate}
+\item Egy egyenes kieséses rendszerben minden mérkőzésen egy csapat kiesik,
+míg egy marad bajnoknak. Ha $n$ csapat indul, akkor pontosan $n-1$
+csapat esik ki, tehát: 46 mérkőzés szükséges.
+
+\item A fordulók száma a legkisebb $k$, amelyre: 
+\[
+2^{k}\geq n.
+\]
+Mivel $n=47$, és 
+\[
+2^{5}=32<47<64=2^{6},
+\]
+ezért: 
+\[
+\boxed{6}
+\]
+fordulóra van szükség.
+\item A verseny lefolyását egy \textbf{fa} gráffal lehet szemléltetni, ahol: 
+\begin{itemize}
+\item A csúcsok a csapatokat jelölik. 
+\item Az élek a mérkőzéseket, amelyek az egyik csapat kieséséhez vezetnek. 
+\item A fa gyökere a bajnok. 
+\item A levélcsúcsok az induló csapatok. 
+\end{itemize}
+A fa összefüggő és körmentes, és az élek száma $n-1$.
+\item A második helyezett kiléte nem biztos, hogy egyértelműen eldönthető
+az egyenes kieséses rendszerben, mivel a vesztesek kiesnek, és nem
+játszanak további mérkőzéseket.
+
+Ez azt jelenti, hogy a döntőben vesztes csapat lesz a második, de
+lehet, hogy nem a ténylegesen második legjobb csapat, mert a későbbi
+bajnok már korán legyőzhette a valódi második legjobbat.
+
+Így nem létezik biztosan meghatározható minimális mérkőzésszám a pontos második hely eldöntéséhez egyetlen egyenes kieséses versenyben.
+
+Ha pontosabb rangsort akarunk (második, harmadik hely), más versenyrendszert,
+például vigaszágat vagy körmérkőzést kell alkalmazni. 
+
+\end{enumerate}
+\end{solution}
+\begin{problem}
+Egy 7 csúcsú fa gráfban a csúcsok fokszáma a következő: 
+\begin{itemize}
+\item Egy csúcsnak a fokszáma 3, 
+\item Három csúcsnak a fokszáma 2, 
+\item Három csúcsnak a fokszáma 1. 
+\end{itemize}
+\begin{enumerate}
+\item Igazolja, hogy ez a fokszámeloszlás lehetséges-e egy fán! 
+\item Rajzoljon egy példát erre a fára! 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+~
+\begin{enumerate}
+\item Ellenőrizzük, hogy a fokszámok összege megegyezik-e a fa éleinek kétszeresével.
+
+Egy 7 csúcsú fában az élek száma: 
+\[
+|E|=7-1=6.
+\]
+A fokszámok összege legyen: 
+\[
+\sum\deg(v)=1\times3+3\times2+3\times1=3+6+3=12.
+\]
+Mivel a gráf éleinek kétszerese: 
+\[
+2\times|E|=2\times6=12,
+\]
+a feltételek teljesülnek, így a fokszámeloszlás lehetséges egy fán.
+\item A fa rajzolása:
+
+\medskip{}
+
+\begin{itemize}
+\item Vegyünk egy központi csúcsot, amelynek fokszáma 3. 
+\item Ehhez csatlakozzanak három olyan csúcs, amelyeknek a fokszáma 2. 
+\item Minden ilyen 2 fokú csúcshoz kapcsolódjon egy levélcsúcs (fokszám
+1). 
+\end{itemize}
+Ez egy olyan fa, amelynek a fokszámeloszlása megfelel a feladatban
+adottaknak. 
+
+\end{enumerate}
+\end{solution}
+\begin{problem}
+Rajzolj olyan erdőt, amely 4 komponensből (fából) és 10 csúcsból áll!
+Mennyi éle van?
+\end{problem}
+
+\begin{solution}
+Egy komponens egy összefüggő fa, amelyben az élek száma a csúcsok
+számánál eggyel kevesebb. Ha az erdő 4 komponensből (4 fából) áll,
+és összesen 10 csúcsa van, akkor:
+
+\[
+\text{Élek száma}=10-4=6
+\]
+
+\textbf{Rajz:}
+
+\begin{tikzpicture}[
+  vertex/.style=circle,draw,fill=black,inner sep=2pt,
+  scale=1, every node/.style=transform shape
+]
+
+% Fa 1 (3 csúcs)
+\node[vertex] (a1) at (0,0) {};
+\node[vertex] (a2) at (1,0) {};
+\node[vertex] (a3) at (0.5,-1) {};
+\draw (a1) -- (a2);
+\draw (a1) -- (a3);
+
+% Fa 2 (3 csúcs)
+\node[vertex] (b1) at (3,0) {};
+\node[vertex] (b2) at (4,0) {};
+\node[vertex] (b3) at (3.5,-1) {};
+\draw (b1) -- (b2);
+\draw (b2) -- (b3);
+
+% Fa 3 (2 csúcs)
+\node[vertex] (c1) at (0,-3) {};
+\node[vertex] (c2) at (1,-3) {};
+\draw (c1) -- (c2);
+
+% Fa 4 (2 csúcs)
+\node[vertex] (d1) at (3,-3) {};
+\node[vertex] (d2) at (4,-3) {};
+\draw (d1) -- (d2);
+
+\end{tikzpicture}
+
+\noindent\textbf{Válasz:} Az erdőnek 6 éle van.
+\end{solution}
+\begin{problem}
+Egy fa egyetlen ággal indul. Ez az ág két évig nő, majd a második
+év leteltekor tavasszal hajt egy új ágat. Ezután minden évben tavasszal
+új ágat hajt. Az új hajtások az első évükben csak növekednek, és a
+második év végétől ők is ágat hajtanak, majd minden évben újabbat.
+Hány ág lesz a hatodik év végén?
+\end{problem}
+
+\begin{solution}
+Rekurzívan számoljuk az ágak számát:
+\begin{itemize}
+\item 0. év: 1 ág (kezdeti) 
+\item 1. év: 1 ág 
+\item 2. év: 2 ág 
+\item 3. év: 3 ág 
+\item 4. év: 5 ág 
+\item 5. év: 8 ág 
+\item 6. év: 13 ág 
+\end{itemize}
+\noindent\textbf{Válasz:} A fa hatodik év végére 13 ágból fog állni.
+
+\end{solution}
+\begin{problem}
+Egy 15 pontú fagráfban 12 levél van. Hány élen halad át a gráf leghosszabb
+útja? 
+\end{problem}
+
+\begin{solution}
+A maradék pontok száma: $15-12=3$, ezek a belső pontok. Ha a három
+belső pont láncot alkot, és a két széléhez kapcsolódik egy-egy levél,
+akkor a leghosszabb út így nézhet ki:
+
+\[
+\text{levél}\rightarrow\text{belső1}\rightarrow\text{belső2}\rightarrow\text{belső3}\rightarrow\text{levél}
+\]
+
+Ez az út 5 csúcsot és 4 élt tartalmaz.
+
+\noindent\textbf{Válasz:} A leghosszabb út hossza 5 él.
+\end{solution}
+\begin{problem}
+Egy társaság tagjai most találkoztak először, eddig 13 e-mailcím-csere
+történt a megbeszélés alatt. Ez elegendő ahhoz, hogy pontosan egy
+úton bárki üzenete bárkihez eljusson. Legfeljebb hány fős lehet ez
+a társaság? 
+\end{problem}
+
+\begin{solution}
+Ez azt jelenti, hogy a kapcsolati háló egy \emph{fa}, mert bármely
+két személy között pontosan egy út van, és nincsenek körök. A fának
+$n$ csúcsa és $n-1$ éle van.
+
+\[
+n-1=13\Rightarrow n=14
+\]
+
+\noindent\textbf{Válasz:} Legfeljebb 14 fős lehetett a társaság.
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Gergely Verona]
+Öt város közé négy egyenes szakaszból álló vasúthálózatot akarnak
+építeni úgy, hogy bármelyik városból bármelyik másikba el lehessen
+jutni. (A városok közül semelyik három nem esik egy egyenesbe. A szakaszok
+keresztezhetik is egymást.) Hány ilyen vasúthálózat lehetséges? \emph{(KöMaL,
+1992) }
+\end{extraproblem}
+
+\begin{solution}
+A feladatban adott, hogy 5 város van, és 4 összekötő szakasz (él)
+építhető ki közöttük. Az a feltétel, hogy bármelyik városból el lehessen
+jutni bármelyik másikba, azt jelenti, hogy a hálózatnak összefüggőnek
+kell lennie.
+
+Ez tehát egy olyan gráfot ír le, amelynek:
+\begin{itemize}
+\item 5 csúcsa van (a városok), 
+\item 4 éle van (a vasúti szakaszok), 
+\item és a gráf összefüggő. 
+\end{itemize}
+Ezek a feltételek pontosan egy fát definiálnak. Egy fa olyan összefüggő,
+körmentes gráf, amely $n$ csúccsal és $n-1$ éllel rendelkezik. Jelen
+esetben $n=5$, tehát az összes 5 csúcsú fa számát keressük.
+
+A Cayley-tétel szerint az $n$ címkézett csúcsú fa lehetséges száma:
+
+\[
+n^{n-2}
+\]
+
+Esetünkben:
+
+\[
+5^{5-2}=5^{3}=125
+\]
+
+Tehát $125$ különböző vasúthálózat lehetséges. 
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+Egy kommunikációs hálózatot szeretnénk kiépíteni 21 számítógépből
+úgy, hogy: 
+\begin{itemize}
+\item a hálózat minden gépe elérje a többit (azaz a hálózat összefüggő legyen), 
+\item ne legyenek hurkok vagy körök (azaz a hálózat gráfja fa legyen), 
+\item továbbá minden gép legfeljebb 4 másik géppel lehet közvetlen kapcsolatban. 
+\end{itemize}
+Mi a lehető legnagyobb fokszámú gépek száma a hálózatban? 
+\end{extraproblem}
+
+\begin{solution}
+Mivel a hálózat gráfja egy \emph{fa}, azaz összefüggő és körmentes,
+ezért 21 csúcs esetén pontosan $21-1=20$ él van.
+
+A gráfelmélet egyik alapvető tétele szerint a fokszámok összege kétszerese
+az élek számának: 
+\[
+\sum\text{fokszám}=2\cdot20=40.
+\]
+
+Tegyük fel, hogy $x$ darab csúcs (számítógép) fokszáma 4. Ezek együtt
+$4x$ fokot adnak. A többi $21-x$ csúcs fokszáma legfeljebb 3, de
+minden csúcs fokszáma legalább 1 (mivel a fa összefüggő).
+
+Próbáljunk meg konkrét értékeket behelyettesíteni:
+\begin{itemize}
+\item Ha $x=8$, akkor a 8 gép összesen $8\cdot4=32$ fokot ad. Ekkor a
+maradék $21-8=13$ gépnek $40-32=8$ fok marad, azaz ezeket úgy kell
+elosztani, hogy a fokszámuk átlaga kevesebb mint 1. Ez csak úgy lehet,
+ha pontosan 8 csúcsnak a fokszáma 1, a többinek 0 --- ez még lehetséges.
+\item Ha $x=9$, akkor $9\cdot4=36$ fokot kapunk, a maradék 12 csúcsra
+$40-36=4$ fok marad. Ez legfeljebb 4 darab 1 fokú csúcs lehet, és
+8 darab 0 fokú. De egy fa nem lehet összefüggő, ha 8 csúcs teljesen
+elszigetelt --- tehát ez nem megengedett.
+\item Ha $x=10$, akkor $10\cdot4=40$ fok jön ki, a többi 11 csúcsnak nulla
+fokszáma lenne, vagyis teljesen különálló csúcsok --- így a gráf
+nem lenne összefüggő, tehát ez sem lehet. 
+\end{itemize}
+Tehát a maximális számú olyan csúcs, amely fokszáma 4 lehet, az 8.
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Egy összefüggő, irányítatlan, ciklusmentes gráf (azaz egy fa) 17
+csúcsot tartalmaz, és a csúcsok fokszámösszege 32. Hány levél található
+ebben a fában? 
+\end{extraproblem}
+
+\begin{solution}
+\noindent Egy $n$-csúcsú fa $n-1$ élt tartalmaz, így: 
+\[
+\text{Élek száma}=17-1=16.
+\]
+A fokszámösszeg egy irányítatlan gráfban: 
+\[
+\sum\deg(v)=2\cdot\text{élek száma}=2\cdot16=32,
+\]
+ez megegyezik a feladatban szereplő értékkel.
+
+Tegyük fel, hogy $k$ darab levél van (azaz $\deg(v)=1$). A többi
+$17-k$ csúcs fokszáma legalább 2.
+
+A fokszámösszeg tehát: 
+\[
+k\cdot1+\sum_{i=1}^{17-k}\deg(v_{i})=32.
+\]
+
+Minimumértékkel becsülve: 
+\[
+k+2(17-k)=32\Rightarrow k+34-2k=32\Rightarrow-k=-2\Rightarrow k=2.
+\]
+
+\textbf{Válasz: } $\boxed{2}$ levél található a fában. 
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Hány különböző címkézett fa létezik pontosan 6 csúccsal? 
+\end{extraproblem}
+
+\begin{solution}
+\noindent A Cayley-tétel szerint egy $n$-csúcsú címkézett fára az
+összes lehetséges fa száma: 
+\[
+n^{n-2}.
+\]
+
+Ebben az esetben $n=6$, tehát: 
+\[
+6^{6-2}=6^{4}=\boxed{1296}.
+\]
+
+\textbf{Válasz: } Összesen $\boxed{1296}$ különböző címkézett fa
+létezik. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Bizonyítsd be, hogy egy fa automorfizmusának van fixpontja vagy fixéle! 
+\end{extraproblem}
+
+\begin{solution}
+Legyen $L$ az $F$ fa elsőfokú pontjainak halmaza. Mivel $F$ egy
+egyszerű gráf, ezért egy automorfizmusa leírható mint pontjainak egy
+permutációja. Ha $\varphi:V(F)\to V(F)$ egy automorfizmusa $F$-nek,
+akkor $\varphi(L)=L$, hiszen egy gráf automorfizmusa elsőfokú pontokat
+elsőfokú pontokba visz. Így 
+\[
+\varphi_{1}:V(F)\setminus L\to V(F)\setminus L,
+\]
+ahol $\varphi_{1}$ a $\varphi$ automorfizmus leszűkítése, az $F_{1}=F-L$
+fa egy automorfizmusa (feltéve, hogy $V(F)\setminus L\neq\emptyset$).
+Az elsőfokú pontok elhagyásával egy $F,F_{1},F_{2},\ldots,F_{k}$
+fasorozatot nyerünk úgy, hogy az eredeti automorfizmus leszűkítése
+az $F_{i}$ fa ponthalmazára ($1\leq i\leq k$) az $F_{i}$ fa egy
+automorfizmusát adja.
+
+A sorozat utolsó eleme egy üres gráf vagy egy 1 pontú gráf. Ha üres
+gráfhoz jutunk, akkor az előző lépésben egy 1 élű gráfunk volt. Ezt
+az élt az automorfizmus fixen hagyja. Ha egy 1 pontú gráfhoz jutunk,
+akkor ezt a pontot az automorfizmus fixen hagyja. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Bizonyítsd be, hogy egy $2n$ élű fa élhalmaza felbontható $n$ darab
+diszjunkt párra, ahol egy párban szomszédos élek szerepelnek! 
+\end{extraproblem}
+
+\begin{solution}
+Legyen $x$ egy elsőfokú pont szomszédja az adott $F$ fában. (A feltételek
+miatt $F$-nek $2n+1$ pontja van.) Ekkor $(F-x)$ komponensekre esik
+szét. Az $x$ választása miatt az egyik komponens 1 pontú lesz. Mivel
+$(F-x)$-ben $2n$ pont van, ezért lesz másik páratlan pontú komponens.
+Az $x$-ből ehhez a páratlan komponenshez és az elsőfokú ponthoz vezető
+két él egy szomszédos élpár. Ezt a két élt elhagyva $F$-ből a maradék
+gráfban az összes komponens páros pontú (azaz páros élű) fa lesz.
+Ez alapján indukcióval igazolható az állítás. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Az $1,2,\ldots,n$ természetes számokat úgy akarjuk kiszínezni, hogy
+a relatív prímszámok különböző színt kapjanak. Legalább hány színre
+van szükségünk? 
+\end{extraproblem}
+
+\begin{solution}
+Legyen $\pi(n)$ az $n$-nél nem nagyobb prímek száma. Ekkor $1$
+és az első $\pi(n)$ darab prímszám közül bármely kettő relatív prím,
+így legalább $\pi(n)+1$ szín szükséges. De $\pi(n)+1$ szín elég:
+az $n>1$ szám színe legyen egyik prímosztója, $1$ pedig kapjon egy
+külön színt. 
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Legalább hány csoportba kell beosztanunk az első száz pozitív egész
+számot, ha azt akarjuk, hogy egyetlen csoportban se legyen két olyan
+szám, amelyek egyike többszöröse a másiknak? 
+\end{extraproblem}
+
+\begin{solution}
+Az $1,2,4,8,16,32,64$ számok egyike sem kerülhet ugyanabba az osztályba,
+azaz legalább hét osztályra van szükségünk. Az 
+\begin{gather*}
+\{1\},\ \{2,3\},\ \{4,5,6,7\},\ \{8,9,\ldots,15\},\\
+\{16,17,\ldots,31\},\ \{32,33,\ldots,63\},\ \{64,65,\ldots,100\}
+\end{gather*}
+osztályozás megfelelő. Így a szükséges osztályok minimális száma $7$. 
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Legyen $T$ egy fa $n$ csúccsal. Tudjuk, hogy minden levél fokszáma
+1, minden belső csúcs fokszáma páros szám. Bizonyítsd be, hogy a levelek
+száma páros. 
+\end{extraproblem}
+
+\begin{solution}
+Jelölések: 
+\begin{itemize}
+\item $L$ --- levelek száma, 
+\item $I$ --- belső csúcsok száma, 
+\item $n=L+I$ --- összes csúcs. 
+\end{itemize}
+Mivel $T$ fa, élei száma $n-1=L+I-1$.
+
+A fokszámok összege kétszerese az élek számának: 
+\[
+\sum_{v\in V}\deg(v)=2(n-1)=2(L+I-1)
+\]
+
+A levelek fokszáma 1, a belső csúcsoké páros: 
+\[
+\sum_{v\in V}\deg(v)=\sum_{i=1}^{I}d_{i}+L
+\]
+ahol $d_{i}$ mind páros szám.
+
+Ebből: 
+\[
+\sum_{i=1}^{I}d_{i}+L=2(L+I-1)\Rightarrow\sum_{i=1}^{I}d_{i}=L+2I-2
+\]
+
+A bal oldal páros (mert minden $d_{i}$ páros), tehát a jobb oldal
+is páros: 
+\[
+L+2I-2\equiv0\pmod 2\Rightarrow L\equiv0\pmod 2
+\]
+
+\bigskip{}
+
+\textbf{Következtetés:} A levelek száma páros. 
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+Egy $F$ fának 17 csúcsa van, és bármely csúcsának fokszáma 1 vagy
+4. Határozzuk meg, legalább hány élet kell $F$-be behúzni ahhoz,
+hogy a keletkező gráfnak legyen Euler-köre! 
+\end{extraproblem}
+
+\begin{solution}
+Egy összefüggő gráfnak pontosan akkor van Euler-köre, ha minden csúcs
+fokszáma páros. Mivel $F$ egy fa, ezért az összefüggőség teljesül.
+$F$ fának 17 csúcsa van, tehát 16 él fut a csúcsok között. Az összfokszám
+32. Jelölje $n$ a 4 fokszámú csúcsok számát és jelölje $m$ az 1
+fokszámú csúcsok számát. Keressük az $n$ és $m$ pozitív számokat
+úgy, hogy $n\cdot4+m\cdot1=32$. Próbálgatás után megkapjuk, hogy
+$n=5$ és $m=12$. Két 1 fokszámú csúcs biztosan nincs összekötve
+egy éllel, mert ez egy különálló összefüggő komponenst határozna meg.
+Mivel tetszőleges kettőt összetudunk kötni, ezért 6 él felhasználásával
+elérhető, hogy csak 4 és 2 fokszámú csúcsok legyenek. Legalább 6 élt
+kell ahhoz behúzni, hogy legyen $F$-nek Euler-köre. 
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+Feladat 1 Legyen $n\geq3$ egész szám. Hány olyan \textbf{címkézett}
+fa van $n$ csúcsra, amelyben: 
+\begin{itemize}
+\item a $1$-es csúcs fokszáma legalább $3$, és 
+\item a $1$ és $2$ csúcsok nem szomszédosak? 
+\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+Megoldás 1 Egy $n$-csúcsú fa Prüfer-kódja egy $n-2$ hosszúságú sorozat
+$\{1,2,\dots,n\}$ elemeiből. Egy csúcs fokszáma: 
+\[
+\deg(v)=\#\text{előfordulás}(v)+1.
+\]
+\begin{itemize}
+\item A $1$-es csúcs fokszáma legalább $3$ $\Rightarrow$ $1$ legalább
+$2$-szer szerepel a kódban. 
+\item A $1$ és $2$ nem szomszédos $\Rightarrow$ elég, ha a $2$ \emph{nem
+szerepel} a Prüfer-kódban (ekkor fokszáma $1$, tehát levélként nem
+kapcsolódhat máshoz, mint egyetlen másik csúcshoz -- nem lehet 1-hez). 
+\end{itemize}
+A kód hossza: $n-2$, a megengedett elemek halmaza: $\{1,3,4,\dots,n\}$,
+azaz $n-2$ elem.
+
+\paragraph{Összes kód, amelyben $2$ nem szerepel:}
+
+\[
+A=(n-2)^{n-2}.
+\]
+
+\paragraph{Levonjuk azokat, ahol $1$ legfeljebb egyszer szerepel:}
+\begin{itemize}
+\item $1$ egyáltalán nem szerepel: $(n-3)^{n-2}$, 
+\item $1$ pontosan egyszer szerepel: $(n-2)\cdot(n-3)^{n-3}$. 
+\end{itemize}
+
+\paragraph{Megfelelő kódok száma:}
+
+\[
+B=A-\left[(n-3)^{n-2}+(n-2)(n-3)^{n-3}\right].
+\]
+
+\paragraph{Végső válasz:}
+
+Azon $n$-csúcsú címkézett fák száma, amelyek megfelelnek a feltételeknek:
+
+\[
+\boxed{(n-2)^{n-2}-(n-3)^{n-2}-(n-2)(n-3)^{n-3}}
+\]
+\end{solution}
+
+\section{Címkézett fák, Prüfer-kód}\label{sec:cimkezett_fak}
+
+\begin{description}
+	{\large \item [{Szerző:}] Domokos Ábel (Didaktikai mesteri -- Matematika, I.
+		év)}
+\end{description}
+
+\begin{definition}[Címkézett gráfok]{def:cimkezett_graf} A címkézett gráf olyan gráf, amelyben a csúcsokhoz
+	és/vagy élekhez címkék (azaz nevek, számok, szimbólumok vagy egyéb
+	azonosítók) vannak rendelve.\par A következőkben olyan gráfokat fogunk
+	érteni alatta, ahol a csúcsokhoz rendeltünk egyedi azonosítót. 
+\end{definition}
+
+\begin{definition}[Súlyozott gráf]{def:sulyozott_graf} Egy gráfot súlyozott gráfnak nevezünk, ha minden
+	éléhez hozzá van rendelve egy valós szám. 
+\end{definition}
+
+\begin{definition}[Minimális feszítőfa]{def:minimalis_feszitofa} A gráf feszítőfáját minimális feszítőfának
+	nevezzük nevezzük, ha az éleihez rendelt súlyok összege minimális. 
+\end{definition}
+
+\begin{problem}
+	Alkalmazott feladat: Egy ország n városát úttal szeretnénk összekötni
+	úgy, hogy minden városból minden másik elérhető legyen. A városok
+	közti út elkészítésének költségeit ismerjük. A kormány hogyan találhatja
+	meg a minimális költségű úthálózatot?
+\end{problem}
+
+Megjegyzés: úthálózat például jelenthet még áram-, telefon-, TV-,
+víz- vagy internetösszeköttetést is.
+\begin{solution}
+	A város és úthálózat alkotta gráfban a minimális feszítőfa megtalálása
+	a cél. A feladat optimálisan megoldható például Kruskal- vagy Prim-algoritmussal. 
+\end{solution}
+\begin{definition}[Bináris fa]{def:binaris_fa} A bináris fa egy olyan fa, melyben minden csomópontnak
+	legtöbb két utóda van. 
+\end{definition}
+
+\begin{definition}[Szabályos bináris fa]{def:szabalyos_bin_fa} Egy bináris fát szabályos bináris fának nevezünk,
+	ha minden csomópontnak vagy nincs gyereke, vagy pontosan két gyereke
+	van. 
+\end{definition}
+
+Adatszerkezetek témakörében a (bináris) fa nagyon gyakran használatos,
+íme néhány példa: 
+\begin{itemize}
+	\item keresőfák (teljes rendezés -- bármely elem gyors keresése) 
+	\item min-max kupacok (legkisebb vagy legnagyobb elem gyors kiválasztása) 
+	\item kifejezésfák (pl. aritmetikai kifejezések tárolása és kiértékelése) 
+	\item mélységi és szélességi bejárás (pl. gráfban feszítőfa generálására
+	alkalmas, inorder bejárás pedig teljesen rendezett sorozatot ad meg
+	egy keresőfában) 
+\end{itemize}
+\begin{center}
+	\begin{minipage}[c]{0.3\textwidth}%
+		\centering \includegraphics[width=1\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/1.kereso\string".png}
+		
+		{\small\textbf{Keresőfa}} % manual caption text
+		%
+	\end{minipage}\hspace{0.05\textwidth} %
+	\begin{minipage}[c]{0.3\textwidth}%
+		\centering \includegraphics[width=1\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/1.minkupac\string".png}
+		
+		{\small\textbf{Min kupac}} %
+	\end{minipage}
+	\par\end{center}
+
+\begin{center}
+	\vspace{1em}
+	\par\end{center}
+
+\begin{center}
+	% Second row: one image centered with manual caption
+	\begin{minipage}[c]{0.35\textwidth}%
+		\centering \includegraphics[width=1\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/1.kifejezesfak\string".png}
+		
+		{\small\textbf{4 + 2 {*} 10 + 3 {*} (5 + 1) kifejezésfája}} %
+	\end{minipage}
+	\par\end{center}
+
+Egyéb fastruktúrákra épülő alkalmazási területek: 
+\begin{itemize}
+	\item számítógépes fájlrendszer tárolása 
+	\item adatelemző módszerek: döntési fák, véletlen erdők 
+	\item R-fa (regtangle tree): térbeli adatok hatékony lekérdezésére 
+	\item Érdekesség: A szabályos bináris fák részfáinak száma megadható a Catalan-számokkal. 
+	\item fraktálok (szépen visszaadja egy igazi fa szerkezetét) 
+\end{itemize}
+\begin{center}
+	\includegraphics[width=0.4\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/tree\string".png} 
+	\par\end{center}
+\begin{theorem}[Fák jellemzési tételei]{thm:fak_jellemzese}
+	
+	Egy $n$ pontú $G$ gráfra az alábbi kijelentések ekvivalensek: 
+	\begin{enumerate}
+		\item $G$ fa (azaz összefüggő és körmentes). 
+		\item $G$ körmentes, és $n-1$ éle van. 
+		\item $G$ összefüggő, és $n-1$ éle van. 
+		\item $G$ összefüggő, és bármely élt eltávolítva $G$-ből a maradék gráf
+		már nem összefüggő. 
+		\item $G$ bármely két csúcsa között pontosan egy út vezet. 
+		\item $G$ körmentes, de egy tetszőleges éllel bővítve az $E(G)$ élhalmazt,
+		már keletkezik kör. 
+	\end{enumerate}
+\end{theorem}
+
+Megjegyzés: Az összefüggőség és a körmentesség tulajdonságai bizonyos
+értelemben ellentétesek egymással. A $4.$ és $6.$ tételek alapján
+a fákat akár ,,minimálisan összefüggő" vagy ,,maximálisan kör nélküli"
+gráfoknak is nevezhetnénk.\\
+\\
+
+Ahogy az igazi fákon is újabb-újabb ágak nőnek, ugyanúgy gráf-fákat
+is növeszthetünk. 
+\begin{theorem}{thm:fa_novesztese}
+	Az alábbi eljárással növesztett gráfok mindegyike fa és minden fa
+	megkapható ilyen módon: 
+	\begin{itemize}
+		\item Kezdjük egyetlen pontból álló G gráffal 
+		\item Ismételjük meg a következő lépést: a meglevő G gráf mellett vegyünk
+		fel egy új pontot és kössük össze G egy tetszőleges pontjával.\\
+		
+	\end{itemize}
+\end{theorem}
+\begin{extraproblem}
+\textbf{Fő feladat}: számoljuk össze az összes lehetséges n csúcsból
+álló fát! 
+\end{extraproblem}
+\begin{solution}
+	1. lépés: elkezdjük kicsi n értékekre megvizsgálni a feladatot. Hamar
+	feltehetjük azt a kérdést, hogy két fa megegyezhet vagy sem? Matematikailag
+	fogalmazva, a két fa mikor izomorf egymással?
+	
+	Ere a kérdésre adott válasz attól függ, hogy a csúcsok egyediek-e,
+	vagyis címkézettek vagy sem.
+	
+	Egy másik tényező, ami befolyásolja két fa különbözőségét, hogy számít-e
+	az egymás mellett lévő élek elhelyezkedésének sorrendje? A következőkben
+	nem szeretnénk az élek sorrendjét figyelembe venni, ezért a következőképpen
+	definiáljuk két fa megegyezését: 
+
+\begin{itemize}
+	\item \textbf{Két címkézett fa akkor egyezik meg}, ha bennük ugyanazok a
+	pontok vannak éllel összekötve. 
+	\item \textbf{Két címkézetlen fa akkor egyezik meg}, ha megadható olyan
+	bijektív megfeleltetés a két fa címkézett pontjai között, hogy az
+	egyik fa bármelyik két pontja akkor van éllel összekötve, ha a másik
+	fában a hozzá rendelt pontok is össze vannak kötve, és vice versa. 
+\end{itemize}
+A címkézett fákból egyértelműen több van, a címkézetlenekből pedig
+kevesebb. Tehát két részre oszlik a feladat: 
+\begin{itemize}
+	\item[a)] címkézett fák száma 
+	\item[b)] címkézetlen fák száma 
+\end{itemize}
+\textbf{Spoiler}: A címkézett fák számát lehet pontosan kiszámolni,
+a címkézetlenek számára eddig csak becslés létezik.
+
+A következőkben csak a címkézett fákkal fogunk foglalkozni.\\
+
+\textbf{Címkézett fák megszámlálása}
+
+\textbf{Ötlet}: Próbáljunk minden fának megfeleltetni egy kódot, amiből
+visszafejthető a fa! Másképp fogalmazva keressünk olyan módszereket,
+ahogy a memóriában tudnánk tárolni a fákat, minél kevesebb tárhellyel!
+Vajon tudunk találni egy bijektív megfeleltetést?
+
+Az n csúcsot címkézzük 0-tól $n-1$-ig. A következő fát hogyan tárolnánk
+a számítógépben?
+\begin{center}
+	\includegraphics[width=0.6\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/tarolando\string".png} 
+	\par\end{center}
+
+Tekintsünk át különböző tárolási módszereket.\\
+
+\textbf{1. Szomszédossági mátrix} 
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/szomsz\string".png} 
+	\par\end{center}
+
+\textbf{Megj}: a 0 címkéjú csomópontot az utolsó sornak és utolsó
+oszlopnak vettük.
+
+\textbf{Elemzés}: n csúcs esetén az $n^{2}$ elemű táblázat alsó háromszögmátrixa
+elég a tárolásra, a főátlót sem kell figyelembe venni, mert az mindig
+nulla. Tehát összesen $(n^{2}-n)/2$ darab, 0 vagy 1 értékű bit elégséges
+a tárolásra. Ez összesen $2^{(n^{2}-n)/2}$ különböző kódot jelent.
+
+\textbf{A leképezés nem lesz bijektív}: minden fa ábrázolható így,
+de nem minden háromszögmátrix fa.\\
+
+\textbf{2. Élek felsorolása} 
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/elekfels\string".png} 
+	\par\end{center}
+
+\textbf{Elemzés}: A táblázatnak már csak két sora van. Azonban a számok
+mostmár nem csak 0 és 1 értékeket, hanem 0-tól $n-1$-ig bármilyen
+értéket felvehetnek. Ekkor Egy számot $\log_{2}n$ bit segítségével
+ábrázolhatunk, ezért most $2n\log_{2}n$ bitre van szükség az egész
+kódhoz. Ez sokkal kevesebb tárhely a szomszédossági mátrixhoz képest
+nagy n-ek esetén. A kódok száma kevesebb, mint $(n)^{2n}$, ez a szám
+pedig kisebb az előző módszer kódjainak számától nagy n-ek esetén.
+
+\textbf{A leképezés nem lesz bijektív}: minden fa ábrázolható ilyen
+kóddal, de nem minden kétsoros kód reprezentál fát.\\
+
+\textbf{3. Apakód} A 0 címkéjű pont a továbbiakban kitüntetett jelentőséggel
+bír: ezt tekintjük majd a fa gyökerének. Egy élt ezek után fiú - apa
+sorrendben adunk meg. Az éleket pedig rendezzük az első végpontjuk
+szerint növekvő sorrendbe.
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/apakod\string".png} 
+	\par\end{center}
+
+\textbf{Elemzés}: A 0 címkéjű csúcsnak nincs apja, tehát neki nem
+kell oszlop, minden más csúcsnak igen, tehát $n-1$ oszlop van. Az
+első oszlop értékei 1-től $n-1$-ig tart, ezért ez igazából nem tartalmaz
+lényeges információt, ezt elhagyhatjuk. Maradunk n-1 számmal, amely
+$(n-1)log_{2}n$ bittel ábrázolható és $n^{n-1}$ féle kód létezik.
+Úgy látszik mégjobb eredményhez jutottunk. Bijektív lesz a leképezés?
+
+\textbf{A leképezés nem lesz bijektív}: Ellenpélda 4 csúcsú mátrix
+esetén: (3 2 1). De már elég közel állunk a megoldáshoz.\\
+
+\textbf{4. Prüfer-kód} A Prüfer-kód az apakód kifinomultabb változatának
+is tekinthetjük.\\
+
+Íme az új szabály: megkeressük a 0-tól különböző 1 fokszámú pontok
+közül a legkisebb címkéjűt, beírjuk az első sorba (a megtalálási sorrendben)
+és alá rögzítjük az apját. Ezután töröljük a szóban forgó pontot,
+és az eljárást megismételjük a megmaradt fával. Az eljárást addig
+folytatjuk, amíg minden csúcs sorra nem kerül.
+\begin{center}
+	\includegraphics[width=0.5\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/prufer\string".png} 
+	\par\end{center}
+
+Az így kapott táblázatot a fa \emph{bővített Prüfer-kódjának} nevezzük.
+(Azért nevezzük „bővítettnek”, mert a „valódi” Prüfer-kód ennek a
+táblázatnak csak egy részéből áll.)
+\begin{theorem}{thm:Prufer-masodik}
+	A bővitett Prüfer-kód második sora egyértelműen meghatározza az elsőt. 
+\end{theorem}
+
+\begin{proof}
+	Alapgondolat: a bővített Prüfer-kód első sorának minden eleme a legkisebb
+	egész szám, amely nem szerepel korábban az első sorban, vagy később
+	a második sorban... 
+\end{proof}
+\textbf{Példák}: Határozd meg a következő Prüfer-kódok bővített Prüfer-kódját:\\
+(3, 2, 2), (1, 1, 0, 5). A bővített kódok a következők lesznek: 
+\[
+\begin{bmatrix}1 & 3 & 4 & 2\\
+	3 & 2 & 2 & 0
+\end{bmatrix},\quad\begin{bmatrix}2 & 3 & 1 & 4 & 5\\
+	1 & 1 & 0 & 5 & 0
+\end{bmatrix}
+\]
+
+A bővített Prüfer-kód első sorát és a második sor utolsó elemét (ami
+mindig 0) elhagyva kapjuk meg az $n-2$ számból álló \textbf{Prüfer-kódot}.
+
+A kiindulási fához rendelt Prüfer-kód a következő lesz: 
+\begin{center}
+	(6, 0, 2, 6, 2, 9, 9, 2) 
+	\par\end{center}
+
+Tehát bármelyik fához hozzárendelhetünk egy Prüfer-kódot.
+
+A visszafele irányra vagyunk már csak kíváncsiak. A kérdés: akármilyen
+kód (n-2 tagú sorozat, amelynek tagjai 0 és n-1 közötti számok) egy
+n pontú fa Prüfer-kódja? Mind az $n^{n-2}$ lehetséges kódból visszafejthető
+egy fa?
+
+Két részre osszuk most a feladatot:
+\begin{itemize}
+	\item[a)] tetszőleges kód kibővíthető a bővített-Prüfer kód mintájára? 
+	\item[b)] Az így kapott kibővített kód valóban fa lesz? 
+\end{itemize}
+\begin{proof}
+	Legyen egy tetszőleges n-2 elemű sor.\\
+	a) Előbb a sort kiegészítjük 0-val, majd minden tag fölé a legkisebb
+	olyan pozitív számot írjuk, amely sem az első sorban a szóban forgó
+	tag előtt, sem a második sorban utána nem szerepel (jegyezzük meg,
+	hogy ilyen egész szám mindig létezik: a feltétel $n$-ből legfeljebb
+	$n-1$ értéket zárhat ki). Ekkor létrehoztuk a kibővített, kétsoros
+	táblázatot.
+	
+	b) Minden csúcsnak van apja a 0-t kivéve, ezért a gráfnak n-1 éle
+	van.
+	
+	Tegyük fel, hogy a kapott táblázatból szerkesztett gráfban van kör.
+	Hogyha élek segítségével meghatározzuk a kört, akkor minden csúcs
+	kétszer kell szerepeljen a éllistán. Válasszuk ki a kör éleit, mindegyik
+	oszlop egy élt jelent. A kiválasztott legbaloldalibb oszlop felső
+	elemére teljesül, hogy nem található meg saját sorában jobbra és az
+	alatta levő sorban sem tőle jobbra. Tehát ez a csúcs nem szerepel
+	kétszer az éllistán, de így ellentmondásba kerültünk. Tehát a gráf
+	körmentes.
+	
+	Mivel a gráf körmentes és n-1 éle van, ezért tétel szerint egy fát
+	kaptunk. 
+\end{proof}
+Összessítve tehát minden címkézett fának van Prüfer-kódja és bármilyen
+n-2 tagból álló sorozathozz hozzárendelhetünk egy fát. Ezáltal a címkézett
+fák száma megegyezik a lehetséges Prüfer-kódok számával, aminek száma
+$n^{n-2}$.
+\end{solution}
+Erre az eredményre Cayley-tétele címmel szoktak hivatkozni. 
+\begin{theorem}{thm:cimkezett_fak_szama}
+	Az n pontú címkézett fák száma $n^{n-2}$. 
+\end{theorem}
+
+
+\section*{Házi feladatok}
+\begin{problem}
+	Keressük meg az összes 2, 3, 4 és 5 pontú címkézetlen fát. Hány címkézett
+	fát készíthetünk ezekből? Határozzuk meg ennek alapján a 2, 3, 4 és
+	5 pontú címkézett fák számát! 
+\end{problem}
+
+\begin{solution}
+	\begin{center}
+		\includegraphics[width=0.9\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/1\string".pdf} 
+		\par\end{center}
+\end{solution}
+\begin{problem}
+	A csilag egy olyan fagráf, aminek a gyökeréhez kapcsolódik minden
+	elem. Hány $n$ pontú címkézett csillag létezik? 
+\end{problem}
+
+\begin{solution}
+	A gyökér címkézése számít egyedül, a többi csúcs mind egyenrangú helyzetűek.
+	Tehát n címke közül egyet kell kiválasztani a gyökérnek, a maradék
+	címkék pedig a fiaknak jutnak. Tehát n lehetséges címkézés van. 
+\end{solution}
+\begin{problem}
+	A következő apakódok közül melyik kódol fát? (0, 1, 3, 4, 5, 6, 7);
+	(7, 6, 5, 4, 3, 2, 1, 0); (0, 0, 0, 0, 0, 0, 0, 0); (2, 3, 1, 2, 3,
+	1, 2,3) 
+\end{problem}
+
+\begin{solution}
+	Egészítsük ki a kódokat: 
+	\[
+	\begin{bmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7\\
+		0 & 1 & 3 & 4 & 5 & 6 & 7
+	\end{bmatrix},\quad\begin{bmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
+		7 & 6 & 5 & 4 & 3 & 2 & 1 & 0
+	\end{bmatrix}
+	\]
+	\[
+	\begin{bmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
+		0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+	\end{bmatrix},\quad\begin{bmatrix}1 & 2 & 3 & 4 & 5 & 6 & 7 & 8\\
+		2 & 3 & 1 & 2 & 3 & 1 & 2 & 3
+	\end{bmatrix}
+	\]
+	\\
+	
+	Az első két apakód nem helyes, mert mind a kettőben a 4 önmagának
+	apja kellene legyen.
+	
+	A 3. apakód helyes és fát ábrázol.
+	
+	A 4. kód nem lehet fa a következő ellentmondás miatt: 1-nek 2, 2-nek
+	3, és 3-nak 1 az apja, de 1-nek nem lehetne önmaga az őse. 
+\end{solution}
+\begin{problem}
+	Legyen egy n csúcsú gráf, amelynek éleit egy $2n-2$ számból álló
+	éllistában ábrázoltunk. Igazold, hogy ha ez a gráf összefüggő, akkor
+	fa! 
+\end{problem}
+
+\begin{solution}
+	$2\cdot(n-1)$ elemből áll az éllista, ez azt jelenti, hogy a gráfnak
+	n-1 éle van. Ekkor azonban, ha az n csúcsú gráf összefüggő és n-1
+	éle van, akkor a fák jellemzési tételei alapján ez a gráf fa. 
+\end{solution}
+\begin{problem}
+	A következő Prüfer-kódokat egészítsd ki és rajzold meg a hozzá tartozó
+	fát: (0, 0, 0, 0), (4, 4, 4), (0, 1, 2, 3, 4), (4, 3, 2, 1). 
+\end{problem}
+
+\begin{solution}
+	\[
+	\begin{bmatrix}1 & 2 & 3 & 4 & 5\\
+		0 & 0 & 0 & 0 & 0
+	\end{bmatrix},\quad\begin{bmatrix}1 & 2 & 3 & 4\\
+		4 & 4 & 4 & 0
+	\end{bmatrix},\quad\begin{bmatrix}5 & 6 & 1 & 2 & 3 & 4\\
+		0 & 1 & 2 & 3 & 4 & 0
+	\end{bmatrix},\quad\begin{bmatrix}5 & 4 & 3 & 2 & 1\\
+		4 & 3 & 2 & 1 & 0
+	\end{bmatrix}
+	\]
+	\\
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{\string"content/Szelyes_Klaudia-Domokos_Abel/5\string".jpg} 
+		\par\end{center}
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+	Egy hegyvidéki településen 8 falu között új úthálózatot szeretnének
+	kiépíteni úgy, hogy:
+	\begin{itemize}
+		\item minden falu elérhető legyen a többi faluból (azaz a hálózat összefüggő
+		legyen), 
+		\item a lehető legkevesebb útköltséggel építsék ki a kapcsolatokat, 
+		\item nem kell minden lehetséges út megépüljön, csak annyi, amennyi minimálisan
+		szükséges az összefüggéshez. 
+	\end{itemize}
+	A falvak közötti lehetséges utak és azok építési költségei (kilométerben): 
+	\begin{center}
+		\begin{tabular}{|c|c|}
+			\hline 
+			\textbf{Út} & \textbf{Hossz (km)}\tabularnewline
+			\hline 
+			A--B & 3\tabularnewline
+			A--C & 5\tabularnewline
+			A--D & 4\tabularnewline
+			B--C & 2\tabularnewline
+			B--E & 7\tabularnewline
+			C--D & 1\tabularnewline
+			C--F & 6\tabularnewline
+			D--F & 2\tabularnewline
+			E--F & 3\tabularnewline
+			E--G & 4\tabularnewline
+			F--G & 2\tabularnewline
+			G--H & 1\tabularnewline
+			F--H & 3\tabularnewline
+			\hline 
+		\end{tabular}
+		\par\end{center}
+	Határozd meg a lehető legalacsonyabb összköltségű úthálózatot úgy,
+	hogy minden falu elérhető legyen minden másiktól!
+\end{extraproblem}
+
+\begin{solution}
+	A feladat egy \emph{minimális feszítőfa} (Minimum Spanning Tree, MST)
+	keresését jelenti egy súlyozott gráfban. Ehhez a Kruskal-algoritmust
+	használjuk: az éleket súly szerint növekvő sorrendbe rendezzük, majd
+	mindig a legkisebb súlyút választjuk, ami nem hoz létre kört, amíg
+	$n-1=7$ élt nem választottunk ki (mivel $n=8$ csúcs).
+	
+	\textbf{Súly szerint rendezett élek:}
+	
+	\begin{center}
+		\begin{tabular}{|c|c|}
+		\hline 
+		\textbf{Él} & \textbf{Hossz}\tabularnewline
+		\hline 
+		C--D & 1\tabularnewline
+		G--H & 1\tabularnewline
+		D--F & 2\tabularnewline
+		F--G & 2\tabularnewline
+		B--C & 2\tabularnewline
+		A--B & 3\tabularnewline
+		E--F & 3\tabularnewline
+		F--H & 3\tabularnewline
+		A--D & 4\tabularnewline
+		E--G & 4\tabularnewline
+		A--C & 5\tabularnewline
+		C--F & 6\tabularnewline
+		B--E & 7\tabularnewline
+		\hline 
+	\end{tabular}
+	\end{center}
+	
+	\vspace{0.5em}
+	\textbf{Kiválasztott élek a Kruskal-algoritmus szerint:}
+	\begin{itemize}
+		\item C--D (1) 
+		\item G--H (1) 
+		\item D--F (2) 
+		\item F--G (2) 
+		\item B--C (2) 
+		\item A--B (3) 
+		\item E--F (3) 
+	\end{itemize}
+	Ezek összesen 7 él, lefedik mind a 8 falut, és nem tartalmaznak kört.
+	
+	\vspace{0.5em}
+	\textbf{Összköltség:} 
+	\[
+	1+1+2+2+2+3+3=\boxed{14\text{ km}}
+	\]
+	
+	\vspace{0.5em}
+	\textbf{Válasz:} A minimális úthálózat hossza \textbf{14 km}, az
+	utak: 
+	\[
+	\text{C--D, G--H, D--F, F--G, B--C, A--B, E--F}.
+	\]
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+	Legyen adott egy 10 csúcsból álló címkézett fa. Hány különböző módon
+	választható ki 3 él úgy, hogy azok együtt egy fát alkossanak (azaz
+	összefüggők legyenek és ne tartalmazzanak ciklust)? 
+\end{extraproblem}
+
+\begin{solution}
+	\noindent Egy 3 élből álló fa 4 csúcsot tartalmaz (hiszen egy fa mindig
+	$n-1$ élből áll, ha $n$ csúcsból áll). Tehát a kérdés: hány darab
+	olyan 4 csúcsú részfát tartalmaz egy 10 csúcsú fa, amely pontosan
+	3 élből áll?
+	
+	Nem tudjuk, hogyan néz ki a fa szerkezete, de a teljes gráf címkézett,
+	és a kérdés a részfákra vonatkozik. Ezért az összes lehetséges 4 csúcsú
+	részgráf közül kell kiválasztani azokat, amelyek önmagukban is fák
+	és pontosan 3 élük van.
+	
+	A 10 csúcsból $\binom{10}{4}=210$ módon választhatunk ki 4 csúcsot.
+	
+	Egy 4 csúcsú gráfnak akkor lesz 3 éle és ciklusmentes szerkezete,
+	ha az önmagában fa --- tehát összefüggő.
+	
+	Nem minden 3 élű 4 csúcsú részgráf lesz összefüggő (pl. 2 komponens).
+	Az összes 4 csúcsú fa szerkezete azonban véges: - "lánc" típusú:
+	$v_{1}-v_{2}-v_{3}-v_{4}$ - "Y" típusú: egy csúcsból 3 él indul
+	- stb.
+	
+	Általánosan nem számolható ki pontosan, hány ilyen van, ha nem ismerjük
+	a gráf pontos szerkezetét. Viszont ha az összes lehetséges {*}{*}4
+	csúcsú részfa{*}{*} számát kérdezzük, akkor a válasz az, hogy: 
+	\begin{center}
+		\boxed{\text{A pontos válasz függ a fa szerkezetétől.}}
+		\par\end{center}
+	\begin{center}
+		\boxed{\text{Nem határozható meg egyértelműen csupán a csúcsszámból.}} 
+		\par\end{center}
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+	Igazoljuk, hogy ha egy fa minden csúcsának fokszáma legfeljebb 3,
+	akkor a levelek száma legalább $\frac{n+2}{2}$, ahol $n$ a csúcsok
+	száma. 
+\end{extraproblem}
+
+\begin{solution}
+	\noindent Tegyük fel, hogy a fa $n$ csúcsból áll, és minden csúcs
+	fokszáma legfeljebb 3.
+	
+	Jelölje $L$ a levelek számát (azaz azokét a csúcsokét, ahol $\deg(v)=1$).
+	A többi csúcs fokszáma 2 vagy 3 lehet. Legyen: 
+	\[
+	n_{1}=L,\quad n_{2}=\text{2 fokú csúcsok száma},\quad n_{3}=\text{3 fokú csúcsok száma}.
+	\]
+	
+	A csúcsok száma: 
+	\[
+	n=n_{1}+n_{2}+n_{3}.
+	\]
+	
+	A fokszámösszeg: 
+	\[
+	\sum\deg(v)=1\cdot n_{1}+2\cdot n_{2}+3\cdot n_{3}=2(n-1),
+	\]
+	mivel a fa $n-1$ élt tartalmaz.
+	
+	Ezért: 
+	\[
+	n_{1}+2n_{2}+3n_{3}=2(n_{1}+n_{2}+n_{3}-1)
+	\]
+	
+	Fejtsük ki a jobb oldalt: 
+	\[
+	n_{1}+2n_{2}+3n_{3}=2n_{1}+2n_{2}+2n_{3}-2
+	\]
+	
+	Vonjuk ki mindkét oldalból a bal oldalt: 
+	\[
+	0=(2n_{1}-n_{1})+(2n_{2}-2n_{2})+(2n_{3}-3n_{3})-2=n_{1}-n_{3}-2\Rightarrow n_{1}=n_{3}+2
+	\]
+	
+	Tehát: 
+	\[
+	L=n_{1}=n_{3}+2
+	\]
+	
+	Most vegyük észre, hogy: 
+	\[
+	n=n_{1}+n_{2}+n_{3}=(n_{3}+2)+n_{2}+n_{3}=2n_{3}+n_{2}+2\Rightarrow n-2=2n_{3}+n_{2}
+	\]
+	\[
+	\Rightarrow2(n-2)\ge4n_{3}\Rightarrow n-2\ge2n_{3}\Rightarrow n_{3}\le\frac{n-2}{2}
+	\]
+	
+	Ez alapján: 
+	\[
+	L=n_{3}+2\ge\frac{n-2}{2}+2=\frac{n+2}{2}
+	\]
+	
+	\textbf{Q.E.D.} A levélcsúcsok száma legalább $\boxed{\frac{n+2}{2}}$. 
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+	Igazoljuk a következőket: 
+	\begin{enumerate}
+		\item Mutasd meg, hogy véges összefüggő egyszerű gráfban bármely két leghosszabb
+		útnak van közös csúcsa. 
+		\item Mutasd meg, hogy egy fagráfban az összes leghosszabb út egy csúcson
+		megy át. 
+	\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+	~
+	\begin{enumerate}
+		\item Feltételezzük, hogy van két olyan leghosszabb út, amelyiknek nincsen
+		közös csúcsa. Legyenek ezek $l$ hosszúságú $a:A_{1}A_{2}\dots A_{l+1}$
+		és $b:B_{1}B_{2}\dots B_{l+1}$ utak. Mivel a gráf összefüggő, ezért
+		léteznek $A_{i}$ és $B_{j}$ pontok úgy, hogy a köztük lévő út mellőzi
+		az $a$ és $b$ utak csúcsait (ha lenne köztes $A_{k}$ vagy $B_{k}$
+		csúcs akkor csak az eredeti cseréljük le ezekre). Vegyük észre, hogy
+		az $a$ mentén az $A_{1}-A_{i}$ és $A_{l+1}-A_{i}$ utak közül valamelyik
+		legalább $\frac{l}{2}$ hosszú. Hasonlóan, $b$ mentén a $B_{1}-B_{j}$
+		és $B_{l+1}-B_{j}$ utak közül valamelyik legalább $\frac{l}{2}$
+		hosszú. Az általánosság megsértése nélkül feltehetjük, hogy az $A_{1}-A_{i}$
+		és $B_{1}-B_{j}$ utak legalább $\frac{l}{2}$ hosszúak (különben
+		átindexelünk). Ekkor viszont az $A_{1}-A_{i}-B_{J}-B_{1}$ t legalább
+		$\frac{l}{2}+\frac{l}{2}+1=l+1$ hosszú, ami ellentmond annak, hogy
+		$l$ hosszúságú a leghosszabb út. Tehát egy véges összefüggő egyszerű
+		gráfban két leghosszabb útnak van közös csúcsa. 
+		\item Feltételezzük, hogy nem egy csúcson mennek át a leghosszabb utak.
+		Az előző alpont szerint minden leghosszabb útnak van közös csúcsa.
+		Ekkor létezik három $l$ hosszúságú út $a$, $b$, $c$ úgy, hogy
+		például az $a$ és $b$ utak közös csúcsa $C$, $b$ és $c$ közös
+		csúcsa $A$, és $c$ és $a$ közös csúcsa $B$. Az egyszerűség kedvéért
+		tegyük fel, hogy amikor $C$ csúcsból az $a$ út mentén megyünk a
+		$B$ felé, akkor a $B$ az első csúcs, ami közös $a$-ban és $c$-ben.
+		Ezt megtehetjük minden út mentén. Ekkor az $A$, $B$, $C$ csúcsok
+		a $c$, $a$ és $b$ utak mentén egy kört határoznának meg, ami ellentmondana
+		annak, hogy egy fagráfon vagyunk. Tehát, egy fagráfban az összes leghosszabb
+		út egy csúcson megy át. 
+	\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+	Legyen $n\geq3$ egész szám. Egy $n$-csúcsú címkézett fa minden
+	élének súlya a két végpont címkéinek összege. (Például: az $\{2,5\}$
+	él súlya $7$.)
+	
+	Hány olyan címkézett fa van, amely:
+	\begin{itemize}
+		\item a teljes súlya \textbf{minimális}, és 
+		\item a fa Prüfer-kódjában \textbf{csak a $\{1,2,3\}$} címkék szerepelnek? 
+	\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+	~
+	
+	\paragraph{1. Prüfer-kód és levélcsúcsok}
+	
+	Egy $n$-csúcsú fa Prüfer-kódja egy $n-2$ hosszú sorozat $\{1,\dots,n\}$
+	elemeiből.
+	
+	A kódban szereplő címkék azok a csúcsok, amelyek \textbf{nem levelek},
+	tehát ha a kódban csak $\{1,2,3\}$ szerepel, akkor: 
+	\[
+	\{4,5,\dots,n\}\quad\text{levél lesz.}
+	\]
+	
+	Ez pontosan $n-3$ darab levél.
+	
+	\paragraph{2. A teljes súly minimalizálása}
+	
+	Minden él súlya: $\text{összeg a végpontok címkéiből}$. A teljes
+	súly akkor a legkisebb, ha a nagy címkék (pl. $\geq4$) csak levelek,
+	és őket kis címkéjű csúcsokhoz kapcsoljuk.
+	
+	Ez pontosan akkor teljesül, ha a belső csúcsok $1,2,3$, tehát a Prüfer-kódban
+	\emph{csak} ezek szerepelnek.
+	
+	\paragraph{3. Kódok száma}
+	
+	A kód hossza: $n-2$, minden pozícióba 3 lehetőség ($1,2,3$):
+	
+	\[
+	\text{Kódok száma}=3^{n-2}
+	\]
+	
+	\paragraph{4. Végső válasz}
+	
+	Az összes olyan fa száma, amely megfelel a feltételeknek:
+	
+	\[
+	\boxed{3^{n-2}}
+	\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+	Adott az alábbi élhalmaz, amely egy címkézett fát reprezentál 7 csúccsal:
+	\[
+	(1,4),\ (4,5),\ (4,2),\ (2,0),\ (2,3),\ (3,6)
+	\]
+	\begin{enumerate}
+		\item[a)] Rajzold meg a fát! 
+		\item[b)] Írd fel a fa \textbf{Prüfer-kódját}! 
+		\item[c)] Hány levél (fokszám 1-es csúcs) van ebben a fában? 
+	\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{a)} A fa gráfjának vizuális ábrája:
+		\begin{center}
+			\begin{tikzpicture}[every node/.style=circle,draw, node distance=1.5cm]
+				\node (0) {0};
+				\node (2) [above right of=0] {2};
+				\node (4) [above left of=2] {4};
+				\node (1) [left of=4] {1};
+				\node (5) [above of=4] {5};
+				\node (3) [right of=2] {3};
+				\node (6) [right of=3] {6};
+				
+				\draw (0) -- (2);
+				\draw (2) -- (4);
+				\draw (4) -- (1);
+				\draw (4) -- (5);
+				\draw (2) -- (3);
+				\draw (3) -- (6);
+			\end{tikzpicture} 
+			\par\end{center}
+		\item \textbf{b)} Prüfer-kód meghatározása:
+		
+		A lépések: 
+		\begin{itemize}
+			\item Levél: 0 → (0, 2) \ensuremath{\Rightarrow} kód: 2 
+			\item Levél: 1 → (1, 4) \ensuremath{\Rightarrow} kód: 4 
+			\item Levél: 5 → (5, 4) \ensuremath{\Rightarrow} kód: 4 
+			\item Levél: 4 → (4, 2) \ensuremath{\Rightarrow} kód: 2 
+			\item Levél: 6 → (6, 3) \ensuremath{\Rightarrow} kód: 3 
+			\item Levél: 3 → (3, 2) \ensuremath{\Rightarrow} kód: 2 
+		\end{itemize}
+		Tehát a Prüfer-kód: 
+		\[
+		(2,4,4,2,3,2)
+		\]
+		
+		\item \textbf{c)} A levelek a következők: 0, 1, 5, 6 \ensuremath{\Rightarrow}
+		összesen \textbf{4 darab}. 
+	\end{itemize}
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+	Legyen adott a következő Prüfer-kód: 
+	\[
+	(3,3,5,5,5,3)
+	\]
+	\begin{enumerate}
+		\item[a)] Hány csúcsú fa tartozik ehhez a kódhoz? 
+		\item[b)] Építsd meg a fát és sorold fel az éleit! 
+		\item[c)] Mely csúcs(ok) a levelek? 
+		\item[d)] Mely csúcs(ok) fokszáma legalább 4? 
+	\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+	\begin{itemize}
+		\item \textbf{a)} A Prüfer-kód hossza 6 → a fa csúcsainak száma: 
+		\[
+		n=6+2=8
+		\]
+		Azaz a fa a \{0, 1, 2, 3, 4, 5, 6, 7\} címkéjű csúcsokból áll.
+		\item \textbf{b)} Felépítés:
+		
+		Kezdő kód: (3, 3, 5, 5, 5, 3)
+		
+		Gyakoriság: 
+		\begin{itemize}
+			\item 3: 3-szor 
+			\item 5: 3-szor 
+		\end{itemize}
+		Kezdeti fokszám: mindenki 1, kivéve 3 és 5 (4-es fokszám lesz)
+		
+		Lépések: 
+		\begin{enumerate}
+			\item Legkisebb levél: 0 → (3, 0) 
+			\item Legkisebb új levél: 1 → (3, 1) 
+			\item 2 → (5, 2) 
+			\item 4 → (5, 4) 
+			\item 6 → (5, 6) 
+			\item 7 → (3, 7) 
+			\item Marad: 3, 5 → (3, 5) 
+		\end{enumerate}
+		\textbf{Élek}: 
+		\[
+		(3,0),(3,1),(5,2),(5,4),(5,6),(3,7),(3,5)
+		\]
+		
+		\item \textbf{c)} Levelek: 0, 1, 2, 4, 6, 7 \ensuremath{\Rightarrow} \textbf{6
+			darab} levél
+		\item \textbf{d)} Fokszám szerint: 
+		\begin{itemize}
+			\item 3 szerepel 3-szor a kódban + 1 \ensuremath{\Rightarrow} fokszám: 4 
+			\item 5 szerepel 3-szor + 1 \ensuremath{\Rightarrow} fokszám: 4 
+		\end{itemize}
+		Tehát a következő csúcsok fokszáma $\geq4$: \textbf{3 és 5} 
+	\end{itemize}
+\end{solution}

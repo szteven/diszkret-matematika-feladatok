@@ -1,0 +1,1506 @@
+
+\chapter{Halmazok és függvények}\label{chap:halmazok}
+\begin{description}
+	{\large \item [{Szerző:}] Fábián Nóra (Korszerű módszerek a matematikatanításban, Didaktikai mesteri -- Matematika, 
+		II. év)}
+	
+\end{description}
+\begin{theorem}%%
+	ALegyen $X$ egy véges halmaz, elemeit jelölje $1,2,\dots,n$ és $P(X)=\set{A\mid A\subseteq X}$
+	az $X$ részhalmazainak halmazát. Akkor $\left|P(X)\right|=2^{n}$,
+	ahol $n=\left|X\right|$. 
+\end{theorem}
+\begin{proof}
+	Sajátos esetek vizsgálata: \\
+	$X=\{1\}\Rightarrow P(X)=\{\emptyset,\{1\}\}\Rightarrow|P(X)|=2$
+	\\
+	$X=\{1,2\}\Rightarrow P(X)=\{\emptyset,\{1\},\{2\},\{1,2\}\}\Rightarrow|P(X)|=4$
+	\\
+	$X=\{1,2,3\}\Rightarrow P(X)=\{\emptyset,\{1\},\{2\},\{3\},\{1,2\},\{1,3\},\{2,3\},\{1,2,3\}\}\Rightarrow|P(X)|=8$
+	\\
+	$\Rightarrow$ Sejtés: $|P(X)|=2^{n}$
+	
+	Sejtés igazolása, döntésfával: 
+	\begin{figure}[h]
+		\centering \includegraphics[width=1\textwidth]{\string"content/Fabian_Nora/abra1\string".PNG}
+		\caption{Döntésfa}
+		\label{abra} 
+	\end{figure}
+	
+	A döntésfán végighaladva követhetjük, hogy milyen elemek kerülnek
+	a részhalmazokba. Ezzel a módszerrel az összes részhalmazt meghatározhatjuk.
+	Mivel minden szinten két lehetőségünk van (benne van a halmazban vagy
+	nincs benne) és a szinteken egymástól független döntéseket hozunk,
+	így észrevehetjük, hogy az összes részhalmaz számát megadhatjuk, mint
+	$2^{n}$, ahol $n$ az $A$ halmaz számossága volt.
+	
+	Sejtés igazolása más módszerrel: \\
+	Legyen $B_{n}=\{(x_{1},x_{2},\ldots,x_{n})|x_{i}\in\{0,1\},i=\overline{1,n}\}$-
+	$n$ hosszú bináris sorozatok halmaza. $|B_{n}|=?$ \\
+	Tudjuk, hogy $|B_{n}|=\underbrace{2\cdot2\cdot\ldots\cdot2}_{\text{n-szer}}=2^{n}$
+	({*}) \\
+	Legyen $f:P(X)\rightarrow B_{n}$ $f(A)=(x_{1},x_{2},\ldots,x_{n})$,
+	ahol
+	
+	\[
+	x_{i}=\left\{ \begin{array}{ll}
+		0 & \text{ha }i\in A\\
+		1 & \text{ha }i\not\in A
+	\end{array}\right.\forall i\in\{1,2,\ldots,n\}
+	\]
+	\\
+	Igazoljuk, hogy $f$ bijektív leképezés.
+	
+	(1) Injektivitás: $A_{1},A_{2}\subseteq X,A_{1}\neq A_{2}\Rightarrow\exists i\in\{1,2,\ldots,n\}$
+	úgy, hogy $i\in A_{1}$ és $i\not\in A_{2}$ vagy $i\not\in A_{1}$
+	és $i\in A_{2}\Rightarrow x_{i}\neq y_{i}$, ahol $f(A_{1})=(x_{1},x_{2},\ldots,x_{n})$
+	és $f(A_{2})=(y_{1},y_{2},\ldots,y_{n})\Rightarrow f(A_{1})\neq f(A_{2})\Rightarrow f$
+	injektív.
+	
+	Injektivitás igazolása másképp: Tegyük fel, hogy $A_{1},A_{2}\subseteq X$
+	úgy, hogy $f(A_{1})=f(A_{2})$, ahol $(x_{1},x_{2},\ldots,x_{n})=f(A_{1})$
+	és $(y_{1},y_{2},\ldots,y_{n})=f(A_{2})\Rightarrow$ \\
+	$\Rightarrow(x_{1},x_{2},\ldots,x_{n})=(y_{1},y_{2},\ldots,y_{n})\Leftrightarrow x_{i}=y_{i},\forall i\in\{1,2,\ldots,n\}\Leftrightarrow$
+	\\
+	$\Leftrightarrow i\in A_{1}$ és $i\in A_{2}$ vagy $i\not\in A_{1}$
+	és $i\not\in A_{2},\forall i\in\{1,2,\ldots,n\}$, ami azt jelenti,
+	hogy $i\in A_{1}\Leftrightarrow i\in A_{2}$, ami alapján $A_{1}=A_{2}\Rightarrow f$
+	injektív
+	
+	(2) Szürjektivitás: Legyen $(x_{1},x_{2},\ldots,x_{n})\in B_{n}$
+	tetszőleges. Akkor $\exists!A\in P(X)$ úgy, hogy $f(A)=(x_{1},x_{2},\ldots,x_{n})$,
+	ahol $A=\{i|x_{i}=1,i\in\{1,2,\ldots,n\}\}\Rightarrow f$ szürjektív
+	.\\
+	(1), (2) $\Rightarrow f$ bijektív $\Rightarrow|B_{n}|=|P(X)|\xLeftrightarrow{(*)}|P(X)|=2^{n}$ 
+\end{proof}
+
+\section*{Házi feladatok}
+\begin{problem}
+	Bizonyítsuk be a következő állítást: egy $mn+1$ hosszú, különböző
+	egész számokból álló $u=(u_{1},u_{2},\dots,u_{mn+1})$ sorozatnak
+	vagy létezik $m$-nél hosszabb csökkenő részsorozata, vagy $n$-nél
+	hosszabb növekvő részsorozata van.
+	
+	Például legyen $m=3$, $n=4$ és az $u=(1,-2,7,3,2,4,5,6,14,10,8,9,13)$
+	sorozat. Ez a sorozat nem tartalmaz $3$-nál hosszabb csökkenő részsorozatot
+	(a leghosszabb csökkenő részsorozatai a $(7,3,2)$ és a $(14,10,8)$,
+	de tartalmaz egy négytagúnál hosszabb növekvő részsorozatot: $(1,2,4,5,6,8,9,13)$ 
+\end{problem}
+\begin{solution}
+	Legyen $(l_{n_{i}},l_{cs_{i}})$ az $u_{i}$ elemből induló leghosszabb
+	növekvő, illetve leghosszabb csökkenő részsorozat hossza.
+	
+	Red.~ad abs.: Feltételezzük, hogy $\forall i\in\{1,2,\ldots,n\cdot m+1\}$
+	esetén $l_{n_{i}}\leq n$ és $l_{cs_{i}}\leq m$. \\
+	Legyen 
+	\[
+	f:\{1,2,3,\ldots,n\cdot m+1\}\rightarrow\{1,2,3,\ldots,n\}\times\{1,2,3,\ldots,m\},f(i)=(l_{n_{1}},l_{cs_{i}})
+	\]
+	jól definiált függvény. Ez a függvény nem injektív, mert \\
+	$|\{1,2,\ldots,n\cdot m+1\}|=n\cdot m+1\not\leq n\cdot m=|\{1,2,3,\ldots,n\}\times\{1,2,3,\ldots,m\}|$
+	(1) \\
+	Legyen $i<j,$ $i,j\in\{1,2,\ldots,m\cdot n+1\}$ \\
+	Igazoljuk, hogy $f(i)\neq f(j)$.
+	
+	$u_{1},u_{2},\ldots,u_{i}=a,\ldots,u_{j}=b,\ldots u_{n\cdot m+1}$
+	\\
+	
+	\[
+	a\neq b\left\{ \begin{array}{lll}
+		a<b & \Rightarrow l_{n_{i}}>l_{n_{j}}, & \text{mert az }u_{j}\text{-ből induló növekvő/csökkenő }\\
+		a>b & \Rightarrow l_{cs_{i}}>l_{cs_{j}}, & \text{részsorozatotki lehet egészíteni }u_{i}\text{-vel}
+	\end{array}\right.
+	\]
+	\\
+	$\Rightarrow f(i)\neq f(j)$ \\
+	Így ezek alapján $f$ injektív, mert bármely $i\neq j$ esetén $f(i)\neq f(j)$
+	(2) \\
+	Az (1) és (2) ellentmond egymásnak, így a red.~ad abs.~módszer
+	alapján következik, hogy a bizonyítandó állítás igaz. 
+\end{solution}
+\begin{problem}
+	Bizonyítsuk be, hogy egy véges halmaznak ugyanannyi páros elemszámú
+	részhalmaza van, mint páratlan elemszámú. 
+\end{problem}
+\begin{solution}
+	Legyen a véges halmazunk $X$, melynek számossága $n$, tehát $|X|=n$.
+	\\
+	Ha $n$ páros, akkor: 
+	{\def\arraystretch{1.2}
+	\[\begin{array}{ccc}
+		\text{1 elemű részhalmazok száma: }C_{n}^{1} & & \text{0 elemű részhalmazok száma: }C_{n}^{0}\\
+		\text{3 elemű részhalmazok száma: }C_{n}^{3} & & \text{2 elemű részhalmazok száma: }C_{n}^{2}\\
+		\text{5 elemű részhalmazok száma: }C_{n}^{5} & & \text{4 elemű részhalmazok száma: }C_{n}^{4}\\
+		\vdots & & \vdots\\
+		\text{\ensuremath{n-1} elemű részhalmazok száma: }C_{n}^{n-1} & & \text{\ensuremath{n} elemű részhalmazok száma: }C_{n}^{n}\\
+		\hrulefill & & \hrulefill\\
+		C_{n}^{1}+C_{n}^{3}+C_{n}^{5}+\ldots+C_{n}^{n-1} & + & C_{n}^{2}+C_{n}^{4}+C_{n}^{6}+\ldots+C_{n}^{n}
+	\end{array}\]
+}
+	Az $X$ halmaznak csak akkor van ugyanannyi páros részhalmaza van,
+	mint páratlan, ha:
+	\[
+	C_{n}^{1}+C_{n}^{3}+C_{n}^{5}+\ldots+C_{n}^{n-1}=C_{n}^{2}+C_{n}^{4}+C_{n}^{6}+\ldots+C_{n}^{n}\Leftrightarrow
+	\]
+	
+	\[
+	-C_{n}^{1}+C_{n}^{2}-C_{n}^{3}+C_{n}^{4}-C_{n}^{5}+C_{n}^{6}+\ldots+C_{n}^{n}-C_{n}^{n-1}=0\Leftrightarrow
+	\]
+	
+	\[
+	(-1)^{1}\cdot C_{n}^{1}+(-1)^{2}\cdot C_{n}^{2}+(-1)^{3}\cdot C_{n}^{3}+(-1)^{4}\cdot+\ldots+(-1)^{n-1}\cdot C_{n}^{n-1}+(-1)^{n}\cdot C_{n}^{n}=0\Leftrightarrow
+	\]
+	
+	\[
+	(-1+1)^{n}=0\Leftrightarrow0=0
+	\]
+	\\
+	Ha $n$ páratlan, akkor is teljesen hasonló egyenletet kapunk. Ezzel
+	beláttuk, hogy valóban egy véges halmaznak ugyanannyi páros elemszámú
+	részhalmaza van, mint páratlan elemszámú. 
+\end{solution}
+\begin{problem}
+	Hány olyan pozitív szám van, ami nem haladja meg a 2001-et és a 3-nak
+	vagy 4-nek többszöröse, de nem többszöröse 5-nek? 
+\end{problem}
+\begin{solution}
+	Legyen
+	
+	\[
+	A=\{x|x<2001\text{ és }3|x\}\Rightarrow|A|=667
+	\]
+	
+	\[
+	B=\{x|x<2001\text{ és }4|x\}\Rightarrow|B|=500
+	\]
+	
+	\[
+	C=\{x|x<2001\text{ és }5x\}\Rightarrow|C|=400
+	\]
+	
+	\[
+	D=\{x|x<2001\text{ és }3|x\text{ és }4|x\}=\{x|x<2001\text{ és }12|x\}\Rightarrow|D|=166
+	\]
+	
+	\[
+	E=\{x|x<2001\text{ és }3|x\text{ és }5|x\}=\{x|x<2001\text{ és }15|x\}\Rightarrow|E|=133
+	\]
+	
+	\[
+	F=\{x|x<2001\text{ és }4|x\text{ és }5|x\}=\{x|x<2001\text{ és }20|x\}\Rightarrow|F|=100
+	\]
+	
+	\[
+	G=\{x|x<2001\text{ és }3|x\text{ és }4|x\text{ és }5|x\}=\{x|x<2001\text{ és }60|x\}\Rightarrow|G|=33
+	\]
+	A következő ábrán a számok azt jelölik, hogy az hányszor számoltuk
+	bele a halmaz/részhalmaz elemeit. A számolásaink végén el kell jutnunk
+	oda, hogy csak az alábbi ábrán látható részeket számoljuk össze. 
+	\begin{figure}[h]
+		\centering \includegraphics[width=0.5\linewidth]{\string"content/Fabian_Nora/abra2\string".PNG}
+		\label{fig:enter-label} 
+	\end{figure}
+	
+	Egy lehetséges összeszámolási mód: 
+	\begin{center}
+		\includegraphics[width=1\textwidth]{\string"content/Fabian_Nora/abra3\string".PNG} 
+		\par\end{center}
+	$|A|+|B|-|D|-|E|-|F|+|G|=667+500-166-133-100+33=801$ 
+\end{solution}
+\begin{problem}
+	Igazoljuk a következő összefüggéseket az $A,B$ és $C$ halmazokkal: 
+	\begin{enumerate}
+		\item[a.)] ${\displaystyle {A\cap(B\cup C)=(A\cap B)\cup(A\cap C)}}$ 
+		\item[b.)] ${\displaystyle {A\cup(B\cap C)=(A\cup B)\cap(A\cup C)}}$ 
+	\end{enumerate}
+\end{problem}
+\begin{solution}
+	$a.)$ Bizonyítsuk be, hogy $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$.
+	
+	Bal oldal tartalmazza a jobb oldalt: \\
+	Legyen $x\in A\cap(B\cup C)$. Ekkor $x\in A$ és $x\in B\cup C$.
+	Mivel $x\in B\cup C$, ezért $x\in B$ vagy $x\in C$. Ha $x\in B$,
+	akkor $x\in A$ és $x\in B$, vagyis $x\in A\cap B$. Ha $x\in C$,
+	akkor $x\in A$ és $x\in C$, vagyis $x\in A\cap C$. Tehát $x\in(A\cap B)\cup(A\cap C)$.
+	
+	Jobb oldal tartalmazza a bal oldalt: Legyen $x\in(A\cap B)\cup(A\cap C)$.
+	Ez azt jelenti, hogy $x\in A\cap B$ vagy $x\in A\cap C$. Ha $x\in A\cap B$,
+	akkor $x\in A$ és $x\in B$. Ha $x\in A\cap C$, akkor $x\in A$
+	és $x\in C$. Mivel mindkét esetben $x\in A$ és $x\in B$ vagy $x\in C$,
+	ezért $x\in A$ és $x\in B\cup C$. Így $x\in A\cap(B\cup C)$.
+	
+	Tehát $A\cap(B\cup C)=(A\cap B)\cup(A\cap C)$. \\
+	$b.)$ Bizonyítsuk be, hogy $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$.
+	
+	Bal oldal tartalmazza a jobb oldalt: \\
+	Legyen $x\in A\cup(B\cap C)$. Ekkor $x\in A$ vagy $x\in B\cap C$.
+	Ha $x\in A$, akkor $x\in A\cup B$ és $x\in A\cup C$, így $x\in(A\cup B)\cap(A\cup C)$.
+	Ha $x\in B\cap C$, akkor $x\in B$ és $x\in C$. Mivel $x\in B$,
+	ezért $x\in A\cup B$, és mivel $x\in C$, ezért $x\in A\cup C$.
+	Ezért $x\in(A\cup B)\cap(A\cup C)$.
+	
+	Jobb oldal tartalmazza a bal oldalt: \\
+	Legyen $x\in(A\cup B)\cap(A\cup C)$. Ekkor $x\in A\cup B$ és $x\in A\cup C$.
+	Ha $x\in A$, akkor nyilvánvalóan $x\in A\cup(B\cap C)$. Ha $x\notin A$,
+	akkor $x\in B$ (mivel $x\in A\cup B$) és $x\in C$ (mivel $x\in A\cup C$).
+	Ekkor $x\in B\cap C$, így $x\in A\cup(B\cap C)$.
+	
+	Tehát $A\cup(B\cap C)=(A\cup B)\cap(A\cup C)$. 
+\end{solution}
+\begin{problem}
+	Hány elemű az a halmaz, amelynek legalább ezerrel több részhalmaza
+	van, mint ahány eleme? 
+\end{problem}
+\begin{solution}
+	Jelölje $x$ a keresett halmaz elemeinek a számát. Ennek a halmaznak
+	$2^{x}$ számú részhalmaza van. \\
+	A feladat kérdése a következő egyenlőtlenségben írható fel: 
+	\[
+	x^{2}>x+1000.
+	\]
+	\\
+	Ezt az egyenlőtlenséget hagyományos középiskolai algebrai eszközökkel
+	nem tudjuk megoldani. Ha azonban végigfutunk $2$ egész kitevőjű hatványain,
+	megtaláljuk azt a kitevőt, amelyre a fenti egyenlőtlenség teljesül:
+	\\
+	Mivel $2^{10}=1024$, így $2^{10}=1024>10+1000=1014$. \\
+	Tehát minden olyan halmaz, amelynek legalább 10 eleme van, annak legalább
+	1000-el több részhalmaza van, mint amennyi az elemeinek száma. 
+\end{solution}
+\begin{problem}
+	Tekintsük az $A=\{1,2,3,4,5,6,7,8,9,10\}$ halmazt. Hány olyan részhalmaza
+	van az $A$ halmaznak, amely: 
+	\begin{enumerate}
+		\item[a.)] tartalmazza a halmaz egy kijelölt elemét? 
+		\item[b.)] tartalmazza az 1 és 2 elemeket (egyszerre)? 
+		\item[c.)] tartalmazza az 1 és 2 elemek közül legalább az egyiket? 
+		\item[d.)] tartalmazza az 1 és 2 elemek közül legfeljebb az egyiket? 
+		\item[e.)] amelyben az elemek szorzata osztható 3-mal? 
+	\end{enumerate}
+\end{problem}
+\begin{solution}
+	$a.)$ Legyen a kijelölt elem az $1$-es. Számoljuk meg azokat a halmazokat,
+	amelyek az $1$-et nem tartalmazzák, ehhez vegyük ki a halmazból az
+	1-et. \\
+	Ekkor a $\{2,3...,10\}$ halmazt kapjuk. Ennek a halmaznak $9$ eleme
+	van, vagyis $2^{9}=512$ darab részhalmaza. Ha ezekhez a halmazokhoz
+	hozzávesszük az 1-et is, akkor megkapjuk az összes olyan részhalmazt,
+	amely tartalmazza az 1-et elemként. \\
+	Tehát $512$ olyan részhalmaz van, amely tartalmazza a halmaz egy
+	kijelölt elemét.
+	
+	$b.)$ Ugyanaz a taktika, mint az $a.)$-ban. Kivesszük az 1 és a
+	2 elemeket, ekkor a $\{3,4,...,10\}$ halmazt kapjuk, amelynek 8 eleme,
+	így $2^{8}=256$ részhalmaza van. Ezekhez vegyük hozzá az 1-et és
+	a 2-t, így az összes részhalmazt megkapjuk, amely tartalmazza a halmaz
+	két kijelölt elemét egyszerre. \\
+	Tehát 256 darab részhalmaz van, amely az 1-et és a 2-t is tartalmazza.
+	
+	$c.)$ Azt tudjuk, hogy 512 olyan részhalmaz van, amely az 1-et tartalmazza,
+	és nyilván ugyanennyien vannak a 2-t tartalmazók is, ezzel összesen
+	1024 halmazt számoltunk össze. Azonban azokat a részhalmazokat így
+	kétszer számoltuk meg, amelyek mindkettőt tartalmazzák egyszerre,
+	így őket le kell vonnunk, hogy csak egyszer legyenek megszámolva.
+	Ezekből a $b.)$ szerint 256 darab van.\\
+	Tehát $1024-256=768$ olyan halmaz van, amely legalább az egyiket
+	tartalmazza.
+	
+	$d.)$ A legfeljebb itt azt jelenti, hogy az 1 és a 2 közül vagy csak
+	az 1-et, vagy csak a 2-t, vagy egyiket sem tartalmazza. Ez esetben
+	a $b.)$ szerint 256 olyan részhalmaz van, amely egyiket sem tartalmazza.
+	Ha ezekbe a halmazokba belerakjuk csak az 1-et, akkor az összes 1-et
+	de 2-t nem tartalmazó halmazt megkapjuk, ha pedig csak a 2-t, akkor
+	az összes 2-t de 1-et nem tartalmazó részhalmazt kapjuk meg. \\
+	Tehát 256+256+256=768 olyan halmaz van, amely az 1 és a 2 közül legfeljebb
+	az egyiket tartalmazza.
+	
+	$e.)$ Ha a számok szorzata osztható 3-mal, akkor a szorzat tartalmaz
+	3-mal osztható számot. A számok között a 3;6;9 számok oszthatóak 3-mal,
+	így ezek közül legalább az egyiket tartalmaznia kell a halmaznak.
+	Azonban egyszerűbb megszámolni, hogy hány olyan van, amely ezeket
+	nem tartalmazza. Kivéve a számokat, a halmazban 7 szám marad, így
+	ezek $2^{7}=128$ részhalmazt alkotnak. Ezeken kívül az összes tartalmazza
+	a 3;6;9 szám valamelyikét. \\
+	Tehát $1024-128=896$ olyan részhalmaz van, amelyekben az elemek szorzata
+	3-mal osztható. 
+\end{solution}
+\begin{problem}
+	Válaszoljunk a következő kérdésekre:
+	\begin{enumerate}
+		\item[a.)] Legyen $A=\{1,2,3\},B=\{1,2,3,4\}$ halmazok és $f$ reláció egy
+		függvény úgy, hogy $f:A\rightarrow B$. Hány darab ilyen $A$-ból
+		$B$-be menő leképezés lehetséges? 
+		\item[b.)] Ha $A$ és B véges halmazok úgy, hogy $|A|=n$ és $|B|=m$, akkor
+		mennyi az $f\rightarrow A:B$ leképezések száma? 
+	\end{enumerate}
+\end{problem}
+\begin{solution}
+	$a.)$ Mivel $f$ egy függvény $A$-ból $B$-be, ezért minden $a\in A$
+	elemhez egyértelműen hozzárendelünk egy $b\in B$ elemet. Mivel $|A|=3$
+	és $|B|=4$, ezért minden egyes $a\in A$ elemhez $4$ féle $B$ halmazbeli
+	elemet rendelhetünk.
+	
+	A függvények számát tehát: $4^{3}=64.$ \\
+	Így összesen $64$ különböző leképezés lehetséges.
+	
+	\textbf{Általános eset:} Legyenek $A$ és $B$ véges halmazok úgy,
+	hogy $|A|=n$ és $|B|=m$. Mivel minden $a\in A$ elemhez pontosan
+	egy $b\in B$ elem van hozzárendelve, és minden elem $m$ féle értéket
+	vehet fel, ezért a lehetséges függvények száma: $m^{n}.$ \\
+	Következtetés: Ha $A$ egy $n$ elemű halmaz, és $B$ egy $m$ elemű
+	halmaz, akkor az $A$-ból $B$-be menő függvények száma: 
+	\[
+	|B|^{|A|}=m^{n}.
+	\]
+\end{solution}
+\begin{problem}
+	Legyenek $A=\{1,2,3\}$, $B=\{a,b,c,d\}$ halmazok és $f:A\rightarrow B$
+	egy függvény. Ebben az esetben mennyi az $A$-ból $B$-be menő \textbf{injektív}
+	leképezések száma? Fogalamzzuk meg általánosn is, ha $A$ és $B$
+	véges halmazok úgy, hogy $|A|=n\text{ és }|B|=m$ ! 
+\end{problem}
+\begin{solution}
+	Egy függvény injektív, ha minden elemhez különböző képet rendel. Így
+	van egy feltételünk, miszerint $n\leq m$. Ennek megfelelően:
+	
+	$\begin{rcases}\begin{array}{cc}
+			\text{1-eshez rendelhetünk} & 4\text{ elemet}\\
+			\text{2-eshez rendelhetünk} & 3\text{ elemet}\\
+			\text{3-eshez rendelhetünk} & 2\text{ elemet}
+	\end{array}\end{rcases}\Rightarrow4\cdot3\cdot2=24$ injektív leképezés lehetséges \\
+	Általánosan: \\
+	$\begin{rcases}\begin{array}{cc}
+			\text{1-eshez rendelhetünk} & m\text{ elemet}\\
+			\text{2-eshez rendelhetünk} & m-1\text{ elemet}\\
+			\text{3-eshez rendelhetünk} & m-2\text{ elemet}\\
+			\dotfill & \dotfill\\
+			\text{n.-hez rendelhetünk} & m-n+1\text{ elemet}
+	\end{array}\end{rcases}\Rightarrow\begin{array}{cc}
+		m\cdot(m-1)\cdot\ldots\cdot(m-n+1)=\\
+		={\displaystyle {\frac{m!}{(m-n)!}=V_{m}^{n}}}\\
+		\text{ injektív leképezés lehetséges}
+	\end{array}$ 
+\end{solution}
+\begin{problem}
+	Határozzuk meg az $A$-ból $B$-be menő szürjektív függvények számát,
+	ha $|A|=n$ és $|B|=m$. 
+\end{problem}
+\begin{solution}
+	Vonjuk ki az $A$-ból $B$-be menő összes leképezés számából azoknak
+	a leképezéseknek a számát, amelyek nem szürjektívek. \\
+	Első lépésben vonjuk le azokat, amelyekben $B$-ből csak elemnek nincs
+	ősképe. Mintha csak $(m-1)$ elemünk lenne a $B$ halmazban. Ilyen
+	függvény összesen \textbf{$m\cdot(m-1)^{n}$} van. (Mindegyik elem
+	esetén csak $(m-1)^{n}$) függvény van és ezekből $m$ darab van.)
+	\\
+	-Amikor 2 elemnek nincs ősképe, akkor összesen $(m-2)^{n}\cdot C_{m}^{2}$
+	függvény képezhető \\
+	-Hasonlóan, amikor 3 elemnek nincs ősképe, akkor $(m-3)^{n}\cdot C_{m}^{3}$
+	függvény képezhető. \\
+	-Folytatva a gondolatmenetet $k$ elem esetén pedig $(m-k)^{n}\cdot C_{m}^{k}$
+	\\
+	-Végül pedig $(m-1)$ elem esetén pedig $(m-m+1)^{n}\cdot C_{m}^{m-1}=m$
+	függvény képezhető.
+	
+	Viszont, ha ezeket összeadjuk és levonjuk az összes függvény számából,
+	amely képezhető, akkor lesznek olyan függvények, amit egynél többször
+	vonunk le. Így ezeket hozzá kell adni az összeghez, hogy megkapjuk
+	az összes szürjektív függvényt. \\
+	$\Rightarrow m^{n}-{\displaystyle {\sum_{k=1}^{m-1}}C_{m}^{k}\cdot(m-k)^{n}\cdot(-1)^{k}\Rightarrow}$
+	\\
+	Összesen tehát ${\displaystyle {\sum_{k=0}^{m}}C_{m}^{k}\ \cdot(m-k)^{n}\cdot(-1)^{k}}$
+	szürjektív leképezés van $A$-ból $B$-be. 
+\end{solution}
+\begin{problem}
+	Határozzuk meg az $A$-ból $B$-be menő bijektív függvények számát,
+	ha $|A|=n$ és $|B|=m$ 
+\end{problem}
+\begin{solution}
+	Egy függvény akkor bijektív, ha injektí\'{v} és szürjektív is. Így
+	ismét van egy feltételünk, miszerint $n\leq m$, mert injektív és
+	$n\geq m$, mert szürjektív így $n=m$. \\
+	$\begin{rcases}\begin{array}{cc}
+			\text{1-eshez rendelhetünk} & m\text{ elemet}\\
+			\text{2-eshez rendelhetünk} & m-1\text{ elemet}\\
+			\dotfill & \dotfill\\
+			\text{n.-hez rendelhetünk} & m-n+1\text{ elemet}\\
+			\text{ és }m=n
+	\end{array}\end{rcases}\Rightarrow\begin{array}{cc}
+		m\cdot(m-1)\cdot\ldots\cdot(m-n+1)=\\
+		=m\cdot(m-1)\cdot\ldots\cdot1=n!\\
+		\text{ bijektív leképezés lehetséges}
+	\end{array}$ 
+\end{solution}
+\begin{problem}
+	Legyen $H$ a sík háromszögeinek halmaza és $S$ pedig a sík pontjainak
+	halmaza. Tekintjük a $H$-ból $S$-be menő, $f$ leképezést, $f:H\rightarrow S$.
+	Ez a leképezés egy háromszöghöz hozzárendeli a köré írt körének középpontját.
+	Vizsgáljuk meg, hogy ez a leképezés injektív-e, szürjektív-e, bijektív-e? 
+\end{problem}
+\begin{solution}
+	A leképezés nem injektív, ugyanis különböző háromszögekhez tartozhat
+	ugyanaz a pont a síkon. Például ha kiválasztok egy elemet $S$-ből,
+	és valamekkora (nem 0) sugárral kört rajzolok a pont körül, akkor
+	a körvonalon kiválaszthatok többféleképpen is 3 pontot úgy, hogy háromszöget
+	alkossanak.
+	
+	A leképezés szürjektív, mert bárhogy választok egy pontot S-ből a
+	korábban leírt módszerrel, találhatok hozzá egy háromszöget a $H$
+	elemeiből.
+	
+	Mivel a leképezés nem injektív, így nem bijektív.
+\end{solution}
+\begin{problem}
+	Döntsük el, hogy az alábbi állítások közül melyik igaz és melyik hamis! 
+	\begin{enumerate}
+		\item[a.)] $f:\mathbb{N}\rightarrow\mathbb{N}:$ $f(n)=|n-3|+1$ leképezés injektív. 
+		\item[b.)] $f:\mathbb{Z}\rightarrow\mathbb{Z}^{2}$ $f(x)=(x-1,1)$ leképezés
+		szürjektív. 
+		\item[c.)] $f:\mathbb{Z}\times\mathbb{Z}\rightarrow\mathbb{N}$ $f(x,y)=|x-y|$
+		leképezés szürjektív. 
+	\end{enumerate}
+\end{problem}
+\begin{solution}
+	$a.)$ $f:\mathbb{N}\rightarrow\mathbb{N}:$ $f(n)=|n-3|+1$ leképezés
+	injektív.
+	
+	$\begin{rcases}f(1)=|1-3|+1=3\end{rcases}\Rightarrow f(1)=f(5)$,
+	de $1\neq5$ így $f$ nem injekív. \\
+	$b.)$ $f:\mathbb{Z}\rightarrow\mathbb{Z}^{2}$ $f(x)=(x-1,1)$ leképezés
+	szürjektív.
+	
+	A leképezés szerint a $\mathbb{Z}^{2}$ elemei közül csak azok állnak
+	elő, amelyeknek a második komponense $1$. Így például a $(1,2)\in\mathbb{Z}^{2}$
+	elemnek nincs ősképe. Tehát a leképezés nem szürjektív. \\
+	$c.)$ $f:\mathbb{Z}\times\mathbb{Z}\rightarrow\mathbb{N}$ $f(x,y)=|x-y|$
+	leképezés szürjektív.
+	
+	Vegyük például az összes olyan $\mathbb{Z\times Z}$-beli elemet,
+	amely $(n,0)$ alakú, ahol $n\in\mathbb{N}$, így $f(n,0)=|n-0|=n$
+	vagyis az összes természetes számnak lesz ősképe. Tehát a leképezés
+	szürjektív. 
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Csapó Hajnalka]
+	Hány olyan $(A_{1},A_{2},A_{3})$ rendezett halmazhármas van, amelyre
+	$A_{1}\cup A_{2}\cup A_{3}=\{1,2,\dots,n\}$ és $A_{1}\cap A_{2}\cap A_{3}=\emptyset$? 
+\end{extraproblem}
+\begin{solution}
+	Tekintsük az alábbi táblázatot. 
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline 
+			& $1$ & $2$ & $3$ & $\dots$ & $n$\tabularnewline
+			\hline 
+			$A_{1}$ &  &  &  &  & \tabularnewline
+			\hline 
+			$A_{2}$ &  &  &  &  & \tabularnewline
+			\hline 
+			$A_{3}$ &  &  &  &  & \tabularnewline
+			\hline 
+		\end{tabular}
+		\par\end{center}
+	A fenti táblázatban $a_{ij}=1$, ha $j\in A_{i}$ és $a_{ij}=0$,
+	ha $j\notin A_{i}$. A feltételek szerint a $(0,0,0)$ és $(1,1,1)$
+	számhármasok egyik oszlopban sem jelenhetnek meg, így minden egyes
+	halmazhármashoz egyértelműen hozzárendelhetünk egy ilyen táblázatot
+	(mátrixot). Tehát a halmazhármasok száma az ilyen mátrixok számával
+	egyezik meg. A mátrixok minden egyes oszlopát $2^{3}-2=6$ féleképpen
+	tölthetjük ki, így $6^{n}$ ilyen mátrix létezik.
+	
+	\textbf{Megjegyzés.} Ha ugyanez a feladat $m$ halmaz esetén, akkor
+	$(2^{m}-2)^{n}$ ilyen halmaz $m$-es létezik.
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+	Hány olyan $(A_{1},A_{2},A_{3})$ halmazhármas létezik, amelyre $A_{i}\neq\emptyset$,
+	$(i=1\dots3)$, $A_{1}\cup A_{2}=A_{2}\cup A_{3}=A_{3}\cup A_{1}=\{1,2,\dots,n\}$
+	és $A_{1}\cap A_{2}\cap A_{3}=\emptyset$? 
+\end{extraproblem}
+\begin{solution}
+	Tekintsük a $B_{i}=A\setminus A_{i}$ halmazokat, ahol $A=\{1,2,\dots,n\}$.
+	A feltételek alapján $B_{1}\cap B_{2}=B_{2}\cap B_{3}=B_{3}\cap B_{1}=\emptyset$
+	és $B_{1}\cup B_{2}\cup B_{3}=A$. Nyilvánvalóan minden $(A_{1},A_{2},A_{3})$
+	halmazhármasnak egyértelműen megfelel egy $(B_{1},B_{2},B_{3})$ halmazhármas,
+	ezért ezeket fogjuk megszámolni. Minden ilyen $(B_{1},B_{2},B_{3})$
+	hármashoz hozzárendelhetünk egy $(a_{1},a_{2},\dots,a_{n})$ szám
+	$n$-est a következőképpen: 
+	\[
+	a_{i}=\left\{ \begin{array}{rl}
+		1, & \mathrm{ha}\ \ i\in B_{1}\\
+		2, & \mathrm{ha}\ \ i\in B_{2}\\
+		3, & \mathrm{ha}\ \ i\in B_{3}
+	\end{array}\right.
+	\]
+	Mivel az $(1,1,\dots,1)$, $(2,2,\dots,2)$ és $(3,3,\dots,3)$ hármasokat
+	nem kaphatjuk, hiszen $B_{i}\neq A$, $(i=1,2,3)$, ezért összesen
+	$3^{n}-3$ ilyen halmazhármas létezik.
+	
+	2. megoldás:
+	
+	Az előbbiekhez hasonlóan tekintsük az alábbi táblázatot. 
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|}
+			\hline 
+			& $1$ & $2$ & $3$ & $\dots$ & $n$\tabularnewline
+			\hline 
+			$B_{1}$ &  &  &  &  & \tabularnewline
+			\hline 
+			$B_{2}$ &  &  &  &  & \tabularnewline
+			\hline 
+			$B_{3}$ &  &  &  &  & \tabularnewline
+			\hline 
+		\end{tabular}
+		\par\end{center}
+	A feltételek szerint minden oszlopban egy 1-es és két 0-s jelenik
+	meg. Így minden $(B_{1},B_{2},B_{3})$ halmazhármashoz egyértelműen
+	hozzárendelhetünk egy ilyen táblázatot. Ilyen táblázat $3^{n}$ létezik,
+	de egyik sorban sem jelenhet meg csupa 1-es, tehát $3^{n}-3$ ilyen
+	halmazhármas létezik létezik.
+\end{solution}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+	Egy matematikaversenyen $3$ feladatot tűztek ki. A $30$ induló
+	közül az első feladatot $19$-en, a másodikat $15$-en, a harmadikat
+	$18$-an oldották meg hibátlanul. Az első és második feladatra $7$,
+	a második és harmadik feladatra $10$, az első és harmadik feladatra
+	$9$ tanuló adott helyes megoldást. Mindhárom feladat megoldása $3$
+	diáknak sikerült. Hányan nem tudtak egyetlen feladatot sem megoldani? 
+\end{extraproblem}
+\begin{solution}
+	Legyenek a következő halmazok: 
+	\begin{itemize}
+		\item $A$ az első feladatot helyesen megoldó diákok halmaza, 
+		\item $B$ a második feladatot helyesen megoldó diákok halmaza, 
+		\item $C$ a harmadik feladatot helyesen megoldó diákok halmaza. 
+	\end{itemize}
+	A megadott adatok szerint: 
+	\[
+	|A|=19,\quad|B|=15,\quad|C|=18,
+	\]
+	\[
+	|A\cap B|=7,\quad|B\cap C|=10,\quad|A\cap C|=9,\quad|A\cap B\cap C|=3.
+	\]
+	
+	Az szitaformulát alkalmazva az alábbi képlettel számítjuk ki, hogy
+	hány diák oldott meg legalább egy feladatot:
+	
+	\[
+	|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|B\cap C|-|A\cap C|+|A\cap B\cap C|
+	\]
+	
+	Behelyettesítve a megadott értékeket:
+	
+	\[
+	|A\cup B\cup C|=19+15+18-7-10-9+3=29.
+	\]
+	
+	Mivel összesen $30$ diák vett részt a versenyen, azok száma, akik
+	egyetlen feladatot sem tudtak megoldani:
+	
+	\[
+	30-29=1.
+	\]
+	
+	\textbf{Válasz:} Egyetlen diák nem tudott egy feladatot sem megoldani. 
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+	Jelölje $r_{n}$ az $\{1;2;\cdots;n\}$ halmaz azon részhalmazainak
+	számát, amelyek nem tartalmaznak szomszédos számokat, ahol az $1$-et
+	és az $n$-et is szomszédosnak tekintjük. Határozzuk meg $r_{16}$
+	értékét.
+	
+	(OKTV 2010/2011; II. kategória, döntő) 
+\end{extraproblem}
+\begin{solution}
+	Vizsgáljuk meg kisebb $n$-re.
+	
+	Ha $n=1$ akkor $\{1\}$ a feltételnek megfelelő részhalmazok $\emptyset$
+	és $\{1\}$, tehát $r_{1}=2$.
+	
+	Ha $n=2$ akkor $\{1,2\}$ a feltételnek megfelelő részhalmazok $\emptyset$,
+	$\{1\}$ és $\{2\}$, tehát $r_{2}=3$.
+	
+	Ha $n=3$ akkor $\{1,2,3\}$ a feltételnek megfelelő részhalmazok
+	$\emptyset$, $\{1\}$, $\{2\}$ és $\{3\}$, tehát $r_{3}=4$.
+	
+	Ha $n=4$ akkor $\{1,2,3,4\}$ a feltételnek megfelelő részhalmazok
+	$\emptyset$, $\{1\}$, $\{2\}$, $\{3\}$, $\{4\}$, $\{1,3\}$ és
+	$\{2,4\}$ tehát $r_{4}=7$.\\
+	
+	Sejtés: Ha $n\geq2$ akkor $r_{n+2}=r_{n+1}+r_{n}$.\\
+	
+	Három részre bontjuk az $n+2$ elemű halmaz megfelelő részhalmazait:
+	\begin{enumerate}
+		\item Ha a részhalmaz nem tartalmazza $n+2$-t, és sem $1$-et, sem $n+1$-et,
+		akkor éppen az első $n+1$ elem megfelelő részhalmazait kapjuk, amelyek
+		száma $r_{n+1}$.
+		\item Ha a részhalmaz nem tartalmazza $n+2$-t, de tartalmazza $1$-et és
+		$n+1$-et is, akkor nem lehet benne $n$. Ezekből a részhalmazokból,
+		ha kivesszük $n+1$-et, akkor az első $n$ elem megfelelő részhalmazai
+		közül azok maradnak, amelyek tartalmazzák $1$-et. Ezek száma pontosan
+		$r_{n}$.
+		\item Ha a részhalmaz tartalmazza $n+2$-t, akkor nem tartalmazhatja sem
+		$1$-et, sem $n+1$-et. Ezekből a részhalmazokból, ha kivesszük $n+2$-t,
+		akkor az első $n$ elem megfelelő részhalmazai közül azok maradnak,
+		amelyek nem tartalmazzák $1$-et. Ezek száma pontosan $r_{n}$.
+	\end{enumerate}
+	Ezzel beláttuk az $r_{n+2}=r_{n+1}+r_{n}$ összefüggést.\\
+	
+	Ezek alapján: $r_{5}=r_{4}+r_{3}=7+4=11$,$r_{6}=r_{5}+r_{4}=11+7=18$,$r_{7}=r_{6}+r_{5}=18+11=29$,$\dots$,$r_{16}=r_{15}+r_{14}=1364+843=2207$
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+	Legyen $A=\{1;2;3;4;5\}$ és $B=\{1;2;3\}$. Az $f(x)$ függvény
+	értelmezési tartománya $A$, és minden $A$-beli $x$ esetén $f(x)\in A$.
+	Hány $f(x)$ függvényre teljesül, hogy $\{f(f(x))|x\in A\}=B$?
+	
+	(OKTV 2011/2012; II. kategória, döntő) 
+\end{extraproblem}
+\begin{solution}
+	Legyen $f(1)=4$, mivel $f(f(x))$ értékkészlete $B$, ezért $\exists y\in A$
+	úgy, hogy $f(f(y))=1$. Ha $f(y)=a,a\in A$ akkor $f(f(a))=f(1)=4\notin B\Rightarrow$
+	a keresett $f$ függvény az $1,2,3$-hoz nem rendelhet $4,5$-öt.
+	
+	$f(4)=4$ nem lehetséges mert ekkor $f(f(4))=4\notin B$, hasonlóan
+	$f(5)=5$ sem lehetséges.\\
+	
+	Ha $f(1),f(2),f(3)$ értékei az $1,2,3$ számok valamilyen permutációja
+	akkor 
+	\begin{enumerate}
+		\item $f(4)$ és $f(5)$ is $B$-beli értéket vesz fel, egymástól függetlenül
+		vehetnek fel 3-3 különböző értéket. Összesen $3!\cdot3\cdot3=54$
+		darab ilyen függvény van. 
+		\item $f(4)$ és $f(5)$ közül legalább az egyik nem $B$-beli, vagyis $f(4)=5$
+		vagy $f(5)=4$ ekkor $f(4)=5$ esetén $f(f(4))\in B$ miatt $f(5)\in B$,
+		míg $f(5)=4$ esetén $f(4)\in B$.Ekkor $2$ lehetőség van arra, hogy
+		$4$ vagy $5$ képe legyen $B$-beli, majd a választott kép $3$ különböző
+		értéket vehet fel. Összesen $3!\cdot2\cdot3=36$ darab ilyen függvény
+		van. 
+	\end{enumerate}
+	Vizsgáljuk meg azt az esetet amikor $f(1),f(2),f(3)$ értékei az $1,2,3$
+	számok valamilyen permutációja úgy, hogy lehetnek azonos értékek.
+	
+	Ha $f(1)=f(2)=f(3)=k$ ahol $k\in\{1,2,3\}$ ez azt jelenti, hogy
+	az $f(f(x))$ értékkészlete csak egy elemet tartalmaz ami ellentmond
+	a feladat feltételeinek.
+	
+	Legyen két érték azonos(jel. a) (pl $f(1)=f(2)$), egy különböző(jel.
+	k), akkor ha: 
+	\begin{enumerate}
+		\item $f(4)$ és $f(5)$ is $B$-beli elem, de ez nem lehetséges mivel $f(f(x))$
+		értékkészlete csak $2$ számból állna. 
+		\item $f(4)$ vagy $f(5)$ $B$-beli elem úgy, hogy különbözik az idáig
+		választott értékektől (jel. b), mert csak így lesz $f(f(x))$ értékkészlete
+		a teljes $B$. Az a értékre $3$ lehetőségünk van, k értéke $2$-féle
+		lehet. Továbbá $3$ -féle választásunk van, hogy az $1,2,3$ számok
+		közül melyikhez rendeljük a-t, és 2-féle választásunk, hogy a 4-hez
+		vagy az 5-höz rendeljük b-t. Összesen $3\cdot2\cdot3\cdot2=36$ darab
+		ilyen függvény van. 
+	\end{enumerate}
+	A feladat feltételeit $54+36+36=126$ függvény teljesíti. 
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+	Legyen a következő feladat:
+	\begin{enumerate}
+		\item Határozd meg az $f:\mathbb{R}\setminus\{-1,0,1\}\to\mathbb{R}\setminus\{-1,0,1\}$
+		szürjektív függvényt, ha 
+		\[
+		f(x)\cdot f(f(x))+f(f(x))=f(x)-1,
+		\]
+		minden $x\in\mathbb{R}\setminus\{-1,0,1\}$ esetén!
+		\item Értelmezzük a $h_{n}=f\circ f\circ\cdots\circ f$ ($n$-szer $f$)
+		függvényeket, ahol $n\in\mathbb{N}^{*}$. Határozd meg a $h_{2024}$
+		függvényt! 
+	\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+	A kérdésekre adott válasz:
+	\begin{enumerate}
+		\item Az adott $f(x)\cdot f(f(x))+f(f(x))=f(x)-1$ egyenlőségből kiindulva
+		kapjuk, hogy 
+		\[
+		f(f(x))(f(x)+1)=f(x)-1.
+		\]
+		Mivel a függvény értékkészlete az $\mathbb{R}\setminus\{-1,0,1\}$
+		halmaz, ezért $f(x)\neq-1$, tehát eloszthatunk $(f(x)+1)$-el, így
+		\[
+		f(f(x))=\frac{f(x)-1}{f(x)+1}.
+		\]
+		Jelöljük $y=f(x)$, ekkor 
+		\[
+		f(y)=\frac{y-1}{y+1},\quad\forall y\in\text{Im}(f).
+		\]
+		Tehát a keresett függvény az $f:\mathbb{R}\setminus\{-1,0,1\}\to\mathbb{R}\setminus\{-1,0,1\}$,
+		ahol 
+		\[
+		f(x)=\frac{x-1}{x+1}.
+		\]
+		Ellenőrizzük az $f$ szürjektivitását: minden $y\in\mathbb{R}\setminus\{-1,0,1\}$
+		esetén létezik $x\in\mathbb{R}\setminus\{-1,0,1\}$ úgy, hogy 
+		\[
+		f(x)=y\iff\frac{x-1}{x+1}=y,
+		\]
+		ahonnan 
+		\[
+		x=\frac{1+y}{1-y},
+		\]
+		ez pedig létezik az $\mathbb{R}\setminus\{-1,0,1\}$ halmazon. Ha
+		\[
+		\frac{1+y}{1-y}=-1\iff1+y=-1+y\iff1=-1,
+		\]
+		ami lehetetlen. Ha 
+		\[
+		\frac{1+y}{1-y}=0\iff1+y=0\iff y=-1,
+		\]
+		ami szintén lehetetlen.
+		\item Számítsuk ki: 
+		\begin{itemize}
+			\item $n=1$ esetén $h_{1}(x)=f(x)=\frac{x-1}{x+1}$, 
+			\item $n=2$ esetén $h_{2}(x)=(f\circ f)(x)=-\frac{1}{x}$, 
+			\item $n=3$ esetén $h_{3}(x)=(f\circ f\circ f)(x)=-\frac{1}{f(x)}=\frac{x+1}{1-x}$, 
+			\item $n=4$ esetén $h_{4}(x)=(f\circ f\circ f\circ f)(x)=x$. 
+		\end{itemize}
+		Ahonnan következik, hogy $n=2024$ esetén $h_{2024}(x)=h_{4}(x)=x$. 
+		
+	\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+	Legyen $A=\{1,2,3,4,5,6,7,8,9,10\}$ egy halmaz, és $f:A\to A$ egy
+	olyan függvény, amelyre teljesül, hogy:
+	\begin{itemize}
+		\item $f(f(n))=n$ minden $n\in A$-ra 
+		\item $f(1)=2$ és $f(2)=1$. 
+	\end{itemize}
+	Hányféle olyan $f$ függvény létezik, amely megfelel a fenti feltételeknek? 
+\end{extraproblem}
+\begin{solution}
+	Vegyük sorra a feltételeket:
+	\begin{itemize}
+		\item Az első feltétel azt mondja, hogy $f(f(n))=n$ minden $n\in A$-ra.
+		Ez azt jelenti, hogy minden elemhez egyértelműen egy másik elem tartozik,
+		és ha egyszer alkalmazzuk $f$-et, majd újra $f$-et, akkor visszajutunk
+		az eredeti elemhez. 
+		\item A második feltétel biztosítja, hogy $f(1)=2$ és $f(2)=1$, tehát
+		a 1-es és 2-es elemek kölcsönösen hozzárendelve vannak. 
+		\item Az $f(f(n))=n$ azt is jelenti, hogy ha $f(n)=m$, akkor $f(m)=n$.
+		Ezért minden más párt (3, 4), (5, 6), (7, 8), (9, 10) szimmetrikusan
+		kell kezelni, tehát a maradék elemeket úgy kell rendelni, hogy párosan
+		rendeljük őket egymáshoz. 
+		\item A maradék számok: $\{3,4,5,6,7,8,9,10\}$. Mivel minden elemhez egy
+		másik elem tartozik, az összes lehetséges párt a következő módon kell
+		kiválasztani: 
+		\item A 3-at választhatjuk a 4-hez, a 5-öt a 6-hoz, a 7-et a 8-hoz, és a
+		9-et a 10-hez. 
+		\item Mivel 4 párt kell kialakítani, a 4 pár kiválasztásának száma a $4!$
+		lehetséges permutációjából adódik. 
+	\end{itemize}
+	Tehát a megoldás (az összes lehetséges függvények száma): $4!=24$.
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+	Határozd meg az $f:\mathbb{N}\rightarrow\mathbb{N}$ függvényeket,
+	amelyekre $f(1)=1$, $f(2n)<6f(n)$ és $3f(n)f(2n+1)=f(2n)(3f(n)+1)$,
+	bármely $n\in\mathbb{N}$ esetén. 
+\end{extraproblem}
+\begin{solution}
+	A fenti összefüggéseket felírva $n=1$ esetén azt kapjuk, hogy 
+	\[
+	\left\{ \begin{array}{l}
+		3f(1)f(3)=f(2)(3f(1)+1)\\
+		f(1)=1
+	\end{array}\right.\Rightarrow3f(3)=4f(2)
+	\]
+	\[
+	\Rightarrow\left\{ \begin{array}{l}
+		3\phantom{x}|\phantom{x}4f(2)\\
+		lnko(3,4)=1
+	\end{array}\right.\Rightarrow3\phantom{x}|\phantom{x}f(2).
+	\]
+	Tudjuk, hogy $f(2)<6f(1)=6$, így $f(2)\in\{0,3\}$.
+	
+	Ha $f(2)=0$, akkor $3f(2)f(5)=f(4)(3f(2)+1)$, vagyis $f(4)=0$.
+	Hasonlóan, ha feltételeznénk, hogy egy $k\in\mathbb{N}^{*}$ esetén
+	$f(k)=0$, akkor abból következne, hogy $f(2k)=0$, de ekkor az $f(2k)<6f(k)$
+	feltétel nem teljesülne. Ez azt jelenti, hogy $\forall n\in\mathbb{N}^{*}$
+	esetén $f(n)\neq0$. Tehát $f(2)=3$.
+	
+	\[
+	\left\{ \begin{array}{l}
+		3f(n)f(2n+1)=f(2n)(3f(n)+1),\forall n\in\mathbb{N}\\
+		f(k)\in\mathbb{N},\forall k\in\mathbb{N}
+	\end{array}\right.
+	\]
+	\[
+	\Rightarrow\left\{ \begin{array}{l}
+		3f(n)\phantom{x}|\phantom{x}f(2n)(3f(n)+1)\\
+		lnko(3f(n),3f(n)+1)=1
+	\end{array}\right.\Rightarrow3f(n)\phantom{x}|\phantom{x}f(2n),
+	\]
+	ami alapján létezik olyan $l\in\mathbb{N}$, hogy $f(2n)=3lf(n)$.
+	Viszont tudjuk, hogy $f(2n)<6f(n)$, ami alapján $l\in\{0,1\}$. Mivel
+	$f(k)\neq0$, $\forall k\in\mathbb{N}$, ezért $l\neq0$. Tehát $l=1$
+	és így $f(2n)=3f(n)$, $\forall n\in\mathbb{N}$.
+	
+	\[
+	\left\{ \begin{array}{l}
+		3f(n)f(2n+1)=f(2n)(3f(n)+1)\\
+		f(2n)=3f(n)
+	\end{array}\right.\Rightarrow3f(n)f(2n+1)=3f(n)(3f(n)+1)
+	\]
+	\[
+	\Rightarrow\left\{ \begin{array}{l}
+		f(n)(f(2n+1)-3f(n)-1)=0,\forall n\in\mathbb{N}.\\
+		f(n)\neq0,\forall n\in\mathbb{N}^{*}.
+	\end{array}\right.\Rightarrow f(2n+1)=3f(n)+1,\forall n\in\mathbb{N}^{*}.
+	\]
+	
+	Vizsgáljuk meg az $n=0$ esetet. Ha $n=0$, akkor $3f(0)f(1)=f(0)(3f(0)+1)$
+	$\Leftrightarrow$ $f(0)(2-3f(0))=0$, $f(0)\in\mathbb{N}$ $\Rightarrow$
+	$f(0)=0$.
+	
+	Tehát azt kaptuk, hogy $f:\mathbb{N}\rightarrow\mathbb{N}$ olyan
+	függvény, amelyre $f(0)=0$, $f(1)=1$ és $f(2n)=3f(n)$, illetve
+	$f(2n+1)=3f(n)+1$, $\forall n\in\mathbb{N}^{*}$.
+	
+	Ahhoz, hogy a függvényt explicit módon is meg tudjuk adni, vizsgáljunk
+	meg pár példát.
+	
+	Például $f(81)=f(2\cdot40+1)=3f(40)+1=3f(2\cdot20)+1=3^{2}f(20)+1=3^{2}f(2\cdot10)+1=3^{3}f(10)+1=3^{3}f(2\cdot5)+1=3^{4}f(5)+1=3^{4}f(2\cdot2+1)+1=3^{4}(3f(2)+1)+1=3^{5}f(2)+3^{4}+1=3^{5}f(2\cdot1)+3^{4}+1=3^{6}f(1)+3^{4}+1=3^{6}+3^{4}+1$,
+	viszont $81=2\cdot40+1=2^{2}\cdot20+1=2^{3}\cdot10+1=2^{4}\cdot5+1=2^{4}(2\cdot2+1)+1=2^{6}+2^{4}+1$.
+	
+	Tehát, ha $n=2^{\alpha_{1}}+2^{\alpha_{2}}+\cdots+2^{\alpha_{k}}$,
+	ahol $\alpha_{1}>\alpha_{2}>\cdots>\alpha_{k}$, $\alpha_{i}\in\mathbb{N}$
+	(ami mindig felírható), akkor $f(n)=3^{\alpha_{1}}+3^{\alpha_{2}}+\cdots+3^{\alpha_{k}}$.
+	
+	Így $f:\mathbb{N}\rightarrow\mathbb{N}$, ahol 
+	\[
+	f(n)=\left\{ \begin{array}{ll}
+		0, & n=0;\\
+		3^{\alpha_{1}}+3^{\alpha_{2}}+\cdots+3^{\alpha_{k}}, & n=2^{\alpha_{1}}+2^{\alpha_{2}}+\cdots+2^{\alpha_{k}},\alpha_{1}>\alpha_{2}>\cdots>\alpha_{k},\alpha_{i}\in\mathbb{N}.
+	\end{array}\right.
+	\]
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+	Egy $1000$ oldalú konvex sokszög belsejében felveszünk $n$ pontot.
+	Jelöljük $\mathcal{H}$-val a sokszög csúcsaiból és a felvett pontokból
+	álló halmazt. A sokszöget osszuk fel páronként diszjunkt belsejű \emph{üres}
+	háromszögekre úgy, hogy a háromszögek csúcsa a $\mathcal{H}$-ból
+	legyenek. Egy háromszöget \emph{üres} háromszögnek nevezünk, ha sem
+	a belsejében, sem az oldalainak belsejében nem tartalmaz $\mathcal{H}$-beli
+	pontot.
+	\begin{itemize}
+		\item[(a)] Létezik-e olyan $n$ érték, amelyre a felbontás $2025$ üres háromszögből
+		áll? 
+		\item[(b)] Milyen $k$ értékekre létezik olyan $n>0$, amelyre a felbontás $k$
+		darab üres háromszögből áll? 
+	\end{itemize}
+	\begin{flushright}
+		(OMMO, 2025, 2. forduló, IX. osztály) 
+		\par\end{flushright}
+\end{extraproblem}
+\begin{solution}
+	A következő módon járhatunk el:
+	\begin{itemize}
+		\item[(a)] Jelöljük $A_{1}$, $A_{2}$, \ldots , $A_{1000}$-rel a sokszög csúcsait
+		és $B_{1}$, $B_{2}$, \ldots , $B_{n}$-nel a belső pontokat. Kiszámítjuk
+		a felbontásban szereplő üres háromszögek szögeinek összege kétféleképpen.
+		Ha a felbontás $2025$ háromszögből áll, akkor ez a szögösszeg $2025\cdot180^{\circ}$.
+		Másrészt, az üres háromszögek szögeinek összege egyenlő a sokszög
+		csúcsai körül, illetve a belső pontok körül létrejött szögek összegével.
+		A sokszög $A_{i}$ csúcsa körül létrejött szögek összege éppen az
+		$A_{i}$ szög. Így a sokszög csúcsai körül létrejött szögek összege
+		a sokszög szögeinek összegével egyenlő, azaz $180^{\circ}\cdot(1000-2)$.
+		Egy $B_{i}$ pont körül létrejött szögek összege $360^{\circ}$, tehát
+		a $B_{1},B_{2},\ldots,B_{n}$ pontok körül létrejött szögek összege
+		$n\cdot360^{\circ}$. A fentiek alapján, ha létezik $2025$ üres háromszögből
+		álló felbontás, akkor 
+		\[
+		2025\cdot180^{\circ}=998\cdot180^{\circ}+n\cdot360^{\circ},
+		\]
+		ahonnan $2n+998=2025$. Az egyenlőség bal oldala páros, a jobb oldala
+		páratlan, tehát nem létezik ilyen $n$ érték. 
+		\item[(b)] A fenti gondolatmenet alapján 
+		\[
+		k\cdot180^{\circ}=998\cdot180^{\circ}+n\cdot360^{\circ},
+		\]
+		vagyis 
+		\[
+		2n+998=k.
+		\]
+		Ennek az egyenletnek minden 1000-nél nagyobb vagy egyenlő páros $k$
+		értékre van megoldása. 
+	\end{itemize}
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+	(Moszkvai Matematika Olimpia, 1969) A 0,1 számok segítségével felírunk
+	$2^{n-1}$ $n$-jegyű különböző számsorozatot. Ha a felírt sorozatok
+	közül bármelyik hármat összehasonlítjuk, akkor azokra teljesül, hogy
+	létezik olyan $1\leq p\leq n$ pozitív egész szám, amelyre a vizsgált
+	sorozatok $p$-dik jegye 1-es. Mutassuk meg, hogy ekkor létezik olyan
+	$1\leq k\leq n$ pozitív egész szám is, amelyre az összes sorozat
+	$k$-dik jegye 1-es és ez egyértelmű! 
+\end{extraproblem}
+\begin{solution}
+	Jelöljük $S$-sel azt a halmazt, amely tartalmazza az összes $n$-jegyű
+	csak a 0, 1-ből álló számsorozatot: 
+	\[
+	S=\{X|X=(x_{1},x_{2},\dots,x_{n}),\textrm{ ahol }x_{i}\in\{0,1\},i\in\{1,2,\dots,n\}\}.
+	\]
+	Továbbá vezessük be ezen a halmazon a szorzás műveletet az alábbiak
+	szerint: 
+	\[
+	X=(x_{1},\dots,x_{n}),Y=(y_{1}.\dots,y_{n})\in S:X\cdot Y=(x_{1}\cdot y_{1},x_{2}\cdot y_{2},\dots,x_{n}\cdot y_{n})\in S.
+	\]
+	Bevezetünk még egy a konjugált műveletet is: 
+	\[
+	X=(x_{1},\dots,x_{n})\in S:\overline{X}=(\overline{x_{1}},\overline{x_{2}},\dots,\overline{x_{n}}),\textrm{ ahol }
+	\]
+	\[
+	\forall i\in\{1,2,\dots,n\},\phantom{i}\overline{x_{i}}=\left\{ \begin{array}{ll}
+		1, & \textrm{ha }x_{i}=0\\
+		0, & \textrm{ha }x_{i}=1.
+	\end{array}\right.
+	\]
+	A továbbiakban jelöljük $S_{0}$-val azt a halmazt, mely részhalmaza
+	$S$-nek és eleget tesz a feltételeknek. Vizsgáljuk ennek a halmaznak
+	a tulajdonságait.
+	
+	A feltételek alapján elmondhatjuk, hogy tetszőleges $X,Y,Z\in S_{0}$
+	esetén $X\cdot Y\cdot Z\neq(0,0,\dots,0)$. Ugyanakkor ebből az is
+	következik, hogy $(0,0,\dots,0)\notin S_{0}$, valamint az is, hogy
+	bármely két $S_{0}$-beli tag szorzata sem lesz egyenlő $(0,0,\dots,0)$-val.
+	Ezt a gondolatot folytatva, mivel a szerkesztés alapján bármely $X\in S$
+	esetén $X\cdot\overline{X}=(0,0,\dots,0)$, ezért $X$ és $\overline{X}$
+	közül legfennebb az egyik lehet benne $S_{0}$-ban. Tudjuk, hogy $|S_{0}|=2^{n-1}$,
+	vagyis pontosan fele annyi eleme van, mint $S$-nek, ezért az $(X,\overline{X})$
+	párokból pontosan az egyik benne is kell legyen $S_{0}$-ban ahhoz,
+	hogy ne jussunk ellentmondáshoz.
+	
+	A következő észrevétel a szorzásra fog vonatkozni. Igazolni szeretnénk,
+	hogy tetszőleges $X,Y\in S_{0}$ esetén $X\cdot Y$ is az $S_{0}$-nak
+	eleme. A bizonyítást reductio ad absurdum végezzük el. Feltételezzük,
+	hogy $X\cdot Y\notin S_{0}$. Ebből arra következtethetünk, hogy $\overline{X\cdot Y}\in S_{0}$.
+	Vegyük a következő három elemét az $S_{0}$-nak: $X$, $Y$, $\overline{X\cdot Y}$.
+	Az $S_{0}$ tulajdonsága miatt tudjuk, hogy $X\cdot Y\cdot\overline{X\cdot Y}\neq(0,0,\dots,0)$,
+	de ez ellentmondáshoz vezet, mert 
+	\[
+	X\cdot Y\cdot\overline{X\cdot Y}=(X\cdot Y)\cdot\overline{X\cdot Y}=(0,0,\dots,0)
+	\]
+	a konjugáltak szorzása miatt. Tehát $X\cdot Y\in S_{0}$ valóban igaz.
+	
+	Most pedig, ha $S_{0}=\{X_{1},X_{2},\dots,X_{2^{n-1}}\}$ alakba írjuk
+	fel, akkor vizsgáljuk az $X=X_{1}\cdot X_{2}\cdot...\cdot X_{2^{n-1}}$
+	elemet. Elmondhatjuk, hogy $X\in S_{0}$ és ezért $X\neq(0,0,\dots,0)$.
+	Ebből az következik, hogy létezik legalább egy olyan eleme az $X$
+	sorozatnak, ami 1-es, de a szorzás miatt ez azt is jelenti, hogy $S_{0}$
+	minden tagjának 1-esnek kell lennie abban a pozicióban. Tehát létezik
+	olyan $k\in\{1,...,n\}$ pozició, ahol $S_{0}$ minden számsorozatában
+	1-es áll. Utolsó lépésként azt látjuk be reductio ad absurdum módszerrel,
+	hogy mi történik, ha több ilyen érték is van. Feltételezzük, hogy
+	két ilyen érték is van, ami azt fogja jelenteni, hogy minden elem
+	ugyanabban a két pozicióban 1-et vesz fel. Emiatt $S_{0}$ elemei
+	csak a többi $n-2$ elemben térnek el, de így $S_{0}$-nak maximum
+	csak $2^{n-2}$ tagja lehetne. Ez ellentmond annak, hogy $|S_{0}|=2^{n-1}$,
+	tehát valóban egyértelmű az a $k$ érték. 
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+	Határozzuk meg az összes olyan $f:\mathbb{R}\rightarrow\mathbb{R}$
+	függvényt, mely teljesíti a következő összefüggést 
+	\[
+	f(xf(x)+f(y))=(f(x))^{2}+y,\phantom{aa}\forall x,y\in\mathbb{R}.
+	\]
+	\begin{flushright}
+		\textit{(XIV. Balkán Olimpia, 1997)} 
+		\par\end{flushright}
+\end{extraproblem}
+\begin{solution}
+	Helyettesítsük be $x=0$, így kapjuk, hogy $f(f(y))=(f(0))^{2}+y,\forall y\in\mathbb{R}$.
+	Az $f(0)=a$ jelölést használjuk és az adott összefüggésbe $x$ helyett
+	$f(x)$-t helyettesítünk, és felhasználva az előbbi eredményt:
+	
+	\begin{equation}
+		\centering\begin{aligned}f(f(x)\cdot f(f(x))+f(y))= & f\left(f(x)\left(x+a^{2}\right)+f(y)\right)=\\
+			= & {[f(f(x))]^{2}+y=\left(x+a^{2}\right)^{2}+y.}
+		\end{aligned}
+		\label{seresbrigi1}
+	\end{equation}
+	
+	Mivel $f(f(y))=(f(0))^{2}+y,\forall y\in\mathbb{R}$ $\Rightarrow f$
+	minden valós értéket felvesz, tehát létezik olyan $n\in\mathbb{R}$,
+	hogy $f(n)=0$. Ezt helyettesítve az eredeti összefüggésbe kapjuk,
+	hogy $f(f(y))=y,\phantom{a}\forall y\in\mathrm{R}$. Figyelembe véve
+	az $f(f(y))=(f(0))^{2}+y,\forall y\in\mathbb{R}$ összefüggést, következik,
+	hogy $f(0)=0$ (vagyis $n=0=a$ ).
+	
+	Ekkor a (\ref{seresbrigi1})-es egyenlőségek alapján 
+	\[
+	x^{2}+y=f(xf(x)+f(y))=(f(x))^{2}+y,\quad\forall y\in\mathbb{R}.
+	\]
+	
+	Látható, hogy $(f(x))^{2}=x^{2},\phantom{a}\forall x\in\mathbb{R}$.
+	Tehát létezik olyan $A\subseteq\mathbb{R}$, amelyre 
+	\[
+	f(x)=\left\{ \begin{array}{cc}
+		x, & x\in A\\
+		-x, & x\in\mathbb{R}\backslash A.
+	\end{array}\right.
+	\]
+	
+	Tegyük fel, hogy az $A\backslash\{0\}$ és az $\mathbb{R}^{*}\backslash A$
+	halmaz nem üres, tehát létezik $x_{1}\in A\backslash\{0\}$ és $x_{2}\in\mathbb{R}^{*}\backslash A$.
+	Ha ezt a két értéket helyettesítjük az eredeti összefüggésbe kapjuk,
+	hogy 
+	\[
+	f(x_{1}f(x_{1})+f(x_{2}))=(f(x_{1}))^{2}+x_{2}\Rightarrow f\left(x_{1}^{2}-x_{2}\right)=x_{1}^{2}+x_{2}.
+	\]
+	Ha $x_{1}^{2}-x_{2}\in A\backslash\{0\}$, akkor $f\left(x_{1}^{2}-x_{2}\right)=x_{1}^{2}-x_{2}=x_{1}^{2}+x_{2}$,
+	vagyis $x_{2}=-x_{2}$, amiből $x_{2}=0$. Ha $x_{1}^{2}-x_{2}\in\mathbb{R}^{*}\backslash A$,
+	akkor $f\left(x_{1}^{2}-x_{2}\right)=-x_{1}^{2}+x_{2}=x_{1}^{2}+x_{2}$,
+	vagyis $x_{1}^{2}=-x_{1}^{2}$, amiből $x_{1}=0$. De ezen esetek
+	nem lehetségesek, mert $x_{1,2}\neq0$, hiszen $x_{1}\in A\backslash\{0\}$
+	és $x_{2}\in\mathbb{R}^{*}\backslash A$.
+	
+	Tehát csak az $f(x)=x$ és $f(x)=-x$ függvények teljesítik a megadott
+	egyenletet.
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+	Az $f:\mathbb{N}^{*}\rightarrow\mathbb{N}^{*}$ szigorúan növekvő
+	függvény teljesíti a következő egyenlőtlenséget 
+	\[
+	f(1)+f(2)+\ldots+f(n)\geq\frac{f(n)\cdot(1+f(n))}{2},\phantom{a}\forall n\in\mathbb{N}^{*}.
+	\]
+	Bizonyítsd be, hogy $f(n)=n,\phantom{a}\forall n\in\mathbb{N}^{*}.$
+	\begin{flushright}
+		\textit{(András Szilárd, Kovács Lajos: Függvényegyenletek, 119 oldal/18.feladat)} 
+		\par\end{flushright}
+\end{extraproblem}
+\begin{solution}
+	\textbf{n=1} esetén teljesül, hogy $f(1)\geq\frac{f(1)(1+f(1))}{2}$,
+	amit végigosztva $f(1)\neq0$ (mert az értékkészlete a függvénynek
+	nem tartalmazza a nullát), kapjuk hogy $2\geq1+f(1)$, így $f(1)\leq1.$
+	De a függvény értékkészlete $\mathbb{N}^{*}$, vagyis minden $n\in\mathbb{N}^{*}$
+	elemre igaz, hogy $f(n)\geq1$, így $f(1)\geq1$ is. Az előbbi két
+	állításból következik, hogy $f(1)=1.$
+	
+	\textbf{n=2} esetén a feltétel és előbbi eredmény szerint 
+	\begin{align*}
+		f(1)+f(2)=1+f(2) & \geq\frac{(1+f(2))f(2)}{2}\Rightarrow\frac{(1+f(2))f(2)-2(1+f(2))}{2}\leq0\\
+		& \Rightarrow(f(2)+1)(f(2)-2)\leq0.
+	\end{align*}
+	Mivel $f(2)+1>0$, így $f(2)\leq2$ szükséges teljesüljön. De $f$
+	szigorúan növekvő és $f(1)=1$, tehát $f(2)\geq2$. Ez csak akkor
+	teljesül, ha $f(2)=2$.
+	
+	A matematikai indukció segítségével igazoljuk, hogy $f(n)=n,\forall n\in\mathbb{N}^{*}.$
+	
+	Fennebb beláttuk, hogy $n=1$-re és $n=2$-re teljesül az indukciós
+	feltevés. Tegyük fel, hogy $f(k)=k,\quad\forall k\leq n$, és ekkor
+	lássuk be azt, hogy $f(n+1)=n+1$ is teljesül.
+	
+	Az adott egyenlőtlenséget $(n+1)$-re írva fel majd $k\leq n$-re
+	az $f(k)=k$ értékeket behelyettesítve (indukciós feltevést használjuk
+	fel), kapjuk hogy 
+	\begin{align*}
+		\centering & f(1)+f(2)+\ldots+f(n)+f(n+1)=1+2+\ldots+n+f(n+1)\\
+		& =\frac{n(n+1)}{2}+f(n+1)\geq\frac{f(n+1)(1+f(n+1))}{2}.
+	\end{align*}
+	Innen 
+	\begin{align*}
+		\frac{f(n+1)(1+f(n+1))}{2}-\frac{n(n+1)+2f(n+1)}{2} & \leq0\\
+		\Rightarrow f(n+1)+f^{2}(n+1)-n(n+1)-2f(n+1) & \leq0.
+	\end{align*}
+	Vagyis $f^{2}(n+1)-f(n+1)-n(n+1)\leq0$, ahonnan 
+	\[
+	(f(n+1)+n)(f(n+1)-(n+1))\leq0.
+	\]
+	Mivel $f(n+1)\geq1$, ezért $f(n+1)+n\geq1>0$, így következik, hogy
+	$f(n+1)\leq n+1$. Másrészt a függvény szigorúan növekvő, ezért $f(n+1)>f(n)=n$,
+	tehát $f(n+1)\geq n+1$. Az előbbi két egyenlőtlenség alapján $f(n+1)=n+1$
+	valóban teljesül.
+	
+	Tehát a matematikai indukció elve alapján beláttuk, hogy $f(n)=n,\quad\forall n\in N^{*}$
+	az egyetlen függvény ami teljesíti a feladat kérelmeit, így ez a függvény
+	a feladat egyetlen megoldása. 
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+	Létezik-e két olyan $A,B$ nem negatív számokból álló végtelen elemű
+	halmaz, hogy bármely nem negatív egész szám felírható egyértelműen
+	$A$ és $B$ egy-egy elemének összegeként. (Kürschák József Matematikai
+	Tanulóverseny 1966. évi 3. feladata)
+\end{extraproblem}
+\begin{solution}
+	Létezik két ilyen halmaz:
+	
+	Legyen $A$ azon elemek halmaza, amelyek jobbról balra minden páros
+	pozíción nullást tartalmaznak. (pl. 10504)
+	
+	Legyen $B$ azon elemek halmaza, amelyek jobbról balra minden páros
+	pozíción nullást tartalmaznak. (pl. 3070)
+	
+	A nulla legyen eleme mindkét halmaznak.\\
+	
+	Mind a két halmaznak jól láthatóan végtelen sok eleme van.
+	
+	A nulla felírható egyértelműen a két nulla összegeként.
+	
+	Az összes többi egész szám felbontható egy $A$-beli és egy $B$-beli
+	elem összegére.
+	
+	Például, ha 
+	\[
+	c=\overline{c_{n}c_{n-1}\dots c_{3}c_{2}c_{1}}\in\mathbb{N},\text{ akkor }a=\overline{\dots c_{3}0c_{1}}\in A,b=\overline{\dots c_{4}0c_{2}0},a+b=c
+	\]
+	
+	Feltételezzük, hogy két összeg egyenlő. Mivel a páratlan helyen levő
+	értékekért csak az $A$-beli szám felel, ezért az összeadások $A$-beli
+	tagjai megegyeznek. Hasonlóan a $B$-beli tagok is megegyeznek. Tehát
+	$A$ és $B$ halmazok teljesítik a feladat feltételeit.
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+	Adjunk meg olyan, 100-nál kisebb pozitív egészekből álló halmazt,
+	amelyre teljesül, hogy a belőlük készíthető összegek mind különbözőek.
+	(Az összeg lehet egytagú is, és vehetjük az összes szám összegét is.)
+	Legfeljebb hány számból állhat ez a halmaz? (Róka Sándor: Válogatás
+	Erdős Pál kedvenc feladataiból) 
+\end{extraproblem}
+\begin{solution}
+	Nézzük, 100-ig hogyan tudunk számokat választani úgy, hogy a belőlük
+	képzett összegek különbözőek legyenek.
+	
+	7 számot választhatunk: $1,2,4,8,16,32,64$.
+	
+	Más lehetőségek: 
+	\[
+	1,3,5,11,23,48,99
+	\]
+	
+	\[
+	1,3,5,10,21,41,85
+	\]
+	
+	\[
+	2,3,6,12,25,50,99
+	\]
+	
+	\[
+	20,31,37,40,42,43,44
+	\]
+	
+	Választhatunk 8 számot is?
+	
+	A 2-hatványok sorozata gazdaságos sorozat, egy adott értéket nem kaphatunk
+	meg kétféle összeg eredményeként. Vegyük az $1,2,4,8,16,32$ számok
+	3-szorosát. Ez is gazdaságos sorozat, ha az eredeti az volt. A belőlük
+	kapható összegek a $3\cdot63=189$-nél nem nagyobb 3-mal osztható
+	számok.
+	
+	Vegyük a sorozathoz a 95 és 97 számokat, az így kapott 8 szám is gazdaságos
+	sorozat. A már meglévő összegeken kívül a következő új összegeket
+	kaphatjuk.
+	
+	A 97 szerepel tagként, a 95 pedig nem. Ezek az összegek 3-mal osztva
+	2 maradékot adnak.
+	
+	Mind a két új szám, a 95 és 97 is szerepel bennük tagként. Az ilyen
+	összegek oszthatók 3-mal, és nem kisebbek $95+97=192$-nél, és ezek
+	az összegek is páronként különbözőek.
+	
+	Tehát van 8 ilyen szám: 3, 6, 12, 24, 48, 95, 96, 97.
+	
+	Van másik, jobb számhalmaz, ahol a legnagyobb szám kisebb 97-nél:
+	40, 60, 71, 77, 80, 82, 83, 84.
+	
+	Van-e 9, van-e 10 szám?
+	
+	10 szám nincs.
+	
+	Ha lenne 10 db legfeljebb kétjegyű pozitív egészből álló halmaz, akkor
+	a belőlük képezhető összegek száma kisebb $10\cdot99=990$-nél. Azonban
+	10 számból $2^{10}-1=1023$ összeg készíthető, így a skatulyaelv miatt
+	van két összeg, amelynek ugyanaz az értéke.
+	
+	9 számot sem tudunk választani.
+	
+	Az $a_{1}<a_{2}<\dots<a_{9}$ pozitív egészekre teljesül, hogy a belőlük
+	készíthető (legalább egy, legfeljebb kilenc különböző tagból álló)
+	összegek mind különbözőek.
+	
+	Bizonyítsuk be, hogy $a_{9}>100$.
+	
+	Tegyük fel, hogy $a_{9}\leq100$.
+	
+	Belátjuk, hogy az $a_{9}$-et nem használó összegek között van kettő,
+	amelyek különbsége $a_{9}$.
+	
+	Legyen $S$ azoknak a legfeljebb öttagú összegeknek a halmaza, amelyek
+	az $a_{1},a_{2},\dots,a_{8}$ számokból készíthetők, és nem kisebbek
+	$a_{4}$-nél.
+	
+	\[
+	\binom{8}{1}+\binom{8}{2}+\binom{8}{3}+\binom{8}{4}+\binom{8}{5}=218
+	\]
+	
+	Összesen 218 legfeljebb öttagú összeg van, ezek közül csak azok lehetnek
+	kisebbek $a_{4}$-nél, amelyekben csak $a_{1},a_{2}$ és $a_{3}$
+	szerepel, összesen 7 darab.
+	
+	Tehát az összegekből legalább $218-7=211$ akkora, mint $a_{4}$.
+	
+	Az összegek között $a_{9}\leq100$ miatt van három olyan, amelyek
+	$a_{9}$-cel osztva ugyanazt a maradékot adják.
+	
+	A legnagyobb összeg $a_{4}+a_{5}+a_{6}+a_{7}+a_{8}<a_{4}+4\cdot a_{9}.$.
+	
+	Az $S$ összegei közül a legkisebb $a_{4}$, ezért bármely két összeg
+	különbsége kisebb $4\cdot a_{9}$-nél, így a három azonos maradékú
+	összeg között van kettő, amelyek különbsége $a_{9}$.
+	
+	A két összegből a kisebbhez $a_{9}$-et adva a nagyobbat kapjuk. Itt
+	az ellentmondás.
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+	Legyen $A_{1},A_{2},\dots,A_{n}$ egy halmazrendszer, ahol minden
+	$A_{i}$ részhalmaza egy véges $X$ halmaznak. Tegyük fel, hogy az
+	alábbi két feltétel teljesül:
+	\begin{enumerate}
+		\item Minden $A_{i}$ halmaz legfeljebb $k$ elemet tartalmaz, azaz $|A_{i}|\leq k$.
+		\item Bármely két halmaz metszetének elemszáma legfeljebb $t$, azaz $|A_{i}\cap A_{j}|\leq t$
+		minden $i\neq j$ esetén.
+	\end{enumerate}
+	Bizonyítsuk be, hogy az összes halmaz együttes elemszámára fennáll
+	az alábbi egyenlőtlenség:
+	
+	\[
+	\left|\bigcup_{i=1}^{n}A_{i}\right|\geq\frac{nk}{k-t}.
+	\]
+\end{extraproblem}
+\begin{solution}
+	Legyen $S=\bigcup_{i=1}^{n}A_{i}$, azaz az összes halmaz egyesítése.
+	Célunk annak bizonyítása, hogy 
+	\[
+	|S|\geq\frac{nk}{k-t}.
+	\]
+	\begin{enumerate}
+		\item Elemösszegzési módszer:\\
+		Tekintsük az alábbi kétféle megszámlálási módot:\\
+		\emph{Első megszámlálás}: Minden egyes $A_{i}$ legfeljebb $k$ elemet
+		tartalmaz, tehát az összes halmaz együttvéve összesen legfeljebb $nk$
+		elemet vesz figyelembe. \\
+		\emph{Második megszámlálás}: Minden egyes $x\in S$ elemet annyiszor
+		számolunk meg, ahány különböző $A_{i}$-ben előfordul. Jelöljük ezt
+		az előfordulási számot $d_{x}$-szel: 
+		\[
+		d_{x}=|\{i\mid x\in A_{i}\}|.
+		\]
+		\item A metszési korlát alkalmazása:\\
+		Tegyük fel, hogy egy konkrét $x\in S$ szerepel az $A_{i_{1}},A_{i_{2}},\dots,A_{i_{m}}$
+		halmazokban, vagyis $d_{x}=m$. Mivel minden két halmaz átfedése legfeljebb
+		$t$ lehet, ezért ha összeadjuk az összes halmaz elemszámát, akkor:
+		\[
+		\sum_{x\in S}d_{x}=\sum_{i=1}^{n}|A_{i}|\leq nk.
+		\]
+		Másrészt az egyes elemek előfordulási száma nem lehet tetszőlegesen
+		nagy. Egy jól ismert kombinatorikai becslés alapján:
+		\[
+		\sum_{x\in S}d_{x}^{2}\leq nkd_{x}.
+		\]
+		A Cauchy-egyenlőtlenség szerint:
+		\[
+		|S|\geq\frac{\left(\sum_{x\in S}d_{x}\right)^{2}}{\sum_{x\in S}d_{x}^{2}}.
+		\]
+		A fentiek felhasználásával:
+		\[
+		|S|\geq\frac{(nk)^{2}}{nkd_{x}}=\frac{nk}{d_{x}}.
+		\]
+		Mivel $d_{x}\leq k-t$, így
+		\[
+		|S|\geq\frac{nk}{k-t}.
+		\]
+		\emph{Konklúzió:} Megmutattuk, hogy az egyesített halmaz elemszáma
+		alsó korlátként követi az
+		\[
+		|S|\geq\frac{nk}{k-t}
+		\]
+		összefüggést, ezzel bizonyítva az állítást.
+	\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+	Jelölje $r_{n}$ az $\{1;2;\ldots;n\}$ halmaz azon részhalmazainak
+	számát, amelyek nem tartalmaznak szomszédos számokat, ahol az 1-et
+	és az n-et is szomszédosnak tekintjük. Határozzuk meg $r_{16}$ értékét.
+	(OKTV 2010/2011; II. kategória, döntő)
+\end{extraproblem}
+\begin{solution}
+	Nevezzük a feladat feltételeit teljesítő részhalmazokat megfelelőnek.
+	Először kisebb n-ekre meghatározzuk $r_{n}$ értékét.\\
+	$r_{1}=2$, a megfelelő részhalmazok $\varnothing$ és $\{1\}$.\\
+	$r_{2}=3$, a megfelelő részhalmazok $\varnothing,\{1\}$ és $\{2\}$.\\
+	$r_{3}=4$, a megfelelő részhalmazok $\varnothing,\{1\},\{2\}$ és
+	$\{3\}$.\\
+	$r_{4}=7$, a megfelelő részhalmazok $\varnothing,\{1\},\{2\},\{3\},\{4\},\{1;3\}$
+	és $\{2;4\}$.\\
+	$r_{5}=11$, a megfelelő részhalmazok $\varnothing,\{1\},\{2\},\{3\},\{4\},\{5\},\{1;3\},\{2;4\},\{3;5\},\{1;4\}$
+	és $\{2;5\}$.
+	
+	Az első néhány értékből azt sejthetjük, hogy $n\geq2$ esetén $r_{n+2}=r_{n+1}+r_{n}$.
+	Ehhez három részre bontjuk az $n+2$ elemű halmaz megfelelő részhalmazait:
+	\begin{itemize}
+		\item Ha a részhalmaz nem tartalmazza $n+2$-t, továbbá nem tartalmazza
+		egyszerre 1-et és $n+1$-et, akkor éppen az első $n+1$ elem megfelelő
+		részhalmazait kapjuk, ezek száma $r_{n+1}$. 
+		\item Ha a részhalmaz nem tartalmazza $n+2-t$, de tartalmazza 1-et és $n+1$-et
+		is, akkor biztosan nem tartalmazza $n$-et. Ha elhagyjuk ezen részhalmazokból
+		$n+1$-et, akkor megkapjuk az első $n$ elem olyan megfelelő részhalmazait,
+		amelyek tartalmazzák 1-et. 
+		\item Ha a részhalmaz tartalmazza $n+2$-t, akkor nem tartalmazza 1-et és
+		$n+1$-et. Ha elhagyjuk ezen részhalmazokból $n+2-t$, akkor megkapjuk
+		az első $n$ elem olyan megfelelő részhalmazait, amelyek nem tartalmazzák
+		1-et. Az előző esettel együtt ezen megfelelő részhalmazok száma $r_{n}$. 
+	\end{itemize}
+	Ezzel beláttuk az $r_{n+2}=r_{n+1}+r_{n}$ összefüggést. A kapott
+	rekurzió alapján sorra kiszámíthatjuk az $r_{n}$ értékeket:
+	\begin{center}
+		\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+			\hline 
+			$n$ & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 & 12 & 13 & 14 & 15 & 16\tabularnewline
+			\hline 
+			$r_{n}$ & 7 & 11 & 18 & 29 & 47 & 76 & 123 & 199 & 322 & 521 & 843 & 1364 & 2207\tabularnewline
+			\hline 
+		\end{tabular}
+		\par\end{center}
+	Vagyis $r_{16}=2207$.\\
+	
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+	Legyen $A=\{1;2;3;4;5\}$ és $B=\{1;2;3\}$. Az $f(x)$ függvény
+	értelmezési tartománya $A$, és minden $A$-beli $x$ esetén $f(x)\in A$.
+	Hány $f(x)$ függvényre teljesül, hogy $\{f(f(x))\mid x\in A\}=B$
+	? (OKTV 2011/2012; II. kategória, döntő) 
+\end{extraproblem}
+\begin{solution}
+	Először megmutatjuk, hogy a keresett $f$ függvény az 1, 2, 3 számok
+	egyikéhez sem rendelhet sem 4-et, sem 5-öt. Ezt az $f(1)=4$ példán
+	szemléltetjük. Mivel $f(f(x))$ értékkészlete $B$, ezért van olyan
+	$y\in A$, amelyre $f(f(y))=1$. Legyen ekkor $f(y)=z$ (ahol $z\in A$
+	), de így $f(f(z))=f(1)=4$ lenne, ami nem eleme $B$-nek, és így
+	nem lehetséges. Hasonlóan bizonyítható az álítás többi része is.
+	
+	Most megvizsgáljuk, hogy mi lehet $f(4)$ és $f(5)$ értéke. Nem lehet
+	$f(4)=4$, hiszen ekkor $f(f(4))=4$ lenne, ami nem eleme $B$-nek.
+	Ugyanígy $f(5)=5$ sem lehetséges. Innentől két esetet különböztetünk
+	meg:\\
+	(a) $f(4)$ és $f(5)$ is $B$-beli elem.\\
+	(b) $f(4)$ és $f(5)$ közül (legalább) az egyik nem $B$-beli, azaz
+	$f(4)=5$ vagy $f(5)=4$. Ekkor $f(4)=5$ esetén $f(f(4))\in B$ miatt
+	$f(5)\in B$; míg $f(5)=4$ esetén $f(4)\in B$.
+	
+	A továbbiakban a keresett függvényeket három csoportra osztva számoljuk
+	össze.
+	\begin{enumerate}
+		\item csoport: $f(1),f(2)$ és $f(3)$ értéke az $1,2,3$ számok valamely
+		permutációja, továbbá $f(4)$ és $f(5)$ értéke (a) szerint $B$-beli.
+		Ekkor a permutáció 3!-féle lehet, míg $f(4)$ és $f(5)$ értéke egymástól
+		függetlenül $3-3$-féle lehet, tehát ilyen függvényből $3!3\cdot3=54$
+		darab van. 
+		\item csoport: $f(1),f(2)$ és $f(3)$ értéke az $1,2,3$ számok valamely
+		permutációja, továbbá $f(4)$ és $f(5)$ értéke (b) szerint alakul.
+		Ekkor a permutáció 3!-féle lehet. Ezután ki kell választanunk, hogy
+		4 vagy 5 képe legyen $B$-beli (erre 2 lehetőségünk van), majd a kép
+		értéke 3 -féle lehet. Tehát az ilyen függvények száma $3!\cdot2\cdot3=36$. 
+		\item csoport: $f(1),f(2)$ és $f(3)$ értéke úgy kerül ki az $1,2,3$ számok
+		közül, hogy vannak közöttük azonos értékek. Először megmutatjuk, hogy
+		nem lehet mindhárom érték azonos. Ha ugyanis $f(1)=f(2)=f(3)$ lenne,
+		akkor $f(f(x))$ értékkészletében (a) esetén csak egy, (b) esetén
+		csak két szám állna. Vagyis a 3. csoportban $f(1),f(2)$ és $f(3)$
+		értéke közül kettő azonos (jelölje ezt\\
+		$k$ ), egy pedig ezektől különböző (jelölje ezt $l$ ). Az (a) eset
+		nem lehetséges, hiszen ekkor $f(f(x))$ érékkészlete csak két számból
+		állna. A (b) esetben $f(4)$ és $f(5)$ valamelyike $B$-beli, mégpedig
+		$B$-nek a $k$-tól és $l$-től különböző $m$ eleme, hiszen csak
+		így lesz $f(f(x))$ értékkészlete a teljes $B$. Az ilyen függvények
+		esetén $l$ értéke 3 -féle lehet, $m$ értéke 2 -féle. Továbbá 3-féle
+		választásunk van, hogy az 1, 2, 3 számok közül melyikhez rendeljük
+		l-et, és 2-féle választásunk, hogy a (b) esetben a 4-hez vagy az 5
+		-höz rendeljük $m$-et. Vagyis ebbe a csoportba összesen $3\cdot2\cdot3\cdot2=36$
+		függvény tartozik. 
+	\end{enumerate}
+	Így összesen $54+36+36=126$ függvény teljesíti a feladat feltételeit. 
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+	Adott az $A=\left\{ 3^{x}\,\middle|\,3^{n+1}<3^{x}\leq3^{n+6},\ x\in\mathbb{N}\right\} $,
+	a 3 bizonyos hatványainak halmaza.  
+\begin{enumerate}
+	\item Hány eleme van az $A$ halmaznak? 
+	\item Határozzuk meg $n$-et, ha az $A$ halmaz növekvő sorrendbe helyezett
+	elemei közül a harmadik szám 2187. 
+\end{enumerate}
+\textit{(XXI. Vályi Gyula emlékverseny -- Marosvásárhely -- 2015)}
+\end{extraproblem}
+\begin{solution}
+	~
+	\begin{enumerate}
+		\item A $3^{x}$ akkor szigorúan nagyobb a $3^{n+1}$-nél, ha $x$ szigorúan
+		nagyobb $n+1$-nél. Ugyanakkor $3^{x}\leq3^{n+6}$, tehát $x\leq n+6$.
+		Ez azt jelenti, hogy $x$ a következő értékeket veheti fel: 
+		\[
+		x\in\{n+2,n+3,n+4,n+5,n+6\}
+		\]
+		Tehát az $A$ halmaznak 5 eleme van.
+		\item A halmaz harmadik eleme a $3^{n+4}$, a 2187 pedig a 3-nak a hetedik
+		hatványa, ebből következik, hogy $n+4=7$, vagyis $n=3$. 
+	\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+	Adott az $A=\{1,2,\dots,99,100\}$ halmaz. Határozzuk meg, hány 5040-nel
+	egyenlő összeget alkothat az $A$ halmaz elemeiből! \textit{(Matlap
+		2012/2. szám -- V. osztály)}
+\end{extraproblem}
+\begin{solution}
+	Adjuk össze az $A$ halmaz elemeit: 
+	\[
+	1+2+3+\cdots+100=\frac{101\cdot100}{2}=5050
+	\]
+	
+	Ahhoz, hogy az összeg 5040 legyen, a teljes összegből el kell vennünk
+	10-et. Hányféleképpen alakulhat ki a 10-es összeg? A következő esetekben:
+	
+	\begin{align*}
+		10,\quad & 1+9,\quad2+8,\quad3+7,\quad4+6,\\
+		& 1+2+7,\quad1+3+6,\quad1+4+5,\quad2+3+5,\\
+		& 1+2+3+4
+	\end{align*}
+	
+	Tehát a válaszunk: 10 lehetséges eset van arra, hogy az $A$ halmaz
+	elemeiből 5040-nel egyenlő összeget kapjunk.
+\end{solution}
+\begin{extraproblem}[Domokos Ábel]
+	Egy $n$ elemű halmaznak legfeljebb hány részhalmaza adható meg úgy,
+	hogy bármelyik kettő metszete nem üres halmaz legyen?
+\end{extraproblem}
+\begin{solution}
+	Legyen $A$ egy $n$-elemű halmaz, ekkor $|P(A)|=2^{n}$.
+	
+	Legyen $X\in P(A)$ tetszőleges. Ekkor létezik $C_{A}X$(X komplementere),
+	melyre teljesül, hogy $X\cap C_{A}X=\emptyset$. Ezeket párba rendezhetjük
+	és kapjuk, hogy A elemei $2^{n-1}$ párba rendezhetők úgy, hogy a
+	párbeli elemek diszjunktak egymással.
+	
+	Lássuk be, hogy legfeljebb $2^{n-1}$ halmaz választható ki a feladat
+	feltételeinek megfelelően.
+	
+	Először bebizonyítjuk, hogy létezik egy ilyen választás. Legyen $a\in A$.
+	Ekkor válasszuk ki az $a$-t tartalmazó $A$ részhalmazait, ezekből
+	$2^{n-1}$ különböző halmaz van. Bármely két ilyen részhalmaz tartalmazza
+	az $a$-t, tehát metszetük nem üres. Kész vagyunk a szerkesztéssel.
+	
+	Lássuk be, hogy nem létezik $2^{n-1}$-nél nagyobb elemű megfelelő
+	választás. \\
+	Red. ad. abs: tegyük fel, hogy mégis létezik. Mivel $P(A)$ elemei
+	$2^{n-1}$ párba rendezhetők, ezért ha több, mint $2^{n-1}$ különböző
+	részhalmazt választunk, akkor skatulyaelv alapján biztos, hogy kiválasztunk
+	két elemet, amelyek párban vannak. Ezek diszjunktak lesznek, azonban
+	ezzel ellentmondásba ütköztünk, mivel azt feltételeztük a választásról,
+	hogy diszjunkt halmazokat választottunk ki.
+	
+	Tehát beláttuk, hogy legfeljebb $2^{n-1}$ különböző halmazt lehet
+	kiválasztani $P(A)$-ból.
+\end{solution}
+

@@ -1,0 +1,1327 @@
+
+\chapter{Aszimmetrikus kulcsú kriptográfia}\label{chap:aszimmetrikus_kripto}
+\begin{description}
+{\large \item [{Szerző:}] Lőrincz Attila (Didaktikai mesteri -- Matematika, II.
+év)}
+\end{description}
+
+\section*{Alapok}
+
+Az aszimmetrikus titkosítás olyan módszer, ahol a titkosításhoz és
+visszafejtéshez \textbf{két külön kulcs} tartozik: egy nyilvános (publikus)
+és egy titkos (privát). A nyilvános kulcsot bárki használhatja üzenet
+küldésére, de csak a titkos kulccsal rendelkező fél tudja visszafejteni.
+
+Csak olyan üzenetet titkosíthatunk ami belefér a maradékosztályba.
+
+Gyakran használt algoritmusok: 
+\begin{enumerate}
+\item Diffie--Hellman kulcscsere 
+\begin{itemize}
+\item Cél: két fél közösen létrehozhat egy titkos kulcsot nyilvános csatornán
+keresztül. 
+\item A biztonság alapja: nehéz visszafejteni a diszkrét logaritmust. 
+\item Nem titkosít üzenetet, csak kulcscserét valósít meg. 
+\end{itemize}
+\item ElGamal titkosítás 
+\begin{itemize}
+\item A címzett nyilvános kulcsát használják az üzenet titkosítására. 
+\item A feladó minden üzenethez generál egy új véletlen kulcsot. 
+\item A titkosított üzenet két részből áll, amelyet csak a címzett tud visszafejteni. 
+\end{itemize}
+\item Rivest--Shamir--Adleman (RSA) titkosítás 
+\begin{itemize}
+\item Két nagy prímszám szorzatán alapul. 
+\item A nyilvános kulccsal titkosított üzenetet csak a titkos kulccsal lehet
+visszafejteni. 
+\item Alkalmas aláírásra és titkosításra is. 
+\end{itemize}
+\item Elliptic Curve Cryptography (ECC) 
+\begin{itemize}
+\item Az elliptikus görbén végzett műveleteken alapul. 
+\item Azonos biztonság kisebb kulcshosszal -- hatékonyabb és gyorsabb. 
+\item Alkalmas aláírásra, titkosításra és kulcscserére is. 
+\end{itemize}
+\end{enumerate}
+Sokszor kihasználjuk a primitív gyököket a titkosítások során, így
+itt egy kis ismétlő:
+
+Egy$\pmod n$ maradékosztálynak keressük a generátorát (primitív gyökét).
+Ehhez szükségük van $\varphi(n)$-re, vagyis az Euler féle fí-függvénnyel
+meghatározzuk az $n$-nél kisebb $n$-el relatív prímek számát. 
+\[
+\varphi(n)=(p_{1}-1)(p_{2}-1)\dots(p_{r-1}-1)(p_{r}-1)\quad\text{ ahol }p_{i}=\overline{1,r}\text{ az }n\text{ prímtényezői.}
+\]
+\begin{example}
+$\varphi(33)=(3-1)(11-1)=20$ vagy $\varphi(23)=23-1=22$.
+\end{example}
+Ha ez megvan akkor tekintjük $\varphi(n)$ összes prím osztóját és
+ezekkel leellenőrizzük, hogy az általunk választott szám lehet-e generátor,
+azaz primitív gyök.
+
+\begin{example}
+\begin{align*}
+ & n=23,\,\varphi(n)=22\\
+ & 22\text{ prímosztói: }2,\,11;\\
+ & 5^{\frac{22}{5}}\not\equiv1\pmod{23}\quad5^{\frac{22}{2}}\not\equiv1\pmod{23}
+\end{align*}
+Ha egyik sem relatív prím $\varphi(n)=22$-vel, akkor a választott
+szám $5$ generátora a $\mathbb{Z}_{23}^{*}$-nak.
+
+\begin{tabular}{cccc}
+$5^{1}\equiv5\pmod{23}$  & $5^{2}\equiv2\pmod{23}$  & $5^{3}\equiv10\pmod{23}$  & $5^{4}\equiv4\pmod{23}$ \tabularnewline
+$5^{5}\equiv20\pmod{23}$  & $5^{6}\equiv8\pmod{23}$  & $5^{7}\equiv17\pmod{23}$  & $5^{8}\equiv16\pmod{23}$ \tabularnewline
+$5^{9}\equiv11\pmod{23}$  & $5^{10}\equiv9\pmod{23}$ & $5^{11}\equiv22\pmod{23}$ & $5^{12}\equiv18\pmod{23}$\tabularnewline
+$5^{13}\equiv21\pmod{23}$ & $5^{14}\equiv13\pmod{23}$ & $5^{15}\equiv19\pmod{23}$ & $5^{16}\equiv3\pmod{23}$ \tabularnewline
+$5^{17}\equiv15\pmod{23}$ & $5^{18}\equiv6\pmod{23}$  & $5^{19}\equiv7\pmod{23}$  & $5^{20}\equiv12\pmod{23}$\tabularnewline
+$5^{21}\equiv14\pmod{23}$ & $5^{22}\equiv1\pmod{23}$  &  & \tabularnewline
+\end{tabular}
+\end{example}
+
+\section*{Titkosítási módszerek kifejtése}
+
+\subsection*{1. Diffie--Hellman kulcscsere}
+
+Nyilvános: $p$ nagy prím, $g$ primitív gyök (generátor)$\pmod p$-n
+
+Titkos: $a,\,b$ tetszőleges természetes számok
+
+Ekkor kiszámítható: $A\equiv g^{a}\pmod p$ és $B\equiv g^{b}\pmod p$
+Ezeket alapján kiszámítható egy közös, titkos kulcs ($K$): 
+\[
+A^{b}\equiv K\equiv B^{a}\pmod p
+\]
+
+\begin{example}
+Anna és Balázs létre akar hozni egy titkos kulcsot.
+De csak nyilvános csatornán tudnak kommunikálni. 
+\[
+p=23,\,g=5\quad(\,g\in\{5,\,7,\,10,\,11,\,14,\,15,\,17,\,19,\,20,\,21\}\,)
+\]
+Mindketten választanak titkos számot: $a=3$ (Anna), $b=4$ (Balázs).
+
+Anna kiszámítja: $A\equiv5^{3}\equiv10\pmod{23}$, ezt elküldi Balázsnak
+a nyilvános csatornán.
+
+Balázs kiszámítja: $B\equiv5^{4}\equiv4\pmod{23}$, ezt elküldi Annának
+a nyilvános csatornán
+
+Ezután mindketten a kapott számokat hatványozzák a saját titkos számukkal:
+Balázs: $K\equiv10^{4}\equiv18\pmod{23}$. Anna: $K\equiv4^{3}\equiv18\pmod{23}$.
+
+Megvan a titkos kulcs ($K=18$). Ezt senki más nem tudja rajtuk kívül.
+
+Spártai Pistike elhatározza, hogy megfejti a titkos kódot.
+
+Ismeri: $p=23,\,g=5,\,A=10,\,B=4$. És a módszert is tudja. Ahhoz,
+hogy a titkos kulcsot meghatározza, szüksége van az egyik titkos számra.
+\begin{align*}
+A & \equiv g^{a}\pmod p\\
+10 & \equiv5^{a}\pmod{23}\\
+a & =\log_{5}(10+k\cdot23),\quad a,\,k\in\mathbb{N}
+\end{align*}
+
+Ezt elég nehéz visszafejteni ha valóban nagy számokkal dolgozunk.
+($k=5$-re megkapjuk az eredményünket)
+\end{example}
+
+\subsection*{2. ElGamal titkosítás}
+
+Az ElGamal titkosítás az imént említett kulcscserén alapszik.
+
+Titkos: $x$ - csak a címzett ismeri
+
+Nyilvános: $p$ prím, $g$ generátora $\mathbb{Z}_{p}^{*}$-nak. És
+$y=g^{x}$ egy nyilvános kulcs.
+
+\textbf{Titkosítás:}
+
+Anna választ egy számot, $k$-t, és kiszámítja:
+
+\[
+c_{1}=g^{k}\pmod p,
+\]
+\[
+c_{2}=m\cdot y^{k}\pmod p,
+\]
+
+ahol $m$ az üzenet. Ezeket elküldi Balázsnak aki dekódolja:
+
+\[
+m=c_{2}\cdot(c_{1}^{x})^{-1}\pmod p
+\]
+
+
+\begin{example}
+Nyilvános adatok: $p=23,\,g=5,y=8\,(\equiv5^{6}\pmod{23})$
+
+Titkos adatok: $x=6,\,k=3$ ez utóbbit Anna választja tetszés szerint,
+minden üzenethez másat.
+
+Üzenet: $13$
+
+Anna számol:
+
+\[
+c_{1}=5^{3}\equiv10\pmod{23},
+\]
+\[
+c_{2}=13\cdot8^{3}\equiv17\pmod{23}
+\]
+
+Elküldött üzenet: $(10,17)$
+
+Balázs számol:
+
+\[
+c_{1}^{x}=10^{6}\equiv2\pmod{23},
+\]
+\[
+2^{-1}\equiv12\pmod{23},
+\]
+\[
+m=17\cdot12\equiv13\pmod{23}
+\]
+
+Üzenet visszafejtve.
+\end{example}
+Megjegyzés: A tetszés szerint választott $k$ esetében figyelembe
+kell venni néhány dolgot ahhoz, hogy biztonságos legyen az üzenet
+váltás: 
+\begin{enumerate}
+\item $k\neq0,\,k\in{1,\,2,\,\dots,\,p-2}$, 
+\item $k$ relatív prím $p-1$-el (hogy létezzen inverze), 
+\item Minden üzenethez válasszunk más $k$-t, különben visszafejthető az
+üzenet. 
+\end{enumerate}
+
+\begin{example}
+A betűket az (\ref{Attila_tabular}) táblázat alapján feleltetjük
+meg számoknak. Nyilvános kulcs: $p=22223,\,g=5,\,y=11456$
+
+"Példa" = "31 51 59 49 45". Ezeket egymás után fűzzük úgy, hogy
+még beleférjenek a $\pmod{22223}$ maradékosztályba: "3151 5949 4500".
+Ezt a három számot titkosítjuk. Választunk $k=8$-t.
+
+\[
+c_{1}\equiv5^{8}\equiv12834\pmod{22223}
+\]
+\[
+c_{2}\equiv(3151,\,5949,\,4500)11456^{8}\equiv(03151,\,05949,\,00045)16903\pmod{22223}
+\]
+\[
+c_{2}\equiv(15045,\,19095,\,05053)\pmod{22223}
+\]
+
+Ekkor elküldjük ($c_{1},c_{2}$)-t, ami ($12834,15045,19095,05053$).
+Ha ezt megpróbálnánk betűkké alakítani az (\ref{Attila_tabular})
+táblázat alapján, akkor lennének furcsa jeleink (Ha kiegészítenénk
+a táblázatot mindenféle karakterrel @'+\#\%...) és összekevert betűk
+is.
+\end{example}
+
+Különböző táblázatok, melyeket világszerte használnak: Ascii, utf-8, stb.
+
+Példa táblázat betűk és számok közti megfeleltetésre:
+
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+\hline 
+\multicolumn{2}{|c|}{Karakter / Kód} & \multicolumn{2}{c|}{Karakter / Kód} & \multicolumn{2}{c|}{Karakter / Kód} & \multicolumn{2}{c|}{Karakter / Kód} & \multicolumn{2}{c|}{Karakter / Kód}\tabularnewline
+\hline 
+A  & 10  & L  & 24  & Ü  & 38  & f  & 52  & p  & 66 \tabularnewline
+Á  & 11  & M  & 25  & Ű  & 39  & g  & 53  & q  & 67 \tabularnewline
+B  & 12  & N  & 26  & V  & 40  & h  & 54  & r  & 68 \tabularnewline
+C  & 13  & O  & 27  & W  & 41  & i  & 55  & s  & 69 \tabularnewline
+D  & 14  & Ó  & 28  & X  & 42  & í  & 56  & t  & 70 \tabularnewline
+E  & 15  & Ö  & 29  & Y  & 43  & j  & 57  & u  & 71 \tabularnewline
+É  & 16  & Ő  & 30  & Z  & 44  & k  & 58  & ú  & 72 \tabularnewline
+F  & 17  & P  & 31  & a  & 45  & l  & 59  & ü  & 73 \tabularnewline
+G  & 18  & Q  & 32  & á  & 46  & m  & 60  & ű  & 74 \tabularnewline
+H  & 19  & R  & 33  & b  & 47  & n  & 61  & v  & 75 \tabularnewline
+I  & 20  & S  & 34  & c  & 48  & o  & 62  & w  & 76 \tabularnewline
+Í  & 21  & T  & 35  & d  & 49  & ó  & 63  & x  & 77 \tabularnewline
+J  & 22  & U  & 36  & e  & 50  & ö  & 64  & y  & 78 \tabularnewline
+K  & 23  & Ú  & 37  & é  & 51  & ő  & 65  & z  & 79 \tabularnewline
+\hline 
+\end{tabular}\label{Attila_tabular}
+
+\subsection*{3. Rivest--Shamir--Adleman (RSA) titkosítás}
+
+Az RSA titkosítási módszer alkalmas aláírásra és titkosításra is.
+
+\begin{example}
+Anna kulcspárt készít: Kiválaszt két prímszámot és összeszorozza:
+$n=3\cdot11=33$, majd kiszámítja a $\varphi(33)=20$-et.
+
+Ez alapján tud nyilvános kulcsot választani (pl. $e=3$-t), ami invertálható
+kell legyen (tehát relatív prím $20$-al).
+
+Titkos kulcs $d$:
+
+\[
+d\cdot e\equiv1\pmod{\varphi(n)}
+\]
+\[
+7\cdot3\equiv21\equiv1\pmod{20}
+\]
+\[
+\Rightarrow d=7
+\]
+
+Nyilvános kulcs: ($n=33,e=3$)
+
+Privát kulcs: $d=7$
+
+Balázs titkosítja az $m=4$ üzenetet: $c\equiv m^{e}\equiv4^{3}\equiv64\equiv31\pmod{33}$.
+
+Ezt elküldi Annának aki megfejti: $m\equiv c^{d}\pmod{33}\Rightarrow31^{7}\equiv4\pmod{33}$.
+\vspace*{1em}
+
+Most Anna küldött üzenetet Balázsnak és azt aláírta a titkos kulcsával
+(Az üzenet legyen most is $4$, ezt titkosította Balázs nyilvános
+kulcsával):
+
+$s\equiv m^{d}\pmod{33}\Rightarrow s\equiv4^{7}\equiv16\pmod{33}$.
+
+Balázs megfejtette az üzenetet ($4$) és most megnézi, hogy valóban
+Annától jött-e az üzenet, illetve módosítottak-e az üzeneten közben.
+
+$s^{e}\equiv16^{3}\equiv4\pmod{33}$, ami talál az üzenettel, tehát
+nem módosítottak rajta és valóban Anna küldte.
+\end{example}
+\textbf{Megjegyzés:} itt nincs bemutatva de a két emberhez különböző
+kulcsok tartoznak pl. Balázsé lehetne $e_{B}=17,\,n_{B}=77$. \vspace{1em}
+
+Ez körülbelül így működik az e-mailekkel is. Mindenkinek az email
+címe tulajdonképpen az ő nyilvános kulcsa.
+
+\begin{tabular}{lll}
+\textbf{Művelet}  & \textbf{Használt kulcs}  & \textbf{Cél} \tabularnewline
+Titkosítás  & Címzett nyilvános kulcsa  & Bizalmasság \tabularnewline
+Visszafejtés  & Címzett privát kulcsa  & Csak ő olvashatja \tabularnewline
+Aláírás  & Feladó privát kulcsa  & Hitelesítés \tabularnewline
+Aláírás ellenőrzése  & Feladó nyilvános kulcsa  & Ellenőrzés\tabularnewline
+\end{tabular}
+
+\subsection*{4. ECC (Elliptic Curve Cryptography)}
+
+Hasonlóan működik az RSA módszerhez csak a titkosításhoz bonyolultabb
+képletet használunk ezért nem kell nagy számokkal dolgozni, emiatt
+hatékonyabb a titkosítás és mégis ugyanolyan biztonságot nyújt. Használják
+telefonos rendszerekhez.
+
+Itt veszünk egy elliptikus görbét pl.: 
+\[
+y^{2}\equiv x^{3}+ax+b\pmod p,
+\]
+ahol $p$ egy kis prím amin belül dolgozunk. A görbe bonyolultsága
+$a$-tól és $b$-től függ.
+
+Választunk egy bázispontot $G=(x_{1},y_{1})$ ami rajta van a görbén
+és annyiszor végzünk pontösszeadást vele amennyi a titkos kulcsunk
+$d$.
+
+\begin{example}
+Titkos: $d=4,\,G=(3,6)$
+
+Nyilvános: $a=2,\,b=3,4G\equiv(80,87)$
+
+A pontduplázásra használt képlet:
+
+\[
+\lambda=\frac{3x_{1}^{2}+a}{2y_{1}}\pmod p
+\]
+\[
+x_{2}=\lambda^{2}-2x_{1}\pmod p
+\]
+\[
+y_{2}=\lambda(x_{2}-x_{1})-y_{1}\pmod p
+\]
+
+Esetünkben: $\lambda=\frac{29}{12}\equiv29\cdot12^{-1}\equiv59\pmod{97}$,
+ez alapján $2G=80,87$. \vspace{1em}
+
+Két különböző pont összeadása ($2G+G=3G,\quad2G=(x_{2},y_{2}),\,G=(x_{1},y_{1})$):
+\[
+\lambda=\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\pmod p
+\]
+\[
+x_{3}=\lambda^{2}-x_{1}-x_{2}\pmod p
+\]
+\[
+y_{3}=\lambda(x_{2}-x_{1})-y_{2}\pmod p
+\]
+
+Esetünkben: $\lambda=59$ (Ez véletlen, hogy ugyanannyi lett). $3G=(x_{3},y_{3})=(3,6)$
+Vagyis olyan a görbénk és a bázispontunk, hogy a ciklusa kettő, ez
+nem mondható biztonságosnak.
+\end{example}
+
+\section*{Kulcshosszok és biztonság}
+
+\subsection*{RSA és ElGamal kulcshossz vs. biztonság}
+\begin{center}
+\begin{tabular}{rrl}
+\hline 
+\textbf{Kulcshossz (bit)}  & \textbf{Számjegyek (kb.)}  & \textbf{Biztonság} \tabularnewline
+\hline 
+1024  & 310  & Rossz \tabularnewline
+2048  & 617  & Minimális \tabularnewline
+3072  & 925  & Ideális \tabularnewline
+4096  & 1234  & Erős \tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+
+\subsection*{Elliptikus görbe alapú titkosítás (ECC)}
+\begin{center}
+\begin{tabular}{rrrl}
+\hline 
+\textbf{ECC kulcshossz}  & \textbf{Számjegyek (kb.)}  & \textbf{RSA/ElGamal megfelelője}  & \textbf{Biztonság} \tabularnewline
+\hline 
+160 bit  & 48  & 1024 bit  & Rossz \tabularnewline
+224 bit  & 68  & 2048 bit  & Minimális \tabularnewline
+256 bit  & 78  & 3072 bit  & Ideális \tabularnewline
+384 bit  & 116  & 7680 bit  & Erős \tabularnewline
+521 bit  & 157  & 15360 bit  & Sok \tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+
+\section*{Probabilisztikus prímtesztek}
+
+A valódi prímteszt algoritmusok nagyon lassúak, ezért használunk módszereket
+arra, hogy meghatározzuk egy szám összetett vagy "valószínűleg prím"-e.
+
+\subsection*{Fermat prímteszt}
+
+A Fermat probabilisztikus prímteszt a kis-Fermat tételre alapszik:
+Ha $a^{p-1}\equiv1\pmod p$, ahol $a$ egy véletlen szám, de nem többszöröse
+$p$-nek. Általában $1$ és $p-1$ közötti számokat választunk.
+
+Ha $a^{p-1}\equiv1\pmod p$ teljesül, de $p$ összetett, akkor $a$-t
+"Fermat-hazug"-nak és $p$-t pszeudoprímnek nevezzük az $a$ alappal.
+Amíg ki nem derül, hogy $p$ ténylegesen prím-e azt, mondjuk valószínűleg
+prím.
+
+Ha $a^{p-1}\equiv1\pmod p$ nem teljesül $p$ biztosan összetett.
+
+Ezt elvégezzük több $a$-ra is de nem érdemes túl sokra, mert ha egy
+számra pszeudoprím akkor valószínűleg többre is az lesz.
+
+\subsection*{Miller--Rabin prímteszt}
+
+Ez a Fermat prímteszt kiterjesztése, annyi a különbség, hogy itt két
+állítást nézünk és az alapot úgy választjuk, hogy relatív prím legyen
+$p$-vel. A $p-1$-et felírjuk mint $2^{s}\cdot d$. 
+\begin{enumerate}
+\item $a^{d}\equiv1\pmod p$ 
+\item $a^{2^{r}\cdot d}\equiv-1\pmod p$, néhány $0\leq r<s$-re 
+\end{enumerate}
+Ha ebből a két állításból egyik teljesül akkor már azt mondjuk, hogy
+erősen valószínű prímszám. Illetve ha nem prím valójában akkor: erős
+pszeudoprím az alapra nézve és erős hazug az alap.
+
+\section*{Házi feladatok}
+\begin{problem}
+Végezz Miller--Rabin probabilisztikus prímtesztet az alábbi számokra: 
+\begin{enumerate}
+\item $1033$ 
+\item $2773$ 
+\end{enumerate}
+\end{problem}
+
+\begin{solution}
+\hspace{0em}\vspace{1em}
+
+\textbf{1.} Kell egy alap ami relatív prím az első számra. Látható,
+hogy a szám nem osztható a $2,\,3,\,4,\,5$ számokkal így minden szám
+ami ezen számok hatványainak, jó lesz alapnak.
+
+Legyen $a=3$. Továbbá a $p-1=1032=2^{3}\cdot129$ számításból kiderült,
+hogy $s=3$ és $d=129$. 
+\begin{align*}
+3^{129} & \equiv\,?\pmod{1033}\\
+3^{7} & \equiv121\pmod{1033}\\
+3^{9} & \equiv121\cdot3^{2}\equiv56\pmod{1033}\\
+3^{18} & \equiv56\cdot56\equiv37\pmod{1033}\\
+3^{36} & \equiv336\pmod{1033}\\
+3^{72} & \equiv299\pmod{1033}\\
+3^{108} & \equiv336\cdot299\equiv263\pmod{1033}\\
+3^{21} & \equiv3^{18}\cdot3^{3}\equiv37\cdot27\equiv999\pmod{1033}\\
+3^{129} & \equiv999\cdot263\equiv355\pmod{1033}
+\end{align*}
+
+Ez nem teljesült nézzük a második állítást. Tudjuk, hogy $r\in\{0,\,1,\,2\}$
+számokkal dolgozhatunk. Tudjuk, hogy nullára nem teljesül, az előző
+számítás alapján.
+
+\begin{align*}
+3^{2^{1}\cdot129} & \equiv\,?\pmod{1033}\\
+3^{2\cdot129} & \equiv355\cdot355\equiv-1\pmod{1033}\text{ jó}\\
+3^{4\cdot129} & \equiv(-1)^{2}\equiv1\pmod{1033}\text{ nem jó}\\
+\end{align*}
+
+Látható az is, hogy ha találtunk egy jót onnantól minden második lesz
+jó. Így most, hogy 3 érték közül egy értékre lett jó az eredmény elfogadhatjuk
+mint "néhány érték" azt az egyet.
+
+Állíthatjuk, hogy az $1033$ erősen valószínűleg prím. (Egyébként
+az, pontosabban egy boldog prímszám)
+
+\textbf{2.} Hasonlóan gondolkodunk, $a=2$-re nézzük ez úttal. 
+\[
+2772=2^{2}\cdot693
+\]
+
+\begin{align*}
+2^{12} & \equiv1323\pmod{2773}\\
+2^{24} & \equiv566\pmod{2773}\\
+2^{48} & \equiv1461\pmod{2773}\\
+2^{96} & \equiv2084\equiv-689\pmod{2773}\\
+2^{192} & \equiv538\pmod{2773}\\
+2^{384} & \equiv1052\pmod{2773}\\
+2^{576} & \equiv284\pmod{2773}\\
+2^{672} & \equiv1207\pmod{2773}\\
+2^{684} & \equiv2386\pmod{2773}\\
+2^{693} & \equiv512\cdot2386\equiv1512\pmod{2773}
+\end{align*}
+
+Ismét próbálkozunk a második kongruenciával. Most $r\in\{0,\,1\}$.
+\[
+2^{2\cdot693}\equiv1192\pmod{2773}
+\]
+
+Egyik állítás sem teljesült, így állíthatjuk, hogy a kettő tanúja
+annak, hogy a $2773$ nem prím. Ez valóban így van, mivel $2773=47\cdot59$.
+\end{solution}
+\begin{problem}
+Titkosítsd az $m=13$ üzenetet ElGamal algoritmussal, a publikus kulcsok
+$p=29,\,g=3,\,y=5$. A $k$-t amivel titkosítasz te választod ki.
+
+(A végeredményed tartalmazza a $c_{1}=g^{k}$ és $c_{2}=m\cdot y^{k}$-t
+is $\pmod{29}$-en) 
+\end{problem}
+
+\begin{solution}
+\hspace{0em}\vspace{1em}
+
+Legyen $k=4$, ez a legkisebb szám amire $g^{k}$ "kilóg" a maradékosztályból
+de még kicsi, hogy könnyű legyen a számítás. 
+\begin{align*}
+c_{1} & \equiv3^{4} & \equiv23\pmod{29}\\
+c_{2} & \equiv13\cdot5^{4} & \equiv5\pmod{29}
+\end{align*}
+
+Titkosított üzenet: $23,5$.
+
+Javításhoz lehet ellenőrizni a titkos kulccsal és egy algoritmussal,
+ha könnyebb: $d=10$. 
+\[
+m\equiv c_{2}\cdot(c_{1}^{10})^{-1}\pmod{29}
+\]
+\end{solution}
+\begin{problem}Jancsika kétszer küldött Juliskának üzenetet. Amiket ismerünk: $p=29,\,g=3,\,y=5,\,(c_{1},\,c_{2})=(23,\,5),\,(c_{1}',\,c_{2}')=(23,6)$.
+Te vagy Juliska minden lében kanál barátja akinek elárulta az első
+üzenet tartalmát: $m_{1}=13$
+
+Határozd meg $m_{2}$-t! 
+\end{problem}
+
+\begin{solution}
+\hspace{0em}\vspace{1em}
+
+Abból, hogy $c_{1}=c_{1}'$ következtethetünk arra, hogy ugyanazt
+a $k$-t használta Jancsi a titkosításhoz.
+
+Tudjuk, hogy: 
+\[
+m\equiv c_{2}\cdot(c_{1}^{10})^{-1}\pmod{29}
+\]
+ez alapján: 
+\[
+(c_{1}^{10})^{-1}\equiv\frac{m_{1}}{c_{2}}\equiv m_{1}\cdot c_{2}^{-1}\equiv13\cdot6\equiv20\pmod{29}
+\]
+
+Az új üzenet $m_{2}\equiv c_{2}'\cdot20\equiv4\pmod{29}$.
+\end{solution}
+\begin{problem}
+Titkosítsd és írd alá az $m=24$ üzenetet RSA titkosítással.
+
+A te nyilvános kulcsod: $e=17,\,n=77$
+
+A te privát kulcsod: $d=53$
+
+A címzett nyilvános kulcsa $e_{1}=5,\,n_{1}=65$ 
+\end{problem}
+
+\begin{solution}
+\hspace{0em}\vspace{1em}
+
+\[
+c\equiv24^{5}\equiv59\pmod{65}
+\]
+\[
+s\equiv59^{16}\equiv4\pmod{77}
+\]
+\[
+s\equiv59^{16\cdot3+5}\equiv59^{53}\pmod{77}
+\]
+\[
+s\equiv59^{53}\equiv75\pmod{77}
+\]
+\end{solution}
+\begin{problem}
+Fejtsd meg a $c=15$ üzenetet ami RSA titkosítással volt védve és
+ellenőrizd, hogy tényleg tőle jött-e az üzenet, itt az aláírás $s=5$.
+(Az előző feladat címzettje válaszolt)
+
+A te nyilvános kulcsod: $e=17,\,n=77$
+
+A te privát kulcsod: $d=53$
+
+A küldő nyilvános kulcsa $e_{1}=5,\,n_{1}=65$ 
+\end{problem}
+
+\begin{solution}
+\hspace{0em}\vspace{1em}
+
+\[
+m\equiv c^{d}\equiv15^{53}\equiv64\pmod{77}
+\]
+Részeredmények: 
+\[
+15^{2}\equiv71\pmod{77}
+\]
+\[
+71\cdot15\equiv64\equiv-13\pmod{77}
+\]
+\[
+(-13)^{2}\equiv15\equiv15^{6}\pmod{77}
+\]
+\[
+(15^{5})^{10}\equiv1^{10}\equiv1\pmod{77}
+\]
+\[
+15^{53}\equiv15^{3}\equiv64\pmod{77}
+\]
+
+\[
+s^{5}\equiv5^{5}\equiv5\pmod{65}
+\]
+\[
+5\neq64
+\]
+Tehát az üzenet nem a küldőtől titkos kulcsával írták alá (nem ő küldte
+de az ő nevével). Vagy módosítottak az ő eredeti üzenetén.
+
+\textbf{Ez nem a megoldás része, csak érdekesség, ha valaki visszajött
+megnézni:} A másik fél titkos kulcsa $d_{1}=29$ 
+\[
+m\equiv-1\pmod{65}
+\]
+\[
+s\equiv m^{29}\equiv-1\equiv64\pmod{65}
+\]
+Ha a feladatban $s=64$-et kaptunk volna, akkor a $(64)^{5}\equiv-1\equiv64\pmod{65}$
+aláírás ellenőrzés megegyezett volna az üzenettel. 
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Fábián Nóra]
+Egy titkosítórendszerben két relatív kis prímszámot használtak RSA
+kulcsgeneráláshoz, de csak a nyilvános kulcs ismert: 
+\begin{itemize}
+\item $n=2623$ 
+\item $e=17$ 
+\end{itemize}
+Egy titkosított üzenet: $C=588$ 
+\begin{enumerate}
+\item Próbáld meg visszafejteni az RSA privát kulcsot: azaz találd meg a
+privát kitevőt $d$, amely kielégíti: $ed\equiv1\pmod{\varphi(n)}$. 
+\item Fejtsd vissza a titkosított üzenetet $C$ a privát kulccsal. 
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+~
+\begin{enumerate}
+\item \textbf{A modulus faktorizálása:}
+
+Próbáljuk meg felbontani $n=2623$-at prímfaktoraiba:
+
+\[
+2623=43\cdot61
+\]
+
+Tehát: $p=43$, $q=61$.
+\item \textbf{Euler-féle függvény:}
+
+\[
+\varphi(n)=(p-1)(q-1)=42\cdot60=2520
+\]
+
+\item \textbf{A privát kulcs:}
+
+Keressük $d$-t úgy, hogy:
+
+\[
+ed\equiv1\pmod{2520}\quad\text{ahol }e=17
+\]
+
+Ez azt jelenti, hogy $d$ a 17 moduláris inverze 2520 modulo szerint.
+A bővített euklideszi algoritmus alapján:
+
+\[
+d=1481\quad\text{(mert }17\cdot1481\equiv1\pmod{2520})
+\]
+
+Tehát a privát kulcs: $(n=2623,\ d=1481)$
+\item \textbf{Az üzenet visszafejtése:}
+
+\[
+M=C^{d}\mod n=588^{1481}\mod 2623
+\]
+
+Ez hatékonyan kiszámolható gyors hatványozással (pl. Pythonban \texttt{pow(588,
+1481, 2623)}), és az eredmény: $M=42$ 
+
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Az RSA az egyik legnépszerűbb nyilvános kulcsú kriptográfiai rendszer.
+Tudjuk, hogy két nagy prímszámmal, $p$-vel és $q$-val működik, amelyeket
+minden felhasználónak titokban kell tartania. \\
+ Eve egy rosszindulatú szereplő, aki szeret ellopni titkos RSA-paramétereket
+a felhasználóktól, majd ezeket az Interneten kínálja megvételre. Ma
+egy új prímpár, $p$ és $q$ eladását ajánlja, amelyek kielégítik
+a következő összefüggést:
+
+\[
+p^{4x}+4\cdot2015=q^{4y}
+\]
+
+ahol $x$ és $y$ természetes számok.
+
+\bigskip{}
+
+Meg kellene vásárolniuk Eve ügyfeleinek ezeket a számokat?\emph{ (NSCUCRYPTO,
+2015) }
+\end{extraproblem}
+
+\begin{solution}
+Legyen $A=p^{4x}$ és $B=q^{4y}$. Vizsgáljuk az egyenletet modulo
+3 szerint: 
+\[
+A+2=B.
+\]
+Ismert, hogy egy négyzetszám és 2 nem lehetnek kongruensek modulo
+3 szerint. Ha $A\equiv0\pmod 3$, akkor $B\equiv2\pmod 3$, ami nem
+lehetséges. Ha $A\equiv1\pmod 3$, akkor $B\equiv0\pmod 3$, tehát
+3 osztja $B$-t, így $q=3$, mivel $q$ prímszám.
+
+Megjegyezhetjük, hogy $B\equiv1\pmod 8$, tehát 
+\[
+A=B-4\cdot2015\equiv1-4\cdot5\pmod 8.
+\]
+De egy $4y$-edik hatvány és 5 nem lehetnek kongruensek modulo 8 szerint,
+így tehát \emph{nem szabad megvásárolni} ezeket a számokat Eve-től. 
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+Egy egyszerűsített RSA-rendszert használunk, ahol:
+\begin{itemize}
+\item A két prím: $p=5$ és $q=11$. 
+\item A nyilvános kulcshoz kiszámoljuk: $n=p\cdot q$, valamint $\varphi(n)=(p-1)(q-1)$. 
+\item Válasszuk $e=3$-at, amelyre $\gcd(e,\varphi(n))=1$. 
+\item Számítsuk ki a privát kulcs $d$ értékét, amely kielégíti: $e\cdot d\equiv1\pmod{\varphi(n)}$. 
+\end{itemize}
+Egy titkosítandó üzenet a következő szám: $m=7$. Számítsd ki:
+\begin{enumerate}
+\item[a)] a nyilvános kulcsot $(n,e)$, 
+\item[b)] a privát kulcs $d$ értékét, 
+\item[c)] a titkosított üzenetet $c$, ahol $c\equiv m^{e}\mod n$, 
+\item[d)] a visszafejtett üzenetet $m'$, ahol $m'\equiv c^{d}\mod n$. 
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+\textbf{a) Nyilvános kulcs:}
+
+\[
+n=5\cdot11=55,\quad\varphi(n)=(5-1)(11-1)=4\cdot10=40
+\]
+\[
+\text{Mivel }\gcd(3,40)=1,\text{ így }e=3\text{ megfelelő.}
+\]
+\[
+\textbf{Nyilvános kulcs: }(n,e)=(55,3)
+\]
+
+\textbf{b) Privát kulcs:}
+
+Megoldandó: $3\cdot d\equiv1\pmod{40}$
+
+\[
+3\cdot27=81\equiv1\pmod{40}
+\]
+\[
+\textbf{Privát kulcs: }d=27
+\]
+
+\textbf{c) Titkosított üzenet:}
+
+\[
+c\equiv7^{3}\mod 55=343\mod 55=13
+\]
+\[
+\textbf{Titkosított üzenet: }c=13
+\]
+
+\textbf{d) Visszafejtés:}
+
+\[
+m'\equiv13^{27}\mod 55
+\]
+
+Gyors hatványozással:
+
+\[
+13^{2}=169\mod 55=4,\quad13^{4}=4^{2}=16,\quad13^{8}=16^{2}=256\mod 55=36
+\]
+\[
+13^{16}=36^{2}=1296\mod 55=31
+\]
+
+\[
+13^{27}=13^{16}\cdot13^{8}\cdot13^{2}\cdot13\Rightarrow31\cdot36\cdot4\cdot13\mod 55
+\]
+
+\[
+31\cdot36=1116\mod 55=16,\quad16\cdot4=64\mod 55=9,\quad9\cdot13=117\mod 55=7
+\]
+
+\[
+\textbf{Visszafejtett üzenet: }m'=7
+\]
+\end{solution}
+\begin{extraproblem}[Kovács Levente]
+Egy RSA rendszerben a felhasználó a következő két prímszámot választotta: $p=17$, $q=11$.
+\begin{enumerate}
+    \item Határozd meg a nyilvános és a privát kulcsokat!
+    \item Titkosítsd az \( M = 88 \) üzenetet a nyilvános kulccsal!
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+    \underline{Kulcsgenerálás:}
+    \begin{align*}
+        n &= p \cdot q = 17 \cdot 11 = 187 \\
+        \varphi(n) &= (p - 1)(q - 1) = 16 \cdot 10 = 160
+    \end{align*}
+
+    Válasszunk egy \( e \) értéket, amely relatív prím \( \varphi(n) \)-nel.  
+    Legyen például \( e = 7 \), mert \( \gcd(7, 160) = 1 \).
+
+    Számoljuk ki a privát kulcshoz szükséges \( d \) értéket úgy, hogy:
+    \[
+    d \cdot e \equiv 1 \pmod{160}
+    \Rightarrow d \cdot 7 \equiv 1 \pmod{160}
+    \]
+
+    A megoldás: \( d = 23 \), mivel \( 7 \cdot 23 = 161 \equiv 1 \pmod{160} \)
+
+    Kulcsok:
+    \[
+    \text{Nyilvános kulcs: } (e = 7,\; n = 187), \quad
+    \text{Privát kulcs: } (d = 23,\; n = 187)
+    \]
+
+    \underline{Titkosítás:}
+
+    Titkosítandó üzenet: \( M = 88 \)
+
+    A titkosított üzenet:
+    \[
+    C = M^e \mod n = 88^7 \mod 187
+    \]
+
+    Gyors hatványozással:
+
+    \begin{align*}
+        88^2 &= 7744 \mod 187 = 77 \\
+        88^4 &= 77^2 = 5929 \mod 187 = 132 \\
+        88^7 &= 88 \cdot 88^2 \cdot 88^4 = 88 \cdot 77 \cdot 132 \mod 187
+    \end{align*}
+
+    \[
+    88 \cdot 77 = 6776 \mod 187 = 43, \quad
+    43 \cdot 132 = 5676 \mod 187 = \boxed{66}
+    \]
+
+    Titkosított üzenet: \( C = 66 \)
+\end{solution}
+
+\begin{extraproblem}[Kovács Levente]
+    Egy RSA rendszer nyilvános kulcsa:
+\[
+e = 5, \quad n = 221
+\]
+A privát kulcs:
+\[
+d = 77
+\]
+Egy titkosított üzenet: \( C = 36 \)
+\begin{enumerate}
+    \item Fejtsd vissza a titkosított üzenetet!
+    \item Igazold, hogy a visszafejtett üzenet helyes!
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+    \begin{itemize}
+    
+    \item Visszafejtés:
+
+    \[
+    M = C^d \mod n = 36^{77} \mod 221
+    \]
+
+    \item Binárisan:  
+    \[
+    77 = 1001101_2 \Rightarrow
+    36^{77} = 36^{64} \cdot 36^8 \cdot 36^4 \cdot 36^1
+    \]
+
+    \item Számolások:
+    \begin{align*}
+        36^2 &= 1296 \mod 221 = 212 \\
+        36^4 &= 212^2 = 44944 \mod 221 = 104 \\
+        36^8 &= 104^2 = 10816 \mod 221 = 1 \\
+        36^{64} &= 1
+    \end{align*}
+
+    \item Ezután:
+    \[
+    M = 1 \cdot 1 \cdot 104 \cdot 36 = 3744 \mod 221 = \boxed{113}
+    \]
+
+    \item Ellenőrzés:
+
+    \[
+    C = M^e \mod n = 113^5 \mod 221
+    \]
+
+    \begin{align*}
+        113^2 &= 12769 \mod 221 = 181 \\
+        113^4 &= 181^2 = 32761 \mod 221 = 101 \\
+        113^5 &= 113 \cdot 101 = 11413 \mod 221 = \boxed{36}
+    \end{align*}
+
+    Ez egyezik az eredeti titkosított üzenettel, tehát a visszafejtés helyes.
+\end{itemize}
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Egy üzenetet RSA algoritmus segítségével szeretnénk titkosítani.
+Az alábbi paramétereket használjuk:
+\begin{itemize}
+\item Két prím: $p=61$, $q=53$ 
+\item Nyilvános kulcs komponense: $e=17$ 
+\item Titkosítandó üzenet: $M=65$ 
+\end{itemize}
+\noindent Határozzuk meg:
+\begin{enumerate}
+\item Az RSA modulusát $n=pq$ és az Euler-függvényt $\varphi(n)$ 
+\item A privát kulcsot $d$, ahol $ed\equiv1\pmod{\varphi(n)}$ 
+\item A titkosított üzenetet $C=M^{e}\mod n$ 
+\item A visszafejtett üzenetet $M=C^{d}\mod n$ 
+\item Ellenőrizzük, hogy a visszafejtett üzenet megegyezik-e az eredetivel! 
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+1. Modulus és Euler-függvény
+
+\[
+n=p\cdot q=61\cdot53=3233
+\]
+\[
+\varphi(n)=(p-1)(q-1)=60\cdot52=3120
+\]
+
+2. Privát kulcs kiszámítása
+
+Keressük $d$-t úgy, hogy 
+\[
+ed\equiv1\pmod{3120},\quad\text{ahol }e=17
+\]
+Ez az inverz: 
+\[
+d=e^{-1}\mod 3120=17^{-1}\mod 3120
+\]
+Kiterjesztett euklideszi algoritmussal: 
+\[
+\begin{aligned}3120 & =183\cdot17+9\\
+17 & =1\cdot9+8\\
+9 & =1\cdot8+1\\
+8 & =8\cdot1+0
+\end{aligned}
+\]
+
+Visszafelé behelyettesítve: 
+\[
+1=2\cdot3120-367\cdot17\Rightarrow d=-367\mod 3120=2753
+\]
+
+3. Titkosítás
+
+\[
+C=M^{e}\mod n=65^{17}\mod 3233=2790
+\]
+
+4. Visszafejtés
+
+\[
+M=C^{d}\mod n=2790^{2753}\mod 3233=65
+\]
+
+5. Ellenőrzés
+
+Mivel a visszafejtett üzenet $M=65$, ami megegyezik az eredeti üzenettel,
+az RSA algoritmus helyesen működött.
+
+Összefoglalás
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline 
+\textbf{Paraméter} & \textbf{Érték}\tabularnewline
+\hline 
+$p,q$ & 61, 53\tabularnewline
+\hline 
+$n=pq$ & 3233\tabularnewline
+\hline 
+$\varphi(n)$ & 3120\tabularnewline
+\hline 
+Nyilvános kulcs $(e,n)$ & $(17,3233)$\tabularnewline
+\hline 
+Privát kulcs $d$ & 2753\tabularnewline
+\hline 
+Titkosított üzenet $C$ & 2790\tabularnewline
+\hline 
+Visszafejtett üzenet $M$ & 65\tabularnewline
+\hline 
+\end{tabular}
+\par\end{center}
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+Anna és Béla szeretnének ECC titkosítást használva üzenetet váltani.
+Ha az $y^{2}\equiv x^{3}+2x+3$ (mod 97) görbét használjuk, oldd meg
+a következő feladatokat: 
+\begin{enumerate}
+\item Keress egy pontot, ami rajta van a görbén. 
+\item Ha a Béla titkos kulcsa az 5, mi lesz a nyilvános kulcsa? 
+\item Ha Anna a 2 számot használja, akkor hogyan titkosítaná a $P_{m}=(10,35)$
+üzenetet? 
+\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+\begin{enumerate}
+\item Keressük $x$-et úgy, hogy $x^{3}+2x+3$ négyzet modulo 97. Euler
+kritériumát használhatnánk konkrét $x$-ek esetén a létezés eldöntésére,
+de nézzük meg az első pár példát, hátha egyszerűbben is kapunk egy
+bázis pontot.\\
+ Ha $x=1$, akkor $x^{3}+2x+3\equiv6$ (mod 97) nem tudjuk egyértelműen
+eldönteni.\\
+ Ha $x=2$, akkor $x^{3}+2x+3\equiv15$ (mod 97) nem tudjuk egyértelműen
+eldönteni.\\
+ Ha $x=3$, akkor $x^{3}+2x+3\equiv36$ (mod 97), ami biztosan négyzet
+modulo 97, mert $6^{2}\equiv36$ (mod 97).\\
+ Tehát $G_{1}=(x_{1},y_{1})=(3,6)$ rajta van a görbén. 
+\item Pontduplázáshoz számoljuk ki 
+\[
+\lambda\equiv\frac{3x_{1}^{2}+a}{2y_{1}}\equiv\frac{27+2}{12}\equiv\frac{29}{12}\mod 97
+\]
+\[
+12^{-1}\equiv89\mod 97\Rightarrow\lambda\equiv29\cdot89\equiv2581\mod 97\Rightarrow\lambda\equiv59\mod 97
+\]
+Az új pontok kiszámolásához:
+
+\[
+x_{3}\equiv\lambda^{2}-2x_{1}\equiv59^{2}-6\equiv3481-6\equiv3475\equiv80\mod 97
+\]
+
+\[
+y_{3}\equiv\lambda(x_{1}-x_{3})-y_{1}\equiv59(3-80)-6\equiv-4549\equiv10\mod 97=10
+\]
+\[
+2G=(x_{2},y_{2})=(80,10).
+\]
+Két különböző pont összeadásához egy másik összefüggést kell használjunk,
+$3G=2G+G$: 
+\[
+\lambda\equiv\frac{y_{2}-y_{1}}{x_{2}-x_{1}}\equiv\frac{10-6}{80-3}\equiv\frac{4}{77}\mod 97
+\]
+\[
+77^{-1}\equiv63\mod 97\Rightarrow\lambda\equiv4\cdot63\equiv252\equiv59\mod 97
+\]
+\[
+x_{3}\equiv58^{2}-80-3\equiv3364-83\equiv3281\equiv80\mod 97
+\]
+\[
+y_{3}\equiv58(80-80)-10\equiv-10\equiv87\mod 97
+\]
+\[
+G_{3}=(x_{3},y_{3})=(80,87).
+\]
+Hasonlóan számolva $4G=(80,10)$ és $P_{B}=5G=(80,87)$. 
+\item $C_{1}=2G=(80,10).$ Számoljuk ki $S=2P_{B}$-t. 
+\[
+\lambda\equiv\frac{3x_{1}^{2}+a}{2y_{1}}\equiv\frac{19202}{174}\equiv\frac{93}{77}\equiv39\mod 97
+\]
+\[
+x_{s}\equiv\lambda^{2}-2x_{1}\equiv39^{2}-2\cdot80\equiv1361\equiv2\mod 97
+\]
+\[
+y_{s}\equiv\lambda(x_{1}-x_{3})-y_{1}\equiv39(80-2)-87\equiv2955\equiv46\mod 97
+\]
+\[
+S=(x_{s},y_{s})=(2,46).
+\]
+\[
+P_{m}+S=(10,35)+(2,46).
+\]
+\[
+\lambda\equiv\frac{46-35}{2-10}\equiv\frac{11}{89}\equiv11\cdot52\equiv88\mod{97}
+\]
+\[
+x\equiv\lambda^{2}-x_{1}-x_{2}\equiv88^{2}-10-2\equiv7732\equiv59\mod{97}
+\]
+\[
+y\equiv\lambda(x_{1}-x_{3})-y_{1}\equiv88(10-59)-35\equiv39\mod{97}
+\]
+A titkosított üzenet: \{(80,10),(59,39)\}. 
+\end{enumerate}
+\end{solution}
+
+\begin{extraproblem}[Száfta Antal]
+Egy kriptográfiai alkalmazásban az alábbi paramétereket használják
+egy nyilvános kulcsú (RSA) rendszer inicializálásához:
+
+- Válasszák ki az alábbi két prímet: $p=101$, $q=113$. - Ezekből
+képezik az $n=pq$ moduluszt. - Az $e$ nyilvános kitevő értéke: $e=3533$.
+\begin{enumerate}
+\item Számítsd ki a modulus értékét $n$, és a titkos kulcshoz szükséges
+$\varphi(n)$ értékét! 
+\item Számítsd ki az $e$ inverzét modulo $\varphi(n)$, vagyis a titkos
+kulcs $d$ értékét úgy, hogy $ed\equiv1\mod{\varphi}(n)$. 
+\item Egy üzenet kódolt formában $C=5875$. Fejtsd vissza az üzenetet az
+RSA dekódolási képlet segítségével! 
+\item Valaki egy nagy számot, $N=1299709$ szeretne prímként használni.
+Használj \textbf{Fermat-próbát} az alábbi alappal: $a=2$. Döntsd
+el, hogy a szám átmegy-e a teszten. 
+\item Mutasd meg, hogyan működik a \textbf{Miller--Rabin prímteszt} a fenti
+$N$ számon ugyanazzal az $a=2$ alappal. Döntsd el, hogy $N$ átesik-e
+a teszten vagy sem. 
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+~
+\begin{enumerate}
+\item \textbf{Modulus és Euler-függvény:} 
+\begin{align*}
+n & =pq=101\cdot113=11413\\
+\varphi(n) & =(p-1)(q-1)=100\cdot112=11200
+\end{align*}
+\item \textbf{Titkos kulcs számítása:} Keressük $d$-t úgy, hogy: 
+\[
+3533\cdot d\equiv1\mod 11200
+\]
+A bővített Euklideszi algoritmus segítségével: 
+\[
+d=10277
+\]
+\item \textbf{Dekódolás:} 
+\[
+M\equiv C^{d}\mod n=5875^{10277}\mod 11413=42
+\]
+Tehát az eredeti üzenet: \textbf{42}
+\item \textbf{Fermat-próba:} 
+\[
+2^{1299708}\mod 1299709=1\Rightarrow\text{átmegy a teszten}
+\]
+\item \textbf{Miller--Rabin teszt:} 
+\[
+N-1=1299708=2^{2}\cdot324927\Rightarrow s=2,\ d=324927
+\]
+\[
+x=2^{324927}\mod 1299709\equiv-1\mod 1299709
+\]
+Tehát: \textbf{átmegy a Miller--Rabin teszten is az $a=2$ alappal.} 
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Egy RSA-kriptográfiai rendszerben a nyilvános kulcs: $(n=391,e=3)$.
+Kódold le az $M=42$ üzenetet a nyilvános kulcs segítségével! Végezd
+el a teljes számítást, és mutasd be a módszert!
+\end{extraproblem}
+
+\begin{solution}
+
+\textbf{RSA-adatok:}\\
+
+A nyilvános kulcs: $(n,e)$ A titkosítandó üzenet: $M$ (számként)
+
+Az RSA-kódolás képlete: 
+\[
+C\equiv M^{e}\mod n
+\]
+
+ahol $C$ a kódolt (titkosított) üzenet.
+
+\textbf{Adatok behelyettesítése:}\\
+
+Adott: 
+\[
+M=42,\quad e=3,\quad n=391
+\]
+
+Számoljuk ki: 
+\[
+C\equiv42^{3}\mod 391
+\]
+
+Először kiszámítjuk $42^{3}$: 
+\[
+42^{3}=42\cdot42\cdot42=1764\cdot42=74088
+\]
+
+Ezután: 
+\[
+C=74088\mod 391
+\]
+
+Végezzük el az osztást: 
+\[
+74088\div391\approx189.5\Rightarrow391\cdot189=73959
+\]
+
+\[
+74088-73959=\boxed{129}
+\]
+
+
+\textbf{Eredmény:}\\
+
+\[
+\boxed{C=129}
+\]
+
+Tehát az RSA-titkosított üzenet: 
+\[
+\boxed{\text{129}}
+\]
+
+
+\textbf{Megjegyzés:}\\
+
+A titkosítást bárki el tudja végezni, aki ismeri a nyilvános kulcsot
+$(n,e)$. A visszafejtéshez azonban szükség lenne a privát kulcsra
+is, amit csak a címzett ismer.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+
+
+Legyen az ElGamal-kriptográfiai rendszer nyilvános kulcsa:
+\begin{itemize}
+\item $p=29$ 
+\item $g=2$ 
+\item $y=18$ \quad{}(ahol $y=g^{x}\bmod p$, $x$ a privát kulcs) 
+\end{itemize}
+Két titkosított üzenetet ismerünk, amelyek azonos véletlen számmal
+($k$) lettek titkosítva:
+
+\[
+(c_{1},c_{2})=(13,10)\quad\text{(ismeretlen \ensuremath{m})}
+\]
+\[
+(c_{1}',c_{2}')=(13,3)\quad\text{(\ensuremath{m'=5} ismert)}
+\]
+
+\textbf{Feladatok:} 
+\begin{enumerate}
+\item Határozzuk meg a privát kulcs $x$-et, azaz oldjuk meg $2^{x}\equiv18\pmod{29}$. 
+\item Használjuk az ismert $m'=5$ értéket, hogy meghatározzuk $y^{k}\bmod p$-t. 
+\item Ebből határozzuk meg az első üzenet $m$ értékét. 
+\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+
+\textbf{1. lépés: A privát kulcs meghatározása}
+
+Keressük meg azt az $x$-et, amelyre: 
+\[
+2^{x}\equiv18\pmod{29}
+\]
+
+Próbálgatással: 
+\[
+\begin{aligned}2^{1} & =2\\
+2^{2} & =4\\
+2^{3} & =8\\
+2^{4} & =16\\
+2^{5} & =3\\
+2^{6} & =6\\
+2^{7} & =12\\
+2^{8} & =24\\
+2^{9} & =19\\
+2^{10} & =9\\
+2^{11} & =18\quad\Rightarrow x=11
+\end{aligned}
+\]
+
+\textbf{2. lépés: $y^{k}\bmod p$ meghatározása az ismert üzenet segítségével}
+
+A titkosítás képlete: 
+\[
+c_{2}=m\cdot y^{k}\mod p\Rightarrow y^{k}=\frac{c_{2}'}{m'}\mod p
+\]
+
+Mivel $c_{2}'=3$, $m'=5$: 
+\[
+y^{k}\equiv3\cdot5^{-1}\pmod{29}
+\]
+
+Számoljuk ki $5^{-1}\mod 29$-et. Ez az a szám $a$, amire $5a\equiv1\pmod{29}$.
+Próbálgatással: 
+\[
+5\cdot6=30\equiv1\pmod{29}\Rightarrow5^{-1}\equiv6
+\]
+
+Tehát: 
+\[
+y^{k}\equiv3\cdot6=18\pmod{29}
+\]
+
+\textbf{3. lépés: Az ismeretlen üzenet visszafejtése}
+
+\[
+m=\frac{c_{2}}{y^{k}}\mod p=10\cdot18^{-1}\mod 29
+\]
+
+Keressük meg $18^{-1}\mod 29$-et. Ez az $a$, amire: 
+\[
+18a\equiv1\pmod{29}
+\]
+
+Próbálgatással: $18\cdot1=1818\cdot2=36\equiv718\cdot3=54\equiv2518\cdot4=72\equiv1418\cdot5=90\equiv318\cdot6=108\equiv2118\cdot7=126\equiv1018\cdot8=144\equiv2818\cdot9=162\equiv1818\cdot10=180\equiv618\cdot11=198\equiv2418\cdot12=216\equiv1318\cdot13=234\equiv218\cdot14=252\equiv2018\cdot15=270\equiv918\cdot16=288\equiv2718\cdot17=306\equiv1718\cdot18=324\equiv618\cdot19=342\equiv2518\cdot20=360\equiv1218\cdot21=378\equiv1\Rightarrow18^{-1}\equiv21\pmod{29}$
+
+Ezért: 
+\[
+m=10\cdot21\mod 29=210\mod 29=210-7\cdot29=210-203=7
+\]
+
+\textbf{Válasz:} Az első üzenet visszafejtett értéke: 
+\[
+\boxed{m=7}
+\]
+\end{solution}

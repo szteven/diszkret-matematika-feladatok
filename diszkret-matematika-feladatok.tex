@@ -1,0 +1,206 @@
+\documentclass[magyar]{package/fancy-book}
+
+%%%%%%%%%% Default Package %%%%%%%%%%%%%
+\usepackage{package/color-env}
+%%%%%%%%%% %%%%%%%%%%%%%%% %%%%%%%%%%%%%
+
+%%%%%%%%%% Required Packages %%%%%%%%%%%%%
+\usepackage{calligra} %%% (optional) to make the Title text beautiful 
+\usepackage[magyar]{babel}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{amssymb,amsmath,amsfonts}  %%% for maths
+\usepackage{braket}
+\usepackage{graphicx}
+\usepackage{extarrows}
+\usepackage{mathtools}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections,arrows}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{cancel}
+\usepackage{cprotect}
+%\usepackage{cite}
+
+\usepackage[nobottomtitles]{titlesec}
+\usepackage[section]{placeins}
+\usepackage{indentfirst}
+\usepackage{pdfpages}
+
+\usepackage{url}
+\def\UrlBreaks{\do\/\do-}
+\usepackage{breakurl}
+
+
+\definecolor{ccqqqq}{rgb}{0.8,0,0}
+
+\addbibresource{resource/references.bib}
+\DeclareNameAlias{default}{family-given}
+
+\sloppy
+
+\fancypagestyle{plain}{%
+	\fancyhf{}% Clear header/footer
+	\renewcommand{\headrulewidth}{0pt}%
+}
+
+\usepackage{datetime}
+\newdateformat{version}{%
+	\THEYEAR. \twodigit{\THEMONTH}. \twodigit{\THEDAY}.}
+
+\begin{document}
+	
+\includepdf[fitpaper=true, pages=-]{resource/cover_a4.pdf}
+
+\newpage
+\thispagestyle{plain}
+~
+\vfill
+\noindent Borítóterv, háttérkép: Szöllősi István
+
+\vspace*{1em}
+
+\noindent A könyv a következő \LaTeX{} sablon alapján készült: \href{https://github.com/dev-aditya/LaTeX-template}{https://github.com/dev-aditya/LaTeX-template}
+
+\vspace*{1em}
+
+\noindent\textbf{Utolsó módosítás dátuma (verzió): \version\today}
+
+\include{title.tex}
+
+\newpage
+
+\tableofcontents
+
+\chapter*{Előszó}
+\addcontentsline{toc}{chapter}{Előszó}
+\thispagestyle{plain}
+
+Jelen feladatgyűjtemény a 2024/2025-ös tanév második féléve során
+készült a \emph{Korszerű módszerek a matematikatanításban}, illetve
+\emph{Didaktikai mesteri -- Matematika} szakos, első- és másodéves
+hallgatók közreműködésével, a \emph{Módszertani vonatkozások a diszkrét
+matematika tanításában} nevű tantárgy keretén belül (tantárgyfelelős:
+dr. Szöllősi István, egyetemi docens, Babeș-Bolyai Tudományegyetem, Matematika és Informatika
+Kar, Magyar Matematika és Informatika Intézet, Kolozsvár). 
+
+A félév során minden egyes hallgató választott egy témát egy megadott
+listából és annak alapján tartott egy bevezető jellegű tanórát a kollégái
+előtt. A megadott témakör fogalmait, tételeit, stb. precízen és érthetően
+be kellett vezetni, bizonyítani, megfelelő példákkal érthetővé kellett
+tenni és meg kellett fogalmazni a többieknek 5-10, témához kapcsolódó
+házi feladatot. Ezután (két hetes határidővel) meg kellett szerkeszteni
+az órán leadott anyagot (esetleg kibővített formában) és a házi feladatok
+megoldását egy adott \LaTeX{} sablont használva. A kollégák megoldották
+a házi feladatokat és kerestek egy-két témához kapcsolódó nehezebb/érdekesebb
+feladatot, majd ezeket -- megoldással együtt -- leírták (szintén
+a megadott sablont használva). Ebből adódóan a könyv szerkezete a
+következő: 
+\begin{itemize}
+	\item Minden fejezet (vagy alfejezet) egy hosszabb vagy rövidebb bevezető
+	szöveggel indít, itt található a témához kapcsolódó elméleti tudnivaló:
+	fogalmak meghatározásai, tételek, bizonyítások, példák, magyarázat,
+	feladatok. Az adott fejezet elején a szerző neve fel van tüntetve. 
+	\item Ezután egy \emph{Házi feladatok} című alfejezet következik, ez tartalmazza
+	a szerző 5-10 házi feladatát, a (feltehetően) helyes megoldásokkal
+	együtt. 
+	\item Minden fejezet egy (általában terjedelmes) \emph{Nehezebb feladatok}
+	című résszel zárul, ez tartalmazza a témához kapcsolódó nehezebb/érdekesebb
+	feladatokat, szintén megoldásokkal együtt. Minden egyes feladatnál
+	szerepel annak a hallgatónak a neve, aki az adott feladatot beküldte
+	és a megoldását kidolgozta.
+\end{itemize}
+Ezzel a módszerrel és a 22 hallgató féléves munkájával készült el
+a feladatgyűjtemény, ami -- reményeim szerint -- rajtuk kívül másoknak
+(pl. iskolai matematikatanároknak, egyetemi hallgatóknak, matematikai
+versenyekre készülőknek, stb.) is hasznára válhat. A gyűjtemény több
+mint 500 megoldott feladatot és 22 elméleti gyorstalpalót tartalmaz,
+ízelítőt adva a diszkrét matematika különböző fejezeteiből. 
+
+Igyekeztem minden megoldást ellenőrizni és javítottam számos kisebb-nagyobb
+hibát, de ennek ellenére figyelembe kell venni a következőket:
+\begin{itemize}
+	\item Számos elírás, esetleg matematikai hiba is lehet a könyvben, ha bárki
+	ilyet észlel, jelezze\footnote{A következő email címre írva lehet jelezni bármilyen hibát, észrevételt: \href{mailto:istvan.szollosi@math.ubbcluj.ro}{istvan.szollosi@math.ubbcluj.ro}}, és amint lehet, javítjuk.
+	\item A bevezető szövegeknek (``elméleti tudnivalóknak'') nyilvánvaló okok
+	miatt eltérő a stílusa, különböző fokú részletességgel és precizitással
+	vannak kidolgozva és tartalmazhatnak pontatlanságokat, elírásokat,
+	kisebb hibákat. Ha bárki ilyet észlel, jelezze, és amint lehet, javítjuk.
+	\item A feladatok érdekességének vagy nehézségi szintjének szempontjából
+	vannak ``hálásabb'' és ``kevésbé hálás'' témák. A gyűjtemény nem feltétlenül
+	követ egy ``könnyebbtől a nehezebb felé'' szerkesztési elvet.
+	\item A feladatszövegek és/vagy megoldások, illetve felhasznált képek forrásmegjelölése helyenként
+	hiányos lehet. A felhasznált irodalom nagy részét a könyv végén feltüntettük, 
+	de valószínűleg a lista korántsem teljes vagy pontos. Ha bárki
+	segítene e hiányosság pótlásában, vagy szerzőjogi aggályok/problémák
+	merülnének fel, jelezze és amint lehet, orvosoljuk. Ez egy ingyenes,
+	nyílt forrású, kiadatlan, saját használatra szánt anyag, ahol talán
+	vállalható ez a kompromisszum (is). 
+\end{itemize}
+\newpage
+\thispagestyle{plain}
+\noindent A gyűjtemény tartalmát a következő hallgatók munkája nyomán állítottuk össze:
+\begin{enumerate}
+	\item Bartalis Dorottya -- \nameref{chap:dio}: \nameref{sec:lindio}
+	\item Boga Zsombor -- \nameref{chap:indukcio}
+	\item Csapó Hajnalka -- \nameref{chap:generatorf}: \nameref{sec:mi_a_generatorf}
+	\item Csurka-Molnár Hanna -- \nameref{chap:grafok}: \nameref{sec:graf_alapok}
+	\item Czofa Vivien -- \nameref{chap:elemi_szamelmelet}: \nameref{sec:szamelmelet_alapok}
+	\item Domokos Ábel -- \nameref{chap:fak}: \nameref{sec:cimkezett_fak}
+	\item Fábián Nóra -- \nameref{chap:halmazok}
+	\item Gál Tamara -- \nameref{chap:ismetleses_perm}
+	\item Gergely Verona -- \nameref{chap:grafok}: \nameref{sec:terkepek}
+	\item Kis Aranka-Enikő -- \nameref{chap:grafok}: \nameref{sec:sikgrafok}
+	\item Kis Brigitta -- \nameref{chap:elemi_szamelmelet}: \nameref{sec:Fermat-Wilson}
+	\item Kiss Andrea-Tímea -- \nameref{chap:perm}
+	\item Kovács Levente -- \nameref{chap:Fibonacci}
+	\item Lőrincz Attila -- \nameref{chap:aszimmetrikus_kripto}
+	\item Lukács Andor -- \nameref{chap:generatorf}: \nameref{sec:Catalan}, \nameref{chap:kombgeo}
+	\item Miklós Dóra -- \nameref{chap:particiok}
+	\item Péter Róbert -- \nameref{chap:skatulya}
+	\item Seres Brigitta -- \nameref{chap:Pascal}
+	\item Sógor Bence -- \nameref{chap:szimmetrikus-kripto}
+	\item Szabó Kinga -- \nameref{chap:szita}
+	\item Száfta Antal -- \nameref{chap:dio}: \nameref{sec:vegtelen_leszallas}
+	\item Szélyes Klaudia -- \nameref{chap:fak}: \nameref{sec:fak_alapok}
+\end{enumerate}
+Köszönöm a felsorolt kollégák figyelmét és egész féléves kitartó munkáját.
+A tanári hivatáshoz sok sikert, türelmet és megbecsülést kívánok!
+
+\vspace*{1cm}
+
+\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}}lr}
+	dr. Szöllősi István & Kolozsvár,\tabularnewline
+    egyetemi docens & 2025. július 7.
+\end{tabular*}
+
+\include{\string"content/Fabian_Nora/chapter_halmazok_fuggvenyek\string"}
+\include{\string"content/Kiss_Andrea_Timea/chapter_variaciok_permutaciok_kombinaciok\string"}
+\include{\string"content/Gal_Tamara/chapter_ismetleses_permutacio_variacio_kombinacio\string"}
+\include{\string"content/Boga_Zsombor/chapter_teljes_indukcio\string"}
+\include{\string"content/Szabo_Kinga/chapter_szitaformula\string"}
+\include{\string"content/Peter_Robert/chapter_skatulyaelv\string"}
+\include{\string"content/Seres_Brigitta_Alexandra/chapter_binomialis_pascal\string"}
+\include{\string"content/Miklos_Dora/chapter_particiok\string"}
+\include{\string"content/Czofa_Vivien-Kis_Brigitta/chapter_szamelmelet\string"}
+\include{\string"content/Sogor_Bence/chapter_szimmetrikus_kripto\string"}
+\include{\string"content/Lorincz_Attila/chapter_aszimmetrikus_kripto\string"}
+\include{\string"content/Csapo_Hajnalka-Lukacs_Andor/chapter_generatorfuggvenyek\string"}
+\include{\string"content/Kovacs_Levente/chapter_fibonacci\string"}
+\include{\string"content/Bartalis_Dorottya-Szafta_Antal/chapter_diofantikus_egyenletek\string"}
+\include{\string"content/Csurka_Molnar_Hanna-Kis_Aranka_Eniko-Gergely_Verona/chapter_grafok\string"}
+\include{\string"content/Szelyes_Klaudia-Domokos_Abel/chapter_fak\string"}
+\include{\string"content/Lukacs_Andor/chapter_kombinatorikus_geometria\string"}
+
+\nocite{*}
+\printbibliography[heading=bibintoc,title={\centering Könyvészet}]
+
+%\bibliographystyle{diszkret} % or alpha, abbrv, etc.
+
+%\bibliography{resource/references} % omit the .bib extension
+
+\end{document}

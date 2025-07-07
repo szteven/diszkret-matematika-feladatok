@@ -1,0 +1,1314 @@
+
+\chapter{Ismétléses permutációk, ismétléses variációk, ismétléses kombinációk}\label{chap:ismetleses_perm}
+\begin{description}
+{\large \item [{Szerző:}] Gál Tamara (Didaktikai mesteri -- Matematika, II. év)}
+\end{description}
+\begin{problem}
+ Mi a különbség az alábbi feladatpárokban?
+ \begin{itemize}
+ 	\item[1/A)] Hányféleképpen lehet sorba rendezni 5 különböző színű golyót?
+ 	\item[1/B)] Hányféleképpen lehet sorba rakni egy fehér, két zöld és két kék
+ 	golyót? 
+ 	\item[2/A)] Hányféle különböző sorrendje van a MÉRTAN szó betűinek?
+ 	\item[2/B)] Hányféle különböző sorrendje van a MATEMATIKA szó betűinek?
+ \end{itemize}
+ 
+\end{problem}
+Várható válasz: Az 1-es típusú kérdésekben minden elem csak egyszer
+fordulhat elő, míg a 2-es típusú kérdésekben minden elem többször
+is előfordulhat.
+\begin{solution}
+	\begin{itemize}
+		\item[1/A)] Öt különböző színű golyót $5!=120$ féleképpen lehet sorba rendezni.
+		\item[1/B)] Mi történik, ha az elemek nem különbözőek? Próbáljuk sorba rendezni
+		az elemeket. Jelölje k a kék golyókat, f a fehér golyókat, z a zöld
+		golyókat. Rögzítsük le a kék golyók helyét az első oszlopban, a többi
+		oszlopot töltsük fel a maradék golyókkal.
+
+%1/A) Öt különböző színű golyót $5!=120$ féleképpen lehet sorba rendezni.
+%\\
+% 1/B) Mi történik, ha az elemek nem különbözőek? Próbáljuk sorba rendezni
+%az elemeket. Jelölje k a kék golyókat, f a fehér golyókat, z a zöld
+%golyókat. Rögzítsük le a kék golyók helyét az első oszlopban, a többi
+%oszlopot töltsük fel a maradék golyókkal.\\
+% %
+\begin{tabular}{l|l|l|l}
+kk---  & kkfzz & kkzfz & kkzzf \tabularnewline
+k-k--  & kfkzz & kzkfz & kzkzf \tabularnewline
+k--k- & kfzkz & kzfkz & kzzkf\tabularnewline
+k---k & kfzzk & kzfzk & kzzfk\tabularnewline
+-kk-- & fkkzz & zkkfz & zkkzf\tabularnewline
+-k-k- & fkzkz & zkfkz & zkzkf\tabularnewline
+-k--k & fkzzk & zkfzk & zkzfk\tabularnewline
+--kk- & fzkkz & zfkkz & zzkkf\tabularnewline
+--k-k & fzkzk & zfkzk & zzkfk\tabularnewline
+---kk & fzzkk & zfzkk & zzfkk\tabularnewline
+\end{tabular}\\
+ Összesen 30 féle sorrend lehetséges. 
+ 
+ Na de hogyan csökkent le a 120
+lehetőség 30-ra? Azonos színű golyók egymás közötti sorrendjeiket
+egyformának tekinthetjük. Tehát van 5 helyünk amiből 2-re kék golyó
+kerül, ez $C_{5}^{2}=10$ lehetőség. Egy helyre kerülhet fehér golyó
+a maradék 3 hely közül, ez $C_{3}^{1}=3$ lehetősége marad. A maradék
+két helyre pedig egyértelműen a zöld golyók kerülnek. Tehát összesen
+$C_{5}^{2}\cdot C_{3}^{1}\cdot C_{2}^{2}=10\cdot3\cdot1=30$ lehetőség. 
+	\end{itemize}
+\end{solution}
+\begin{definition}{ism_perm}
+Ha az elemek között van olyan amelyik többször is előfordul, az elemek
+egy sorba rendezését ismétléses permutációnak nevezzük.
+\end{definition}
+
+\begin{theorem}{ism_perm_theo}
+Ha $n$ elem között $p_{1},p_{2},...,p_{k}$ darab megegyező van és
+$p_{1}+p_{2}+...+p_{k}=n,$ akkor ezeket az elemeket $\frac{n!}{p_{1}!\cdot p_{2}!\cdot...\cdot p_{k}!}$
+különböző módon lehet sorba rendezni. \cite{Moz2}
+\end{theorem}
+
+\begin{proof}
+Az első $p_{1}$ egyforma elemet: $C_{n}^{p_{1}}$ különböző módon
+lehet kiválasztani.
+\[
+C_{n}^{p_{1}}=\frac{(p_{1}+p_{2}+...+p_{n})!}{p_{1}!\cdot(p_{2}+...+p_{n})!}.
+\]
+A következő $C_{p_{2}+p_{3}+...+p_{n}}^{p_{2}}$ módon lehet kiválasztani:
+$C_{p_{2}+p_{3}+...+p_{n}}^{p_{2}}=\frac{(p_{2}+...+p_{n})!}{p_{2}!\cdot(p_{3}+p_{4}+...+p_{n})!}.$\\
+ Az utolsó $p_{k}$ elemet : $C_{p_{k}}^{p_{k}}$ féle módon lehet
+kiválasztani: $C_{p_{k}}^{p_{k}}=\frac{p_{k}!}{p_{k}!}.$ 
+\[
+C_{n}^{p_{1}}\cdot C_{p_{2}+p_{3}+...+p_{n}}^{p_{2}}\cdot C_{(p_{3}+p_{4}+...+p_{n})}^{p_{3}}...\cdot C_{p_{k}}^{pk}\Leftrightarrow
+\]
+\[
+\frac{(p_{1}+p_{2}+...+p_{n})!}{p_{1}!\cdot(p_{2}+...+p_{n})!}\cdot\frac{(p_{2}+...+p_{n})!}{p_{2}!\cdot(p_{3}+p_{4}+...+p_{n})!}\cdot...\cdot\frac{p_{k}}{p_{k}}=\frac{(p_{1}+p_{2}+...+p_{k})!}{p_{1}!\cdot p_{2}!\cdot...\cdot p_{k}!}=\frac{n!}{p_{1}!\cdot p_{2}!\cdot...\cdot p_{k}!}
+\]
+\end{proof}
+\begin{solution}
+	\begin{itemize}
+		\item[2/A)] A Mértan szó 6 betűből áll tehát $6!$-féleképpen lehet sorba
+		rendezni.
+		\item[2/B)] A MATEMATIKA szóban van két M betű, három A betű és a két T
+		betű. A lehetséges sorrendek száma:$\frac{10!}{(3!\cdot2!\cdot2!)}=151200.$ 
+	\end{itemize}
+
+\end{solution}
+\begin{problem}
+Mi a különbség az alábbi feladatpárokban?
+\begin{itemize}
+\item[1/A)] Az 1, 2, 3, 4 számok közül válasszunk ki kettőt és írjuk fel
+ezeket az összes lehetséges sorrendben. Mennyi a lehetőségek száma?
+\item[1/B)] Az 1, 2, 3, 4 számok közül válasszunk ki kettőt úgy, hogy ugyanazt
+az elemet kétszer is vehetjük és írjuk fel ezeket az összes lehetséges
+sorrendben. Mennyi a lehetőségek száma?
+\item[1/A)] Egy 14 fős csoportban hányféleképpen lehet 4 különböző könyvet
+kiosztani, ha mindenki 1 könyvet kaphat?
+\item[2/B)] Egy 14 fős társaságban 4 könyvet osztunk szét. Hányféleképpen
+tehetjük meg, ha minden könyv különböző, és mindenki több könyvet
+is kaphat
+\end{itemize}
+\end{problem}
+ 
+\begin{solution}
+\begin{itemize}
+\item[1/A)] A következőket kapjuk: 12 13 14 21 23 24 31 32 34 41 42 43 A
+lehetőségek száma 12.
+\item[1/B)] A következőket kapjuk: 11 12 13 14 21 22 23 24 31 32 33 34 41
+42 43 44 A lehetőségek száma 16.
+\item[2/A)] Az első könyvet 14 embernek adhatjuk. A második könyvet 13 embernek
+oszthatjuk ki. A harmadik könyvet 12 embernek oszthatjuk ki, míg a
+negyedik könyvet 11 embernek adhatjuk oda. Összesen 14·13·12·11 --
+féleképpen oszthatjuk ki a könyveket.
+\item[2/B)] Ha egy ember több könyvet is kaphat akkor mindegyik könyvet
+14 embernek adhatnánk oda. Így a lehetőségek száma $14\cdot14\cdot14\cdot14=14^{4}$
+lehetőség.
+\end{itemize}
+
+\end{solution}
+\begin{definition}{ism_var}
+Ha $n$-féle elemből a sorrend figyelembe vételével kiválasztunk $k$
+darabot (egyféle elemből többet is választhatunk), az $n$-féle elemnek
+egy $k$ tagú ismétléses variációját kapjuk. \cite{Moz2}
+\end{definition}
+
+\begin{theorem}{ism_var_theo}
+$n-$féle elem $k$ tagú ismétléses variációinak a száma: $V_{n}^{k,i}=n^{k}.$ 
+\end{theorem}
+
+\begin{proof}
+$n-$féle elemből kiválasztunk $k$ darabot mind a $k$ helyre n elemet
+tudunk tenni, ez azt jelenti, hogy a lehetőségeink száma: $\underbrace{n\cdot n\cdot n\cdot...\cdot n}_{k\,\,\text{darab}}=n^{k}.$ 
+\end{proof}
+\begin{problem}
+	Mi a különbség az alábbi feladatpárokban?
+\begin{itemize}
+\item[1/A)] Az 1, 2, 3, 4 számok közül válasszunk ki kettőt (két különbözőt)
+és írjuk fel ezeket úgy, hogy nem vagyunk tekintettel a kiválasztott
+elemek sorrendjére. Mennyi a lehetőségek száma?
+\item[1/B)] Az 1, 2, 3, 4 számok közül válasszunk ki kettőt úgy, hogy ugyanazt
+az elemet kétszer is vehetjük, de nem vagyunk tekintettel a kiválasztott
+elemek sorrendjére. Mennyi a lehetőségek száma?
+\item[2/A)] Egy 14 fős csoportban hányféleképpen lehet 4 egyforma könyvet
+kiosztani, ha mindenki 1 könyvet kaphat? 
+\item[2/B)] Egy 14 fős csoportban hányféleképpen lehet 4 egyforma könyvet
+kiosztani, ha mindenki több könyvet is kaphat?
+\end{itemize}
+\end{problem}
+\begin{solution}
+\begin{itemize}
+\item[1/A)] Hat lehetőség van, ezek a következők: 12 13 14 23 24 34
+\item[1/B)] Az előző lehetőségekhez még pluszba kellenek nekünk az azonos
+tagúak, a következőket kapjuk: 11 12 13 14 22 23 24 33 34 44 A lehetőségek
+száma 10.
+\item[1/A)] Az első könyvet 14 tanulónak adhatjuk. A második könyvet a maradék
+13 tanulónak adhatjuk. És így tovább… Összesen 14·13·12·11 -- féleképpen
+oszthatjuk ki a könyveket. Igen ám, de egyformák a könyvek. A kiválasztott
+4 tanulót akárhogy állítjuk sorba, ugyanazt az esetet kapjuk, mert
+ugyanaz a könyv lesz náluk. Az esetek száma annyiad részre csökken,
+ahányféleképpen a kiválasztott négy tanulót sorba tudjuk rendezni.
+$C_{14}^{4}=\frac{14!}{10!\cdot4!}=1001.$
+\item[2/B)] Mindenki nevét írjuk rá egy-egy cédulára, és a cédulákat tegyük
+bele egy kalapba. Ha valakinek kihúztuk a nevét, megkapja a könyvét,
+és a céduláját visszatesszük a kalapba. Az utolsó húzás után már nem
+kell visszatenni a cédulát. Tehát négy húzás után 3-szor kell visszatenni
+a cédulát. Így ugyanannyi eset van, mintha 17 tanulóból kéne kiválasztani
+négyet: $C_{17}^{4}=\frac{17!}{(17-4)!\cdot4!}=2380.$ 
+\end{itemize}
+
+\end{solution}
+\begin{definition}{ism_komb}
+Ha $n$-féle elemből választunk $k$ darabot úgy, hogy a választás
+sorrendje nem számít és mindegyikféle elemből többet is választhatunk,
+az $n$-féle elem $k$ tagú ismétléses kombinációját kapjuk.
+\end{definition}
+
+\begin{theorem}{ism_komb_theo}
+$n$-féle elem $k$ tagú ismétléses kombinációinak száma: $C_{n}^{k,i}=C_{n+k-1}^{k}$ \cite{komb} 
+\end{theorem}
+
+\begin{proof}
+Megmutatjuk, hogy bijektív leképezés létesíthető $n$ elem $k$-adosztályú
+ismétléses kombinációi és $n+k-1$ elem $k$-adosztályú (ismétlés
+nélküli) kombinációi között. Innen következni fog, hogy $C_{n}^{k,i}=C_{n+k-1}^{k}.$
+Tekintsünk az $1,2,...,n$ elemek egy tetszőleges, rögzített $a_{i_{1}},a_{i_{2}},...,a_{i_{k}}$
+ismétléses kombinációját, ahol $1\leq a_{i_{1}}\leq a_{i_{2}}\leq...\leq a_{i_{k}}\leq n$.
+Adjuk hozzá az elemekhez rendre a $0,1,2,...,k-1$ számokat, azaz
+legyen $a_{i_{1}},a_{i_{2}}+1,...,a_{i_{k}}+(k-1)$. Ez az $1,2,...,n+k-1$
+elemeknek egy ismétlés nélküli kombinációja, mert itt $1\leq a_{i_{1}}<a_{i_{2}}+1<...<a_{i_{k}}+(k-1)\leq n+k-1.$
+Minden ilyen ismétlés nélküli kombinációt megkapunk és pontosan egyszer.
+Fordítva, ha $b_{i_{1}},b_{i_{2}},...,b_{i_{k}}$ az $1,2,...,n+k-1$
+elemek egy ismétlés nélküli kombinációja, akkor $b_{i_{1}},b_{i_{2}}-1,...,b_{i_{k}}-(k-1)$
+az $1,2,...,n$ elemek egy ismétléses kombinációja lesz. 
+\end{proof}
+
+\section*{Házi feladatok}
+\begin{problem}[\cite{Moz2}]
+Írjuk le a 334445 mellé az összes különböző hétjegyű számot, amely
+a 334445 számjegyeinek felcserélésével keletkezett. Mennyi az összes
+leírt számjegy összege? 
+\end{problem}
+
+\begin{solution}
+Először a két darab 3-asból, három darab 4-esből és egy darab 5ösből
+alkotható hatjegyű számok számát keressük. Ez a következő: 
+\[
+P_{6}^{2,3,1}=\frac{6!}{2!\cdot3!\cdot1!}=\frac{1\cdot2\cdot3\cdot4\cdot5\cdot6}{1\cdot2\cdot1\cdot2\cdot3\cdot1}=60
+\]
+Egy ilyen hatjegyű számban a számjegyek összege: 3+3+4+4+4+5=23, így
+az összes leírt számjegy összege: $60\cdot23=1380.$ 
+\end{solution}
+\begin{problem}[\cite{Moz3}]
+Melyik nagyobb: az (a,a,a,a,b,b,b) betűkészletből alkotható hétbetűs
+szavak száma vagy ugyanebből a betűkészletből alkotható hatbetűs szavak
+száma? 
+\end{problem}
+
+\begin{solution}
+A héthosszúságú szavak száma: $P_{7}^{4,3}=\frac{7!}{4!\cdot3!}=\frac{1\cdot2\cdot3\cdot4\cdot5\cdot6\cdot7}{1\cdot2\cdot3\cdot4\cdot1\cdot2\cdot3}=5\cdot7=35.$
+A hathosszúságú szavak száma: $P_{6}^{4,3}=\frac{6!}{4!\cdot3!}=\frac{1\cdot2\cdot3\cdot4\cdot5\cdot6}{1\cdot2\cdot3\cdot4\cdot1\cdot2\cdot3}=5.$
+Tehát a hétbetűs szavak száma nagyobb, mint a hatbetűs szavak száma. 
+\end{solution}
+\begin{problem}[\cite{Moz2}]
+Emese és Karcsi öt gyermeket szeretne. Fel is írták az alábbi neveket
+egy táblára: Aladár, Eszter, Csilla, Tamás, Andrea, Kamilla, Gáspár,
+Vivien, János, Csaba. Ezek közül mindig véletlenszerűen választanak
+egyet az éppen születő csöppségnek (persze kétszer nem adják ugyanazt
+a nevet). Hányféle sorrendben adhatják a neveket a megszületendő öt
+gyermeknek? 
+\end{problem}
+
+\begin{solution}
+Az öt gyermek megszülethet 5 lány, 4 lány és 1 fiú, 3 lány és 2 fiú,
+2lány és 3 fiú, 1 lány és 4 fiú, 5 fiú variációban. Az első és az
+utolsó esetben könnyű dolgunk van, mindkétszer $5!$ sorrendben adhatnak
+nevet a megszületendő gyerekeknek. Vegyük bonyolultabb példának a
+harmadik esetet. Ekkor a gyerekek között a lányok-fiúk sorrendje ismétléses
+permutáció: $P_{5}^{3,2}=\frac{5!}{3!\cdot2!},$ azon belül a lányoknak
+$\frac{5!}{(5-3)!},$ a fiúknak $\frac{5!}{(5-2)!}-$ féleképpen adhatnak
+nevet. Ezek alapján minden esetet számba tudunk venni (a szimmetria
+miatt elég az egyes eseteket kettővel szorozni), a végeredmény:
+\[
+2\cdot5!+2\cdot\frac{5!}{4!\cdot1!}\cdot\frac{5!}{(5-4)!}\cdot\frac{5!}{(5-1)!}+2\cdot\frac{5!}{3!\cdot2!}\cdot\frac{5!}{(5-3)!}\cdot\frac{5!}{(5-2)!}=30240.
+\]
+\end{solution}
+\begin{problem}[\cite{Moz4}]
+Gábor elfelejtette, hogy kémiából dolgozatot írnak.A 7 kérdés mindegyikére
+A,B és C válasz közül lehetett választani egyet. Hányféleképpen tölthette
+ki Gábor véletlenszerűen a tesztet?
+\end{problem}
+
+\begin{solution}
+Ha nem hagyott üresen se, akkor minden válaszra van 3 lehetősége vagyis: $3\cdot3\cdot3\cdot3\cdot3\cdot3\cdot3=3^{7}.$ Ha üresen is hagyhatott
+akkor minden válaszra 4 lehetősége van és akkor: $4^{7}$ féleképpen
+tölthette ki. 
+\end{solution}
+\begin{problem}[\cite{Moz4}]
+Egy Bolha üldögél egy négyzet mellett. Egyszer csak ráugrik a négyzet
+egyik csúcsára, majd onnantól kezdve a csúcsokon ugrál még kilencszer.Hányféle
+sorrendben érintheti a csúcsokat, ha:
+\begin{enumerate}
+\item bármikor bármelyikre ugorhat 
+\item oda nem ugrik ahol éppen áll 
+\item nem ugrik se oda ahol éppen áll sem pedig az eggyel korábbi állomáshelyére? 
+\end{enumerate}
+
+\end{problem}
+
+\begin{solution}
+\begin{enumerate}
+\item  Bármikor bármelyik csúcsra ugorhat, minden esetben 4 lehetősége
+van: $4^{10}.$
+\item  Elsőnek bárhova, utána viszont már csak 3-3 helyre ugorhat: $4\cdot3^{9}$
+\item Elsőnek bárhova ugorhat. A következő ugrása a mostani helyéről
+elviszi, az utána levőkben pedig mindig kizárunk kettő csúcsot: $4\cdot3\cdot2^{8}$ 
+\end{enumerate}
+
+\end{solution}
+\begin{problem}[\cite{Moz3}]
+Hányféle a magyar zászlóhoz hasonló három sávos zászlót lehet készíteni
+öt színből, ha a színek többször is előfordulhatnak, de azonos színek
+nem lehetnek egymás mellett?
+\end{problem}
+
+\begin{solution}
+Az első sáv kiszínezéséhez 5 lehetőségünk van. A második sáv nem lehet
+az elsővel egyszínű erre 4 lehetőség jut. A harmadik sáv nem lehet
+a másodikkal egyszínű , de lehet az elsővel azonos színű így erre
+is 4 lehetőség van. Tehát a kiszínezéshez: $5\cdot4\cdot4=80$ lehetőségünk
+van.
+\end{solution}
+\begin{problem}[\cite{Moz2}]
+Egy kertészeti újságban ötféle növényt kínálnak akciós áron, petúniát,
+muskátlit, rózsát, szarkalábat, levendulát. Eszter 12 növényt rendel.
+Hányféleképpen teheti meg, ha egy növényből többet is rendelhet? 
+\end{problem}
+
+\begin{solution}
+Valójában keressük 5 féle növény 12 darab ismétléses kombinációinak
+a számát ami egyenlő: $C_{12+5-1}^{12}=C_{16}^{12}=\frac{16!}{12!\cdot4!}=\frac{13\cdot14\cdot15\cdot16}{1\cdot2\cdot3\cdot4}=1820.$
+\end{solution}
+\begin{problem}[\cite{Moz1}]
+Egy dobozban 1-től 9-ig sorszámozott cédulák vannak. Kiemelünk belőlük
+5 darabot, a kivett cédulát megnézzük majd visszatesszük. Hány olyan
+húzás lehet, amiben legalább kettő 8-as van, ha a kivett számokat
+üres cédulára írva egy másik dobozba helyezzük. 
+\end{problem}
+
+\begin{solution}
+Érdemes áttérni az ellentett esetek összeszámlálására, itt ismétléses
+kombinációkat kell felírnunk. Az összes esetekben kilenc számból választunk
+ki ismétléssel ötöt: $C_{9+5-1}^{5}=C_{13}^{5}=\frac{13!}{8!\cdot5!}=1287.$
+Ha nincs közöttük 8-as, akkor már csak nyolc számból választunk ötöt
+ismétléssel: $C_{8+5-1}^{5}=C_{12}^{5}=\frac{12!}{7!\cdot5!}=792.$
+Ha egy 8-as van a számok között, akkor a többi négyet a maradék nyolc
+értékből választhatjuk, szintén ismétléssel: $C_{8+4-1}^{4}=C_{11}^{4}=\frac{11!}{7!\cdot4!}=330.$
+A végeredmény: $C_{13}^{5}-C_{12}^{5}-C_{11}^{4}=1287-792-330=165.$
+\end{solution}
+\begin{problem}[\cite{Moz2}]
+ Zsuzsi Párizsban 18 képeslapot vásárolt, melyeket 8 fajta képeslap
+közül választott ki. Hányféleképpen tehette ezt meg? 
+\end{problem}
+
+\begin{solution}
+Zsuzsi a képeslapokat 8 elem 18 darab ismétléses kombinációjával választhatta
+ki: $C_{18+8-1}^{18}=C_{25}^{18}=\frac{25!}{7!\cdot18!}=480700$
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+Egy $10$ fős társaságban $4$ könyvet osztunk szét. Hányféleképpen
+tehetjük meg, ha a könyvek egyformák, és mindenki több könyvet is
+kaphat? 
+\end{extraproblem}
+
+\begin{solution}
+Az embereket sorba rendezve beékeljük a sorba a könyveket
+az a személy után, akinek a könyvet adjuk. Mivel ez a sorozat csak
+egy személlyel kezdődhet, könyvvel nem, figyelmen kívül hagyhatjuk
+az első személyt. Így a lehetséges rendezések száma $(10-1+4)!=13!$.
+A sorban csak az számít, hogy adott személy után hány könyv szerepel,
+így a személyek egymáshoz viszonyított sorrendjét figyelmen kívül
+kell hagynunk (ez $9!$ mivel az első személyt rögzítettük). Továbbá
+a könyvek egyformák, ezért azok sorrendjét is figyelmen kívül hagyva
+összesen $9!\cdot4!$ ismétlése lesz egy adott szétosztásnak a személyek
+és könyvek összes lehetséges sorbarendezése között. Így a lehetséges
+leosztások száma: 
+\[
+\frac{13!}{9!\cdot4!}=\frac{13\cdot12\cdot11\cdot10}{4\cdot3\cdot2\cdot1}=13\cdot11\cdot5=715.
+\]
+
+2.Megoldás: Vegyük sorra, hogy hányféleképpen lehet 4 könyvet szétosztani
+\[
+4=3+1=2+2=2+1+1=1+1+1+1
+\]
+
+Ha minden könyvet $1$ személy kap, a lehetőségek száma: 
+\[
+C_{10}^{1}=10.
+\]
+Ha $3$ könyv jut egy személyhez és a $4.$ könyv egy másikhoz, a
+lehetőségek száma: 
+\[
+V_{10}^{2}=\frac{10!}{(10-2)!}=10\cdot9=90.
+\]
+Ha $2-2$ könyvet adunk oda két embernek, a lehetőségek száma: 
+\[
+C_{10}^{2}=\frac{10!}{(10-2)!\cdot2!}=\frac{10\cdot9}{2}=45.
+\]
+Ha egy ember kap $2$ könyvet és két ember kap $1-1$ könyvet, a lehetőségek
+száma: 
+\[
+C_{10}^{1}\cdot C_{9}^{2}=10\cdot\frac{9!}{(9-2)!\cdot2!}=\frac{10\cdot9\cdot8}{2}=360.
+\]
+Ha $4$ ember kap $1-1$ könyvet, a lehetőségek száma: 
+\[
+C_{10}^{4}=\frac{10!}{(10-4)!\cdot4!}=\frac{10\cdot9\cdot8\cdot7}{4\cdot3\cdot2\cdot1}=10\cdot3\cdot7=210.
+\]
+Összesen tehát $10+90+45+360+210=715$ lehetőség van. 
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Hányféleképpen lehet 15 szál virágot 5 lány között
+szétosztani úgy, hogy mindenki kapjon legalább egy szálat? }}\textit{(Matlab
+2017/01, L:2637, Deák Imre tanár, Székelyudvarhely)}
+\end{extraproblem}
+
+\begin{solution}
+Első lépésben biztosítani kell, hogy mindenki kapjon egy-egy szál
+virágot. Marad 10 szál virág.
+
+A maradék 10 szál virág szétosztását ismétléses permutációval vagy
+kombinációval számítjuk ki:
+
+\[
+P_{14}^{4,10}=\binom{10+4}{4}=\binom{14}{4}=\frac{14!}{10!\cdot4!}=\frac{11\cdot12\cdot13\cdot14}{1\cdot2\cdot3\cdot4}=1001.
+\]
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+\textit{\emph{Hányféleképpen lehet sorrendbe állítani a RENDETLENÜL
+szó betűit úgy, hogy ne álljon két E betű egymás mellett? (Minden
+betűt pontosan egyszer használunk fel.)}}
+\end{extraproblem}
+
+\begin{solution}
+\textbf{1. megoldás:} Először rendezzük el az E-től különböző betűket,
+nyolc betűt, köztük két-két azonosat: \texttt{R D T U N N L L}. A
+8 betűt $8!$ féle módon rendezhetjük sorba, de a két N betűt és a
+két L betűt egymás között felcserélve nem kapunk új esetet (ismétléses
+permutáció), ezért 
+\[
+\frac{8!}{2!\cdot2!}
+\]
+lehetőségünk van ezeknek a betűknek a sorba rendezéséhez.
+
+Az E betűket az így kialakult szó elé, utána vagy a betűk közé, tehát
+9 helyre tehetjük le. 9 helyből kell kiválasztanunk 3-at úgy, hogy
+a sorrend nem számít. Ez $\binom{9}{3}$ lehetőség.
+
+Ezért: 
+\[
+\frac{8!}{2!\cdot2!}\cdot\binom{9}{3}=10080\cdot84=846720\text{ esetet kapunk.}
+\]
+
+\medskip{}
+
+\textbf{2. megoldás:} A \texttt{RENDETLENÜL} szó 11 betűből áll, ezek
+között van három E betű, két N betű és két L betű. A 11 betűt $11!$
+féle módon rendezhetjük sorba, a három E betűt, a két N betűt és a
+két L betűt egymás között felcserélve nem kapunk új esetet (ismétléses
+permutáció), ezért 
+\[
+\frac{11!}{3!\cdot2!\cdot2!}
+\]
+lehetőségünk van ezeknek a betűknek sorba rendezésére.
+
+Ezek között azok az esetek, amelyekben egymás mellett szerepelnek
+E betűk, számunkra rosszak, amelyeket le fogunk vonni.
+
+Ha két E betű szerepel egymás mellett, akkor tekintsük ezeket egy
+karakternek, a harmadik E betűt pedig sima betűnek. Most 10 karaktert
+rendezünk sorba, köztük kettő-kettő azonos. Így ezen esetek száma:
+\[
+\frac{10!}{2!\cdot2!}
+\]
+
+Ha három E betű szomszédos, akkor azt három betűs egyetlen karakternek
+tekinthetjük, tehát ezek számát majd vissza kell adnunk. Legyen most
+\texttt{EEE} egyetlen jel, ilyen eset: 
+\[
+\frac{9!}{2!\cdot2!}
+\]
+van. A feladat feltételeinek megfelelő sorrendezések száma:
+
+\[
+\frac{11!}{3!\cdot2!\cdot2!}-\frac{10!}{2!\cdot2!}+\frac{9!}{2!\cdot2!}=846720.
+\]
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Hányféle módon lehet felmenni egy 25 lépcsőfokból álló lépcsőn, ha
+mindig csak 2-t vagy 3-at léphetünk felfelé? (Két feljutás különböző,
+ha van legalább egy olyan lépcsőfok, amelyre az egyik feljutásban
+rálépünk, de a másikban nem.) \emph{(Arany Dániel Matematikai Tanulóverseny
+2014/2015; haladók, II. kategória, 1. forduló) }
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük $a$-val azt, hogy hányszor léptünk $2$-t, $b$-vel pedig
+azt, hogy hányszor léptünk $3$-at. Ekkor teljesülnie kell a 
+\[
+2a+3b=25
+\]
+összefüggésnek, ahol $a$ és $b$ természetes számok.\\
+
+Mivel $2a$ páros, ezért $3b$ páratlan, így $b$ is páratlan, emiatt
+$b$ értéke csak $1,3,5$ vagy $7$ lehet. Az ezekhez tartozó $a$
+értékek rendre $11,8,5$ és $2$.\\
+
+A négy esethez a következő megoldások tartoznak: 
+\begin{enumerate}
+\item $b=1$ és $a=11$ esetén a $12$ lépésből $11$ egyforma, ez $P_{12}^{1,11}=\frac{12!}{11!\cdot1!}=12$
+lehetőség. 
+\item $b=3$ és $a=8$ esetén a $12$ lépésből $3$ és $8$ egyforma, ez
+$P_{11}^{8,3}=\frac{12!}{8!\cdot3!}=\frac{8!\cdot9\cdot10\cdot11}{8!\cdot2\cdot3}=165$
+lehetőség. 
+\item $b=5$ és $a=5$ esetén a $12$ lépésből $5$ és $5$ egyforma, ez
+$P_{10}^{5,5}=\frac{10!}{5!\cdot5!}=\frac{5!\cdot6\cdot7\cdot8\cdot9\cdot10}{5!\cdot2\cdot3\cdot4\cdot5}=252$
+lehetőség. 
+\item $b=7$ és $a=2$ esetén a $9$ lépésből $7$ és $2$ egyforma, ez
+$P_{9}^{7,2}=\frac{9!}{7!\cdot2!}=\frac{7!\cdot8\cdot9}{7!\cdot2}=36$
+lehetőség. 
+\end{enumerate}
+Összesen $12+165+252+36=465$ féleképpen juthatunk fel a lépcsőn. 
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+Legyen $A=\{1,2,\dots,k\}$, $B=\{1,2,\dots,n\}$. Hány $f:A\to B$
+növekvő függvény létezik?
+\end{extraproblem}
+
+\begin{solution}
+Legyen $f(1)=a_{1}\in B$, $f(2)=a_{2}\in B,\dots,f(k)=a_{k}\in B$.
+Feltétel: $a_{1}\leq a_{2}\leq\dots\leq a_{k}$.
+
+A lehetőségek száma, tehát az $f:A\to B$ növekvő függvények száma
+minden $n,k\geq1$ esetén éppen
+
+\[
+\binom{n+k-1}{k}
+\]
+
+(a definíció szerint).
+
+Ennek alapján az $\{1,2,\dots,n\}$ elemek $k$-adosztályú ismétléses
+kombinációi úgy is definiálhatók, mint az $f:A\to B$ növekvő függvények.
+
+Szokásos a következő jelölés is: ha $x$ valós szám és $k\geq1$ természetes
+szám, akkor
+
+\[
+[x]_{k}=x(x+1)(x+2)\cdots(x+k-1).
+\]
+
+Így
+
+\[
+\binom{n+k-1}{k}=\frac{[n]_{k}}{k!}=\frac{n(n+1)(n+2)\cdots(n+k-1)}{k!}.
+\]
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+Tekintsük azokat a dominókat, amelyek mindkét felén a pontok száma
+0-tól 8-ig terjed. Ezeket a pontok számának megfelelően így azonosíthatjuk:
+$xy$, ahol $0\leq x\leq y\leq8$.
+\begin{enumerate}
+\item Hány ilyen dominó van?
+\item Hányféleképpen lehet a 45 ilyen dominó közül kettőt kiválasztani úgy,
+hogy a két dominót egymás mellé lehessen tenni (azaz valamelyik felükön
+a pontok száma azonos)?
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+~
+\begin{enumerate}
+\item Ha $x=0$, akkor $y$ értékei $0,1,2,\dots,8$ lehetnek, ez 9 lehetőség.
+Ha $x=1$, akkor $y$ értékei $1,2,\dots,8$ lehetnek, ez 8 lehetőség,
+és így tovább, ha $x=8$, akkor csak $y=8$ lehet, ez 1 lehetőség.
+Az összeadási szabály szerint a dominók száma:
+\[
+9+8+7+\dots+1=45.
+\]
+\item Válasszunk egy dominót. Ez lehet:
+
+1. eset: "dupla" dominó, azaz $00$, $11$, $22$, $\dots$, $88$,
+ezek száma 9, 2. eset: olyan dominó, amelyre $x<y$, ezek száma 36.
+
+Az 1. esetben a második dominót 8-féleképpen választhatjuk. Például
+$22$ esetén vehetjük a $02$, $12$, $23$, $24$, $25$, $26$,
+$27$, $28$ jelzésűeket. A 2. esetben 8 + 8 = 16-féle párt választhatunk.
+Például $27$ lehetséges párjai: $02$, $07$, $12$, $17$, $22$,
+$23$, $24$, $25$, $26$, $28$, $37$, $47$, $57$, $67$, $77$,
+$78$.
+
+A szorzási szabály szerint:
+
+Az 1. esetben a lehetőségek száma: $9\cdot8=72$, - A 2. esetben
+a lehetőségek száma: $36\cdot16=576$.
+
+Az összeadási szabály szerint az összes lehetőségek száma:
+
+\[
+72+576=648.
+\]
+
+Az előbbi számítások során különbséget tettünk aszerint, hogy a két
+dominót milyen sorrendben húzzuk. Mivel minden összeillő dominó-pár
+kétszer szerepel (pl. $35$ és $52$ majd $52$ és $35$), ha ezeket
+nem tekintjük különbözőknek, akkor a lehetőségek száma az előbbi felére
+csökken, azaz:
+
+\[
+\frac{648}{2}=324.
+\]
+
+\end{enumerate}
+\end{solution}
+\begin{extraproblem}[Kiss Andrea-Tímea]
+Egy pénzfeldobás-sorozatban nyilvántarthatjuk, hogy hányszor követi
+az egyik oldalt közvetlenül a másik oldal, például egy fej után írás
+(FI), vagy egy fej után ismét egy fej (FF) következik, és így tovább.
+Például a 
+\[
+FFIIFFFFIFFIIII
+\]
+15 dobásból álló sorozatban megfigyelhetjük, hogy van öt darab FF,
+három darab FI, két darab IF és négy darab II.
+
+Hány különböző, 15 pénzfeldobásból álló sorozat létezik, amely pontosan
+két FF, három FI, négy IF és öt II szekvenciát tartalmaz? \emph{(AIME
+1986)}
+\end{extraproblem}
+
+\begin{solution}
+Tekintsük a pénzfeldobás-sorozatot írásokból és fejekből álló blokkok
+sorozataként, ahol például egy fej blokk alatt azt értjük, hogy a
+fejet közvetlenül egymás után valahányszor kidobjuk. Például egy FFFF
+négy dobásból álló rész egy $\{F\}$ blokkott jelent, míg egy IIIIII
+hat dobásból álló rész egy $\{I\}$ blokkott jelent.
+
+Miképpen a sorozatunk három FI és négy IF szekvenciát kell tartalmazzon,
+ezért a blokkok csak így következhetnek egymás után: 
+\[
+\{I\}\{F\}\{I\}\{F\}\{I\}\{F\}\{I\}\{F\}.
+\]
+
+Vizsgáljuk meg, hogy hogyan helyezzük el a fejeket és írásokat a blokkokban
+aszerint, hogy két FF, öt II szekvencia legyen, valamint mindegyik
+blokk legkevesebb egy dobást tartalmazzon. Ehhez feltételezzük, hogy
+kezdetben minden blokk csak egy-egy fejet és írást tartalmaz. Így
+még hiányzik $15-8=7$ pénzfeldobás-eredmény beillesztése a sorozatba.
+
+Mivel két FF szekvencia van a sorozatban, ezért vagy egy $\{F\}$
+blokkban van FFF, vagy két külön $\{F\}$ blokkban van FF. Mindkét
+esetben 2 új fejet illesztettünk be a sorozatba, ezért a beillesztendő
+írások száma 5 lesz. Az öt írást akárhogy illesszük be a $\{I\}$
+blokkokba, minden esetben öt II szekvencia jön létre, ugyanis ahány
+írást tartalmaz egy $\{I\}$ blokk, eggyel kevesebb II szekvencia
+számolódik annál a blokknál. Ez azt jelenti, hogy minden új írás hozzáadása
+a sorozathoz egy újabb II szekvenciát generál.
+
+A probléma megoldásához azt kell vizsgáljuk, hogy a két fejet és öt
+írást hányféleképpen tudunk elhelyezni a már meglévő blokkokban.
+
+A két fejet a négy $\{F\}$ blokkba $C_{4+2-1}^{2}=C_{5}^{2}=\dfrac{5!}{2!\cdot3!}=10$-
+féleképpen lehet elhelyezni, valamint az öt írást a négy $\{I\}$
+blokkba $C_{4+5-1}^{5}=C_{8}^{5}=\dfrac{8!}{5!\cdot3!}=56$-féleképpen
+lehet elhelyezni, ahol figyelembe vettük azt, hogy egy blokkot akár
+többször választhatok, ezért számoltunk ismétléses kombinációval.
+
+Ezek alapján $10\cdot56=560$-féle 15 dobásból álló sorozat lehetséges
+a megadott feltételek mellett. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Hányféleképpen juthatunk el a koordináta-rendszer origójából a $(4,2)$
+pontba, ha $10$ lépést teszünk, minden lépésünk egységnyi hosszú
+és párhuzamos a tengelyek valamelyikével? \emph{(OKTV 2012/2013; II.
+kategória, 1. forduló)}
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük a lépéseket a B (balra), J (jobbra), F (fel) és L (le) betűkkel.
+Ahhoz, hogy az origóból a $(4,2)$ pontba eljussunk legalább $4$-et
+kell jobbra lépnünk és $2$-őt felfele. Ez összesen $6$ lépés, a
+maradék négy lépést pedig úgy tehetjük csak meg, hogy a 4 lépés elvégzése
+után helyben maradjunk: ha jobbra lépünk, kell szerepeljen egy balra
+lépésnek is, valamint ha felfele lépünk akkor egyet kell lépnünk lefele
+is. Így a maradék négy lépés a $(J,B)$, $(F,L)$ párokból tevődik
+össze, melyek így az alábbiak lehetnek: 
+\begin{itemize}
+\item két $(J,B)$ pár, azaz $2$ db $J$, $2$ db $B$; 
+\item két $(F,L)$ pár, azaz $2$ db $F$, $2$ db $L$; 
+\item egy $(J,B)$ pár és egy $(F,L)$ pár, azaz $1$ db $J$, $1$ db $B$,
+$1$ db $F$, $1$ db $L$. 
+\end{itemize}
+Ezeket összevetve az első hat lépéssel a következő lépésekből tevődhetnek
+össze a megfelelő utak: 
+\begin{itemize}
+\item J, J, J, J, J, J, B, B, F, F; 
+\item J, J, J, J, F, F, F, F, L, L; 
+\item J, J, J, J, J, B, F, F, F, L. 
+\end{itemize}
+Az összes lehetséges út számát úgy kapjuk meg, ha megszámoljuk, hogy
+hányféleképpen rendezhetőek sorrendbe a fenti sorok. Ehhez ismétléses
+permutációt alkalmazunk, mert a sorozatokban ismétlődő elemek is megjelennek.
+Tehát az összes lehetséges sorrendet az alábbiak szzerint kapjuk meg:
+\begin{align*}
+P_{10}^{6,2,2}+P_{10}^{4,4,2}+P_{10}^{5,1,3,1} & =\frac{10!}{6!\cdot2!\cdot2!}+\frac{10!}{4!\cdot4!\cdot2!}+\frac{10!}{5!\cdot1!\cdot3!\cdot1!}\\
+ & =1260+3150+5040=9450.
+\end{align*}
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Egy édességboltban 6 féle cukorka kapható: csokoládés, epres, vaníliás,
+karamellás, mentolos és kókuszos. Egy vásárló 10 darab cukorkát szeretne
+venni úgy, hogy bármelyik fajtából bármennyit választhat.
+\begin{enumerate}
+\item[a)] Hányféleképpen választhatja ki a 10 cukorkát? 
+\item[b)] Hányféleképpen választhatja ki a 10 cukorkát, ha legalább egy csokoládésnak
+lennie kell benne? 
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+{a) Bármilyen elosztás lehetséges}
+
+Az ismétléses kombináció képlete:
+
+\[
+C(n+k-1,k)=\binom{n+k-1}{k}
+\]
+
+ahol: 
+\begin{itemize}
+\item $n=6$ (cukorkafajták száma), 
+\item $k=10$ (választott cukorkák száma). 
+\end{itemize}
+Tehát:
+
+\[
+C(6+10-1,10)=C(15,10)=\binom{15}{10}
+\]
+
+Számoljuk ki:
+
+\[
+\binom{15}{10}=\frac{15!}{10!(5!)}=\frac{15\times14\times13\times12\times11}{5\times4\times3\times2\times1}=3003
+\]
+
+\textbf{Válasz:} A vásárló \textbf{3003} különböző módon választhat
+cukorkát.\\
+
+{b) Legalább egy csokoládés cukorkának lennie kell}
+
+Ha legalább egy csokoládés kell, akkor először választunk egy csokoládéset,
+majd a maradék 9 cukorkát osztjuk el a 6 féle cukorka között:
+
+\[
+C(6+9-1,9)=C(14,9)=\binom{14}{9}
+\]
+
+Számoljuk ki:
+
+\[
+\binom{14}{9}=\frac{14!}{9!(5!)}=\frac{14\times13\times12\times11\times10}{5\times4\times3\times2\times1}=2002
+\]
+
+\textbf{Válasz:} A vásárló \textbf{2002} különböző módon választhat
+cukorkát, ha legalább egy csokoládésnak lennie kell.
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+A nagypályás fiú focicsapat legutóbbi mérkőzésének első félidejében
+leginkább védekezett. Mind a 16 szabadrúgást, amit a bíró nekik ítélt,
+saját térfelükről végezhették el -- ezért a három csatár nem, de
+a kapus rúghatott szabadot. A szabadrúgások elvégzőit a másodedző
+jelölte ki. Hányféle lehetőség közül választhatott, ha 
+\begin{itemize}
+\item[a.)] a szabadrúgások időbeli sorrendjét is figyelembe vesszük; 
+\item[b.)] csak azt vesszük figyelembe, hogy kik végezték el a szabadrúgásokat? 
+\end{itemize}
+A második félidőre az edző kicsit átszervezte a csapatot, így a játék
+végig az ellenfél térfelén folyt. Most 13 szabadrúgást végeztek el,
+de a kapus már nem rúgott labdába. Így hányféle lehetőség volt a szabadrúgások
+elvégzésére, ha 
+\begin{itemize}
+\item[c.)] a szabadrúgások időbeli sorrendjét is figyelembe vesszük; 
+\item[d.)] csak azt tekintjük, hogy kik végezték el a szabadrúgásokat? 
+\end{itemize}
+\begin{flushright}
+\textit{(Magyarországi emelt szintű érettségi feladat)} 
+\par\end{flushright}
+\end{extraproblem}
+
+\begin{solution}
+Egy focimeccs alatt $11$ ember van a pályán egy csapatból, beleszámítva
+a kapust is. Így ha a szabadrúgásokat a kapus is elvégezhette, de
+a három csatár nem, $11-3=8$ ember végezhetett szabadrúgást. \\
+ a.) $16$ szabadrúgást kellett leadjon $8$ ember. A fociban semmi
+sem tiltja, hogy két vagy több szabadrúgást ne végezhessen el ugyanaz
+a játékos. Így minden szabadrúgás esetén $8$ emberből lehet választani,
+még akkor is ha az illető már többször is rúgott. Figyelembe véve
+azt, hogy számít az időrendi sorrend, ismétléses variációval (értelmezés:
+$8$-féle elemből (focistából) a sorrend figyelembevételével kiválasztunk
+$16$ darabot (egyféle elemből többet is választhatunk)) tudjuk megadni
+a kért eredményt: 
+\[
+\underbrace{8\cdot8\cdot\ldots\cdot8}_{\text{16-szor}}=8^{16}.
+\]
+b.) Mivel szintén az a kérdés, hogy $8$ emberből hányféleképpen tudunk
+$16$-ot kiválasztani, úgy hogy egy embert többször is választhatunk,
+de a kiválasztásuk sorrendje nem számít, ez értelmezés szerint $n=8$-nak
+$k=16$-onkénti ismétléses kombinációja. Tehát 
+\[
+C_{8+16-1}^{16}=C_{23}^{16}=\frac{23!}{16!7!}=245157
+\]
+féleképpen választhatóak ki a fiúk, ha a sorrendet nem vesszük figyelembe.
+\\
+ c.) A csapat $11$ emberéből csak a kapus nem rúghatott, így $11-1=10$
+emberből választhatták ki a szabadrúgást leadó embert. Mivel egy embert
+akárhányszor is ki lehet választani, figyelembe véve az időbeli sorrendet,
+a $13$ szabadrúgást a $10$ embernek: 
+\[
+\underbrace{10\cdot10\cdot\ldots\cdot10}_{\text{13-szor}}=10^{13}
+\]
+féle sorrendben lehetett leadni (ismétléses variáció).\\
+ d.) Mivel szintén az a kérdés, hogy $10$ emberből hányféleképpen
+tudunk $13$-at kiválasztani, úgy hogy egy embert többször is választhatunk,
+de a kiválasztásuk sorrendje nem számít, ez értelmezés szerint $n=10$-nek
+$k=13$-asonkénti ismétléses kombinációja. Tehát 
+\[
+C_{10+13-1}^{13}=C_{22}^{13}=\frac{22!}{13!9!}=497420
+\]
+féleképpen választhatóak ki a fiúk, ha a sorrendet nem vesszük figyelembe.
+\end{solution}
+\begin{extraproblem}[Seres Brigitta-Alexandra]
+Tekintsük azokat a dominókat, amelyek mindkét felén a pontok száma
+0-tól 8-ig terjed. Ezeket a pontok számának megfelelően így azonosíthatjuk:
+$xy$, ahol $0\leq x\leq y\leq8$.
+\begin{enumerate}
+\item[a)] Hány ilyen dominó van? 
+\item[b)] Hányféleképpen lehet a 45 ilyen dominó közül kettőt kiválasztani
+úgy, hogy a két dominót egymás mellé lehessen tenni (azaz valamelyik
+felükön a pontok száma azonos)?
+\end{enumerate}
+\end{extraproblem}
+\begin{solution}
+\begin{enumerate}
+\item[a)] Ha $x=0$, akkor $y$ értékei $0,1,2,\dots,8$ közül lehetnek, ez
+$9$ lehetőség. Ha $x=1$, akkor $y$ értékei $1,2,\dots,8$ közül
+lehetnek (hiszen $x\leq y$, ezért nem lehet már $y=0$), ez $8$
+lehetőség. Továbbá is ahogy növeljük $x$ számát $y$-ra eggyel kevesebb
+választási lehetőség lesz $x\leq y$ feltétel miatt. Utolsó esetben,
+ha $x=8$, akkor csak $y=8$ lehet, ez $1$ lehetőség.
+
+Mivel a felsorolt esetek egymást kizárják és az összes lehetséges
+esetet végigvettük, így az összegzési szabály ( „összes lehetőségek
+száma $=$ az egymást kizáró eseteknek megfelelő lehetőségek számainak
+összege”) szerint a dominók száma
+
+\[
+9+8+\dots+1=45.
+\]
+
+\item[b)] Válasszunk egy dominót.
+
+Legyen az \textbf{1. eset}: "dupla" dominó, azon dominók, melyben
+$x=y$, azaz $00,11,22,\dots,88$, ebből $9$ darab van.
+
+A \textbf{2. eset}: olyan dominó, amelyre $x<y$ (az összes többi
+ilyen, hiszen $x\leq y$ mindig igaz és $x=y$ előző esetben tárgyaltuk
+le, így amik maradnak azok csak a $x<y$ típusú dominók), ezek száma
+$45-9=36$.
+
+Az \textbf{1. esetben} a második dominó 8-féleképpen választható (minden
+dupla dominóhoz még $8$ darab olyan dominó tartozik, melyen szerepel
+az adott szám, pl. $00$ mellé a $01$,$02$,...,$08$ dominók tehetőek
+vagy pl. $11$ mellé $01,12,13,...,18$). Így minden dupla dominóhoz
+$8$ társa tehető, összesen $9\cdot8=72$ eset van.
+
+A \textbf{2. esetben} Egy olyan dominóhoz, melyben $x<y$ választhatunk
+egy $x$ számjegyet tartalmazó dominót (ebből $8$ db van még az $xy$-on
+kívül) vagy egy $y$ számjegyet tartalmazó dominót (ebből $8$ db
+van még az $xy$-on kívül). Olyan, hogy mind a kettőt tartalmazza
+$x,y$-t is, nem lehet, mert az maga az $xy$ és fordított sorrendben
+nincsenek meg a dominók, hiszen $x<y$. Tehát a $x$-et tartalamzó
+$8$ dominó és $y$-t tartalmazó $8$ dominó között nincsnenek közös
+elemek, így $xy$ mellé $8+8=16$ dominót lehet választani.
+
+Például $27$ lehetséges párjai: $02,07,12,17,22,23,24,25,26$, $28,37,47,57,67,77,78$.
+
+Mivel a \textbf{2. esetben} 36 dominó van, mindegyik mellé $16$ pár
+tehető le, az összes lehetőség: 
+\[
+36\cdot16=576.
+\]
+Az \textbf{1. eset} és \textbf{2. eset} dominói egymást kizáró eseteknek
+számítanak, és egybevéve az összes lehetőséget kiadják, így az összegzési
+szabály („összes lehetőségek száma $=$ az egymást kizáró eseteknek
+megfelelő lehetőségek számainak összege”) szerint a lehetőségek száma
+\[
+72+576=648.
+\]
+
+Az előbbiekben különbséget tettünk aszerint, hogy a két dominót milyen
+sorrendben húzzuk. Minden összeillő dominó-pár kétszer szerepelt,
+így pl. először $27$ választása és hozzá $47$, majd először $47$
+választása és hozzá $27$ párosítást két különbözőnek számítottuk.
+Ha ezeket nem tekintjük különbözőknek, akkor a lehetőségek száma az
+előbbi fele, azaz $324$. 
+\end{enumerate}
+\end{solution}
+
+\begin{extraproblem}[Sógor Bence]
+Hány megoldása van az $x+y+z+w=21$ egyenletnek a nem negatív egész
+számok halmazán? Hány egész megoldása van az $x+y+z+w=21$ egyenletnek,
+ha $x\geq3$, $y\geq1$, $z\geq-2$, $w\geq-4$?
+\end{extraproblem}
+
+\begin{solution}
+Az első kérdést megválaszolva, tekinthetünk úgy a feladatra, mintha
+21 1-est szeretnénk szétosztani $x$, $y$, $z$, $w$ között úgy,
+hogy egy betűhöz több 1-est is rendelhetünk. Ezt $C_{4}^{21,i}$-féleképpen
+tehetjük meg. A megoldások száma: 
+\[
+C_{4}^{21,i}=C_{24}^{21}=C_{24}^{3}.
+\]
+
+Próbáljuk visszavezetni ezt a kérdést az előzőre. Vegyük észre, hogy
+ha az egyenletet átírjuk
+
+\[
+(x-3)+(y-1)+(z+2)+(w+4)=21-3-1+2+4=23
+\]
+
+alakba, akkor $x-3\geq0$, $y-1\geq0$, $z+2\geq0$ és $w+4\geq0$.
+Tehát összesen:
+
+\[
+C_{4}^{23,i}=C_{26}^{23}=C_{26}^{3}
+\]
+
+egész megoldása van az egyenletnek.
+\end{solution}
+\begin{extraproblem}[Szabó Kinga]
+Egy iskolában a tanulók $10$ fős csapatokat szerveztek. Egy diák
+több csapatnak is tagja lehet, vagy akár egyiknek sem. A csapatok
+száma $500$. Bizonyítsuk be, hogy a diákokat el lehet helyezni két
+teremben úgy, hogy minden csapatnak mindkét teremben legyen tagja.
+\emph{(Róka Sándor: 2000 feladat az elemi matematika köréből) }
+\end{extraproblem}
+
+\begin{solution}
+A diákok száma $n$. Őket a két terembe $2^{n}$-féleképp lehet szétosztani.
+A tanulók két teremben való szétosztásai között vannak "rossz" elhelyezések,
+amelyekben valamelyik (vagy több) csapatnak minden tagja ugyanabba
+a terembe kerül. Ha a rossz elhelyezések száma kisebb, mint $2^{n}$;
+abból következik hogy van jó elhelyezés is. Tekintsünk egy tetszőleges
+csapatot, és számítsuk ki, hogy hány olyan rossz elhelyezés van, amikor
+ennek a csapatnak minden tagja ugyanabba a terembe kerül. Először
+el kell döntenünk, hogy melyik ez a terem, ez $2$ lehetőség. Ezután
+a többi $n-10$ embert kell szétosztanunk, amit $2^{n-10}$-féleképpen
+tehetünk meg. Összesen tehát $2\cdot2^{n-10}=2^{n-9}$ olyan rossz
+elhelyezés van, amikor egy kiszemelt csapat minden tagját ugyanabban
+a teremben helyeztük el. $500$ csapat lévén az összes rossz elhelyezés
+száma legfeljebb $500\cdot2^{n-9}.$ (Lehetnek esetek, amelyeket többször
+is megszámoltunk.) Mivel $500\cdot2^{n-9}=\frac{500}{512}\cdot2^{n}<2^{n},$
+ezért a feladat állítása igaz. 
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+ Péter és Anna öt kiskutyát fogadott örökbe. A kiskutyáknak még nincsen
+nevük, szóval elkezdtek tanakodni, hogy kereszteljék el őket. Végül
+a követekező neveket jegyezték ki: 
+\[
+\text{Ali, Eli, Csillu, Tomi, Andi, Kamillus, Gáspa, Vivus, Jánus, Csibusz.}
+\]
+Eldöntötték, hogy a névadás során az alábbi szabályokat kell betartani: 
+\begin{itemize}
+\item Az első kutya neve nem kezdődhet „A” betűvel. 
+\item Az öt kutyus neve közül pontosan két névnek kell magánhangzóval kezdődnie
+(A, E, I, O, U). 
+\item Egy adott név csak egyszer szerepelhet. 
+\item A nevek sorrendje számít.
+
+Hányféle sorrendben keresztelhetik el a kiskutyákat? 
+
+\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+
+\underline{ Az összes lehetséges sorrend ismétlés nélkül}\\
+
+Ha nem lennének megkötések, akkor a nevek kiválasztása és sorrendje:
+\[
+V_{10}^{5}=\frac{10!}{(10-5)!}=\frac{10!}{5!}.
+\]
+Kiszámolva: 
+\[
+\frac{10!}{5!}=\frac{10\cdot9\cdot8\cdot7\cdot6}{1}=30240.
+\]
+Ez azonban nem veszi figyelembe a megadott feltételeket.
+
+\underline{A feltételek figyelembevétele ismétléses permutációval}\\
+
+\textbf{Az első név kiválasztása}
+
+Az első név nem kezdődhet "A" betűvel, tehát Alo és Andi nem lehet
+első. Ezért: 
+\[
+8\text{ lehetőség.}
+\]
+
+\textbf{Két magánhangzós név kiválasztása}\\
+
+A magánhangzóval kezdődő nevek: \{\text{Ali, Eli, Andi}\}. Ebből
+pontosan kettőt kell választani: 
+\[
+C_{3}^{2}=3.
+\]
+
+\textbf{Három mássalhangzós név kiválasztása}\\
+
+A mássalhangzóval kezdődő nevek:
+
+\{\text{Csillu, Tomi, Kamillus, Gáspa, Vivus, Jánus, Csabusz}\}.
+Ebből pontosan hármat kell választani: 
+\[
+C_{7}^{3}=\frac{7!}{3!(7-3)!}=35.
+\]
+
+\underline{Az 5 kiválasztott név sorrendje}\\
+
+A kiválasztott nevek permutációinak száma: 
+\[
+5!=120.
+\]
+
+\underline{A végső számítás}\\
+
+A teljes lehetőségek száma: 
+\[
+8\cdot C_{3}^{2}\cdot C_{7}^{3}\cdot5!.
+\]
+Kiszámolva: 
+\[
+8\cdot3\cdot35\cdot120.
+\]
+\[
+8\cdot3=24.
+\]
+\[
+24\cdot35=840.
+\]
+\[
+840\cdot120=100800.
+\]
+
+\[
+\mathbf{100800}
+\]
+Tehát \textbf{100 800} különböző módon adhatják a neveket az öt kiskutyának.
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+ Hány különböző módon lehet az összes karaktert átrendezni úgy, hogy
+semmilyen két azonos karakter ne álljon egymás mellett, ha az eredeti
+karakterlánc: 
+\[
+S=AABBBCCCC
+\]
+\end{extraproblem}
+
+\begin{solution}
+
+\underline{1. Az ismétléses permutációk teljes száma}
+
+Először megszámoljuk az összes lehetséges átrendezést a karakterek
+ismétléseinek figyelembevételével: 
+\[
+\frac{9!}{2!3!4!}=\frac{362880}{2\cdot6\cdot24}=\frac{362880}{288}=1260.
+\]
+Ez az összes lehetséges átrendezés, ha nem lenne megkötés.
+
+\underline{2. A tiltott esetek meghatározása}
+
+A feltétel szerint kizárjuk azokat az eseteket, amikor két azonos
+karakter egymás mellett áll.
+
+\textbf{Az A-k érintkezőek}\\
+
+Ha az A-k mindig együtt állnak, akkor egyetlen "AA" blokkot kapunk:
+\[
+\frac{8!}{3!4!}=\frac{40320}{6\cdot24}=\frac{40320}{144}=280.
+\]
+
+\textbf{A B-k érintkezőek}\\
+
+Ha a B-k mindig együtt állnak, akkor egyetlen "BBB" blokkot kapunk:
+\[
+\frac{7!}{2!4!}=\frac{5040}{2\cdot24}=\frac{5040}{48}=105.
+\]
+
+\textbf{A C-k érintkezőek}\\
+
+Ha a C-k mindig együtt állnak, akkor egyetlen "CCCC" blokkot kapunk:
+\[
+\frac{6!}{2!3!}=\frac{720}{2\cdot6}=\frac{720}{12}=60.
+\]
+
+\underline{3. Az átfedések kezelése}
+
+\textbf{Az A-k és B-k egyaránt érintkezőek}\\
+
+\[
+\frac{6!}{4!}=\frac{720}{24}=30.
+\]
+
+\textbf{Az A-k és C-k egyaránt érintkezőek}\\
+
+\[
+\frac{6!}{3!}=\frac{720}{6}=120.
+\]
+
+\textbf{A B-k és C-k egyaránt érintkezőek}\\
+
+\[
+\frac{5!}{2!}=\frac{120}{2}=60.
+\]
+
+\textbf{Az A-k, B-k és C-k mind érintkezőek}\\
+
+\[
+3!=6.
+\]
+
+\underline{4. Szitaformula alkalmazása}
+
+Az érvényes permutációk száma: 
+\[
+1260-(280+105+60)+(30+120+60)-6
+\]
+\[
+=1260-445+210-6=1019.
+\]
+
+Tehát \textbf{1019} különböző módon lehet az összes karaktert átrendezni
+úgy, hogy semmilyen két azonos karakter ne álljon egymás mellett.
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+Egy matematikatáborban 3 nap alatt összesen 10 foglalkozásra kerül
+sor az alábbi bontásban:
+\begin{itemize}
+\item 1. nap: 2 foglalkozás
+\item 2. nap: 5 foglalkozás
+\item 3. nap: 3 foglalkozás
+\end{itemize}
+A foglalkozások az alábbi témakörökből állnak:
+\begin{itemize}
+\item  Kombinatorika: 3 foglalkozás
+ \item Geometria: 2 foglalkozás
+ \item Algebra: 1 foglalkozás
+ \item Analízis: 2 foglalkozás
+ \item Számelmélet: 2 foglalkozás
+\end{itemize}
+
+a) Hányféleképpen lehet összeállítani az órarendet?
+
+b) Hányféleképpen lehet összeállítani az órarendet, ha egy nap nem
+lehet ugyanaz a téma kétszer? 
+\end{extraproblem}
+
+\begin{solution}
+a) a lehetséges órarendek száma $\dfrac{10!}{3!\cdot2!\cdot1!\cdot2!\cdot2!}=75600$
+
+b) Ha egy témakör nem szerepelhet egy nap kétszer, akkor a második
+nap minden témakörből 1-1 foglalkozás lesz. Ezt $5!$ módon lehet az
+órarendbe tenni. Az első és a harmadik napra kell tenni egy-egy kombinatorika
+foglalkozást. Ezt 2, illetve 3 módon lehet. A 1. és a 3. nap a maradék
+helyekre 1-1 Geometria, Analízis és Számelmélet foglalkozást lehet
+tenni. Ezt első nap 3 féleképpen lehetséges, 3. nap pedig a maradék
+két témakörből a maradék két helyre kétféleképpen lehet tenni a foglalkozásokat,
+tehát az összes ilyen órarend: $2\cdot3\cdot5!\cdot3\cdot2=4320$.
+\end{solution}
+\begin{extraproblem}[Csapó Hajnalka]
+ a) Hány olyan hatjegyű szám létezik, amelyben van legalább két azonos
+számjegy? b) Hány olyan hatjegyű szám létezik, amelyben pontosan két
+azonos számjegy van? 
+\end{extraproblem}
+
+\begin{solution}
+a) Az összes hatjegyű természetes szám száma: $9\cdot10^{5}=900000$
+Azon hatjegyű számok száma, amelyek számjegyei különböznek: $9\cdot9\cdot8\cdot7\cdot6\cdot5=136080$.
+Tehát azok száma, amelyekben legalább két azonos számjegy van: $900000-136080=763920$.
+
+b) Egy ilyen számhoz 5 számjegyet használunk. Ha nem tartalmaz 0-t,
+akkor $5\cdot\dfrac{6!}{2!\cdot1!\cdot1!\cdot1!\cdot1!}=1800$ ilyen
+szám képezhető ezzel az 5 számjeggyel. Az 5 számjegyet pedig $C_{9}^{5}=126$
+módon választhatjuk ki, tehát $126\cdot18000=226800$ ilyen szám van.
+Ha ez az 5 számjegy tartalmaz 0-t, akkor ha két 0-t tartalmaz, azokat
+5 helyre kell letenni $\dfrac{4\cdot5}{2}=10$ módon, a többi helyre
+pedig a megmaradt 4 számjegyet kell sorba rendezni $4!=24$ módon,
+ezt a 4 számjegyet $C_{9}^{4}=126$ módon választatjuk ki, tehát összesen
+$126\cdot10\cdot24=30240$ ilyen szám van. Ha nem a nulla ismétlődik,
+akkor a maradék 4 számjegyet $4\cdot\dfrac{5!}{2!\cdot1!\cdot1!\cdot1!}=240$
+féleképpen rendezhetjük. A nullát minden esetben 5 helyre tehetjük,
+tehát $126\cdot240\cdot5=151200$
+
+Tehát az összes ilyen szám 408240.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+ Egy 5 házból álló házsort szeretnénk kifesteni, és 4-féle festékünk
+van. A szomszédos házak nem lehetnek egyforma színűek. (Egy házhoz
+csak egyféle festéket használunk, a festékeket nem lehet keverni.)
+\end{extraproblem}
+
+\begin{solution}
+Az első házhoz 4-féle festékből választhatunk. A második házhoz már
+csak a maradék 3 színből választhatunk, mivel a szomszédos ház nem
+lehet ugyanaz a színű. Ugyanez igaz a harmadik, negyedik és ötödik
+házra is, tehát mindegyikhez 3 szín közül választhatunk, kivéve az
+előzőhöz használt színt.
+
+Ezért az összes lehetséges kifestési lehetőség száma:
+
+\[
+4\cdot3\cdot3\cdot3\cdot3=4\cdot3^{4}=324
+\]
+
+Tehát összesen 324 féle kifestés létezik.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+ Az ötös, vagy a hatos lottón lehet kevesebb szelvénnyel biztosan
+telitalálatot elérni. (Az ötös lottó esetén 90 szám közül kell ötöt
+találni, a hatoson 45-ből 6-ot.)
+\end{extraproblem}
+
+\begin{solution}
+Ötös lottó esetén 90-ből 5 szelvényre, hatos lottónál pedig 45-ből
+6 szelvényre van szükség. Vizsgáljuk a $\binom{90}{5}-\binom{45}{6}$
+különbség előjelét:
+
+\[
+\binom{90}{5}-\binom{45}{6}=\frac{90\cdot89\cdot88\cdot87\cdot86}{5!}-\frac{45\cdot44\cdot43\cdot42\cdot41\cdot40}{6!}
+\]
+
+\[
+=\frac{1}{6!}\left((90\cdot89\cdot88\cdot87\cdot86)-(45\cdot44\cdot43\cdot42\cdot41\cdot40)\right)
+\]
+
+\[
+=\frac{1}{6!}\left((90\cdot89\cdot88\cdot87\cdot86)-(45\cdot44\cdot43\cdot42\cdot41\cdot40)\right)>0
+\]
+
+Azaz az ötös lottó esetén több szelvényt kell kitölteni.
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Hányféle eredmény születhet akkor, ha egy csomag magyar kártyából
+4 lapot egymás után kihúzunk, és a húzásnál
+\begin{itemize}
+\item[a)] a kihúzott lapokat mind megkülönböztetjük egymástól, 
+\item[b)] a kihúzott lapokat csak a szín szerint különböztetjük meg, 
+\item[c)] a kihúzott lapokat csak az értéke szerint különböztetjük meg? 
+\end{itemize}
+Oldjuk meg a feladatot úgy is, hogy az egyenkénti húzás után mindig
+visszatesszük, illetve úgy is, hogy nem tesszük vissza a lapot (leosztjuk)!
+\end{extraproblem}
+
+\begin{solution}
+\textbf{a)} visszatevés nélkül: Mivel minden lapot különbözőnek tekintünk,
+minden húzás után csökken a lehetőségek száma. Az első lapnál 32 lehetőség
+van, a másodiknál 31, és így tovább. Ezért a lehetséges eredmények
+száma:
+
+\[
+32\cdot31\cdot30\cdot29=863040
+\]
+
+\textbf{a)} visszatevéssel: Ha minden lapot visszateszünk, akkor minden
+húzásnál 32 lehetőség van, így az eredmények száma:
+
+\[
+32\cdot32\cdot32\cdot32=32^{4}=1048576
+\]
+
+\textbf{b)} minden esetben: Mivel csak a színeket különböztetjük meg,
+minden húzásnál 4 szín közül választhatunk. Ezért a lehetséges eredmények
+száma:
+
+\[
+4\cdot4\cdot4\cdot4=4^{4}=256
+\]
+
+\textbf{c)} minden esetben: Ha csak az értékeket különböztetjük meg,
+akkor minden húzásnál 8 érték közül választhatunk. Az eredmények száma
+tehát:
+
+\[
+8\cdot8\cdot8\cdot8=8^{4}=4096
+\]
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Egy 10 fős társaság három csónakkal indul csónakázni: egy $5$, egy
+$3$ és egy $2$ személyessel. Mennyi a valószínűsége annak, hogy
+Anna és Béla (a társaság két tagja) egy csónakba kerülnek? 
+\end{extraproblem}
+
+\begin{solution}
+Az összes lehetséges ültetések száma 
+\[
+N=\frac{10!}{5!\cdot3!\cdot2!}=2520.
+\]
+A kedvező esetek száma három részből tevődik össze: 
+\begin{itemize}
+\item Ha Anna és Béla az $5$ személyes csónakban ülnek, akkor a maradék
+$8$ főből $3$ főt kell kiválasztani a csónakjukba, ezért a kedvező
+esetek száma 
+\[
+K_{1}=\frac{8!}{3!\cdot3!\cdot2!}=560.
+\]
+\item Ha Anna és Béla a $3$ személyes csónakban ülnek, akkor a maradék
+$8$ főből $1$ főt kell kiválasztani a csónakjukba, ezért a kedvező
+esetek száma 
+\[
+K_{2}=\frac{8!}{5!\cdot1!\cdot2!}=168.
+\]
+\item Ha Anna és Béla a $2$ személyes csónakban ülnek, akkor a maradék
+$8$ főből $0$ főt kell kiválasztani a csónakjukba, ezért a kedvező
+esetek száma 
+\[
+K_{3}=\frac{8!}{5!\cdot3!\cdot0!}=56.
+\]
+\end{itemize}
+Tehát a kedvező esetek száma 
+\[
+K=K_{1}+K_{2}+K_{3}=560+168+56=784.
+\]
+A keresett valószínűség 
+\[
+P=\frac{K}{N}=\frac{784}{2520}=\frac{14}{45}.
+\]
+\end{solution}
+

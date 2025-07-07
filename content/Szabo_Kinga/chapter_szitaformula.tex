@@ -1,0 +1,1524 @@
+
+\chapter{A szitaformula (a bennfoglalás és kizárás elve)}\label{chap:szita}
+\begin{description}
+{\large \item [{Szerző:}] Szabó Kinga (Didaktikai mesteri -- Matematika, II. év)}
+\end{description}
+
+\begin{problem}
+Egy osztály tanulói közül matematika óra elején kiküldünk 2 diákot.
+A többiek karamelles és cseresznyés cukorkákat kapnak. Választhatnak,
+hogy ki milyent szeretne venni. Egy gyerek 1 fajta cukorkából, csak
+egyet vehet, de lesz olyan diák is, aki egyik cukorkából sem kér.
+Visszajön a két diák és el kell dönteniük, hogy összesen hány gyerek
+kapott cukorkát. Ha 15-en vettek karamelleset, 20-an cseresznyéset,
+és mindkét cukorkából 5-ön vettek, akkor hány gyerek vett el a cukorkából?
+\vspace{3mm}
+
+\textbf{Megjegyzés:} Érdemes megpróbálni élőben, cukorkákkal, a gyerekek
+felállhatnak és halmazokat alkothatnak. Különböző színű kötelekkel
+el el lehet különíteni a halmazokat. \vspace{3mm}
+\end{problem}
+\begin{solution}
+Köröket rajzolunk a táblára és rajz alapján megoldjuk. Megpróbáljuk,
+halmazokkal, matematikailag leírni a feladatot.
+
+Legyen a karamelles cukorkát választó gyerekek halmaza a K halmaz,
+és a cseresznyéset választók halmaza pedig a C.
+
+$|K|=15,|C|=20$ és $|K\cap C|=5$. Ekkor $|K\cup C|=|K|+|C|-|K\cap C|=15+20-5=30$.-Szitaformula
+\end{solution}
+\subsubsection*{Szitaformula (2 halmaz esetén):}
+
+$A$ és $B$ nem üres halmazok, ekkor: 
+\[
+|A\cup B|=|A|+|B|-|A\cap B|
+\]
+\begin{problem}
+Vizsgáljuk az előző feladatot ha lesz egy harmadik,
+citromos izű cukorka is. Citromos cukorkát 4 gyerek vesz el, citromos
+és cseresznyés cukorkát 2, citromos és karamelles cukorkát 3 míg citromos,
+karamelles, és cseresznyés cukorkát 1 gyerek vesz el. \vspace{5mm}
+\end{problem}
+\begin{solution}
+A citromos cukorkát jelöljük I-vel: $|I|=4,|I\cap C|=2,|I\cap K|=3,|I\cap K\cap C|=1.$
+\[
+|I\cup K\cup C|=|I|+|K|+|C|-|I\cap K|-|I\cap C|-|K\cap C|+|I\cap K\cap C|=4+15+20-3-2-5+1=30
+\]
+\end{solution}
+
+\begin{theorem}{thm:altalanos-szita}
+(Szita-formula általánosan): $A_{1},A_{2},\dots,A_{n}$ véges nem
+üres halmazokra az alábbi formula érvényes:
+
+\begin{equation}
+\left|\bigcup_{i=1}^{n}A_{i}\right|=\sum_{i=1}^{n}|A_{i}|-\sum_{1\leq i<j\leq n}|A_{i}\cap A_{j}|+\sum_{1\leq i<j<k\leq n}|A_{i}\cap A_{j}\cap A_{k}|-\dots+(-1)^{n+1}\left|\bigcap_{i=1}^{n}A_{i}\right|
+\end{equation}
+
+\begin{equation}
+\left|\bigcap_{i=1}^{n}A_{i}\right|=\sum_{i=1}^{n}|A_{i}|-\sum_{1\leq i<j\leq n}|A_{i}\cup A_{j}|+\sum_{1\leq i<j<k\leq n}|A_{i}\cup A_{j}\cup A_{k}|-\dots+(-1)^{n+1}\left|\bigcup_{i=1}^{n}A_{i}\right|
+\end{equation}
+
+ahol:
+
+\[
+\bigcup_{i=1}^{n}A_{i}=A_{1}\cup A_{2}\cup\dots\cup A_{n},\quad\bigcap_{i=1}^{n}A_{i}=A_{1}\cap A_{2}\cap\dots\cap A_{n}.
+\]
+\end{theorem}
+
+\begin{proof}
+$n=2$ esetén igaz a következő képlet:
+
+\begin{equation}
+|A_{1}\cup A_{2}|=|A_{1}|+|A_{2}|-|A_{1}\cap A_{2}|.
+\end{equation}
+
+Feltételezzük, hogy az összefüggés fennáll $n-1$ halmazra:
+
+\begin{equation}
+\left|\bigcup_{i=1}^{n-1}A_{i}\right|=\sum_{i=1}^{n-1}|A_{i}|-\sum_{1\leq i<j\leq n-1}|A_{i}\cap A_{j}|+\dots+(-1)^{n}\left|\bigcap_{i=1}^{n-1}A_{i}\right|.
+\end{equation}
+
+Az alábbi formulát használjuk:
+
+\begin{equation}
+\bigcup_{i=1}^{n}A_{i}=\left(\bigcup_{i=1}^{n-1}A_{i}\right)\cup A_{n}.
+\end{equation}
+
+Az $(n=2)$ esetén igaz képlet alkalmazásával és az indukciós feltevés
+alapján:
+
+\begin{align*}
+\left|\bigcup_{i=1}^{n}A_{i}\right| & =\left(\bigcup_{i=1}^{n-1}A_{i}\right)\cup A_{n}=\left|\bigcup_{i=1}^{n-1}A_{i}\right|+|A_{n}|-\left|\left(\bigcup_{i=1}^{n-1}A_{i}\right)\cap A_{n}\right|=\\
+ & =\sum_{i=1}^{n-1}|A_{i}|-\sum_{1\leq i<j\leq n-1}|A_{i}\cap A_{j}|+\dots+(-1)^{n}\left|\bigcap_{i=1}^{n-1}A_{i}\right|\\
+ & \quad+|A_{n}|-\left|\left(\bigcup_{i=1}^{n-1}A_{i}\right)\cap A_{n}\right|.
+\end{align*}
+
+Ez éppen azt mutatja, hogy az állítás $n$-re is teljesül, tehát a
+bizonyítás befejeződött.
+
+Az iménti számolást még a következő alakban írhatjuk fel:
+
+\begin{equation}
+\left(\bigcup_{i=1}^{n-1}A_{i}\right)\cap A_{n}=\bigcup_{i=1}^{n-1}(A_{i}\cap A_{n}).
+\end{equation}
+
+Ezt behelyettesítve kapjuk a kért (5.0.1) összefüggést.
+
+A (5.0.2) bizonyítása teljesen hasonló módon történik, elégséges felcserélni
+az $\cup$ és $\cap$ műveleteket. 
+\end{proof}
+\begin{theorem}{thm:egyenlotlensegek}
+Egyenlőtlenségek:
+
+Adott $A_{1},A_{2},\dots,A_{n}$ véges, nem üres halmaz esetén, ha
+$m$ páros és $m<n$, akkor:
+
+\begin{equation}
+\sum_{i=1}^{m}|A_{i}|-\sum_{1\leq i<j\leq m}|A_{i}\cap A_{j}|+\dots+(-1)^{m+1}\left|\bigcap_{i=1}^{m}A_{i}\right|\leq\left|\bigcup_{i=1}^{n}A_{i}\right|.
+\end{equation}
+
+Ha pedig $m$ páratlan és $m<n$, akkor:
+
+\begin{equation}
+\sum_{i=1}^{m}|A_{i}|-\sum_{1\leq i<j\leq m}|A_{i}\cap A_{j}|+\dots+(-1)^{m+1}\left|\bigcap_{i=1}^{m}A_{i}\right|\geq\left|\bigcup_{i=1}^{n}A_{i}\right|.
+\end{equation}
+\end{theorem}
+
+A bizonyítás hasonló az előző tétel bizonyításához.
+\begin{theorem}{thm:logikai-szita}
+(Logikai szita):
+
+Legyen $S$ egy $N$ elemű halmaz, és legyenek $A_{1},A_{2},\dots,A_{k}$
+nem szükségképpen különböző, nem üres részhalmazai $S$-nek. Bármely
+$M\subseteq\{1,2,\dots,k\}$ esetén legyen:
+
+\begin{equation}
+N(M)=\left|\{s\in S\mid s\in\bigcap_{i\in M}A_{i}\}\right|,
+\end{equation}
+
+\begin{equation}
+N_{j}=\sum_{|M|=j}N(M),\quad0\leq j\leq k.
+\end{equation}
+
+Azon $S$-beli elemek száma, amelyek egyetlen $A_{i}$-ben sem találhatók:
+
+\begin{equation}
+N-N_{1}+N_{2}-N_{3}+\dots+(-1)^{k}N_{k}.
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+Két esetet különböztetünk meg: 
+\begin{itemize}
+\item Ha $x\in S$ és $x$ nem eleme egyetlen $A_{i}$-nek sem, akkor az
+$x$-et csak egyszer az $N$-ben számoljuk. 
+\item Ha $x\in S$ és $x$ pontosan $\ell$ darab $A_{i}$ halmazban található,
+akkor az $N$-ben egyszer, $N_{1}$-ben $\binom{\ell}{1}$-szer, $N_{2}$-ben
+$\binom{\ell}{2}$-szer, ..., $N_{\ell}$-ben $\binom{\ell}{\ell}$-szer
+szerepel. Így az $x$ súlya: 
+\begin{equation}
+1-\binom{\ell}{1}+\binom{\ell}{2}-\dots+(-1)^{\ell}\binom{\ell}{\ell}=(1-1)^{\ell}=0.
+\end{equation}
+\end{itemize}
+Ez azt jelenti, hogy $x$-et nem számoltuk az $S\setminus\left(\bigcup_{i=1}^{k}A_{i}\right)$
+elemei közé. 
+\end{proof}
+\vspace{5mm}
+
+\begin{problem}
+Tegyük fel, hogy van egy $S$ halmazunk, amely 10 elemből áll: 
+\[
+S=\{1,2,3,4,5,6,7,8,9,10\}.
+\]
+Három részhalmazt definiálunk: $A_{1}$ tartalmazza a 2-vel osztható
+számokat, $A_{2}$ tartalmazza a 3-mal osztható számokat, $A_{3}$
+tartalmazza az 5-tel osztható számokat. Hány olyan elem van $S$-ben,
+amely egyik $A_{i}$-ben sem szerepel? \vspace{5mm}
+\end{problem}
+\begin{solution} 
+\begin{itemize}
+\item $A_{1}$ tartalmazza a 2-vel osztható számokat: 
+\[
+A_{1}=\{2,4,6,8,10\}
+\]
+\item $A_{2}$ tartalmazza a 3-mal osztható számokat: 
+\[
+A_{2}=\{3,6,9\}
+\]
+\item $A_{3}$ tartalmazza az 5-tel osztható számokat: 
+\[
+A_{3}=\{5,10\}
+\]
+\end{itemize}
+\[
+|A_{1}|=5,\quad|A_{2}|=3,\quad|A_{3}|=2
+\]
+
+\[
+A_{1}\cap A_{2}=\{6\}\Rightarrow|A_{1}\cap A_{2}|=1
+\]
+
+\[
+A_{1}\cap A_{3}=\{10\}\Rightarrow|A_{1}\cap A_{3}|=1
+\]
+
+\[
+A_{2}\cap A_{3}=\emptyset\Rightarrow|A_{2}\cap A_{3}|=0
+\]
+
+\[
+A_{1}\cap A_{2}\cap A_{3}=\emptyset\Rightarrow|A_{1}\cap A_{2}\cap A_{3}|0
+\]
+
+A logikai szita tétel szerint az elemek száma, amelyek egyik halmazban
+sem szerepelnek:
+
+\[
+|S-(A_{1}\cup A_{2}\cup A_{3})|=N-N_{1}+N_{2}-N_{3}=
+\]
+
+\[
+=|S|-(|A_{1}|+|A_{2}|+|A_{3}|)+(|A_{1}\cap A_{2}|+|A_{1}\cap A_{3}|+|A_{2}\cap A_{3}|)-|A_{1}\cap A_{2}\cap A_{3}|=
+\]
+
+\[
+=10-(5+3+2)+(1+1+0)-0=
+\]
+
+\[
+=10-10+2-0=2
+\]
+\end{solution}
+
+\begin{problem}[Szürjektív függvények száma]
+Legyenek $X=\{x_{1},x_{2},\ldots,x_{m}\},Y=\{y_{1},y_{2},\ldots,y_{n}\}$
+halmazok, $m\geq n.$ Határozd meg az $f:X\rightarrow Y$ szürjektív
+függvények számát.
+\end{problem}
+\begin{solution}
+Ha $f:X\rightarrow Y$ szürjektív $\Rightarrow\forall y\in Y\exists x\in X:f(x)=y$
+
+Legyen $M=Y^{X},M=Y^{X}=\{f|f:X\rightarrow Y\}$\\
+
+\[
+A_{i}=\{f|f:X\rightarrow Y,Y_{i}\neq Imf\},1\leq i\leq n.
+\]
+
+\[
+A_{1},A_{2},\ldots,A_{n}\subseteq M.
+\]
+
+\[
+S(m,n)=|M-(\bigcap_{i=1}^{n}A_{i})|=\sum_{I\subseteq\{1,n\}}(-1)^{|I|}|A_{I}|^{i=1}=
+\]
+\[
+=M-\sum_{i=1}^{n}|A_{i}|+\sum_{1\leq i<j\leq n}|A_{i}\cap A_{j}|-\sum_{1\leq i<j<k\leq n}|A_{i}\cap A_{j}\cap A_{k}|+\ldots+(-1)^{n}|A_{1}\cap A_{2}\cap\ldots\cap A_{n}|=
+\]
+\[
+=n^{m}-C_{n}^{1}\cdot(n-1)^{m}+C_{n}^{2}\cdot(n-2)^{m}+\ldots+(-1)^{n-1}\cdot C_{n}^{n-1}\cdot1^{m}=\sum_{k=0}^{m}(-1)^{k}\cdot C_{n}^{k}\cdot(n-k)^{m}
+\]
+\end{solution}
+
+\section*{Házi feladatok}
+\begin{problem}
+Egy osztályban angolul, franciául, németül rendre 16, 6, 7 tanuló
+tanul. Négyen angolul is és németül is, hárman németül és franciául,
+ketten franciául és angolul is tanulnak. Egy tanul mindhárom nyelvet
+tanulja. Hányan vannak az osztályban, ha mindenki tanul legalább egy
+nyelvet? Hányan tanulnak csak angolul?\\
+ 
+\end{problem}
+
+\begin{solution}
+Legyen $A$ az angolul, $F$ a franciául, és $N$ a németül tanuló
+tanulók halmaza.
+
+\[
+|A|=16,|F|=6,|N|=7,|A\cap N|=4,|N\cap F|=3,|F\cap A|=2,|A\cap F\cap N|=1
+\]
+
+Tanulók száma szitaformula segítségével: 
+\[
+|A\cup F\cup N|=|A|+|F|+|N|-|A\cap N|-|N\cap F|-|F\cap A|+|A\cap F\cap N|=16+6+7-4-3-2+1=21
+\]
+Csak angolul tanuló diákok száma: 
+\[
+|A|-|A\cap F|-|A\cap N|+|A\cap F\cap N|=16-2-4+1=11
+\]
+\end{solution}
+\begin{problem}
+Egy felmérés során 100 embert megkérdeztek, hogy milyen forrásból
+szerzik a híreket. A következő eredmény született: tévéből 65, rádióból:
+38, újságból 39, tévéből és rádióból: 27, tévéből és újságból : 20,
+rádióból és újságból: 9, tévéből, rádióból és újságból: 6. Hányan
+nem szerzik a híreket egyik forrásból sem? Hányan vannak, akik csupán
+egy forrásból szerzik a híreket a három közül?\\
+ 
+\end{problem}
+
+\begin{solution}
+Legyen $T$ a tévéből, $R$ a rádióból, és $U$ az újságból híreket
+szerzők halmaza.
+
+\[
+|T|=65,|R|=38,|U|=39,|T\cap R|=27,|T\cap U|=20,|R\cap U|=9,|T\cap R\cap U|=6
+\]
+
+\[
+|T\cup R\cup U|=|T|+|R|+|U|-|T\cap R|-|T\cap U|-|R\cap U|+|T\cap R\cap U|=65+38+39-27-20-9+6=92
+\]
+
+\[
+100-92=8
+\]
+
+Csak a tévéből szerzik a híreket: 
+\[
+|T|-|T\cap R|-|T\cap U|+|T\cap R\cap U|=65-27-20+6=24
+\]
+
+Csak a rádióból szerzik a híreket: 
+\[
+|R|-|T\cap R|-|R\cap U|+|T\cap R\cap U|=38-27-9+6=8
+\]
+
+Csak az újságból szerzik a híreket: 
+\[
+|U|-|T\cap U|-|R\cap U|+|T\cap R\cap U|=39-20-9+6=16
+\]
+\end{solution}
+\begin{problem}
+Egy sportegyesületben úszni, futni és kerékpározni tanulnak a gyerekek.
+Úszni 18-an, futni 12-en, kerékpározni 10-en tanulnak. Öten úsznak
+és futnak is, négyen futnak és kerékpároznak is, hárman pedig úsznak
+és kerékpároznak is. Két gyerek mindhárom sportot űzi. Hány gyerek
+jár az egyesületbe, ha mindenki legalább egy sportot tanul? Hányan
+tanulnak csak úszni? 
+\end{problem}
+
+\begin{solution}
+Legyen $U$ az úszni, $F$ a futni, $K$ a kerékpározó gyerekek száma.
+
+\[
+|U|=18,|F|=12,|K|=10,|U\cap F|=5,|F\cap K|=4,|U\cap K|=3,|U\cap F\cap K|=2
+\]
+
+\[
+|U\cup F\cup K|=|U|+|F|+|K|-|U\cap F|-|U\cap K|-|F\cap K|+|U\cap F\cap K|=18+12+10-5-4-3+2=30
+\]
+
+Tehát $30$ gyerek jár a sportegyesületbe.\\
+
+Csak úszni tanuló gyerekek: 
+\[
+|U|-|U\cap F|-|U\cap K|+|U\cap F\cap K|=18-4-3+2=13
+\]
+\end{solution}
+\begin{problem}
+Hányféleképpen ültethetünk le egy sorba három angolt három franciát
+és három törököt úgy, hogy három azonos nemzetiségű ne üljön egymás
+mellé?
+\end{problem}
+
+\begin{solution}
+\[
+9!-C_{3}^{1}\cdot7!\cdot3!+C_{3}^{2}\cdot5!\cdot3!\cdot3!-C_{3}^{3}\cdot3!\cdot3!\cdot3!\cdot3!=362880-90720+12960-1296=283824
+\]
+\end{solution}
+\begin{problem}
+Aladár levelet írt 10 barátjának. Pont mikor borítékba akarta rakni
+a leveleket elaludt a villany. A leveleket ekkor véletlenszerűen rakta
+be a borítékokba. Hányféle olyan elrendezés van, hogy senki ne a neki
+szóló levelet kapja meg?\\
+ 
+\end{problem}
+
+\begin{solution}
+\[
+10!-C_{10}^{1}\cdot9!+C_{10}^{2}\cdot8!-C_{10}^{3}\cdot7!+C_{10}^{4}\cdot6!-C_{10}^{5}\cdot5!+C_{10}^{6}\cdot4!-C_{10}^{7}\cdot3!+C_{10}^{8}\cdot2!-C_{10}^{9}\cdot1!+C_{10}^{10}\cdot1!=
+\]
+\[
+=10!-10!+45\cdot8!-15\cdot8!+30\cdot7!-6\cdot7!+210\cdot4!-30\cdot4!+45\cdot2-5\cdot2+1=
+\]
+\[
+=30\cdot8!+24\cdot7!+180\cdot4!+81=1334961
+\]
+\end{solution}
+\begin{problem}
+Hányféleképpen ülhet le 8 házaspár egy kerekasztal köré úgy, hogy
+minden nő két férfi közé ül, de egyik nő sem ül a férje jobboldalára?\\
+ 
+\end{problem}
+
+\begin{solution}
+Az összes ültetések száma: $7!\cdot8!$\\
+
+Ha legalább egy hölgy a férje jobbján ül: $C_{8}^{1}\cdot7!\cdot7!.$\\
+
+És így tovább... ekkor a helyes ültetések száma szitaformula alapján
+az alábbi módon számolható:
+
+\[
+7!\cdot8!-C_{8}^{1}\cdot7!\cdot7!+C_{8}^{2}\cdot7!\cdot6!-C_{8}^{3}\cdot7!\cdot5!+C_{8}^{4}\cdot7!\cdot4!-C_{8}^{5}\cdot7!\cdot3!+C_{8}^{6}\cdot7!\cdot2!-C_{8}^{7}\cdot7!\cdot1!+C_{8}^{8}\cdot7!\cdot0!=
+\]
+
+\[
+7!\cdot(8!-8!+4\cdot7!-1120+1680-336+56-8+1)=7!\cdot20433
+\]
+\end{solution}
+\begin{problem}
+Hányféleképpen tudunk eltenni 20 különböző papírlapot egy piros, egy
+kék, egy zöld és egy sárga irattartóba úgy, hogy mindegyik irattartóba
+kerüljön legalább egy papír és a dosszién belül a sorrend közömbös?
+\end{problem}
+
+\begin{solution}
+Az összes elrendezések száma: $20^{4},$ hiszen minden papírlap esetén
+$4$ irattartó közül választhatunk.\\
+ Az olyan elrendezések száma, ahol (legalább) egy irattartó üresen
+marad: $C_{4}^{1}\cdot20^{3}.$\\
+ Az olyan elrendezések száma, ahol (legalább) két irattartó üresen
+marad: $C_{4}^{2}\cdot20^{2}.$\\
+ Az olyan elrendezések száma, ahol három irattartó üresen marad: $C_{4}^{3}\cdot20.$\\
+
+Így az összes helyes elrendezések száma: 
+\[
+20^{4}-C_{4}^{1}\cdot20^{3}+C_{4}^{2}\cdot20^{2}-C_{4}^{3}\cdot20=160000-32000+2400-80=130320
+\]
+\end{solution}
+\begin{problem}
+Egy zsákban 10 pár cipő van. Hányféleképpen vehetünk ki belőle 6 darabot
+úgy, hogy ne legyen köztük egy pár sem?\\
+\end{problem}
+
+\begin{solution}
+Logikai szitaformulával:
+
+\[
+C_{20}^{6}-C_{10}^{1}\cdot C_{18}^{4}+C_{10}^{2}\cdot C_{16}^{2}-C_{10}^{3}\cdot C_{14}^{0}=13440
+\]
+\end{solution}
+
+\section*{Nehezebb feladatok}
+\begin{extraproblem}[Szabó Kinga]
+Az osztályba $n$ gyerek jár. Karácsonykor kihúzzák egymás nevét:
+mindenki pontosan egyvalakiét. Akkor sikeres egy húzás, ha mindenkinél
+van cetli, és senki sem saját magát húzta. Mennyi a lehetséges sikeres
+húzások száma?
+\end{extraproblem}
+
+\begin{solution}
+Megjegyzés: A húzásra gondolhatunk úgy, hogy az osztálynapló sorrendjében
+minden diáknak van egy sorszáma, és minden ilyen sorszámhoz azt a
+sorszámot rendeljük, akit húzott. Ez a számok egy permutációját adja.
+A fixpont jelentené azt, hogy valaki önmagát húzta.\\
+
+1. lépés: Határozzuk meg az összes esetet ($H$ halmaz) és a rossz
+esetek kategóriáit ($A_{i}$).\\
+
+Az összes kiosztások száma $|H|=n!$, ha a sikertelen húzásokat is
+számoljuk. Ez a szorzási szabályból következik: Az első gyerek $n$-féle
+cetlit húzhat, a következő már csak $n-1$-et, és egyesével fogynak
+a kihúzható cetlik minden egyéni húzás után. A rossz húzás jellemzője,
+hogy van olyan gyerek, aki magát húzta. Jelölje $A_{i}$ az olyan
+cetlikiosztások eseteit (vagyis az esetek halmazát) amikor az $i$.
+gyerek önmagát húzta. Így annyiféle rossz eset fordul elő, ahányan
+vannak az osztályban.\\
+
+Jelölje $H$ az összes kiosztások halmazát. Ezzel az 1. lépést elvégeztük.
+Valóban szükséges lesz szitálni, mivel könnyű látni, hogy vannak olyan
+kiosztások amik többféle szempontból is rosszak, legalább két $A_{i}$
+$A_{j}$ halmazban is számolnánk őket, de mi minden rossz esetet csak
+egyszer akarunk az összes esetből levonni, vagyis $H-(A_{1}\cup\dots A_{n})$
+méretére vagyunk kíváncsiak.\\
+
+2. lépés: Határozzuk meg az $|A_{i}|,|A_{i}\cap A_{j}|$, illetve
+általában a $k$-s metszetek elemszámait. $|A_{i}|=(n-1)!$, hiszen
+ha az $i$. diák a saját cetlijét húzza, a többiek szabadon húzhatnak
+a maradék $n-1$ cetli közül.\\
+
+Hasonlóan bármelyik$A_{i}\cap A_{j}$ kettes metszet elemszáma $(n-2)!$,
+hiszen az $i$. és $j$. diák cetlijének kivétele után szabadon oszthatunk
+cetliket. Ezt általánosíthatjuk: ha rögzített $k$ ember (pl. $1,2,\dots,k$)
+önmagát húzza, a többiekről pedig nincsen megkötésünk, akkor egy $k$-s
+metszet elemszámát kell megszámolnunk $(A_{1}\cap A_{2}\cap\dots\cap A_{k})$,
+és erre a $(n-k)!$ eredmény adódik.\\
+
+3. lépés: Írjuk fel a szita-formulát. Eszerint a sikeres húzások keresett
+száma: 
+\[
+|H-(A_{1}\cup\dots\cup A_{n})|=
+\]
+\[
+=n!-C_{n}^{1}\cdot(n-1)!+C_{n}^{2}\cdot(n-2)!-\dots+(-1)^{k}\cdot C_{n}^{k}\cdot(n-k)!\pm\dots+(-1)^{n}\cdot C_{n}^{n}.
+\]
+\end{solution}
+\begin{extraproblem}[Csurka-Molnár Hanna]
+Határozzuk meg azoknak az $500$-nál nem nagyobb természetes számoknak
+a számát, amelyek oszthatóak valamely $1$-nél nagyobb számjeggyel! 
+\end{extraproblem}
+
+\begin{solution}
+Ha egy szám osztható egy összetett számmal, akkor osztható a prímtényezős
+felbontásában szereplő prímszámokkal is. Ezért az egynél nagyobb számjegyek
+közül elegendő a prímeket figyelembe vennünk a feladat megoldásánál,
+mert ha egy összetett számjeggyel osztható a szám, akkor osztható
+lesz valamelyik prímszámmal is.
+
+Tehát az $500$-nál nem nagyobb, $2,3,5$, vagy $7$-el osztható természetes
+számokat szeretnénk megszámolni. Tekintsük azon $A_{i}$ halmazokat,
+amelyek az $i$-vel osztható, $500$-nál kisebb számokat tartalmazzák,
+ahol $i\in\{2,3,5,7\}$. 
+\begin{align*}
+|A_{i}| & =\lfloor\frac{500}{i}\rfloor+1\\
+|A_{i}\cap A_{j}| & =\lfloor\frac{500}{i\cdot j}\rfloor+1\\
+|A_{i}\cap A_{j}\cap A_{k}| & =\lfloor\frac{500}{i\cdot j\cdot k}\rfloor+1\\
+|A_{i}\cap A_{j}\cap A_{k}\cap A_{l}| & =\lfloor\frac{500}{i\cdot j\cdot k\cdot l}\rfloor+1\\
+\end{align*}
+ahol $i,j,k,l$ páronként különböző egyjegyű prímszámok.
+
+A logikai szitaformula alapján az $500$-nál kisebb természetes számoknak
+a száma, amelyek oszthatóak valamely $1$-nél nagyobb számjeggyel:
+\begin{align*}
+N & =(\lfloor\frac{500}{2}\rfloor+\lfloor\frac{500}{3}\rfloor+\lfloor\frac{500}{5}\rfloor+\lfloor\frac{500}{7}\rfloor+4)\\
+ & -(\lfloor\frac{500}{2\cdot3}\rfloor+\lfloor\frac{500}{2\cdot5}\rfloor+\lfloor\frac{500}{2\cdot7}\rfloor+\lfloor\frac{500}{3\cdot5}\rfloor+\lfloor\frac{500}{3\cdot7}\rfloor+\lfloor\frac{500}{5\cdot7}\rfloor+6)\\
+ & +(\lfloor\frac{500}{2\cdot3\cdot5}\rfloor+\lfloor\frac{500}{2\cdot3\cdot7}\rfloor+\lfloor\frac{500}{2\cdot5\cdot7}\rfloor+\lfloor\frac{500}{3\cdot5\cdot7}\rfloor+4)-(\lfloor\frac{500}{2\cdot3\cdot5\cdot7}\rfloor+1)\\
+ & =(250+166+100+71+4)-(83+50+35+33+23+14+6)+(16+11+7+4+4)-3\\
+ & =591-244+42-3\\
+ & =386
+\end{align*}
+\end{solution}
+\begin{extraproblem}[Czofa Vivien]
+Adott az $\{1,2,\dots,100\}$ halmaz. Hány szám osztható 2-vel vagy
+3-mal vagy 5-tel? 
+\end{extraproblem}
+
+\begin{solution}
+A halmazban összesen 100 darab szám van. Három halmazra kell használni
+a \textbf{szitaformulát}. Legyen az $A=$ 2-vel osztható számok, $B=$
+3-mal osztható számok, $C=$ 5-tel osztható számok.
+
+\[
+|A\cup B\cup C|=|A|+|B|+|C|-|A\cap B|-|A\cap C|-|B\cap C|+|A\cap B\cap C|
+\]
+
+vagyis 
+\[
+|A|=|\{2,4,6,\dots,100\}|=\left\lfloor \frac{100}{2}\right\rfloor =50
+\]
+\[
+|B|=|\{3,6,9,\dots,99\}|=\left\lfloor \frac{100}{3}\right\rfloor =33
+\]
+\[
+|C|=|\{5,10,15,\dots,100\}|=\left\lfloor \frac{100}{5}\right\rfloor =20
+\]
+\[
+|A\cap B|=|\{6,12,18,\dots,96\}|=\left\lfloor \frac{100}{6}\right\rfloor =16
+\]
+\[
+|A\cap C|=|\{10,20,30,\dots,100\}|=\left\lfloor \frac{100}{10}\right\rfloor =10
+\]
+\[
+|B\cap C|=|\{15,30,45,\dots,90\}|=\left\lfloor \frac{100}{15}\right\rfloor =6
+\]
+\[
+|A\cap B\cap C|=|\{30,60,90\}|=\left\lfloor \frac{100}{30}\right\rfloor =3
+\]
+
+Tehát a válasz: 
+\[
+|A\cup B\cup C|=50+33+20-16-10-6+3=74
+\]
+
+Ez azt jelenti, hogy akkor $100-74=26$ szám \emph{nem} osztható se
+2-vel, se 3-mal, se 5-tel.
+\end{solution}
+\begin{extraproblem}[Czofa Vivien, Kiss Andrea-Tímea, Seres Brigitta-Alexandra]
+\textit{\emph{A Kerekasztal körül lévő 12 székre fel van írva a lovagok
+neve. Ők azonban ezt figyelmen kívül hagyva, véletlenszerűen ülnek
+le. Mennyi a valószínűsége annak, hogy senki sem ül a saját székén?
+}}\textit{(II. Országos Magyar Matematikai Olimpia, II. forduló, XI-XII.
+osztály)}
+\end{extraproblem}
+
+\begin{solution}
+A lehetséges esetek száma $12!$, ennyiféleképpen tudjuk elhelyezni
+a lovagokat a megjelölt székeken. Kiszámoljuk a kedvező esetek számát
+a logikai \textbf{szitaformula} segítségével. Az összes ültetés számából
+kivonjuk azoknak az ültetéseknek a számát, amikor pontosan egyvalaki
+ül a helyén, majd hozzáadjuk azoknak a számát, amikor pontosan két
+lovag ül a helyén és így tovább.
+
+Így a kedvező esetek száma:
+
+\[
+S=12!-\binom{12}{1}\cdot11!+\binom{12}{2}\cdot10!-\binom{12}{3}\cdot9!+\dots+(-1)^{12}\cdot\binom{12}{12}\cdot0!=
+\]
+
+\[
+=12!\left(1-\frac{1}{1!}+\frac{1}{2!}-\frac{1}{3!}+\dots+(-1)^{12}\cdot\frac{1}{12!}\right)
+\]
+
+Ezek alapján a keresett valószínűség:
+
+\[
+P=1-\frac{1}{1!}+\frac{1}{2!}-\frac{1}{3!}+\dots+(-1)^{12}\cdot\frac{1}{12!}
+\]
+
+\textbf{Megjegyzés.} Minél több lovag van, a valószínűség annál jobban
+közelít $\frac{1}{e}=\sum_{k=0}^{\infty}\frac{(-1)^{k}}{k!}$-hez.
+\end{solution}
+\begin{extraproblem}[Fábián Nóra]
+Négy kör úgy helyezkedik el, ahogyan az ábrán látható. A körökön
+belül létrejött 10 tartományba úgy kell beírni a 0, 1, . . . 9 számokat,
+hogy az egyes körökön belüli számok összege egyenlő legyen egymással.
+Legfeljebb mekkora lehet ez az összeg?
+\begin{center}
+\includegraphics[width=0.3\textwidth]{\string"content/Szabo_Kinga/image1\string".png} 
+\par\end{center}
+\end{extraproblem}
+\begin{solution}
+Jelölje a körök egyenlő összegét $x$, az egyes tartományokba írt
+számokat pedig a lenti ábrán a megfelelő helyre írt betű.
+\begin{center}
+\includegraphics[width=0.3\textwidth]{\string"content/Szabo_Kinga/image2\string".png}
+\par\end{center}
+Összeadom körönként azokat a területeket, amik rajta kívül esnek,
+ez $45-x$ ($45=0+1+2+3+4+5+6+7+8+9$). Ha ezeket az (egyenlő) számokat
+sikerül csökkenteni, akkor nő a körökön belüli összeg.
+
+\[
+45-x=i+a+j=i+f+c+d+a=i+f+h+g+j=a+b+d+g+j
+\]
+
+Innen leolvashatjuk az alábbiakat:
+
+\[
+i=b+d+g=f+h+g=j=f+c+d.
+\]
+
+Mivel azt szeretnénk, hogy $45-x$ minimális legyen, ezért
+
+\[
+i+a+j=(b+d+g)+(f+h+g)+(f+c+d)
+\]
+
+összeget akarjuk minimalizálni. Mivel ebben az összegben $g,f,d$
+szerepel kétszer, így ők lesznek a legkisebbek.
+
+Legyen $g,f,d=0,1,2$ és $b,h,c=3,4,5$ így
+
+\[
+i+a+j\geq6+7+8
+\]
+
+De ekkor
+
+\[
+i+a+j\geq(b+d+g)+(f+h+g)+(f+c+d)
+\]
+
+Vagyis számokkal behelyettesítve:
+
+\[
+6+7+8>2\cdot0+2\cdot1+2\cdot2+3+4+5
+\]
+
+Ami egyszerűbben írva:
+
+\[
+21>18.
+\]
+
+Ha $b,h,c$-t eggyel növeljük, akkor $i+a+j$ eggyel csökken. Ekkor
+
+\[
+20>19
+\]
+
+Tehát még ez sem jó. $45-x$-et min. 2-vel kell csökkenteni. Erre
+a következő levezetésnél látunk majd megoldásokat. \textbf{Az egyes
+körökbe írt számok:}
+
+\[
+x=a+b+c+d+e
+\]
+\[
+x=c+e+f+h+i
+\]
+\[
+x=e+d+h+g+j
+\]
+\[
+x=b+c+d+e+f+g+h.
+\]
+
+Vonjuk ki az első három sor összegéből az utolsót!
+
+\[
+2x=a+c+d+2e+h+i+j.
+\]
+
+Így $2x$ értéke nem haladhatja meg
+
+\[
+2\cdot9+8+7+6+5+4+3=51
+\]
+
+értékét, azaz $x$ -- lévén egész szám -- legfeljebb 25. Ez az érték
+el is érhető, a következő ábrán két példát mutatunk rá.
+\begin{center}
+\includegraphics[width=0.7\textwidth]{\string"content/Szabo_Kinga/image\string".png}
+\par\end{center}
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+Egy 52 lapos franciakártya-csomagot szétosztunk 4 játékos között.
+Hány olyan leosztás van, amelyben minden játékosnak jut legalább egy
+treff? (A francia kártyában 4-féle színű lap található, amely színek
+egyike a treff, és minden színből 13 lap fordul elő.) 
+\end{extraproblem}
+
+\begin{solution}
+Álljon a $H$ alaphalmaz a kártyacsomag 4 játékos közötti összes lehetséges
+szétosztásából, továbbá legyenek ennek $A_{1},A_{2},A_{3},A_{4}$
+részhalmazai azon szétosztások, amelyekben az 1., 2., 3., illetve
+4. játékosnak nem jut treff. Feladatunk ekkor $\left|H\backslash\left(A_{1}\cup A_{2}\cup A_{3}\cup A_{4}\right)\right|$
+meghatározása, amelyre a szita-módszert fogjuk alkalmazni.
+
+Tudjuk, hogy $|H|=4^{52}$, hiszen mind az 52 lapot egymástól függetlenül
+a 4 játékos bármelyikének adhatjuk. Azt is tudjuk, hogy $\left|A_{1}\right|=\left|A_{2}\right|=\left|A_{3}\right|=\left|A_{4}\right|=3^{13}\cdot4^{39}$,
+mert ezen szétosztások esetében a 13 treffet mindig csak 3 játékos
+valamelyike kaphatja (például $A_{1}$ esetében csak a 2., 3. vagy
+4. játékos), a fennmaradó 39 lapot pedig a 4 játékos bármelyike.\\
+ $\left|A_{1}\cap A_{2}\right|=\left|A_{1}\cap A_{3}\right|=\left|A_{1}\cap A_{4}\right|=\left|A_{2}\cap A_{3}\right|=\left|A_{2}\cap A_{4}\right|=\left|A_{3}\cap A_{4}\right|=2^{13}\cdot4^{39}$,
+hiszen ekkor a 13 treffet csak 2 játékos valamelyike kaphatja (például
+$A_{1}\cap A_{2}$ esetében csak a 3. vagy 4. játékos), a fennmaradó
+39 lapot pedig továbbra is bárki.\\
+ $\left|A_{1}\cap A_{2}\cap A_{3}\right|=\left|A_{1}\cap A_{2}\cap A_{4}\right|=\left|A_{1}\cap A_{3}\cap A_{4}\right|=\left|A_{2}\cap A_{3}\cap A_{4}\right|=1^{13}\cdot4^{39}$,
+hiszen ekkor a 13 treffet mindig csak egy játékos kaphatja (például
+$A_{1}\cap A_{2}\cap A_{3}$ esetében csak a 4. játékos), a fennmaradó
+39 lapot pedig továbbra is bárki.
+
+Végül $\left|A_{1}\cap A_{2}\cap A_{3}\cap A_{4}\right|=0$, hiszen
+ekkor egyik játékos sem kaphatna treffet, ilyen szétosztás pedig nyilvánvalóan
+nem létezik.
+
+A szita-módszer szerint $\left|H\backslash\left(A_{1}\cup A_{2}\cup A_{3}\cup A_{4}\right)\right|=$
+
+\[
+=|H|-\left(\left|A_{1}\right|+\ldots\right)+\left(\left|A_{1}\cap A_{2}\right|+\ldots\right)-\left(\left|A_{1}\cap A_{2}\cap A_{3}\right|+\ldots\right)+\left|A_{1}\cap A_{2}\cap A_{3}\cap A_{4}\right|
+\]
+
+ahol a ... rendre az összes ugyanannyi halmazból álló metszet felsorolását
+jelenti. A korábbi számításokat behelyettesítve a keresett mennyiség
+$4^{52}-4\cdot3^{13}\cdot4^{39}+6\cdot2^{13}\cdot4^{39}-4\cdot1^{13}\cdot4^{39}+0=$
+$=4^{39}\cdot\left(4^{13}-4\cdot3^{13}+6\cdot2^{13}-4\right)$, tehát
+ennyi a megfelelő leosztások száma. (A végeredmény közelítő értéke
+$1,837\cdot10^{31}$.) 
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+10 ember színházba ment, ahol mindegyikük leadta a kabátját a ruhatárba
+(a kabátok mind különbözőek). A szórakozott ruhatáros összecserélte
+a kiadott sorszámokat, és az előadás végén úgy adta vissza a kabátokat
+(minden embernek egyet-egyet), hogy senki sem a saját kabátját kapta
+vissza. Hányféle különböző módon kaphatták vissza a kabátokat? (A
+visszaadás sorrendje nem számít.) 
+\end{extraproblem}
+
+\begin{solution}
+Álljon a $H$ alaphalmaz a 10 kabát 10 ember közötti összes lehetséges
+szétosztásából, továbbá legyenek ennek $A_{1},A_{2},\ldots,A_{10}$
+részhalmazai azon szétosztások, amelyekben az 1., $2.,\ldots$, illetve
+10. ember a saját kabátját kapja vissza. Feladatunk ekkor $\left|H\backslash\left(A_{1}\cup A_{2}\cup\ldots\cup A_{10}\right)\right|$
+meghatározása, amelyre az előző feladatban is látott szita-módszert
+fogjuk alkalmazni.
+
+Tudjuk, hogy $|H|=10$ !, továbbá $\left|A_{i}\right|=9$ ! (ahol
+$1\leq i\leq10$ ), hiszen ha az $i$-edik ember a saját kabátját
+kapja, akkor a fennmaradó 9 kabátot a többi 9 ember között 9!-féleképpen
+lehet kiosztani. Hasonlóképpen $\left|A_{i}\cap A_{j}\right|=8$ !
+(ahol $1\leq i,j\leq10$ és $i\neq j$ ), illetve bármely $k$ részhalmaz
+metszetének elemszáma $(10-k)$ ! (ahol $1\leq k\leq10$ ). Mivel
+$k$ részhalmazt $C_{10}^{k}$-féleképpen lehet kiválasztani, így
+a szita-formulát felírva a keresett lehetőségek száma a következő:\\
+ $10!-10\cdot9!+C_{10}^{2}\cdot8!-C_{10}^{3}\cdot7!+C_{10}^{4}\cdot6!-C_{10}^{5}\cdot5!+C_{10}^{6}\cdot4!-C_{10}^{7}\cdot3!+C_{10}^{8}\cdot2!-C_{10}^{9}\cdot1!+C_{10}^{10}\cdot0!$\\
+ (ahol $0!=1$ alapján az utolsó tag jelöli a 10 halmaz közös metszetét,
+vagyis azt az 1 lehetőséget, amikor mindenki a saját kabátját kapja
+vissza).
+
+Felhasználva a $C_{10}^{k}\cdot(10-k)!=\frac{10!}{k!\cdot(10-k)!}\cdot(10-k)!=\frac{10!}{k!}$
+összefüggést, az előző eredmény felírható $10!\left(\frac{1}{0!}-\frac{1}{1!}+\frac{1}{2!}-\frac{1}{3!}+\frac{1}{4!}-\frac{1}{5!}+\frac{1}{6!}-\frac{1}{7!}+\frac{1}{8!}-\frac{1}{9!}+\frac{1}{10!}\right)$
+alakban is, amelynek pontos értéke 1334961. (A zárójelben álló összeg
+értéke egyébként azt mutatja meg, hogy a 10 ! összes esetnek hányadrésze
+megfelelő számunkra.) Tehát 1334961 -féleképpen kaphatták vissza a
+kabátokat. 
+\end{solution}
+\begin{extraproblem}[Gál Tamara]
+5 matematikatanár 30 érettségi dolgozatot szeretne elosztani javításra
+egymás között úgy, hogy mindegyikük legalább egyet kijavítson. Hányféleképpen
+tehetik ezt meg? 
+\end{extraproblem}
+
+\begin{solution}
+Álljon a $H$ alaphalmaz a 30 érettségi dolgozat 5 tanár közötti összes
+lehetséges szétosztásából, továbbá legyenek ennek $A_{1},A_{2},A_{3},A_{4},A_{5}$
+részhalmazai azon szétosztások, amelyekben az $1.,2$., 3., 4., illetve
+5. tanárnak nem jut dolgozat. Feladatunk ekkor $\left|H\backslash\left(A_{1}\cup A_{2}\cup A_{3}\cup A_{4}\cup A_{5}\right)\right|$
+meghatározása, amelyre a szita-módszert fogjuk alkalmazni.
+
+Tudjuk, hogy $|H|=5^{30}$, hiszen a 30 dolgozat mindegyikét az 5
+tanár bármelyikének adhatjuk. Továbbá $\left|A_{i}\right|=4^{30}$
+(ahol $1\leq i\leq5$ ), hiszen ha az $i$-edik tanárnak nem jut dolgozat,
+akkor minden dolgozatot 4 tanár valamelyikének adhatunk. Hasonlóképpen
+$\left|A_{i}\cap A_{j}\right|=3^{30}$ (ahol $1\leq i,j\leq5$ és
+$i\neq j$ ), illetve bármely $k$ részhalmaz metszetének elemszáma
+$(5-k)^{30}$ (ahol $1\leq k\leq5$ ). Mivel $k$ részhalmazt $C_{5}^{k}$-féleképpen
+lehet kiválasztani, így a szita-formulát felírva a keresett lehetőségek
+száma $5^{30}-C_{5}^{1}\cdot4^{30}+C_{5}^{2}\cdot3^{30}-C_{5}^{3}\cdot2^{30}+C_{5}^{4}\cdot1^{30}-C_{5}^{5}\cdot0^{30}$
+(ahol az utolsó tag jelöli az 5 halmaz metszetét, amely nyilvánvalóan
+üres, hiszen ekkor egyik tanár se kaphatna dolgozatot).
+
+A lehetséges szétosztások száma tehát $5^{30}-5\cdot4^{30}+10\cdot3^{30}-10\cdot2^{30}+5$.\\
+ (A végeredmény közelítő értéke $9,256\cdot10^{20}$.)
+\end{solution}
+\begin{extraproblem}[Gergely Verona]
+Egy osztály 42 leánytanulójának három kedvence van: egy színész (Sz),
+egy vívóbajnok (V) és egy korcsolyabajnok (K). A leányok gyüjtik kedvenceik
+aláírásos fényképeit. 6 leánynak már mindháromtól van ilyen fényképe.
+Az osztálynak együttesen 21 Sz-képe van, 20 V-és 18 K-képe. Arra a
+kérdésre, hogy kiknek van meg Sz képe is, V képe is, 7-en jelentkeztek,
+hasonlóan Sz és K -ra 10-en, V és K -ra 11-en. Van-e ezek szerint
+olyan leány, akinek még egyik kedvenctől sincs aláírott fényképe,
+és ha igen, hány ilyen van? \emph{(KöMaL, 1963) }
+\end{extraproblem}
+
+\begin{solution}
+Ha azt feltételezzük, hogy minden leánynak legfeljebb egy kedvencétől
+lenne képe, akkor a képpel még nem rendelkezők számát úgy számolhatjuk
+ki, hogy a képek összmennyiségéből kivonjuk az osztály létszámát.
+Ebben az esetben a következő negatív számot kapnánk:
+
+\[
+42-(21+20+18)=-17
+\]
+
+Ez azért érthető, mert többször is kivontuk azok számát, akik több
+képpel rendelkeznek. Például kétszer vontuk ki azokét, akiknek Sz
+és V képe is megvan. Az ilyen kétszeres kivonások miatt hibák keletkezhetnek,
+amit úgy javíthatunk ki, hogy hozzáadjuk azok számát, akik mindhárom
+(Sz-V, Sz-K, V-K) képpárokra jelentkeztek:
+
+\[
+42-(21+20+18)+(7+10+11)
+\]
+
+Háromszor vontuk ki azok számát, akik mindhárom kedvencüktől rendelkeznek
+képpel. Ők már mindhárom kérdésre válaszoltak, tehát a számukat háromszor
+visszaadtuk. Mivel ezek a 6 lányok szerepeltek mindhárom csoportban,
+ezt a számot most már le kell vonnunk a végeredményből.
+
+Ezért az egyetlen képpel sem rendelkező leányok száma:
+
+\[
+42-(21+20+18)+(7+10+11)-6=5.
+\]
+\end{solution}
+\begin{extraproblem}[Kis Aranka-Enikő]
+Egy urnában $k$-féle színű golyó van, mindegyik színből ugyanannyi
+darab. Egyenként húzunk a golyókból úgy, hogy minden húzás után visszatesszük
+a kihúzott golyót, és minden húzásnál bármelyik golyó ugyanolyan valószínűséggel
+kerül kihúzásra.
+\begin{itemize}
+\item[\foreignlanguage{english}{(a)}] Mennyi annak a $q_{n}$ valószínűsége, hogy legalább $n$ húzás kellett
+ahhoz, hogy minden szín előforduljon? 
+\item[\foreignlanguage{english}{(b)}] Mennyi annak a $p_{n}$ valószínűsége, hogy $n$ húzás során minden
+szín előfordult, és ez az $n$-edik húzásnál következik be először
+(vagyis az első $(n-1)$ húzás során csak $(k-1)$ szín fordult elő)? 
+\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+\textbf{(a)} Az, hogy legalább $n$ húzás kell, hogy minden szín előforduljon,
+pontosan azt jelenti, hogy $n-1$ húzás után még nem volt minden szín.
+Jelölje $A_{i,n-1}=A_{i}$ azt az eseményt, hogy az első $n-1$ húzás
+során nem volt $i$ színű golyó.
+
+Ekkor az az esemény, hogy $n-1$ húzás után nem volt minden szín,
+pontosan azt jelenti, hogy az $A_{1},A_{2},\dots,A_{k}$ események
+közül legalább egy bekövetkezett, azaz: 
+\[
+C_{n}:=\{\text{legalább }n\text{ húzás kell}\}=\bigcup_{i=1}^{k}A_{i}.
+\]
+
+Az $A_{i}$ események nem kizáróak, ezért az unió valószínűségét szita-formulával
+határozhatjuk meg. Eszerint: 
+\[
+P\left(\bigcup_{i=1}^{k}A_{i}\right)=\sum_{j=1}^{k}(-1)^{j+1}\binom{k}{j}P(A_{1}\cap\dots\cap A_{j}),
+\]
+ahol az utolsó egyenlőségnél felhasználtuk, hogy a $j$-es metszetek
+valószínűségei megegyeznek (például ugyanakkora valószínűséggel nem
+volt sem piros, sem kék, mint sárga meg zöld).
+
+A metszetek valószínűségeit könnyű meghatározni. Valóban: 
+\[
+P(A_{1})=\frac{(k-1)^{n-1}}{k^{n-1}},
+\]
+hiszen az összes eset $k^{n-1}$, mert az $n-1$ húzás során mindig
+$k$-féle golyót kaphatunk, és a kedvező esetek száma $(k-1)^{n-1}$,
+hiszen 1-es színű golyót nem húztunk.
+
+Hasonlóan: 
+\[
+P(A_{1}\cap A_{2})=\frac{(k-2)^{n-1}}{k^{n-1}},
+\]
+hiszen ekkor sem 1-es, sem 2-es színű golyót nem húzhattunk.
+
+Általánosan: 
+\[
+P(A_{1}\cap\dots\cap A_{j})=\frac{(k-j)^{n-1}}{k^{n-1}}.
+\]
+
+Ezt visszahelyettesítve: 
+\[
+P\left(\bigcup_{j=1}^{k}A_{j}\right)=\sum_{j=1}^{k}(-1)^{j+1}\binom{k}{j}\cdot\frac{(k-j)^{n-1}}{k^{n-1}}.
+\]
+
+\textbf{(b)} Legyen $D_{n}$ az az esemény, hogy pontosan $n$ húzás
+kellett. Könnyű belátni, hogy: 
+\[
+D_{n}=C_{n}\setminus C_{n+1},
+\]
+hiszen ha pontosan $n$ kellett, akkor legalább $n$ kellett, de nem
+kellett $n+1$. Nyilván $C_{n}\supset C_{n+1}$, tehát: 
+\[
+P(D_{n})=P(C_{n})-P(C_{n+1}).
+\]
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+Egy művész 10 különböző festményt készít, amelyeket 5 különböző galériában
+szeretne kiállítani. Minden festményt pontosan egy galériában kell
+elhelyeznie. Hányféleképpen oszthatja el a festményeket a galériák
+között, ha minden galériában legalább egy festményt el kell helyeznie? 
+\end{extraproblem}
+
+\begin{solution}
+Először meghatározzuk az összes lehetséges elosztást, ha nem lenne
+a "minden galériában legalább egy festmény" feltétel. Mivel minden
+festményt 5 galéria közül választhatunk, az összes elosztás száma:
+
+\[
+5^{10}
+\]
+
+A szitaformula alkalmazásához levonjuk azokat az eseteket, amikor
+legalább egy galéria üres.
+\begin{itemize}
+\item Egy galéria üres: A maradék 4 galériába kell elhelyezni a 10 festményt:
+
+\[
+4^{10}
+\]
+
+Mivel 5 galéria van, az ilyen esetek száma:
+
+\[
+5\cdot4^{10}
+\]
+
+\item Két galéria üres: A maradék 3 galériába kell elhelyezni a 10 festményt:
+
+\[
+3^{10}
+\]
+
+Az üresen maradó két galériát $\binom{5}{2}=10$ módon választhatjuk
+ki, így az összes ilyen eset száma:
+
+\[
+10\cdot3^{10}
+\]
+
+\item Három galéria üres: A maradék 2 galériába kell elhelyezni a 10 festményt:
+
+\[
+2^{10}
+\]
+
+Az üresen maradó három galériát $\binom{5}{3}=10$ módon választhatjuk
+ki, így az összes ilyen eset száma:
+
+\[
+10\cdot2^{10}
+\]
+
+\item Négy galéria üres: Az összes festményt az egyetlen maradék galériába
+kell rakni:
+
+\[
+1^{10}=1
+\]
+
+Az egyetlen maradék galériát $\binom{5}{4}=5$ módon választhatjuk
+ki, így:
+
+\[
+5\cdot1^{10}=5
+\]
+
+\end{itemize}
+A végső képlet:
+
+\[
+5^{10}-5\cdot4^{10}+10\cdot3^{10}-10\cdot2^{10}+5\cdot1^{10}
+\]
+\end{solution}
+\begin{extraproblem}[Kis Brigitta]
+Egy iskola 15 diákját 6 különböző tanulmányi csoportba osztják be.
+Minden diák pontosan egy csoportba kerül. Hányféleképpen lehet az
+elosztást végrehajtani, ha minden csoportba legalább egy diákot be
+kell osztani? 
+\end{extraproblem}
+
+\begin{solution}
+Az összes lehetséges elosztás, ha nem lenne megkötés:
+
+\[
+6^{15}
+\]
+
+Levesszük azokat az eseteket, amikor legalább egy csoport üres.
+\begin{itemize}
+\item Egy csoport üres: A maradék 5 csoportba osztjuk a 15 diákot:
+
+\[
+5^{15}
+\]
+
+Azt, hogy melyik csoport legyen üres, $\binom{6}{1}=6$ módon választhatjuk
+ki, így:
+
+\[
+6\cdot5^{15}
+\]
+
+\item Két csoport üres: A maradék 4 csoportba osztjuk a 15 diákot:
+
+\[
+4^{15}
+\]
+
+Az üresen maradó két csoportot $\binom{6}{2}=15$ módon választhatjuk
+ki, így:
+
+\[
+15\cdot4^{15}
+\]
+
+\item Három csoport üres: A maradék 3 csoportba osztjuk a 15 diákot:
+
+\[
+3^{15}
+\]
+
+Az üresen maradó három csoportot $\binom{6}{3}=20$ módon választhatjuk
+ki, így:
+
+\[
+20\cdot3^{15}
+\]
+
+\item Négy csoport üres: A maradék 2 csoportba osztjuk a 15 diákot:
+
+\[
+2^{15}
+\]
+
+Az üresen maradó négy csoportot $\binom{6}{4}=15$ módon választhatjuk
+ki, így:
+
+\[
+15\cdot2^{15}
+\]
+
+\item Öt csoport üres: Az összes diák az egyetlen maradék csoportba kerül:
+
+\[
+1^{15}=1
+\]
+
+Az egyetlen maradék csoportot $\binom{6}{5}=6$ módon választhatjuk
+ki, így:
+
+\[
+6\cdot1^{15}=6
+\]
+
+\end{itemize}
+A végső képlet:
+
+\[
+6^{15}-6\cdot5^{15}+15\cdot4^{15}-20\cdot3^{15}+15\cdot2^{15}-6\cdot1^{15}
+\]
+\end{solution}
+\begin{extraproblem}[Lukács Andor]
+Hány olyan pozitív egész szám van, amely nem haladja meg a $2025$-öt,
+és osztható $3$-mal vagy $4$-gyel, de nem osztható $5$-tel? 
+\end{extraproblem}
+
+\begin{solution}
+Ha $A$ jelöli a $3$-mal osztható számok halmazát, $B$ a $4$-gyel
+osztható számok halmazát, $C$ pedig az $5$-tel osztható számok halmazát
+a megadott intervallumból, akkor 
+\begin{itemize}
+\item $|A|=\left\lfloor \frac{2025}{3}\right\rfloor =675$; 
+\item $|B|=\left\lfloor \frac{2025}{4}\right\rfloor =506$. 
+\end{itemize}
+Azoknak a számoknak a halmaza, amelyek $3$-mal és $4$-gyel is oszthatók,
+a $12$-vel osztható számok halmaza, tehát 
+\[
+|A\cap B|=\left\lfloor \frac{2025}{12}\right\rfloor =168.
+\]
+A szitaformula alapján tehát 
+\[
+|A\cup B|=|A|+|B|-|A\cap B|=675+506-168=1013.
+\]
+A feladat azt kéri, hogy számoljuk meg az $(A\cup B)\setminus C$
+halmaz elemeit, ehhez felhasználjuk a 
+\[
+|(A\cup B)\setminus C|=|A\cup B|-|(A\cup B)\cap C|
+\]
+azonosságot, tehát elég meghatározni a 
+\[
+|(A\cup B)\cap C|=|(A\cap C)\cup(B\cap C)|=|A\cap C|+|B\cap C|-|A\cap B\cap C|
+\]
+számot. Viszont 
+\begin{itemize}
+\item $|A\cap C|=\left\lfloor \frac{2025}{15}\right\rfloor =135$; 
+\item $|B\cap C|=\left\lfloor \frac{2025}{20}\right\rfloor =101$; 
+\item $|A\cap B\cap C|=\left\lfloor \frac{2025}{60}\right\rfloor =33$, 
+\end{itemize}
+így 
+\[
+|(A\cup B)\cap C|=|A\cap C|+|B\cap C|-|A\cap B\cap C|=135+101-33=203.
+\]
+Végül tehát 
+\[
+|(A\cup B)\setminus C|=|A\cup B|-|(A\cup B)\cap C|=1013-203=810.
+\]
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Egy osztály 35 tanulója közül 12 szereti a matematikát, 14 a fizikát,
+13 a kémiát és 10 a történelmet. Ha valaki több tárgyat is szeret
+a felsoroltak közül, akkor az összes természettudományi tárgyat szereti.
+Hat olyan gyerek van, aki az összes természettudományi tárgyat szereti,
+és négy olyan gyerek van, aki az összes tárgyat szereti. Hányan nem
+szeretik egyiket sem a négy tárgy közül? 
+\end{extraproblem}
+
+\begin{solution}
+A feladatot a szitaformula segítségével oldjuk meg. Jelölje $M$,
+$F$, $K$ és $T$ a megfelelő tantárgyat szerető tanulók halmazát.
+Annak meghatározásához, hogy hányan nem szeretik egyik tantárgyat
+sem előbb meghatározzuk, hogy hányan szeretik valamelyik tantárgyat,
+vagyis az $M\cup F\cup K\cup T$ halmaz számosságára vagyunk kíváncsiak.
+A szitaformula képletét az alapján alkalmazzuk, hogy figyelembe vesszük
+a feladat feltételei szerint az alábbi összefüggéseket: 
+\[
+|M\cap F|=|M\cap K|=|F\cap K|=|M\cap F\cap K|=6
+\]
+\[
+|T\cap M|=|T\cap F|=|T\cap K|=|T\cap M\cap F\cap K|=4
+\]
+\[
+|T\cap M\cap F|=|T\cap M\cap K|=|T\cap F\cap K|=|T\cap M\cap F\cap K|=4.
+\]
+Ezek alapján a szitaformula az alábbiak szerint írható fel: 
+\begin{align*}
+|M\cup F\cup K\cup T| & =|M|+|F|+|K|+|T|-3\cdot|M\cap F\cap K|-3\cdot|M\cap F\cap K\cap T|\\
+ & +|M\cap F\cap K|+3\cdot|M\cap F\cap K\cap T|-|M\cap F\cap K\cap T|=\\
+ & =|M|+|F|+|K|+|T|-2\cdot|M\cap F\cap K|-|M\cap F\cap K\cap T|=\\
+ & =12+14+13+10-2\cdot6-4=33.
+\end{align*}
+Tehát összesen $35-33=2$ diák van, aki egyik tantárgyat sem szereti. 
+\end{solution}
+\begin{extraproblem}[Miklós Dóra]
+Hányféleképpen jelölhetünk ki egy konvex, $n$ oldalú $(n\geq6)$
+sokszög csúcsai közül hármat úgy, hogy ezek egyike se legyen szomszédos
+semelyik másikkal? 
+\end{extraproblem}
+
+\begin{solution}
+Mivel $n>3$ ezért mindhárom pont nem lehet szomszédos, így három
+esetet tudunk megkülönböztetni: 
+\begin{itemize}
+\item egyik pont se szomszédos egy másikkal; 
+\item pontosan két pont szomszédos egymással; 
+\item a három pont egymás mellett helyezkedik el, így két szomszédos pár
+van köztük. 
+\end{itemize}
+Azon kiválasztások számát, amikor nincsenek szomszédos pontok úgy
+fogjuk meghatározni, hogy az összes kiválasztásból kivonjuk azoknak
+a számát, ahol legalább két pont szomszédos egymással.
+
+Összesen $C_{n}^{3}$ féleképpen tudunk kiválasztani $n$-ből $3$
+pontot. Vizsgáljuk meg azon esetek számát, amikor vannak szomszédos
+pontok. Azok száma, ahol legalább két pont szomszédos $n\cdot C_{n-2}^{1}$,
+vagyis $n(n-2)$, mivel két szomszédos pont $n$ féleképpen választható
+ki és a harmadik pont bármelyik lehet a maradék $n-2$-ből. Azon esetek
+száma pedig, ahol két szomszédos pontpár van ugyancsak $n$, mivel
+ekkor a három pont egymásutáni. Így azon kiválasztások száma, ahol
+vannak szomszédos pontok: 
+\[
+n\cdot(n-2)-n=n\cdot(n-3).
+\]
+Továbbá azok száma, ahol nincsenek szomszédos pontok: 
+\begin{align*}
+C_{n}^{3}-n\cdot(n-3) & =\frac{(n-2)(n-1)n}{6}-n\cdot(n-3)=\\
+ & =\frac{n\cdot(n^{2}-3n+2-6n+18)}{6}=\\
+ & =\frac{n\cdot(n^{2}-9n+20)}{6}.
+\end{align*}
+\end{solution}
+\begin{extraproblem}[Péter Róbert]
+Hány olyan pozitív egész szám van $1$ és $1000$ között, amely nem
+osztható sem $4$-gyel, sem $6$-tal, sem $10$-zel, sem $15$-tel? 
+\end{extraproblem}
+
+\begin{solution}
+Legyen $A,B,C,D$ rendre azoknak a számoknak a halmaza, amelyek oszthatók
+$4$-gyel, $6$-tal, $10$-zel, illetve $15$-tel.
+
+1. Egyes halmazok elemszáma:
+
+\[
+|A|=\left\lfloor \frac{1000}{4}\right\rfloor =250,\quad|B|=\left\lfloor \frac{1000}{6}\right\rfloor =166,\quad|C|=\left\lfloor \frac{1000}{10}\right\rfloor =100,\quad|D|=\left\lfloor \frac{1000}{15}\right\rfloor =66
+\]
+
+2. Páros metszetek:
+
+\[
+\begin{aligned}|A\cap B| & =\left\lfloor \frac{1000}{\mathrm{lkkt}(4,6)}\right\rfloor =\left\lfloor \frac{1000}{12}\right\rfloor =83\\
+|A\cap C| & =\left\lfloor \frac{1000}{20}\right\rfloor =50\\
+|A\cap D| & =\left\lfloor \frac{1000}{60}\right\rfloor =16\\
+|B\cap C| & =\left\lfloor \frac{1000}{30}\right\rfloor =33\\
+|B\cap D| & =\left\lfloor \frac{1000}{30}\right\rfloor =33\\
+|C\cap D| & =\left\lfloor \frac{1000}{30}\right\rfloor =33
+\end{aligned}
+\]
+
+3. Hármas metszetek:
+
+\[
+\begin{aligned}|A\cap B\cap C| & =\left\lfloor \frac{1000}{\mathrm{lkkt}(4,6,10)}\right\rfloor =\left\lfloor \frac{1000}{60}\right\rfloor =16\\
+|A\cap B\cap D| & =\left\lfloor \frac{1000}{\mathrm{lkkt}(4,6,15)}\right\rfloor =\left\lfloor \frac{1000}{60}\right\rfloor =16\\
+|A\cap C\cap D| & =\left\lfloor \frac{1000}{\mathrm{lkkt}(4,10,15)}\right\rfloor =\left\lfloor \frac{1000}{60}\right\rfloor =16\\
+|B\cap C\cap D| & =\left\lfloor \frac{1000}{\mathrm{lkkt}(6,10,15)}\right\rfloor =\left\lfloor \frac{1000}{30}\right\rfloor =33
+\end{aligned}
+\]
+
+4. Négyes metszet:
+
+\[
+|A\cap B\cap C\cap D|=\left\lfloor \frac{1000}{\mathrm{lkkt}(4,6,10,15)}\right\rfloor =\left\lfloor \frac{1000}{60}\right\rfloor =16
+\]
+
+5. Szitaformula alkalmazása:
+
+\[
+\begin{aligned}|A\cup B\cup C\cup D| & =(250+166+100+66)-(83+50+16+33+33+33)\\
+ & \quad+(16+16+16+33)-16\\
+ & =582-248+81-16=399
+\end{aligned}
+\]
+
+A keresett számok száma: 
+\[
+1000-399=601
+\]
+
+Tehát 601 olyan szám van 1 és 1000 között, amely nem osztható sem
+4-gyel, sem 6-tal, sem 10-zel, sem 15-tel. 
+\end{solution}
+\begin{extraproblem}[Sógor Bence]
+Egy vállalatnak mind a 2025 alkalmazottja számára biztosítja az ebédet.
+Mindenki leves és főfogás közül választ legalább egyet. A levest kérők
+számának aránya 32 és 50 százalék között mozog, míg főfogást az alkalmazottak
+80-92 százaléka szokott kérni. Mennyi $M-m$ értéke, ahol $M$ a teljes
+ebédet kérők maximális száma, míg $m$ a teljes ebédet kérők minimális
+száma? 
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük $L$-lel a levest kérők halmazát, míg $F$-fel a főfogást
+kérők halmazát. Mivel levest az alkalmazottak 32-50 százaléka szokott
+kérni ezért tudjuk, hogy $\frac{32}{100}\leq\frac{|L|}{2025}\leq\frac{50}{100}$.
+Innen $648\leq|L|\leq1012,5$, ahol $|L|$ egy egész szám. Hasonlóan
+$\frac{80}{100}\leq\frac{|F|}{2025}\leq\frac{92}{100}$, ahonnan $1620\leq|F|\leq1863$.
+A teljes ebédet kérők száma $|L\cap F|$. Ez szitaformula alapján
+$|L\cap F|=|L|+|F|-|F\cup L|$. Ennek az értéke akkor maximális vagy
+minimális, amikor $|L|$ és $|F|$ értéke maximális vagy minimális.
+Tehát $M=1012+1863-2025=850$ és $m=1620+648-2025=243$. Ezek alapján
+$M-m=850-243=607$. \\
+Feladat 1
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+Legyen adott egy $n\times n$-es rács, ahol a bal alsó sarok koordinátái
+$(0,0)$, a jobb felső saroké $(n,n)$.
+
+Hány olyan rácsút vezet $(0,0)$-ból $(n,n)$-be, amely csak jobbra
+vagy felfelé haladhat, és nem halad át egyetlen olyan rácsponton sem,
+amely osztható $2$-vel, $3$-mal vagy $5$-tel, azaz a pont koordinátái
+$(x,y)$ teljesítik, hogy $x\cdot y$ osztható $2$-vel, $3$-mal
+vagy $5$-tel.
+\end{extraproblem}
+
+\begin{solution}
+~
+
+\underline{Összes út:}\\
+
+Mivel csak jobbra vagy felfelé léphetünk, a $(0,0)\to(n,n)$ pont
+közötti összes út száma: 
+\[
+C_{2n}^{n}.
+\]
+
+\underline{Tiltott pontok:}\\
+
+Jelölje: 
+\[
+A_{2}=\{(x,y)\mid x\cdot y\text{ osztható }2\text{-vel}\},
+\]
+\[
+A_{3}=\{(x,y)\mid x\cdot y\text{ osztható }3\text{-mal}\},
+\]
+\[
+A_{5}=\{(x,y)\mid x\cdot y\text{ osztható }5\text{-tel}\}.
+\]
+
+\underline{Szitaformula alkalmazása:}\\
+
+Legyen $S$ a tiltott pontokon áthaladó utak száma. A szitaformula
+szerint: 
+\[
+S=S_{2}+S_{3}+S_{5}-S_{2,3}-S_{2,5}-S_{3,5}+S_{2,3,5},
+\]
+ahol $S_{2}$ az olyan utak száma, amelyek érintenek legalább egy
+$A_{2}$-beli pontot, stb.
+
+\underline{Kizárás, bennfoglalás}\\
+
+A $S_{2}$ értékét úgy kapjuk, hogy kiszámoljuk az összes olyan utat,
+amely érint legalább egy olyan pontot, ahol $x\cdot y$ osztható $2$-vel.
+Ez ismert módszerrel történik: 
+\begin{itemize}
+\item A tiltottság miatt a rácsteret "blokkokra" kell osztani. 
+\item Az egyes $S_{k}$ értékek kiszámítása az utak darabolásával történik. 
+\end{itemize}
+A végső válasz: 
+\[
+\boxed{C_{2n}^{n}-S},
+\]
+ahol $S$ a szitaformulával kiszámolt érték.
+\end{solution}
+\begin{extraproblem}[Száfta Antal]
+ Legyen $S=\{1,2,3,\dots,N\}$. Számoljuk meg azon $k$-elemű részhalmazokat
+$S$-ben, amelyek nem tartalmaznak 2-vel, 3-mal vagy 5-tel osztható
+elemeket.
+\end{extraproblem}
+
+\begin{solution}
+Jelöljük: 
+\begin{itemize}
+\item $A_{2}=\{x\in S\mid2\mid x\}$ 
+\item $A_{3}=\{x\in S\mid3\mid x\}$ 
+\item $A_{5}=\{x\in S\mid5\mid x\}$ 
+\end{itemize}
+A keresett elemszám: az $S$ olyan $k$-elemű részhalmazainak száma,
+amelyek $A_{2}\cup A_{3}\cup A_{5}$ komplementerében vannak.
+
+Legyen $M$ a $S$-beli számok száma, amelyek \emph{nem} oszthatók
+2-vel, 3-mal vagy 5-tel.
+
+Ezek azok a számok, amelyek prímtényezőik között nincs 2, 3, vagy
+5.
+
+Legyen $r$ ezek száma. Ekkor a válasz: 
+\[
+C_{r}^{k}
+\]
+
+A $r$ értékét szitaformulával határozzuk meg:
+
+\[
+r=N-|A_{2}\cup A_{3}\cup A_{5}|
+\]
+
+A szitaformula szerint: 
+\[
+|A_{2}\cup A_{3}\cup A_{5}|=|A_{2}|+|A_{3}|+|A_{5}|-|A_{2}\cap A_{3}|-|A_{2}\cap A_{5}|-|A_{3}\cap A_{5}|+|A_{2}\cap A_{3}\cap A_{5}|
+\]
+
+Mivel: 
+\[
+|A_{d}|=\left\lfloor \frac{N}{d}\right\rfloor 
+\]
+
+Ezért: 
+\[
+r=N-\left(\left\lfloor \frac{N}{2}\right\rfloor +\left\lfloor \frac{N}{3}\right\rfloor +\left\lfloor \frac{N}{5}\right\rfloor -\left\lfloor \frac{N}{6}\right\rfloor -\left\lfloor \frac{N}{10}\right\rfloor -\left\lfloor \frac{N}{15}\right\rfloor +\left\lfloor \frac{N}{30}\right\rfloor \right)
+\]
+
+\underline{Végső válasz:}\\
+
+A keresett részhalmazok száma: 
+\[
+\boxed{C_{r}^{k}}
+\]
+ahol $r$ az előzőek szerint számolt érték. 
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+ Hány szökőév van az 1000 és 4004 közötti évek között (mindkettő
+beleértve)? Egy év szökőév, ha: 
+\begin{itemize}
+\item osztható 4-gyel, de nem osztható 100-zal, \textbf{vagy} 
+\item osztható 400-zal. 
+\end{itemize}
+\end{extraproblem}
+
+\begin{solution}
+Az 1000 és 4004 közötti (zárt) intervallumban lévő évek száma: 
+\[
+4004-1000+1=3005.
+\]
+
+\medskip{}
+
+\textbf{1. lépés:} Az összes olyan év megszámlálása, amely osztható
+4-gyel:
+
+Legkisebb ilyen év: 1000 \\
+ Legnagyobb ilyen év: 4004
+
+\[
+\frac{4004-1000}{4}+1=\frac{3004}{4}+1=751+1=752
+\]
+
+\textbf{2. lépés:} Kivonjuk azoknak az éveknek a számát, amelyek oszthatók
+100-zal, de \textbf{nem} oszthatók 400-zal (mert ezek nem szökőévek):
+
+Osztható 100-zal: $1000,1100,\dots,4000$
+
+Ez számtani sorozat, első tag: $a_{1}=1000$, utolsó tag: $a_{n}=4000$,
+differencia: $d=100$
+
+\[
+n=\frac{4000-1000}{100}+1=31
+\]
+
+Osztható 400-zal: $1200,1600,\dots,4000$
+
+\[
+n=\frac{4000-1200}{400}+1=\frac{2800}{400}+1=7+1=8
+\]
+
+Tehát a 100-zal osztható, de 400-zal nem osztható évek száma: $31-8=23$
+
+\medskip{}
+
+\textbf{Végső eredmény:} 
+\[
+\text{Szökőévek száma}=752-23=\boxed{729}
+\]
+\end{solution}
+\begin{extraproblem}[Szélyes Klaudia]
+Egy 100 hallgatóból álló évfolyamon:
+\begin{itemize}
+\item 50 hallgató jár matematika órára, 
+\item 40 hallgató jár informatika órára, 
+\item 35 hallgató jár kémia órára, 
+\item 12 hallgató jár matematika \textbf{és} kémia órára is, 
+\item 10 hallgató jár matematika \textbf{és} informatika órára is, 
+\item 11 hallgató jár informatika \textbf{és} kémia órára is, 
+\item 5 hallgató jár \textbf{mindhárom} órára. 
+\end{itemize}
+Kérdés:
+\begin{enumerate}
+\item Hány hallgató jár legalább az egyik órára? 
+\item Hány hallgató nem jár egyik órára sem? 
+\end{enumerate}
+\end{extraproblem}
+
+\begin{solution}
+Legyenek a következők:
+\begin{itemize}
+\item $|M|=50$ (matematika), 
+\item $|I|=40$ (informatika), 
+\item $|K|=35$ (kémia), 
+\item $|M\cap K|=12$, 
+\item $|M\cap I|=10$, 
+\item $|I\cap K|=11$, 
+\item $|M\cap I\cap K|=5$. 
+\end{itemize}
+\end{solution}
+\medskip{}
+
+\textbf{1. kérdés: Legalább egy órára járók száma}
+
+A háromhalmazos unió képlete: 
+\[
+|M\cup I\cup K|=|M|+|I|+|K|-|M\cap I|-|M\cap K|-|I\cap K|+|M\cap I\cap K|
+\]
+
+Behelyettesítve: 
+\[
+|M\cup I\cup K|=50+40+35-10-12-11+5=125-33+5=\boxed{97}
+\]
+
+\medskip{}
+
+\textbf{2. kérdés: Egyik órára sem járók száma}
+
+\[
+100-97=\boxed{3}
+\]
+
